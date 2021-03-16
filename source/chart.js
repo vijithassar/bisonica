@@ -1,4 +1,5 @@
 import { WRAPPER_CLASS } from './config.js';
+import { audio } from './audio.js';
 import { axes } from './axes.js';
 import { init } from './init.js';
 import { initializeInteractions, interactions } from './interactions.js';
@@ -19,8 +20,12 @@ import { usermeta } from './extensions.js';
  */
 const chart = (s, panelDimensions) => {
   let tooltipHandler;
+
   const renderer = (selection) => {
+
     selection.call(init(s, panelDimensions));
+
+    selection.call(audio(specification));
 
     const chartNode = selection.select('div.chart');
 
