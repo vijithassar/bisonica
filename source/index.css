@@ -168,3 +168,12 @@ path.mark {
   fill: var(--text);
   font-weight: 100;
 }
+
+.falcon-chart :global(.play) {
+  background-color: var(--dark-grey);
+  font-size: x-small;
+  padding: 0.1em 0.3em 0.1em 0.3em;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
