@@ -6,7 +6,15 @@ const context = new AudioContext();
 
 const root = 440;
 const tuning = 0;
-const duration = 0.25;
+const duration = 0.15;
+
+const minor = (min, max) => {
+  const h = (max - min) / 12;
+  const w = h * 2;
+  const steps = [0, w, h, w, w, h, w, w];
+
+  return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min + tuning);
+};
 
 const audioDispatcher = d3.dispatch('play');
 
@@ -25,9 +33,9 @@ const note = (frequency, start) => {
 
 const notes = (values) => {
   const scale = d3
-    .scaleLinear()
-    .domain(d3.extent(values, (d) => d.value))
-    .range([root + tuning, (root + tuning) * 2]);
+    .scaleThreshold()
+    .domain(minor(...d3.extent(values, (d) => d.value)))
+    .range(minor(root, root * 2));
 
   const pitches = values.map(({ value }) => scale(value));
 
