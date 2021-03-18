@@ -85,8 +85,13 @@ const audio = (specification) => {
     if (hasSingleCategory && isLineChart) {
       const play = wrapper.append('div').classed('play', true).text('play');
 
+      let playing = false;
+
       play.on('click', () => {
-        audioDispatcher.call('play', null, values);
+        if (!playing) {
+          audioDispatcher.call('play', null, values);
+          playing = true;
+        }
       });
     }
   };
