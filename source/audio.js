@@ -70,9 +70,15 @@ const audio = (specification) => {
   return (wrapper) => {
     const { values } = lineData(specification)[0];
 
+    let playing = false;
+
     audioDispatcher.on('focus', (index) => {
       if (index > 0) {
         wrapper.select(`.point:nth-child(${index})`).node().focus();
+      }
+
+      if (index === values.length - 1) {
+        playing = false;
       }
     });
 
@@ -84,8 +90,6 @@ const audio = (specification) => {
 
     if (hasSingleCategory && isLineChart) {
       const play = wrapper.append('div').classed('play', true).text('play');
-
-      let playing = false;
 
       play.on('click', () => {
         if (!playing) {
