@@ -73,9 +73,9 @@ const audio = (specification) => {
     let playing = false;
 
     audioDispatcher.on('focus', (index) => {
-      if (index > 0) {
-        wrapper.select(`.point:nth-child(${index})`).node().focus();
-      }
+      const selector = index === 0 ? `.point:first-child` : `.point:nth-child(${index})`;
+
+      wrapper.select(selector).node().focus();
 
       if (index === values.length - 1) {
         playing = false;
