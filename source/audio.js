@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
-import { lineData } from './data';
+import { circularData, lineData, stackedBarData } from './data';
+import { feature } from './feature';
 import { noop } from './helpers';
 
 const context = new AudioContext();
@@ -62,42 +63,61 @@ audioDispatcher.on('play', (values) => {
   notes(values);
 });
 
+const selector = (specification, index) => {
+  const item = index === 0 ? ':first-child' : `:nth-child(${index})`;
+  const type = feature(specification).isLine() ? `.point` : '.mark';
+
+  return `${type}${item}`;
+};
+
 const audio = (specification) => {
   if (specification.layer) {
     return noop;
   }
 
   return (wrapper) => {
-    const { values } = lineData(specification)[0];
+    const hasSingleCategory =
+      new Set(specification.data.values.map((item) => item[specification.encoding.color?.field]))
+        .size === 1;
+    const playable =
+      (hasSingleCategory && feature(specification).isLine()) ||
+      (hasSingleCategory && feature(specification).isBar()) ||
+      feature(specification).isCircular();
+
+    let values;
+
+    if (feature(specification).isLine()) {
+      ({ values } = lineData(specification)[0]);
+    } else if (feature(specification).isCircular()) {
+      values = circularData(specification);
+    } else if (feature(specification).isBar()) {
+      values = stackedBarData(specification)[0].map((item) => {
+        return { value: item.data.undefined?.value };
+      });
+    }
+
+    if (!playable || !values) {
+      return;
+    }
 
     let playing = false;
 
     audioDispatcher.on('focus', (index) => {
-      const selector = index === 0 ? `.point:first-child` : `.point:nth-child(${index})`;
-
-      wrapper.select(selector).node().focus();
+      wrapper.select(selector(specification, index)).node().focus();
 
       if (index === values.length - 1) {
         playing = false;
       }
     });
 
-    const hasSingleCategory =
-      typeof specification.encoding.color?.field === 'undefined' ||
-      new Set(values.map((item) => item[specification.encoding.color?.field])).size === 1;
+    const play = wrapper.append('div').classed('play', true).text('▶');
 
-    const isLineChart = specification.mark === 'line' || specification.mark.type === 'line';
-
-    if (hasSingleCategory && isLineChart) {
-      const play = wrapper.append('div').classed('play', true).text('play');
-
-      play.on('click', () => {
-        if (!playing) {
-          audioDispatcher.call('play', null, values);
-          playing = true;
-        }
-      });
-    }
+    play.on('click', () => {
+      if (!playing) {
+        audioDispatcher.call('play', null, values);
+        playing = true;
+      }
+    });
   };
 };
 
