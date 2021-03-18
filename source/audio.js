@@ -21,15 +21,22 @@ const audioDispatcher = d3.dispatch('play');
 
 const note = (frequency, start) => {
   const oscillator = context.createOscillator();
-  const gain = context.createGain();
+  const gainNode = context.createGain();
 
-  oscillator.connect(gain);
-  gain.connect(context.destination);
+  gainNode.gain.setValueAtTime(1.0, context.currentTime + start);
+
+  const end = context.currentTime + start + duration;
+
+  oscillator.connect(gainNode);
+  gainNode.connect(context.destination);
 
   oscillator.frequency.value = frequency;
 
+  gainNode.gain.setValueAtTime(context.currentTime + start * 0.8, 1);
+  gainNode.gain.linearRampToValueAtTime(0.001, end);
+
   oscillator.start(context.currentTime + start);
-  oscillator.stop(context.currentTime + start + duration * 0.8);
+  oscillator.stop(end);
 };
 
 const notes = (values) => {
