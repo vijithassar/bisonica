@@ -17,7 +17,7 @@ const minor = (min, max) => {
   return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min + tuning);
 };
 
-const audioDispatcher = d3.dispatch('play');
+const audioDispatcher = d3.dispatch('play', 'focus');
 
 const note = (frequency, start) => {
   const oscillator = context.createOscillator();
@@ -48,7 +48,13 @@ const notes = (values) => {
   const pitches = values.map(({ value }) => scale(value));
 
   pitches.forEach((pitch, index) => {
-    note(pitch, index * duration);
+    const seconds = index * duration;
+    const milliseconds = seconds * 1000;
+
+    note(pitch, seconds);
+    setTimeout(() => {
+      audioDispatcher.call('focus', null, index);
+    }, milliseconds);
   });
 };
 
@@ -63,6 +69,13 @@ const audio = (specification) => {
 
   return (wrapper) => {
     const { values } = lineData(specification)[0];
+
+    audioDispatcher.on('focus', (index) => {
+      if (index > 0) {
+        wrapper.select(`.point:nth-child(${index})`).node().focus();
+      }
+    });
+
     const hasSingleCategory =
       typeof specification.encoding.color?.field === 'undefined' ||
       new Set(values.map((item) => item[specification.encoding.color?.field])).size === 1;
