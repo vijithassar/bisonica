@@ -6,7 +6,7 @@ const context = new AudioContext();
 
 const root = 440;
 const tuning = 0;
-const tempo = 120;
+const tempo = 160;
 const duration = 60 / tempo / 2;
 
 const minor = (min, max) => {
