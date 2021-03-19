@@ -21,10 +21,11 @@ const chart = (s, panelDimensions) => {
   let tooltipHandler;
 
   const renderer = (selection) => {
-
     selection.call(init(s, panelDimensions));
 
-    selection.call(audio(specification));
+    initializeInteractions(selection.node(), s);
+
+    selection.call(audio(s));
 
     const chartNode = selection.select('div.chart');
 

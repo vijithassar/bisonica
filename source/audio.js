@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { circularData, lineData, stackedBarData } from './data';
+import { dispatchers } from './interactions';
 import { feature } from './feature';
 import { noop } from './helpers';
 
@@ -17,8 +18,6 @@ const minor = (min, max) => {
 
   return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min + tuning);
 };
-
-const audioDispatcher = d3.dispatch('play', 'focus');
 
 const note = (frequency, start) => {
   const oscillator = context.createOscillator();
@@ -40,7 +39,7 @@ const note = (frequency, start) => {
   oscillator.stop(end);
 };
 
-const notes = (values) => {
+const notes = (values, dispatcher) => {
   const scale = d3
     .scaleThreshold()
     .domain(minor(...d3.extent(values, (d) => d.value)))
@@ -54,14 +53,10 @@ const notes = (values) => {
 
     note(pitch, seconds);
     setTimeout(() => {
-      audioDispatcher.call('focus', null, index);
+      dispatcher.call('focus', null, index);
     }, milliseconds);
   });
 };
-
-audioDispatcher.on('play', (values) => {
-  notes(values);
-});
 
 const selector = (specification, index) => {
   const item = index === 0 ? ':first-child' : `:nth-child(${index})`;
@@ -100,9 +95,13 @@ const audio = (specification) => {
       return;
     }
 
-    let playing = false;
+    const dispatcher = dispatchers.get(wrapper.node());
 
-    audioDispatcher.on('focus', (index) => {
+    dispatcher.on('play', (values) => {
+      notes(values, dispatcher);
+    });
+
+    dispatcher.on('focus', (index) => {
       wrapper.select(selector(specification, index)).node().focus();
 
       if (index === values.length - 1) {
@@ -111,10 +110,11 @@ const audio = (specification) => {
     });
 
     const play = wrapper.append('div').classed('play', true).text('▶');
+    let playing = false;
 
     play.on('click', () => {
       if (!playing) {
-        audioDispatcher.call('play', null, values);
+        dispatcher.call('play', null, values);
         playing = true;
       }
     });
