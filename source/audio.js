@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import { circularData, lineData, stackedBarData } from './data';
 import { dispatchers } from './interactions';
 import { feature } from './feature';
+import { markInteractionSelector } from './marks';
 import { noop } from './helpers';
 
 const context = new AudioContext();
@@ -58,13 +59,6 @@ const notes = (values, dispatcher) => {
   });
 };
 
-const selector = (specification, index) => {
-  const item = index === 0 ? ':first-child' : `:nth-child(${index})`;
-  const type = feature(specification).isLine() ? `.point` : '.mark';
-
-  return `${type}${item}`;
-};
-
 const audio = (specification) => {
   if (specification.layer) {
     return noop;
@@ -102,7 +96,7 @@ const audio = (specification) => {
     });
 
     dispatcher.on('focus', (index) => {
-      wrapper.select(selector(specification, index)).node().focus();
+      wrapper.selectAll(markInteractionSelector(specification)).nodes()[index].focus();
 
       if (index === values.length - 1) {
         playing = false;
