@@ -54,6 +54,22 @@ const repeatLinear = (min, max) => {
     })
     .flat();
 };
+
+const repeatExponential = (min, max) => {
+  if (max % min !== 0) {
+    console.error('endpoints supplied for exponential scale repetition are not octaves');
+  }
+
+  return Array.from({ length: octaves })
+    .map((_, index) => {
+      const start = min * 2 ** index;
+      const end = min * 2 ** (index + 1);
+
+      return minor(start, end);
+    })
+    .flat();
+};
+
 const notes = (values, dispatcher) => {
   const extent = d3.extent(values, (d) => d.value);
   const mid = (extent[1] - extent[0]) * 0.5;
