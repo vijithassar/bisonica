@@ -7,9 +7,9 @@ import { noop } from './helpers';
 
 const context = new AudioContext();
 
-const root = 440;
+const tuning = 440;
+const root = tuning / 2;
 const octaves = 2;
-const tuning = 0;
 const tempo = 160;
 const duration = 60 / tempo / 2;
 
@@ -18,7 +18,7 @@ const minor = (min, max) => {
   const w = h * 2;
   const steps = [0, w, h, w, w, h, w, w];
 
-  return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min + tuning);
+  return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min);
 };
 
 const note = (frequency, start) => {
