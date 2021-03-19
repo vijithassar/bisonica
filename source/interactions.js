@@ -32,6 +32,8 @@ const events = (s) => {
       'removeMarkHighlight',
       'link',
       'tooltip',
+      'play',
+      'focus',
     ];
   }
 };
