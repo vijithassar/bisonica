@@ -41,10 +41,12 @@ const note = (frequency, start) => {
 };
 
 const notes = (values, dispatcher) => {
+  const extent = d3.extent(values, (d) => d.value);
+  const mid = (extent[1] - extent[0]) * 0.5;
   const scale = d3
     .scaleThreshold()
-    .domain(minor(...d3.extent(values, (d) => d.value)))
-    .range(minor(root, root * 2));
+    .domain([...minor(extent[0], mid), ...minor(mid, extent[1])])
+    .range([...minor(root, root * 2), ...minor(root * 2, root * 4)]);
 
   const pitches = values.map(({ value }) => scale(value));
 
