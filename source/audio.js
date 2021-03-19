@@ -8,6 +8,7 @@ import { noop } from './helpers';
 const context = new AudioContext();
 
 const root = 440;
+const octaves = 2;
 const tuning = 0;
 const tempo = 160;
 const duration = 60 / tempo / 2;
@@ -40,6 +41,19 @@ const note = (frequency, start) => {
   oscillator.stop(end);
 };
 
+const repeatLinear = (min, max) => {
+  const spread = max - min;
+  const slice = spread / octaves;
+
+  return Array.from({ length: octaves })
+    .map((_, index) => {
+      const start = slice * index + min;
+      const end = slice * (index + 1) + min;
+
+      return minor(start, end);
+    })
+    .flat();
+};
 const notes = (values, dispatcher) => {
   const extent = d3.extent(values, (d) => d.value);
   const mid = (extent[1] - extent[0]) * 0.5;
