@@ -18,7 +18,17 @@ const chromatic = (root) => {
   return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index));
 };
 
-const minor = (root) => {
+const minorLinear = (min, max) => {
+  const h = (max - min) / 12;
+  const w = h * 2;
+  const steps = [0, w, h, w, w, h, w, w];
+
+  return steps.map((_, index) => {
+    return d3.sum(steps.slice(0, index)) + min;
+  });
+};
+
+const minorExponential = (root) => {
   const semitones = [0, 2, 3, 5, 7, 8, 10, 12];
 
   return chromatic(root).filter((_, index) => semitones.includes(index));
@@ -50,7 +60,9 @@ const repeatLinear = (min, max) => {
 
   return Array.from({ length: octaves })
     .map((_, index) => {
-      const steps = minor(slice * index + min);
+      const start = slice * index + min;
+      const end = slice * (index + 1) + min;
+      const steps = minorLinear(start, end).map((item) => item + start);
 
       return index === 0 ? steps : steps.slice(1);
     })
@@ -64,7 +76,7 @@ const repeatExponential = (min, max) => {
 
   return Array.from({ length: octaves })
     .map((_, index) => {
-      const steps = minor(min * 2 ** index);
+      const steps = minorExponential(min * 2 ** index);
 
       return index === 0 ? steps : steps.slice(1);
     })
