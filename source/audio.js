@@ -49,13 +49,10 @@ const notes = (values, dispatcher) => {
   const pitches = values.map(({ value }) => scale(value));
 
   pitches.forEach((pitch, index) => {
-    const seconds = index * duration;
-    const milliseconds = seconds * 1000;
-
-    note(pitch, seconds);
+    note(pitch, index * duration);
     setTimeout(() => {
       dispatcher.call('focus', null, index);
-    }, milliseconds);
+    }, (index + 1) * duration * 1000);
   });
 };
 
