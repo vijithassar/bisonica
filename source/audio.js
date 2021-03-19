@@ -72,11 +72,9 @@ const repeatExponential = (min, max) => {
 
 const notes = (values, dispatcher) => {
   const extent = d3.extent(values, (d) => d.value);
-  const mid = (extent[1] - extent[0]) * 0.5;
-  const scale = d3
-    .scaleThreshold()
-    .domain([...minor(extent[0], mid), ...minor(mid, extent[1])])
-    .range([...minor(root, root * 2), ...minor(root * 2, root * 4)]);
+  const domain = repeatLinear(...extent);
+  const range = repeatExponential(root, root * 2 ** octaves);
+  const scale = d3.scaleThreshold().domain(domain).range(range);
 
   const pitches = values.map(({ value }) => scale(value));
 
