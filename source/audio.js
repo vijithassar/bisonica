@@ -49,8 +49,9 @@ const repeatLinear = (min, max) => {
     .map((_, index) => {
       const start = slice * index + min;
       const end = slice * (index + 1) + min;
+      const steps = minor(start, end);
 
-      return minor(start, end);
+      return index === 0 ? steps : steps.slice(1);
     })
     .flat();
 };
@@ -64,8 +65,9 @@ const repeatExponential = (min, max) => {
     .map((_, index) => {
       const start = min * 2 ** index;
       const end = min * 2 ** (index + 1);
+      const steps = minor(start, end);
 
-      return minor(start, end);
+      return index === 0 ? steps : steps.slice(1);
     })
     .flat();
 };
