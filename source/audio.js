@@ -8,6 +8,7 @@ import { noop } from './helpers';
 const context = new AudioContext();
 
 const root = 440;
+const octaves = 2;
 const tuning = 0;
 const tempo = 160;
 const duration = 60 / tempo / 2;
@@ -40,13 +41,40 @@ const note = (frequency, start) => {
   oscillator.stop(end);
 };
 
+const repeatLinear = (min, max) => {
+  const spread = max - min;
+  const slice = spread / octaves;
+
+  return Array.from({ length: octaves })
+    .map((_, index) => {
+      const start = slice * index + min;
+      const end = slice * (index + 1) + min;
+
+      return minor(start, end);
+    })
+    .flat();
+};
+
+const repeatExponential = (min, max) => {
+  if (max % min !== 0) {
+    console.error('endpoints supplied for exponential scale repetition are not octaves');
+  }
+
+  return Array.from({ length: octaves })
+    .map((_, index) => {
+      const start = min * 2 ** index;
+      const end = min * 2 ** (index + 1);
+
+      return minor(start, end);
+    })
+    .flat();
+};
+
 const notes = (values, dispatcher) => {
   const extent = d3.extent(values, (d) => d.value);
-  const mid = (extent[1] - extent[0]) * 0.5;
-  const scale = d3
-    .scaleThreshold()
-    .domain([...minor(extent[0], mid), ...minor(mid, extent[1])])
-    .range([...minor(root, root * 2), ...minor(root * 2, root * 4)]);
+  const domain = repeatLinear(...extent);
+  const range = repeatExponential(root, root * 2 ** octaves);
+  const scale = d3.scaleThreshold().domain(domain).range(range);
 
   const pitches = values.map(({ value }) => scale(value));
 
