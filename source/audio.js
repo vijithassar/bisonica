@@ -12,13 +12,16 @@ const root = tuning / 2;
 const octaves = 2;
 const tempo = 160;
 const duration = 60 / tempo / 2;
+const temperament = Math.pow(2, 1 / 12);
 
-const minor = (min, max) => {
-  const h = (max - min) / 12;
-  const w = h * 2;
-  const steps = [0, w, h, w, w, h, w, w];
+const chromatic = (root) => {
+  return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index));
+};
 
-  return steps.map((step, index) => d3.sum(steps.slice(0, index + 1)) + min);
+const minor = (root) => {
+  const semitones = [0, 2, 3, 5, 7, 8, 10, 12];
+
+  return chromatic(root).filter((_, index) => semitones.includes(index));
 };
 
 const note = (frequency, start) => {
@@ -47,9 +50,7 @@ const repeatLinear = (min, max) => {
 
   return Array.from({ length: octaves })
     .map((_, index) => {
-      const start = slice * index + min;
-      const end = slice * (index + 1) + min;
-      const steps = minor(start, end);
+      const steps = minor(slice * index + min);
 
       return index === 0 ? steps : steps.slice(1);
     })
@@ -63,9 +64,7 @@ const repeatExponential = (min, max) => {
 
   return Array.from({ length: octaves })
     .map((_, index) => {
-      const start = min * 2 ** index;
-      const end = min * 2 ** (index + 1);
-      const steps = minor(start, end);
+      const steps = minor(min * 2 ** index);
 
       return index === 0 ? steps : steps.slice(1);
     })
