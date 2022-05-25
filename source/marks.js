@@ -166,12 +166,13 @@ const barDirection = (s) => {
  */
 const barEncoders = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
+  const barLaneChannel = barDirection(s) === 'vertical' ? 'x' : 'y';
 
   return {
     width: () => barWidth(s, dimensions),
     length: encoders.barLength,
     start: encoders.barStart,
-    lane: encoders.x,
+    lane: encoders[barLaneChannel],
   };
 };
 
