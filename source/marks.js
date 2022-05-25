@@ -177,6 +177,32 @@ const barMark = (s, dimensions) => {
 };
 
 /**
+ * lane transform for all bar marks
+ * @param {*} s
+ * @param {*} dimensions
+ * @returns {string} transform
+ */
+const barMarksTransform = (s, dimensions) => {
+  const translate = [0, 0];
+  let offsetChannel;
+  let index;
+
+  if (encodingType(s, 'y') === 'quantitative') {
+    offsetChannel = 'x';
+    index = 0;
+  } else if (encodingType(s, 'x') === 'quantitative') {
+    offsetChannel = 'y';
+    index = 1;
+  }
+
+  const offset = isDiscrete(s, offsetChannel) ? barWidth(s, dimensions) * 0.5 : 0;
+
+  translate[index] = offset;
+
+  return `translate(${translate.join(',')})`;
+};
+
+/**
  * render bar chart marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
@@ -188,11 +214,7 @@ const barMarks = (s, dimensions) => {
     const marks = selection
       .append('g')
       .attr('class', 'marks')
-      .attr('transform', () => {
-        const x = isDiscrete(s, 'x') ? barWidth(s, dimensions) * 0.5 : 0;
-
-        return `translate(${x},0)`;
-      });
+      .attr('transform', barMarksTransform(s, dimensions));
 
     const series = marks
       .selectAll('g')
