@@ -10,7 +10,7 @@ import {
   encodingValueQuantitative,
 } from './encodings.js';
 import { data, pointData } from './data.js';
-import { datum, key, missingSeries, values } from './helpers.js';
+import { datum, isDiscrete, key, missingSeries, values } from './helpers.js';
 import { feature } from './feature.js';
 import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
@@ -184,14 +184,12 @@ const barMark = (s, dimensions) => {
  */
 const barMarks = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'));
-  const type = encodingType(s, encodingFieldCovariate(s));
   const renderer = (selection) => {
     const marks = selection
       .append('g')
       .attr('class', 'marks')
       .attr('transform', () => {
-        const categorical = ['nominal', 'ordinal'].includes(type);
-        const x = categorical ? barWidth(s, dimensions) * 0.5 : 0;
+        const x = isDiscrete(s, 'x') ? barWidth(s, dimensions) * 0.5 : 0;
 
         return `translate(${x},0)`;
       });
