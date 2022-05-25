@@ -146,15 +146,31 @@ const markInteractionSelector = (_s) => {
 };
 
 /**
+ * shuffle around bar mark encoders to
+ * facilitate bidirectional layout
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} bar encoder methods
+ */
+const barEncoders = (s, dimensions) => {
+  const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
+
+  return {
+    width: () => barWidth(s, dimensions),
+    length: encoders.barLength,
+    start: encoders.barStart,
+    lane: encoders.x,
+  };
+};
+
+/**
  * render a single bar chart mark
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
-  const width = barWidth(s, dimensions);
-
+  const { width, length, start, lane } = barEncoders(s, dimensions);
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
 
@@ -163,12 +179,12 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', encoders.barStart)
-      .attr('x', encoders.x)
+      .attr('y', start)
+      .attr('x', lane)
       .attr('aria-label', (d) => {
         return markDescription(s)(d);
       })
-      .attr('height', encoders.barLength)
+      .attr('height', length)
       .attr('width', width)
       .call(tooltips(s));
   };
