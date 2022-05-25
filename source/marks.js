@@ -146,6 +146,18 @@ const markInteractionSelector = (_s) => {
 };
 
 /**
+ * determine which way bars are oriented
+ * @param {object} s Vega Lite specification
+ */
+const barDirection = (s) => {
+  if (s.encoding.x.type === 'quantitative') {
+    return 'horizontal';
+  } else if (s.encoding.y.type === 'quantitative') {
+    return 'vertical';
+  }
+};
+
+/**
  * shuffle around bar mark encoders to
  * facilitate bidirectional layout
  * @param {object} s Vega Lite specification
