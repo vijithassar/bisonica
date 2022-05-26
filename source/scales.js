@@ -97,25 +97,25 @@ const channelRoot = (s, channel) => {
 const domain = (s, channel) => {
   const domains = {
     x: (values) => {
-      const type = encodingType(s, 'x');
+      const type = encodingType(s, channel);
 
       if (type === 'temporal') {
-        const date = (d) => parseTime(encodingValue(s, 'x')(d));
+        const date = (d) => parseTime(encodingValue(s, channel)(d));
 
         return d3.extent(values, date);
       } else if (type === 'nominal' || type === 'ordinal') {
-        return values.map((item) => encodingValue(s, 'x')(item));
+        return values.map((item) => encodingValue(s, channel)(item));
       } else if (type === 'quantitative') {
-        return d3.extent(values, (item) => encodingValue(s, 'x')(item));
+        return d3.extent(values, (item) => encodingValue(s, channel)(item));
       }
     },
     y: (values) => {
-      const type = encodingType(s, 'y');
+      const type = encodingType(s, channel);
       let yMin;
       let yMax;
 
       if (type === 'nominal') {
-        return [...new Set(values.map((item) => encodingValue(s, 'y')(item)))];
+        return [...new Set(values.map((item) => encodingValue(s, channel)(item)))];
       } else if (feature(s).isBar()) {
         yMin = 0;
         yMax = d3.max(sumByPeriod(s));
@@ -123,7 +123,7 @@ const domain = (s, channel) => {
         const daily = data(s)
           .map((item) => item.values)
           .flat();
-        const y = encodingValue(s, 'y');
+        const y = encodingValue(s, channel);
         const nonzero = s.encoding.y.scale?.zero === false;
         const min = d3.min(daily, y);
         const positive = typeof min === 'number' && min > 0;
@@ -139,7 +139,7 @@ const domain = (s, channel) => {
         yMax = d3.max(daily, y);
       } else {
         yMin = 0;
-        yMax = d3.max(values, encodingValue(s, 'y'));
+        yMax = d3.max(values, encodingValue(s, channel));
       }
 
       return [yMin, yMax];
