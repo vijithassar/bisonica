@@ -1,11 +1,10 @@
 import * as d3 from 'd3';
-
 import { barWidth } from './marks.js';
 import { data, sumByCovariates } from './data.js';
 import { defaultColor } from './config.js';
 import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
-import { identity, values } from './helpers.js';
+import { identity, isDiscrete, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 import { sorter } from './sort.js';
@@ -180,8 +179,8 @@ const domain = (s, channel) => {
  */
 const range = (s, dimensions, _channel) => {
   const channel = channelRoot(s, _channel);
-  const ranges = {
-    x: () => {
+  const cartesian = () => {
+    const x = () => {
       const rangeDeltas = () => {
         if (feature(s).isBar() && encodingType(s, channel) === 'temporal') {
           return { [channel]: barWidth(s, dimensions) };
@@ -191,8 +190,8 @@ const range = (s, dimensions, _channel) => {
       };
 
       return [0, dimensions[channel] - rangeDeltas()[channel]];
-    },
-    y: () => {
+    };
+    const y = () => {
       if (isDiscrete(s, channel)) {
         const count = domain(s, channel).length;
         const interval = dimensions[channel] / count;
@@ -201,7 +200,17 @@ const range = (s, dimensions, _channel) => {
       } else {
         return [dimensions[channel], 0];
       }
-    },
+    };
+
+    if (channel === 'x') {
+      return x();
+    } else if (channel === 'y') {
+      return y();
+    }
+  };
+  const ranges = {
+    x: cartesian,
+    y: cartesian,
     color: () => {
       let colorRangeProcessor;
 
