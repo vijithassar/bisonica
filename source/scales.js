@@ -191,9 +191,7 @@ const range = (s, dimensions, channel) => {
       return [0, dimensions.x - rangeDeltas().x];
     },
     y: () => {
-      const type = encodingType(s, 'y');
-
-      if (['nominal', 'ordinal'].includes(type)) {
+      if (isDiscrete(s, channel)) {
         const count = domain(s, channel).length;
         const interval = dimensions.y / count;
 
