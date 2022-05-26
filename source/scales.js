@@ -129,9 +129,8 @@ const domainBaseValues = (s, channel) => {
         const daily = data(s)
           .map((item) => item.values)
           .flat();
-        const y = encodingValue(s, channel);
         const nonzero = s.encoding.y.scale?.zero === false;
-        const min = d3.min(daily, y);
+        const min = d3.min(daily, encodingValue(s, channel));
         const positive = typeof min === 'number' && min > 0;
 
         if (nonzero && positive) {
@@ -142,7 +141,7 @@ const domainBaseValues = (s, channel) => {
           yMin = 0;
         }
 
-        yMax = d3.max(daily, y);
+        yMax = d3.max(daily, encodingValue(s, channel));
       } else {
         yMin = 0;
         yMax = d3.max(values(s), encodingValue(s, channel));
