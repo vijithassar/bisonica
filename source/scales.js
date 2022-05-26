@@ -103,7 +103,7 @@ const domainBaseValues = (s, channel) => {
 
       return d3.extent(values(s), date);
     } else if (type === 'nominal' || type === 'ordinal') {
-      return values(s).map((item) => encodingValue(s, channel)(item));
+      return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
     } else if (type === 'quantitative') {
       return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
     }
