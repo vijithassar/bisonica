@@ -89,76 +89,93 @@ const channelRoot = (s, channel) => {
 };
 
 /**
- * compute scale domain
+ * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
  * @returns {number[]} domain
  */
-const domain = (s, channel) => {
+const domainBaseValues = (s, channel) => {
   const type = encodingType(s, channel);
-  const domains = {
-    x: (values) => {
-      if (type === 'temporal') {
-        const date = (d) => parseTime(encodingValue(s, channel)(d));
 
-        return d3.extent(values, date);
-      } else if (type === 'nominal' || type === 'ordinal') {
-        return values.map((item) => encodingValue(s, channel)(item));
-      } else if (type === 'quantitative') {
-        return d3.extent(values, (item) => encodingValue(s, channel)(item));
-      }
-    },
-    y: (values) => {
-      let yMin;
-      let yMax;
+  if (channel === 'x') {
+    if (type === 'temporal') {
+      const date = (d) => parseTime(encodingValue(s, channel)(d));
 
-      if (type === 'nominal') {
-        return [...new Set(values.map((item) => encodingValue(s, channel)(item)))];
-      } else if (feature(s).isBar()) {
-        yMin = 0;
-        yMax = d3.max(sumByPeriod(s));
-      } else if (feature(s).isLine()) {
-        const daily = data(s)
-          .map((item) => item.values)
-          .flat();
-        const y = encodingValue(s, channel);
-        const nonzero = s.encoding.y.scale?.zero === false;
-        const min = d3.min(daily, y);
-        const positive = typeof min === 'number' && min > 0;
-
-        if (nonzero && positive) {
-          yMin = min;
-        } else if (!positive) {
-          yMin = min;
-        } else {
-          yMin = 0;
-        }
-
-        yMax = d3.max(daily, y);
-      } else {
-        yMin = 0;
-        yMax = d3.max(values, encodingValue(s, channel));
-      }
-
-      return [yMin, yMax];
-    },
-    theta: () => {
-      return [0, 360];
-    },
-    color: (values) => {
-      const colors = Array.from(new Set(values.map(encodingValue(s, 'color'))));
-
-      return colors;
-    },
-  };
-
-  const domain = customDomain(s, channel) || domains[channelRoot(s, channel)](values(s));
-
-  if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {
-    return domain;
+      return d3.extent(values(s), date);
+    } else if (type === 'nominal' || type === 'ordinal') {
+      return values(s).map((item) => encodingValue(s, channel)(item));
+    } else if (type === 'quantitative') {
+      return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
+    }
   }
 
-  return domain.slice().sort(sorter(s, channel));
+  if (channel === 'y') {
+    let yMin;
+    let yMax;
+
+    if (type === 'nominal') {
+      return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
+    } else if (feature(s).isBar()) {
+      yMin = 0;
+      yMax = d3.max(sumByPeriod(s));
+    } else if (feature(s).isLine()) {
+      const daily = data(s)
+        .map((item) => item.values)
+        .flat();
+      const y = encodingValue(s, channel);
+      const nonzero = s.encoding.y.scale?.zero === false;
+      const min = d3.min(daily, y);
+      const positive = typeof min === 'number' && min > 0;
+
+      if (nonzero && positive) {
+        yMin = min;
+      } else if (!positive) {
+        yMin = min;
+      } else {
+        yMin = 0;
+      }
+
+      yMax = d3.max(daily, y);
+    } else {
+      yMin = 0;
+      yMax = d3.max(values(s), encodingValue(s, channel));
+    }
+
+    return [yMin, yMax];
+  }
+
+  if (channel === 'theta') {
+    return [0, 360];
+  }
+
+  if (channel === 'color') {
+    const colors = Array.from(new Set(values(s).map(encodingValue(s, 'color'))));
+
+    return colors;
+  }
+};
+
+/**
+ * sort the domain
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ * @returns {function}
+ */
+const domainSort = (s, channel) => {
+  if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {
+    return identity;
+  }
+
+  return (domain) => domain.slice().sort(sorter(s, channel));
+};
+
+/**
+ * compute domain
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ */
+const domain = (s, channel) => {
+  return customDomain(s, channel) || domainSort(s, channel)(domainBaseValues(s, channel));
 };
 
 /**
