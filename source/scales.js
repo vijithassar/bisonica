@@ -126,11 +126,11 @@ const domainBaseValues = (s, channel) => {
         yMin = 0;
         yMax = d3.max(sumByPeriod(s));
       } else if (feature(s).isLine()) {
-        const daily = data(s)
+        const byPeriod = data(s)
           .map((item) => item.values)
           .flat();
         const nonzero = s.encoding.y.scale?.zero === false;
-        const min = d3.min(daily, encodingValue(s, channel));
+        const min = d3.min(byPeriod, encodingValue(s, channel));
         const positive = typeof min === 'number' && min > 0;
 
         if (nonzero && positive) {
@@ -141,7 +141,7 @@ const domainBaseValues = (s, channel) => {
           yMin = 0;
         }
 
-        yMax = d3.max(daily, encodingValue(s, channel));
+        yMax = d3.max(byPeriod, encodingValue(s, channel));
       } else {
         yMin = 0;
         yMax = d3.max(values(s), encodingValue(s, channel));
