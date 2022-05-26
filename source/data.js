@@ -83,12 +83,16 @@ const stackKeys = (data) => {
  * @returns {array} values summed across time period
  */
 const sumByPeriod = (s) => {
-  const summedByGroup = groupAndSumByProperties(
-    s.data.values,
-    encodingField(s, 'x'),
-    encodingField(s, 'color'),
-    encodingField(s, 'y'),
-  );
+  const x = encodingField(s, 'x');
+  const y = encodingField(s, 'y');
+  const color = encodingField(s, 'color');
+
+  // determine relevance of x and y to the arguments based on encoding
+  const vertical = encodingType(s, 'y') === 'quantitative';
+  const independent = vertical ? x : y;
+  const covariate = vertical ? y : x;
+
+  const summedByGroup = groupAndSumByProperties(values(s), independent, color, covariate);
   const keys = stackKeys(summedByGroup);
   const summedByPeriod = summedByGroup.map((item) => {
     return d3.sum(keys.map((key) => item[key]?.value || 0));
