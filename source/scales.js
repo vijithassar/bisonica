@@ -95,10 +95,9 @@ const channelRoot = (s, channel) => {
  * @returns {number[]} domain
  */
 const domain = (s, channel) => {
+  const type = encodingType(s, channel);
   const domains = {
     x: (values) => {
-      const type = encodingType(s, channel);
-
       if (type === 'temporal') {
         const date = (d) => parseTime(encodingValue(s, channel)(d));
 
@@ -110,7 +109,6 @@ const domain = (s, channel) => {
       }
     },
     y: (values) => {
-      const type = encodingType(s, channel);
       let yMin;
       let yMax;
 
