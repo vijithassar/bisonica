@@ -617,4 +617,4 @@ const marks = (s, dimensions) => {
   }
 };
 
-export { marks, radius, barWidth, markSelector, markInteractionSelector, category };
+export { marks, radius, barWidth, barDirection, markSelector, markInteractionSelector, category };
