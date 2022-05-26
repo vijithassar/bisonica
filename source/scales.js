@@ -114,41 +114,37 @@ const domainBaseValues = (s, channel) => {
       return [0, 360];
     }
 
-    if (channel === 'x') {
-      return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
-    }
+    let min;
+    let max;
 
-    if (channel === 'y') {
-      let min;
-      let max;
+    if (feature(s).isBar()) {
+      min = 0;
+      max = d3.max(sumByCovariates(s));
+    } else if (feature(s).isLine()) {
+      const byPeriod = data(s)
+        .map((item) => item.values)
+        .flat();
+      const nonzero = s.encoding.y.scale?.zero === false;
+      const periodMin = d3.min(byPeriod, encodingValue(s, channel));
+      const positive = typeof periodMin === 'number' && periodMin > 0;
 
-      if (feature(s).isBar()) {
-        min = 0;
-        max = d3.max(sumByCovariates(s));
-      } else if (feature(s).isLine()) {
-        const byPeriod = data(s)
-          .map((item) => item.values)
-          .flat();
-        const nonzero = s.encoding.y.scale?.zero === false;
-        const periodMin = d3.min(byPeriod, encodingValue(s, channel));
-        const positive = typeof periodMin === 'number' && periodMin > 0;
-
-        if (nonzero && positive) {
-          min = periodMin;
-        } else if (!positive) {
-          min = periodMin;
-        } else {
-          min = 0;
-        }
-
-        max = d3.max(byPeriod, encodingValue(s, channel));
+      if (nonzero && positive) {
+        min = periodMin;
+      } else if (!positive) {
+        min = periodMin;
       } else {
         min = 0;
-        max = d3.max(values(s), encodingValue(s, channel));
       }
 
-      return [min, max];
+      max = d3.max(byPeriod, encodingValue(s, channel));
+    } else {
+      min = 0;
+      max = d3.max(values(s), encodingValue(s, channel));
     }
+
+    return [min, max];
+  } else {
+    return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
   }
 };
 
