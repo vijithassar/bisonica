@@ -104,6 +104,10 @@ const domainBaseValues = (s, channel) => {
   } else if (type === 'nominal' || type === 'ordinal') {
     return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
   } else if (type === 'quantitative') {
+    if (channel === 'theta') {
+      return [0, 360];
+    }
+
     if (channel === 'x') {
       return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
     }
@@ -140,10 +144,6 @@ const domainBaseValues = (s, channel) => {
 
       return [yMin, yMax];
     }
-  }
-
-  if (channel === 'theta') {
-    return [0, 360];
   }
 
   if (channel === 'color') {
