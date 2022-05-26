@@ -97,6 +97,12 @@ const channelRoot = (s, channel) => {
 const domainBaseValues = (s, channel) => {
   const type = encodingType(s, channel);
 
+  if (channel === 'color') {
+    const colors = Array.from(new Set(values(s).map(encodingValue(s, 'color'))));
+
+    return colors;
+  }
+
   if (type === 'temporal') {
     const date = (d) => parseTime(encodingValue(s, channel)(d));
 
@@ -144,12 +150,6 @@ const domainBaseValues = (s, channel) => {
 
       return [yMin, yMax];
     }
-  }
-
-  if (channel === 'color') {
-    const colors = Array.from(new Set(values(s).map(encodingValue(s, 'color'))));
-
-    return colors;
   }
 };
 
