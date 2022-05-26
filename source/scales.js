@@ -97,51 +97,49 @@ const channelRoot = (s, channel) => {
 const domainBaseValues = (s, channel) => {
   const type = encodingType(s, channel);
 
-  if (channel === 'x') {
-    if (type === 'temporal') {
-      const date = (d) => parseTime(encodingValue(s, channel)(d));
+  if (type === 'temporal') {
+    const date = (d) => parseTime(encodingValue(s, channel)(d));
 
-      return d3.extent(values(s), date);
-    } else if (type === 'nominal' || type === 'ordinal') {
-      return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
-    } else if (type === 'quantitative') {
+    return d3.extent(values(s), date);
+  } else if (type === 'nominal' || type === 'ordinal') {
+    return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
+  } else if (type === 'quantitative') {
+    if (channel === 'x') {
       return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
     }
-  }
 
-  if (channel === 'y') {
-    let yMin;
-    let yMax;
+    if (channel === 'y') {
+      let yMin;
+      let yMax;
 
-    if (type === 'nominal') {
-      return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
-    } else if (feature(s).isBar()) {
-      yMin = 0;
-      yMax = d3.max(sumByPeriod(s));
-    } else if (feature(s).isLine()) {
-      const daily = data(s)
-        .map((item) => item.values)
-        .flat();
-      const y = encodingValue(s, channel);
-      const nonzero = s.encoding.y.scale?.zero === false;
-      const min = d3.min(daily, y);
-      const positive = typeof min === 'number' && min > 0;
+      if (feature(s).isBar()) {
+        yMin = 0;
+        yMax = d3.max(sumByPeriod(s));
+      } else if (feature(s).isLine()) {
+        const daily = data(s)
+          .map((item) => item.values)
+          .flat();
+        const y = encodingValue(s, channel);
+        const nonzero = s.encoding.y.scale?.zero === false;
+        const min = d3.min(daily, y);
+        const positive = typeof min === 'number' && min > 0;
 
-      if (nonzero && positive) {
-        yMin = min;
-      } else if (!positive) {
-        yMin = min;
+        if (nonzero && positive) {
+          yMin = min;
+        } else if (!positive) {
+          yMin = min;
+        } else {
+          yMin = 0;
+        }
+
+        yMax = d3.max(daily, y);
       } else {
         yMin = 0;
+        yMax = d3.max(values(s), encodingValue(s, channel));
       }
 
-      yMax = d3.max(daily, y);
-    } else {
-      yMin = 0;
-      yMax = d3.max(values(s), encodingValue(s, channel));
+      return [yMin, yMax];
     }
-
-    return [yMin, yMax];
   }
 
   if (channel === 'theta') {
