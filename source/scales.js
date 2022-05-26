@@ -174,30 +174,32 @@ const domain = (s, channel) => {
 /**
  * compute scale range
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} dimensions chart dimensions
+ * @param {string} _channel visual encoding
  * @returns {number[]} range
  */
-const range = (s, dimensions, channel) => {
+const range = (s, dimensions, _channel) => {
+  const channel = channelRoot(s, _channel);
   const ranges = {
     x: () => {
       const rangeDeltas = () => {
-        if (feature(s).isBar() && encodingType(s, 'x') === 'temporal') {
-          return { x: barWidth(s, dimensions) };
+        if (feature(s).isBar() && encodingType(s, channel) === 'temporal') {
+          return { [channel]: barWidth(s, dimensions) };
         } else {
-          return { x: 0 };
+          return { [channel]: 0 };
         }
       };
 
-      return [0, dimensions.x - rangeDeltas().x];
+      return [0, dimensions[channel] - rangeDeltas()[channel]];
     },
     y: () => {
       if (isDiscrete(s, channel)) {
         const count = domain(s, channel).length;
-        const interval = dimensions.y / count;
+        const interval = dimensions[channel] / count;
 
         return Array.from({ length: count }).map((item, index) => index * interval);
       } else {
-        return [dimensions.y, 0];
+        return [dimensions[channel], 0];
       }
     },
     color: () => {
@@ -211,13 +213,13 @@ const range = (s, dimensions, channel) => {
 
       return (
         s.encoding.color?.scale?.range ||
-        colors((customDomain(s, 'color') || colorRangeProcessor(s)).length)
+        colors((customDomain(s, channel) || colorRangeProcessor(s)).length)
       );
     },
     theta: () => [0, Math.PI * 2],
   };
 
-  return ranges[channelRoot(s, channel)]();
+  return ranges[channel]();
 };
 
 /**
