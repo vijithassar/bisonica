@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import { barWidth } from './marks.js';
-import { data, sumByPeriod } from './data.js';
+import { data, sumByCovariates } from './data.js';
 import { defaultColor } from './config.js';
 import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
@@ -124,7 +124,7 @@ const domainBaseValues = (s, channel) => {
 
       if (feature(s).isBar()) {
         min = 0;
-        max = d3.max(sumByPeriod(s));
+        max = d3.max(sumByCovariates(s));
       } else if (feature(s).isLine()) {
         const byPeriod = data(s)
           .map((item) => item.values)

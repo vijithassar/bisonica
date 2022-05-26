@@ -82,7 +82,7 @@ const stackKeys = (data) => {
  * @param {object} s Vega Lite specification
  * @returns {array} values summed across time period
  */
-const sumByPeriod = (s) => {
+const sumByCovariates = (s) => {
   const x = encodingField(s, 'x');
   const y = encodingField(s, 'y');
   const color = encodingField(s, 'color');
@@ -408,4 +408,4 @@ const data = (s) => {
   }
 };
 
-export { data, pointData, sumByPeriod, transplantFields };
+export { data, pointData, sumByCovariates, transplantFields };
