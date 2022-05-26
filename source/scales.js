@@ -119,35 +119,35 @@ const domainBaseValues = (s, channel) => {
     }
 
     if (channel === 'y') {
-      let yMin;
-      let yMax;
+      let min;
+      let max;
 
       if (feature(s).isBar()) {
-        yMin = 0;
-        yMax = d3.max(sumByPeriod(s));
+        min = 0;
+        max = d3.max(sumByPeriod(s));
       } else if (feature(s).isLine()) {
         const byPeriod = data(s)
           .map((item) => item.values)
           .flat();
         const nonzero = s.encoding.y.scale?.zero === false;
-        const min = d3.min(byPeriod, encodingValue(s, channel));
-        const positive = typeof min === 'number' && min > 0;
+        const periodMin = d3.min(byPeriod, encodingValue(s, channel));
+        const positive = typeof periodMin === 'number' && periodMin > 0;
 
         if (nonzero && positive) {
-          yMin = min;
+          min = periodMin;
         } else if (!positive) {
-          yMin = min;
+          min = periodMin;
         } else {
-          yMin = 0;
+          min = 0;
         }
 
-        yMax = d3.max(byPeriod, encodingValue(s, channel));
+        max = d3.max(byPeriod, encodingValue(s, channel));
       } else {
-        yMin = 0;
-        yMax = d3.max(values(s), encodingValue(s, channel));
+        min = 0;
+        max = d3.max(values(s), encodingValue(s, channel));
       }
 
-      return [yMin, yMax];
+      return [min, max];
     }
   }
 };
