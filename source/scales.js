@@ -183,33 +183,27 @@ const domain = (s, channel) => {
 const range = (s, dimensions, _channel) => {
   const channel = channelRoot(s, _channel);
   const cartesian = () => {
-    const x = () => {
-      const rangeDeltas = () => {
-        if (feature(s).isBar() && encodingType(s, channel) === 'temporal') {
-          return { [channel]: barWidth(s, dimensions) };
-        } else {
-          return { [channel]: 0 };
-        }
-      };
+    let result;
 
-      return [0, dimensions[channel] - rangeDeltas()[channel]];
-    };
-    const y = () => {
-      if (isDiscrete(s, channel)) {
-        const count = domain(s, channel).length;
-        const interval = dimensions[channel] / count;
+    if (isDiscrete(s, channel) && scaleType(s, channel) !== 'scaleBand') {
+      const count = domain(s, channel).length;
+      const interval = dimensions[channel] / count;
 
-        return Array.from({ length: count }).map((item, index) => index * interval);
-      } else {
-        return [dimensions[channel], 0];
-      }
-    };
+      const positions = Array.from({ length: count }).map((item, index) => index * interval);
 
-    if (channel === 'x') {
-      return x();
-    } else if (channel === 'y') {
-      return y();
+      result = positions;
+    } else {
+      const temporalBar = feature(s).isBar() && encodingType(s, channel) === 'temporal';
+      const offset = temporalBar ? barWidth(s, dimensions) : 0;
+
+      result = [0, dimensions[channel] - offset];
     }
+
+    if (channel === 'y' && encodingType(s, channel) === 'quantitative') {
+      result.reverse();
+    }
+
+    return result;
   };
   const ranges = {
     x: cartesian,
