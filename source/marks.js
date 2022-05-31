@@ -166,13 +166,18 @@ const barDirection = (s) => {
  */
 const barEncoders = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
-  const barLaneChannel = barDirection(s) === 'vertical' ? 'x' : 'y';
+  const vertical = barDirection(s) === 'vertical';
+  const barLaneChannel = vertical ? 'x' : 'y';
+  const lane = encoders[barLaneChannel];
+  const start = encoders.barStart;
+  const length = encoders.barLength;
+  const width = () => barWidth(s, dimensions);
 
   return {
-    width: () => barWidth(s, dimensions),
-    length: encoders.barLength,
-    start: encoders.barStart,
-    lane: encoders[barLaneChannel],
+    x: vertical ? lane : start,
+    y: vertical ? start : lane,
+    height: vertical ? length : width,
+    width: vertical ? width : length,
   };
 };
 
@@ -183,7 +188,8 @@ const barEncoders = (s, dimensions) => {
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const { width, length, start, lane } = barEncoders(s, dimensions);
+  const { x, y, height, width } = barEncoders(s, dimensions);
+
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
 
@@ -192,12 +198,12 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', start)
-      .attr('x', lane)
+      .attr('y', y)
+      .attr('x', x)
       .attr('aria-label', (d) => {
         return markDescription(s)(d);
       })
-      .attr('height', length)
+      .attr('height', height)
       .attr('width', width)
       .call(tooltips(s));
   };
