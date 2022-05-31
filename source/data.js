@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 
+import { barDirection } from './marks.js';
 import { encodingField, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { identity, missingSeries, values } from './helpers.js';
@@ -208,12 +209,13 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
 const stackValue = (d, key) => d[key]?.value || 0;
 
 const _stackedBarData = (s) => {
-  const summed = groupAndSumByProperties(
-    values(s),
-    encodingField(s, 'x'),
-    encodingField(s, 'color'),
-    encodingField(s, 'y'),
-  );
+  const dimensions = ['x', 'y'];
+
+  if (barDirection(s) === 'horizontal') {
+    dimensions.reverse();
+  }
+
+  const summed = groupAndSumByProperties(values(s), encodingField(s, dimensions[0]), encodingField(s, 'color'), encodingField(s, dimensions[1]));
   const stacker = d3.stack().keys(stackKeys).value(stackValue);
   const stacked = stacker(summed);
 
