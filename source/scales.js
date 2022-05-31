@@ -321,11 +321,19 @@ const extendScales = (s, dimensions, scales) => {
         return 0;
       }
 
-      return dimensions[channel] - extendedScales[channel](d);
+      if (channel === 'y') {
+        return dimensions[channel] - extendedScales[channel](d);
+      } else if (channel === 'x') {
+        return extendedScales[channel](d);
+      }
     };
 
     extendedScales.barStart = (d) => {
-      return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+      if (channel === 'y') {
+        return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+      } else if (channel === 'x') {
+        return extendedScales[channel](d[0]);
+      }
     };
   }
 
