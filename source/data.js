@@ -1,9 +1,15 @@
 import * as d3 from 'd3';
 
 import { barDirection } from './marks.js';
-import { encodingField, encodingType, encodingValue } from './encodings.js';
+import {
+  encodingChannelCovariate,
+  encodingChannelQuantitative,
+  encodingField,
+  encodingType,
+  encodingValue,
+} from './encodings.js';
 import { feature } from './feature.js';
-import { identity, missingSeries, values } from './helpers.js';
+import { identity, isDiscrete, missingSeries, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 
@@ -131,28 +137,29 @@ const sort = (data) => {
 const transplantStackedBarMetadata = (aggregated, raw, s) => {
   const createMatcher = (key) => {
     const matcher = (aggregatedItem, raw) => {
+      const laneChannel = ['x', 'y'].find((channel) => channel !== encodingChannelQuantitative(s));
       const keys = {
-        x: encodingField(s, 'x'),
-        color: encodingField(s, 'color'),
+        lane: encodingField(s, laneChannel),
+        series: encodingField(s, 'color'),
       };
       const matches = raw
         .filter((rawItem) => {
           let seriesMatch;
 
           // single-color categorical charts are still plotted using separate series nodes
-          if (feature(s).hasColor() || ['ordinal', 'nominal'].includes(encodingType(s, 'x'))) {
-            seriesMatch = aggregatedItem[keys.color] === rawItem[keys.color];
+          if (feature(s).hasColor() || isDiscrete(s, encodingChannelCovariate(s))) {
+            seriesMatch = aggregatedItem[keys.series] === rawItem[keys.series];
           } else {
             seriesMatch = true;
           }
 
-          const xMatch =
-            aggregatedItem[keys.x] &&
-            rawItem[keys.x] &&
-            aggregatedItem[keys.x]?.toString() === rawItem[keys.x]?.toString();
+          const laneMatch =
+            aggregatedItem[keys.lane] &&
+            rawItem[keys.lane] &&
+            aggregatedItem[keys.lane]?.toString() === rawItem[keys.lane]?.toString();
           const hasField = !!rawItem[key];
 
-          return seriesMatch && xMatch && hasField;
+          return seriesMatch && laneMatch && hasField;
         })
         .map((item) => item[key])
         .filter(Boolean);
@@ -173,8 +180,8 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
         lookup[encodingField(s, 'color')] = series.key;
       }
 
-      if (encodingField(s, 'x')) {
-        lookup[encodingField(s, 'x')] = item.data.key;
+      if (encodingField(s, encodingChannelCovariate(s))) {
+        lookup[encodingField(s, encodingChannelCovariate(s))] = item.data.key;
       }
 
       const channels = ['href', 'description', 'tooltip'];
