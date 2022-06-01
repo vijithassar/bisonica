@@ -40,7 +40,10 @@ const scaleType = (s, channel) => {
   const key = encodingType(s, channel);
 
   if (typeof key === 'string') {
-    const method = channel === 'x' && ['nominal', 'ordinal'].includes(key) ? 'Band' : methods[key];
+    const method =
+      ['x', 'y'].includes(channelRoot(s, channel)) && isDiscrete(s, channel)
+        ? 'Band'
+        : methods[key];
 
     return `scale${method}`;
   } else if (typeof key === 'undefined') {
