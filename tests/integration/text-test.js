@@ -1,0 +1,89 @@
+import hbs from 'htmlbars-inline-precompile';
+import { module, test } from 'qunit';
+import { render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
+import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { testSelector } from 'test-support';
+
+module('Integration | Component | falcon-charts | text', function (hooks) {
+  setupRenderingTest(hooks);
+
+  test('renders text marks', async function (assert) {
+    const spec = {
+      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      title: {
+        text: 'text mark test',
+      },
+      data: {
+        values: [{}],
+      },
+      mark: {
+        type: 'text',
+      },
+      encoding: {
+        text: {
+          datum: 'A',
+        },
+      },
+    };
+
+    this.set('spec', spec);
+    await render(hbs`
+      <FalconCharts::Chart
+        @spec={{this.spec}}
+        @height=500
+        @width=1000
+      />
+    `);
+
+    const markSelector = testSelector('mark');
+
+    assert.dom(markSelector).exists({ count: 1 });
+    assert.dom(markSelector).hasTagName('text');
+  });
+
+  test('renders text marks with dynamic attributes', async function (assert) {
+    const spec = specificationFixture('scatterPlot');
+
+    spec.mark = { type: 'text' };
+    spec.encoding.color = { field: 'group', type: 'nominal' };
+    spec.encoding.text = { field: 'group', type: 'nominal' };
+
+    this.set('spec', spec);
+    await render(hbs`
+      <FalconCharts::Chart
+        @spec={{this.spec}}
+        @height=500
+        @width=1000
+      />
+    `);
+
+    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+
+    const groups = [...new Set(spec.data.values.map((item) => item.group)).values()];
+
+    groups.forEach((group) => {
+      const matchingValues = spec.data.values.filter((item) => item.group === group);
+      const matchingContent = marks.filter((mark) => mark.textContent === group);
+
+      assert.equal(
+        matchingValues.length,
+        matchingContent.length,
+        `group ${group} has ${matchingValues.length} data values and ${matchingContent.length} mark nodes`,
+      );
+    });
+
+    assert.ok(
+      marks.every((mark) => mark.hasAttribute('x')),
+      'every mark has x position',
+    );
+    assert.ok(
+      marks.every((mark) => mark.hasAttribute('y')),
+      'every mark has y position',
+    );
+    assert.ok(
+      marks.every((mark) => mark.hasAttribute('fill')),
+      'every mark has color',
+    );
+  });
+});
