@@ -5,7 +5,7 @@ import { memoize } from './memoize.js';
 import { polarToCartesian } from './helpers.js';
 import { radius } from './marks.js';
 
-const MARGIN_MAXIMUM = 120;
+const MARGIN_MAXIMUM = 180 + GRID * 5;
 
 const axes = { x: 'bottom', y: 'left' };
 
