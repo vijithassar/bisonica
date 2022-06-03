@@ -5,7 +5,8 @@ import { memoize } from './memoize.js';
 import { polarToCartesian } from './helpers.js';
 import { radius } from './marks.js';
 
-const MARGIN_MAXIMUM = 180 + GRID * 5;
+const TITLE_MARGIN = GRID * 5;
+const MARGIN_MAXIMUM = 180 + TITLE_MARGIN;
 
 const axes = { x: 'bottom', y: 'left' };
 
@@ -54,8 +55,8 @@ const tickMargin = (s, dimensions) => {
  */
 const titleMargin = (s) => {
   return {
-    bottom: feature(s).hasAxisTitleX() ? GRID * 5 : 0,
-    left: feature(s).hasAxisTitleY() ? GRID * 5 : 0,
+    bottom: feature(s).hasAxisTitleX() ? TITLE_MARGIN : 0,
+    left: feature(s).hasAxisTitleY() ? TITLE_MARGIN : 0,
   };
 };
 
