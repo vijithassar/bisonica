@@ -54,8 +54,8 @@ const tickMargin = (s, dimensions) => {
  */
 const titleMargin = (s) => {
   return {
-    bottom: feature(s).hasAxisTitleX() ? GRID * 4 : 0,
-    left: feature(s).hasAxisTitleY() ? GRID * 4 : 0,
+    bottom: feature(s).hasAxisTitleX() ? GRID * 5 : 0,
+    left: feature(s).hasAxisTitleY() ? GRID * 5 : 0,
   };
 };
 
