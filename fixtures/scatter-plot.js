@@ -1,0 +1,47 @@
+const scatterPlotSpec = {
+  $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+  title: {
+    text: 'scatter plot example',
+  },
+  data: {
+    values: [
+      { label: 16, value: 21, group: 'a' },
+      { label: 19, value: 13, group: 'b' },
+      { label: 14, value: 8, group: 'c' },
+      { label: 3, value: 5, group: 'd' },
+      { label: 11, value: 3, group: 'e' },
+      { label: 20, value: 2, group: 'a' },
+      { label: 4, value: 1, group: 'b' },
+      { label: 6, value: 1, group: 'c' },
+      { label: 2, value: 14, group: 'd' },
+      { label: 12, value: 6, group: 'e' },
+      { label: 12, value: 8, group: 'a' },
+      { label: 9, value: 9, group: 'b' },
+      { label: 8, value: 1, group: 'c' },
+      { label: 11, value: 7, group: 'd' },
+      { label: 7, value: 5, group: 'e' },
+      { label: 6, value: 5, group: 'a' },
+      { label: 8, value: 15, group: 'b' },
+      { label: 4, value: 5, group: 'c' },
+      { label: 7, value: 4, group: 'd' },
+      { label: 2, value: 8, group: 'e' },
+      { label: 9, value: 1, group: 'a' },
+      { label: 12, value: 2, group: 'b' },
+      { label: 12, value: 3, group: 'c' },
+      { label: 16, value: 6, group: 'd' },
+      { label: 2, value: 6, group: 'e' },
+      { label: 6, value: 25, group: 'a' },
+      { label: 9, value: 5, group: 'b' },
+      { label: 7, value: 5, group: 'c' },
+      { label: 10, value: 6, group: 'd' },
+      { label: 15, value: 5, group: 'e' },
+    ],
+  },
+  encoding: {
+    y: { field: 'label', type: 'quantitative' },
+    x: { field: 'value', type: 'quantitative' },
+  },
+  mark: { type: 'point', tooltip: true, filled: true },
+};
+
+export { scatterPlotSpec };
