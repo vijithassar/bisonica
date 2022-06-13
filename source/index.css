@@ -1,82 +1,62 @@
-/* stylelint-disable no-descending-specificity */
-
-.falcon-chart {
-  --light-grey: var(--body-and-labels);
-  --medium-grey: var(--surface-inner);
-  --dark-grey: var(--lines-dark);
-  --highlight: var(--focus);
-  --popup: var(--surface-2xl);
-  --severity-informational: var(--informational);
-  --severity-low: var(--low);
-  --severity-medium: var(--medium);
-  --severity-high: var(--high);
-  --severity-critical: var(--critical);
-  --annotation: var(--informational);
-  --text: var(--titles-and-attributes);
-  --border: var(--ground-floor);
-  font-family: Calibre, sans-serif;
-}
-
-.falcon-chart :global(.legend) {
-  color: var(--light-grey);
+.legend {
   max-height: 6em;
   overflow: hidden;
   text-align: center;
 }
 
-.falcon-chart :global(svg .wrapper .mark) {
+svg .wrapper .mark {
   cursor: pointer;
 }
 
-.falcon-chart :global(svg .wrapper .mark:not([data-highlight])) {
+svg .wrapper .mark:not([data-highlight]) {
   stroke: var(--border);
   stroke-width: 1px;
 }
 
-.falcon-chart :global(svg .wrapper text.mark:not([data-highlight])) {
+svg .wrapper text.mark:not([data-highlight]) {
   stroke: none;
 }
 
-.falcon-chart :global(.axes text) {
+.axes text {
   fill: var(--light-grey);
 }
 
-.falcon-chart :global(.axes path) {
+.axes path {
   display: none;
 }
 
-.falcon-chart :global(path.mark) {
+path.mark {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.falcon-chart :global(.legend ul) {
+.legend ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.falcon-chart :global(.chart .legend) {
+.chart .legend {
   color: var(--body-and-labels);
   text-align: center;
 }
 
-.falcon-chart :global(.mark:focus) {
+.mark:focus {
   outline: none;
 }
 
-.falcon-chart :global(.mark[data-highlight]),
-.falcon-chart :global(.point[data-highlight]) {
+.mark[data-highlight],
+.point[data-highlight] {
   stroke: var(--highlight);
   stroke-width: 2px;
 }
 
-.falcon-chart :global(.mark.rule) {
+.mark.rule {
   stroke: var(--annotation);
   stroke-width: 1px;
 }
 
-.falcon-chart :global(.legend li.category) {
+.legend li.category {
   align-items: center;
   display: grid;
   grid-auto-flow: column;
@@ -85,7 +65,7 @@
   padding: 0.2em 0.8em 0.2em 0.8em;
 }
 
-.falcon-chart :global(.legend ul.items-more) {
+.legend ul.items-more {
   background-color: var(--surface-2xl);
   bottom: 0.2em;
   padding: 0.5em;
@@ -93,30 +73,30 @@
   right: 0.2em;
 }
 
-.falcon-chart :global(.legend li.category .label) {
+.legend li.category .label {
   margin-left: 0.2em;
 }
 
-.falcon-chart :global(.legend ul.items-more:hover) {
+.legend ul.items-more:hover {
   display: block;
 }
 
-.falcon-chart :global(.legend li.category .color) {
+.legend li.category .color {
   border-radius: 100%;
   height: 1em;
   -webkit-print-color-adjust: exact;
   width: 1em;
 }
 
-.falcon-chart :global(.legend li.category:not([data-highlight])) {
+.legend li.category:not([data-highlight]) {
   border: 0;
 }
 
-.falcon-chart :global(.legend li.category[data-highlight]) {
+.legend li.category[data-highlight] {
   color: var(--highlight);
 }
 
-.falcon-chart :global(.legend ul.items-more:hover h3) {
+.legend ul.items-more:hover h3 {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -127,11 +107,11 @@
   width: 1px;
 }
 
-.falcon-chart :global(.legend ul.items-more:hover li) {
+.legend ul.items-more:hover li {
   display: flex;
 }
 
-.falcon-chart :global(.legend ul.items-more:not(:hover) li) {
+.legend ul.items-more:not(:hover) li {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -142,43 +122,43 @@
   width: 1px;
 }
 
-.falcon-chart :global(.axes .title) {
+.axes .title {
   text-anchor: middle;
 }
 
-.falcon-chart :global(.axes .x.alternate-ticks .tick) {
+.axes .x.alternate-ticks .tick {
   opacity: 0;
 }
 
-.falcon-chart :global(.axes .y.alternate-ticks .tick) {
+.axes .y.alternate-ticks .tick {
   opacity: 0;
 }
 
-.falcon-chart :global(.axes .x .axis .tick line) {
+.axes .x .axis .tick line {
   stroke: var(--medium-grey);
 }
 
-.falcon-chart :global(.axes .y .axis .tick line) {
+.axes .y .axis .tick line {
   stroke: var(--dark-grey);
 }
 
-.falcon-chart :global(.axes:not(.angled) .x .tick text) {
+.axes:not(.angled) .x .tick text {
   text-anchor: middle;
 }
 
-.falcon-chart :global(.axes .x.alternate-ticks .tick:nth-of-type(4n)) {
+.axes .x.alternate-ticks .tick:nth-of-type(4n) {
   opacity: 1;
 }
 
-.falcon-chart :global(.axes .y.alternate-ticks .tick:nth-of-type(odd)) {
+.axes .y.alternate-ticks .tick:nth-of-type(odd) {
   opacity: 1;
 }
 
-.falcon-chart :global(.axes .axis.nominal.angled .tick text) {
+.axes .axis.nominal.angled .tick text {
   text-anchor: end;
 }
 
-:global(.chart-donut svg text.mark) {
+.chart-donut svg text.mark {
   fill: var(--text);
   font-weight: 100;
 }
