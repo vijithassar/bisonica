@@ -4,7 +4,8 @@ import { mark, values } from './helpers';
 import { memoize } from './memoize';
 
 // this is a mistake
-import { isPresent } from '@ember/utils';
+// import { isPresent } from '@ember/utils';
+const isPresent = (x) => x !== null;
 
 const _feature = (s) => {
   const multicolorTest = (s) => {
