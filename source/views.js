@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 
-import { mark, noop, values } from './helpers';
-import { markSelector, marks } from './marks';
-import { parseScales } from './scales';
+import { mark, noop, values } from './helpers.js';
+import { markSelector, marks } from './marks.js';
+import { parseScales } from './scales.js';
 
 /**
  * determine whether encoding types can be shared

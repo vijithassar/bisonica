@@ -1,5 +1,5 @@
-import { WRAPPER_CLASS } from './config';
-import { feature } from './feature';
+import { WRAPPER_CLASS } from './config.js';
+import { feature } from './feature.js';
 
 /**
  * prepare the DOM of a specified element for rendering a chart

@@ -1,7 +1,7 @@
-import { encodingField, encodingValue } from './encodings';
-import { layerTestRecursive } from './views';
-import { mark, values } from './helpers';
-import { memoize } from './memoize';
+import { encodingField, encodingValue } from './encodings.js';
+import { layerTestRecursive } from './views.js';
+import { mark, values } from './helpers.js';
+import { memoize } from './memoize.js';
 
 // this is a mistake
 // import { isPresent } from '@ember/utils';

@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
-import { barWidth } from './marks';
-import { data, sumByPeriod } from './data';
-import { defaultColor } from './config';
-import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings';
-import { feature } from './feature';
-import { identity, values } from './helpers';
-import { memoize } from './memoize';
-import { parseTime } from './time';
-import { sorter } from './sort';
+import { barWidth } from './marks.js';
+import { data, sumByPeriod } from './data.js';
+import { defaultColor } from './config.js';
+import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings.js';
+import { feature } from './feature.js';
+import { identity, values } from './helpers.js';
+import { memoize } from './memoize.js';
+import { parseTime } from './time.js';
+import { sorter } from './sort.js';
 
 /**
  * create a color palette from the available hue range

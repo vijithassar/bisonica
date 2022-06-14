@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
-import { encodingField, encodingType } from './encodings';
-import { feature } from './feature';
+import { encodingField, encodingType } from './encodings.js';
+import { feature } from './feature.js';
 
 /**
  * round number based on significant digits

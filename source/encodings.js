@@ -1,8 +1,8 @@
-import { feature } from './feature';
-import { memoize } from './memoize';
-import { parseScales } from './scales';
-import { parseTime } from './time';
-import { transform } from './transform';
+import { feature } from './feature.js';
+import { memoize } from './memoize.js';
+import { parseScales } from './scales.js';
+import { parseTime } from './time.js';
+import { transform } from './transform.js';
 
 /**
  * look up the field used for a visual encoding

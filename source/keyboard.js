@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
 
-import { category, markInteractionSelector } from './marks';
-import { dispatchers } from './interactions';
-import { feature } from './feature';
-import { getUrl, mark, noop } from './helpers';
-import { layerMatch, layerNode } from './views';
+import { category, markInteractionSelector } from './marks.js';
+import { dispatchers } from './interactions.js';
+import { feature } from './feature.js';
+import { getUrl, mark, noop } from './helpers.js';
+import { layerMatch, layerNode } from './views.js';
 
 const UP = 'up';
 const RIGHT = 'right';
