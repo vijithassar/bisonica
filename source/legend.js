@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-import { dispatchers } from './interactions';
-import { encodingField } from './encodings';
-import { feature } from './feature';
-import { key, noop } from './helpers';
-import { layerMatch } from './views';
-import { parseScales } from './scales';
+import { dispatchers } from './interactions.js';
+import { encodingField } from './encodings.js';
+import { feature } from './feature.js';
+import { key, noop } from './helpers.js';
+import { layerMatch } from './views.js';
+import { parseScales } from './scales.js';
 
 /**
  * color scale legend item

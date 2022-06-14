@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-import { category, markInteractionSelector, markSelector } from './marks';
-import { customLinkHandler } from './config';
-import { feature } from './feature';
-import { getUrl, key, noop } from './helpers';
-import { layerMatch, layerNode } from './views';
-import { tooltipEvent } from './tooltips';
+import { category, markInteractionSelector, markSelector } from './marks.js';
+import { customLinkHandler } from './config.js';
+import { feature } from './feature.js';
+import { getUrl, key, noop } from './helpers.js';
+import { layerMatch, layerNode } from './views.js';
+import { tooltipEvent } from './tooltips.js';
 
 const dispatchers = d3.local();
 const charts = d3.local();

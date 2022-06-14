@@ -1,13 +1,13 @@
-import { WRAPPER_CLASS } from './config';
-import { axes } from './axes';
-import { init } from './init';
-import { initializeInteractions, interactions } from './interactions';
-import { keyboard } from './keyboard';
-import { layer } from './views';
-import { legend } from './legend';
-import { margin, position } from './position';
-import { marks } from './marks';
-import { testAttributes } from './markup';
+import { WRAPPER_CLASS } from './config.js';
+import { axes } from './axes.js';
+import { init } from './init.js';
+import { initializeInteractions, interactions } from './interactions.js';
+import { keyboard } from './keyboard.js';
+import { layer } from './views.js';
+import { legend } from './legend.js';
+import { margin, position } from './position.js';
+import { marks } from './marks.js';
+import { testAttributes } from './markup.js';
 
 /**
  * generate chart rendering function based on

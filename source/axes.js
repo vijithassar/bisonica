@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
-import { axisTickLabelText, rotation } from './text';
-import { barWidth } from './marks';
-import { degrees, isDiscrete, noop, overlap } from './helpers';
-import { encodingType } from './encodings';
-import { feature } from './feature';
-import { layerMatch } from './views';
-import { parseScales } from './scales';
-import { tickMargin } from './position';
-import { timeMethod, timePeriod } from './time';
+import { axisTickLabelText, rotation } from './text.js';
+import { barWidth } from './marks.js';
+import { degrees, isDiscrete, noop, overlap } from './helpers.js';
+import { encodingType } from './encodings.js';
+import { feature } from './feature.js';
+import { layerMatch } from './views.js';
+import { parseScales } from './scales.js';
+import { tickMargin } from './position.js';
+import { timeMethod, timePeriod } from './time.js';
 
 /**
  * tick count specifier

@@ -1,22 +1,22 @@
 import * as d3 from 'd3';
 
-import { BAR_WIDTH_MINIMUM } from './config';
-import { createAccessors } from './accessors';
+import { BAR_WIDTH_MINIMUM } from './config.js';
+import { createAccessors } from './accessors.js';
 import {
   createEncoders,
   encodingFieldCovariate,
   encodingType,
   encodingValue,
   encodingValueQuantitative,
-} from './encodings';
-import { data, pointData } from './data';
-import { datum, key, missingSeries, values } from './helpers';
-import { feature } from './feature';
-import { memoize } from './memoize';
-import { parseScales } from './scales';
-import { parseTime, timePeriod } from './time';
-import { sortMarkData } from './sort';
-import { tooltipContent, tooltips } from './tooltips';
+} from './encodings.js';
+import { data, pointData } from './data.js';
+import { datum, key, missingSeries, values } from './helpers.js';
+import { feature } from './feature.js';
+import { memoize } from './memoize.js';
+import { parseScales } from './scales.js';
+import { parseTime, timePeriod } from './time.js';
+import { sortMarkData } from './sort.js';
+import { tooltipContent, tooltips } from './tooltips.js';
 
 /**
  * aggregate and sort mark data

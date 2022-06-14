@@ -1,9 +1,9 @@
-import { GRID, WRAPPER_CLASS } from './config';
-import { feature } from './feature';
-import { longestAxisTickLabelTextWidth, rotation } from './text';
-import { memoize } from './memoize';
-import { polarToCartesian } from './helpers';
-import { radius } from './marks';
+import { GRID, WRAPPER_CLASS } from './config.js';
+import { feature } from './feature.js';
+import { longestAxisTickLabelTextWidth, rotation } from './text.js';
+import { memoize } from './memoize.js';
+import { polarToCartesian } from './helpers.js';
+import { radius } from './marks.js';
 
 const MARGIN_MAXIMUM = 120;
 

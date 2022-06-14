@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
-import { MINIMUM_TICK_COUNT } from './config';
-import { encodingType } from './encodings';
-import { getTimeFormatter } from './time';
-import { memoize } from './memoize';
-import { parseScales } from './scales';
-import { ticks } from './axes';
+import { MINIMUM_TICK_COUNT } from './config.js';
+import { encodingType } from './encodings.js';
+import { getTimeFormatter } from './time.js';
+import { memoize } from './memoize.js';
+import { parseScales } from './scales.js';
+import { ticks } from './axes.js';
 
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');

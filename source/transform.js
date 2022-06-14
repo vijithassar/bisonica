@@ -1,5 +1,5 @@
-import { identity } from './helpers';
-import { memoize } from './memoize';
+import { identity } from './helpers.js';
+import { memoize } from './memoize.js';
 
 /**
  * create a function to perform a single calculate expression

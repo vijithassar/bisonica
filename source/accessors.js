@@ -1,8 +1,8 @@
-import { encodingField, encodingFieldQuantitative, encodingValue } from './encodings';
-import { feature } from './feature';
-import { mark } from './helpers';
-import { memoize } from './memoize';
-import { parseTime } from './time';
+import { encodingField, encodingFieldQuantitative, encodingValue } from './encodings.js';
+import { feature } from './feature.js';
+import { mark } from './helpers.js';
+import { memoize } from './memoize.js';
+import { parseTime } from './time.js';
 
 /**
  * generate accessor methods which can look up

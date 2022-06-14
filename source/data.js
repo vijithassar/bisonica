@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
 
-import { encodingField, encodingType, encodingValue } from './encodings';
-import { feature } from './feature';
-import { identity, missingSeries, values } from './helpers';
-import { memoize } from './memoize';
-import { parseTime } from './time';
+import { encodingField, encodingType, encodingValue } from './encodings.js';
+import { feature } from './feature.js';
+import { identity, missingSeries, values } from './helpers.js';
+import { memoize } from './memoize.js';
+import { parseTime } from './time.js';
 
 /**
  * nest data points in a hierarchy according to property name

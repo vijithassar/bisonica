@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 
-import { category } from './marks';
-import { createAccessors } from './accessors';
-import { encodingField, encodingType, encodingValue } from './encodings';
-import { feature } from './feature';
-import { getTimeFormatter } from './time';
-import { memoize } from './memoize';
-import { noop } from './helpers';
-import { parseScales } from './scales';
-import { transform } from './transform';
+import { category } from './marks.js';
+import { createAccessors } from './accessors.js';
+import { encodingField, encodingType, encodingValue } from './encodings.js';
+import { feature } from './feature.js';
+import { getTimeFormatter } from './time.js';
+import { memoize } from './memoize.js';
+import { noop } from './helpers.js';
+import { parseScales } from './scales.js';
+import { transform } from './transform.js';
 
 /**
  * format field description

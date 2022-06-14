@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-import { encodingValue } from './encodings';
-import { memoize } from './memoize';
+import { encodingValue } from './encodings.js';
+import { memoize } from './memoize.js';
 
 const UTC = 'utc';
 const TIME = 'time';
