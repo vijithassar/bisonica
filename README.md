@@ -5,7 +5,7 @@ It is still a work in progress and as such supports only a subset of Vega Lite f
 To use:
 
 ```javascript
-import { chart } from '_';
+import { chart } from 'bisonica';
 
 const dimensions = {
     x: 500,
