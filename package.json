@@ -1,6 +1,7 @@
 {
   "name": "bisonica",
   "version": "0.9.5",
+  "type": "module",
   "exports": {
     ".": "./source/chart.js"
   },
