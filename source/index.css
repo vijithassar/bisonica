@@ -169,12 +169,13 @@ path.mark {
   font-weight: 100;
 }
 
-.falcon-chart :global(.play) {
+.play {
   cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
 }
-.falcon-chart :global(.play:hover) {
+
+.play:hover {
   color: var(--highlight);
 }
