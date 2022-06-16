@@ -7,7 +7,8 @@
   "scripts": {
     "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
     "lint-git": "commitlint -- --to=HEAD",
-    "lint-js": "eslint source tests"
+    "lint-js": "eslint source tests",
+    "test": "qunit tests/*"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
