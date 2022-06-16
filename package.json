@@ -5,9 +5,12 @@
     ".": "./source/chart.js"
   },
   "scripts": {
-    "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js"
+    "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
+    "lint-git": "commitlint -- --to=HEAD"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
     "esbuild": "^0.14.43"
   },
   "dependencies": {
