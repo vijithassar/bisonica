@@ -13,7 +13,8 @@
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
     "esbuild": "^0.14.43",
-    "eslint": "^8.17.0"
+    "eslint": "^8.17.0",
+    "qunit": "^2.19.1"
   },
   "dependencies": {
     "d3": "^7.4.4"
