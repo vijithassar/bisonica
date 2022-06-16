@@ -6,12 +6,14 @@
   },
   "scripts": {
     "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
-    "lint-git": "commitlint -- --to=HEAD"
+    "lint-git": "commitlint -- --to=HEAD",
+    "lint-js": "eslint source tests"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
-    "esbuild": "^0.14.43"
+    "esbuild": "^0.14.43",
+    "eslint": "^8.17.0"
   },
   "dependencies": {
     "d3": "^7.4.4"
