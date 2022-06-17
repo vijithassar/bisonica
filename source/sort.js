@@ -166,13 +166,13 @@ const valuesToSort = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {function} sort comparator function
  */
-const sortMarkData = (s) => {
+const _sortMarkData = (s) => {
   // just select the first matching encoding because
   // multidimensional sort doesn't work at the mark level
   const channel = Object.entries(s.encoding).find(([, channel]) => channel.sort)?.[0];
 
   if (!channel) {
-    return sortNone;
+    return sortNone();
   } else {
     const raw = values(s);
     const order = raw.map(encodingValue(s, channel)).sort(sorter(s, channel));
@@ -183,6 +183,7 @@ const sortMarkData = (s) => {
     };
   }
 };
+const sortMarkData = memoize(_sortMarkData);
 
 /**
  * select sort comparator function
@@ -223,7 +224,7 @@ const selectComparator = (s, channel) => {
   } else if (isDescending(s, channel)) {
     return descending;
   } else {
-    return sortNone;
+    return sortNone();
   }
 };
 
@@ -244,7 +245,7 @@ const sortNatural = (s, channel) => {
 /**
  * field sort comparator
  * @param {object} s Vega Lite specification
- * @param {string} field encoding channel
+ * @param {string} channel encoding channel
  * @returns {function} field sort comparator function
  */
 const sortByField = (s, channel) => {
@@ -294,7 +295,7 @@ const sortByChannel = (s, channel) => {
 /**
  * array sort comparator
  * @param {object} s Vega Lite specification
- * @param {string} field encoding channel
+ * @param {string} channel encoding channel
  * @returns {function} array sort comparator function
  */
 const sortByArray = (s, channel) => {
@@ -315,7 +316,7 @@ const sortByArray = (s, channel) => {
  * null sort comparator
  * @returns {function} noop sort comparator function
  */
-const sortNone = () => 0;
+const sortNone = () => () => 0;
 
 /**
  * create sort comparator function
@@ -334,7 +335,7 @@ const _sorter = (s, channel) => {
     } else if (selectSorter(s, channel) === 'natural') {
       return sortNatural(s, channel);
     } else if (selectSorter(s, channel) === 'none') {
-      return sortNone;
+      return sortNone();
     }
   } catch (error) {
     const sort = s.encoding[channel]?.sort;

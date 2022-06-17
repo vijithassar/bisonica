@@ -29,7 +29,7 @@ const markData = (s) => {
   if (series) {
     return data(s).map((item) => item.sort(sortMarkData(s)));
   } else {
-    return data(s).sort(sortMarkData(s));
+    return data(s).sort((a, b) => sortMarkData(s)(a, b));
   }
 };
 

@@ -50,7 +50,6 @@ const tickMargin = (s, dimensions) => {
 /**
  * compute margin for a Cartesian chart
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
  */
 const titleMargin = (s) => {
