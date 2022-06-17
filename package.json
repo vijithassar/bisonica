@@ -9,14 +9,16 @@
     "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests",
-    "test": "qunit tests/*"
+    "test": "qunit tests/*",
+    "types": "tsc --noEmit --allowJs --checkJs ./source/chart.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
-    "qunit": "^2.19.1"
+    "qunit": "^2.19.1",
+    "typescript": "^4.7.3"
   },
   "dependencies": {
     "d3": "^7.4.4"
