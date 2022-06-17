@@ -10,7 +10,7 @@
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests",
     "test": "qunit tests/*",
-    "types": "tsc --noEmit --allowJs --checkJs ./source/chart.js"
+    "types": "tsc --noEmit --allowJs --checkJs --target ES2022 ./source/chart.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
