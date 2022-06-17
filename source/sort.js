@@ -244,7 +244,7 @@ const sortNatural = (s, channel) => {
 /**
  * field sort comparator
  * @param {object} s Vega Lite specification
- * @param {string} field encoding channel
+ * @param {string} channel encoding channel
  * @returns {function} field sort comparator function
  */
 const sortByField = (s, channel) => {
@@ -294,7 +294,7 @@ const sortByChannel = (s, channel) => {
 /**
  * array sort comparator
  * @param {object} s Vega Lite specification
- * @param {string} field encoding channel
+ * @param {string} channel encoding channel
  * @returns {function} array sort comparator function
  */
 const sortByArray = (s, channel) => {
