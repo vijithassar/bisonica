@@ -149,6 +149,11 @@ const interactions = (_s) => {
           d3.select(target).raise();
           d3.select(target).attr('data-highlight', true);
 
+          // the .focus() method is not officially supported on SVG
+          // elements per the formal specification, but informally
+          // it works
+
+          // @ts-ignore
           active.focus();
         });
 
