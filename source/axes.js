@@ -225,7 +225,7 @@ const y = (s, dimensions) => {
 
     const angle = degrees(rotation(s, 'y'));
 
-    if (typeof angle !== undefined) {
+    if (typeof angle !== 'undefined') {
       yAxis.selectAll('.tick text').attr('transform', function () {
         const textHeight = d3.select(this).node().getBBox().height;
         const position = [textHeight * 0.5 * -1, 0];
