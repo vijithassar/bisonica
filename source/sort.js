@@ -166,7 +166,7 @@ const valuesToSort = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {function} sort comparator function
  */
-const sortMarkData = (s) => {
+const _sortMarkData = (s) => {
   // just select the first matching encoding because
   // multidimensional sort doesn't work at the mark level
   const channel = Object.entries(s.encoding).find(([, channel]) => channel.sort)?.[0];
@@ -183,6 +183,7 @@ const sortMarkData = (s) => {
     };
   }
 };
+const sortMarkData = memoize(_sortMarkData);
 
 /**
  * select sort comparator function
