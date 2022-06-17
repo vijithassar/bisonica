@@ -387,7 +387,7 @@ const pointData = identity;
 
 /**
  * wrapper function around data preprocessing functionality
- * @param {s} s Vega Lite specification
+ * @param {object} s Vega Lite specification
  * @returns {array} sorted and aggregated data
  */
 const data = (s) => {
