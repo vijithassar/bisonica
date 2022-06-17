@@ -148,7 +148,7 @@ const truncate = memoize(_truncate);
  * @param {'x'|'y'} channel axis dimension
  * @param {string} textContent text to process
  * @param {array} [styles] styles to incorporate when measuring text width
- * @returns {function} text processing function
+ * @returns {string} text processing function
  */
 const _axisTickLabelTextContent = (s, channel, textContent, styles) => {
   let text = textContent;
