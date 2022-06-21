@@ -10,6 +10,8 @@
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests",
     "test": "qunit tests/*",
+    "test-serve": "testem --file ./tests/testem.cjs",
+    "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js"
   },
   "devDependencies": {
@@ -18,6 +20,7 @@
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "qunit": "^2.19.1",
+    "testem": "^3.8.0",
     "typescript": "^4.7.3"
   },
   "dependencies": {
