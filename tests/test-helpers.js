@@ -8,9 +8,10 @@ import { scatterPlotSpec } from '@crowdstrike/falcon-charts/components/falcon-ch
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
 import { temporalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/temporal-bar';
 
-import { testSelector } from 'test-support';
 import { select } from 'd3';
 import { chart } from '../source/chart.js';
+
+export const testSelector = (string) => `[data-test-selector="${string}"]`;
 
 export const render = (specification, dimensions = { x: 500, y: 500 }) => {
   const node = document.createElement('div');
