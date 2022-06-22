@@ -5,10 +5,15 @@ import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-char
 import { meta } from './chart/meta';
 import { rulesSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/rules';
 import { scatterPlotSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/scatter-plot';
-import { scopeIdentifier, testSelector } from 'test-support';
+import { testSelector } from 'test-support';
+
 import { select } from 'd3';
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
 import { temporalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/temporal-bar';
+
+const scopeIdentifier = () => {
+  throw new Error('not implemented');
+}
 
 const TEST_SELECTORS = {
   tooltipContent: 'chart-tooltip-content',
