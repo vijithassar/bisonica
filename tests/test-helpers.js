@@ -23,6 +23,10 @@ const scopeIdentifier = () => {
   throw new Error('not implemented');
 }
 
+export const create = () => {
+  throw new Error('not yet implemented');
+}
+
 const TEST_SELECTORS = {
   tooltipContent: 'chart-tooltip-content',
   marks: 'marks',

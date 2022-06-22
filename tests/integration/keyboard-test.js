@@ -1,6 +1,6 @@
 import { LEFT, RIGHT } from 'key-codes';
-import { create } from 'ember-cli-page-object';
 import {
+  create,
   falconChartsDefinition,
   render,
   specificationFixture,
