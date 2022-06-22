@@ -13,7 +13,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -30,7 +30,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a chart without SVG title tooltips', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     delete spec.mark.tooltip;
     this.set('spec', spec);
@@ -48,7 +48,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('disables SVG title tooltips when a custom tooltip handler is indicated', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = true;
+    spec.usermeta = { tooltipHandler: true };
 
     this.set('spec', spec);
     await render(hbs`
@@ -81,7 +81,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a chart with encoding values in the SVG title tooltip', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -113,7 +113,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a stacked bar chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -132,7 +132,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a circular chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('circular');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -151,7 +151,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('renders a line chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('line');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -181,7 +181,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
       usermeta: {},
     };
 
-    spec.usermeta.tooltipHandler = true;
+    spec.usermeta = { tooltipHandler: true };
 
     this.set('spec', spec);
     await render(hbs`

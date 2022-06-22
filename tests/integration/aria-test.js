@@ -7,7 +7,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   test('aria-label matches tooltip by default', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     this.set('spec', spec);
     await render(hbs`
@@ -29,7 +29,8 @@ module('Integration | Component | falcon-charts | aria', function () {
   test('aria-label matches tooltip when tooltip channel is specified', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
+
     spec.mark.tooltip = true;
     spec.encoding.tooltip = 'value';
     this.set('spec', spec);
@@ -83,7 +84,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   test('aria-label can diverge from tooltip', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
-    spec.usermeta.tooltipHandler = false;
+    spec.usermeta = { tooltipHandler: false };
 
     spec.transform = [
       { calculate: "'a'", as: 'a' },
