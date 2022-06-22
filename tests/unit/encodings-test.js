@@ -9,7 +9,7 @@ import {
 import { dimensions } from './support';
 import { module, test } from 'qunit';
 import { parseTime } from '../../source/time';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
 
 module('Unit | Component | falcon-charts | encoders', () => {
   test('creates encoders', (assert) => {

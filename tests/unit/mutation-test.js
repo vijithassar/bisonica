@@ -2,7 +2,7 @@ import { chart } from '../../source/chart';
 import { init } from '../../source/init';
 import { module, test } from 'qunit';
 import { select } from 'd3';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
 
 /**
  * recursively freeze a nested object

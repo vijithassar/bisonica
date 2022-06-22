@@ -1,13 +1,13 @@
-import { categoricalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/categorical-bar';
-import { circularChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/circular';
-import { groupedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/grouped-bar';
-import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/line';
-import { meta } from './chart/meta';
-import { rulesSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/rules';
-import { scatterPlotSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/scatter-plot';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
-import { temporalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/temporal-bar';
+import { categoricalBarChartSpec } from '../fixtures/categorical-bar.js';
+import { circularChartSpec } from '../fixtures/circular.js';
+import { groupedBarChartSpec } from '../fixtures/grouped-bar.js';
+import { lineChartSpec } from '../fixtures/line.js';
+import { rulesSpec } from '../fixtures/rules.js';
+import { scatterPlotSpec } from '../fixtures/scatter-plot.js';
+import { stackedBarChartSpec } from '../fixtures/stacked-bar.js';
+import { temporalBarChartSpec } from '../fixtures/temporal-bar.js';
 
+import { meta } from './chart/meta';
 import { select } from 'd3';
 import { chart } from '../source/chart.js';
 

@@ -1,9 +1,9 @@
 import { barWidth } from '../../source/marks';
-import { categoricalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/categorical-bar';
+import { categoricalBarChartSpec } from '../../fixtures/categorical-bar';
 import { encodingField } from '../../source/encodings';
 import { module, test } from 'qunit';
 import { set } from '@ember/object';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
 
 module('Unit | Component | falcon-charts | marks', () => {
   test('bar width', (assert) => {

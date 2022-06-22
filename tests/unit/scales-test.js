@@ -1,5 +1,5 @@
 import { dimensions } from './support.js';
-import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/line';
+import { lineChartSpec } from '../../fixtures/line.js';
 import { module, test } from 'qunit';
 import { parseScales } from '../../source/scales.js';
 import { parseTime } from '../../source/time.js';
