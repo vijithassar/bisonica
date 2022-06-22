@@ -1,4 +1,4 @@
-import { memoize } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/memoize';
+import { memoize } from '../../source/memoize';
 import { module, test } from 'qunit';
 
 module('Unit | component | falcon-charts | memoize', () => {

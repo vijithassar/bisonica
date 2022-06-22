@@ -1,8 +1,8 @@
 import {
   calculate,
   transform,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/transform';
-import { encodingValue } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
+} from '../../source/transform.js';
+import { encodingValue } from '../../source/encodings.js';
 import { module, test } from 'qunit';
 
 const expressions = {

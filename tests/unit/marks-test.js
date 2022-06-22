@@ -1,6 +1,6 @@
-import { barWidth } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/marks';
+import { barWidth } from '../../source/marks';
 import { categoricalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/categorical-bar';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
+import { encodingField } from '../../source/encodings';
 import { module, test } from 'qunit';
 import { set } from '@ember/object';
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';

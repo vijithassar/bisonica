@@ -1,7 +1,7 @@
 import hbs from 'htmlbars-inline-precompile';
 import * as d3 from 'd3';
 import { create } from 'ember-cli-page-object';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
+import { encodingField } from '../../source/encodings';
 import {
   falconChartsDefinition,
   specificationFixture,

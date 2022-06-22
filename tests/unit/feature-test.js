@@ -1,4 +1,4 @@
-import { feature } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/feature';
+import { feature } from '../../source/feature.js';
 import { module, test } from 'qunit';
 
 module('Unit | Component | falcon-charts | feature', () => {

@@ -1,9 +1,9 @@
 import {
   data,
   transplantFields,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/data';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
-import { getTimeParser } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
+} from '../../source/data';
+import { encodingField } from '../../source/encodings';
+import { getTimeParser } from '../../source/time';
 import { module, test } from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
 

@@ -1,7 +1,7 @@
 import {
   layerMatch,
   layerNode,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/views';
+} from '../../source/views';
 import { module, test } from 'qunit';
 
 module('Unit | Component | falcon-charts | views', () => {

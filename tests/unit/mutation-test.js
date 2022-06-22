@@ -1,5 +1,5 @@
-import { chart } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/chart';
-import { init } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/init';
+import { chart } from '../../source/chart';
+import { init } from '../../source/init';
 import { module, test } from 'qunit';
 import { select } from 'd3';
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';

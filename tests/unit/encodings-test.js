@@ -5,10 +5,10 @@ import {
   encodingFieldQuantitative,
   encodingType,
   encodingValue,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
+} from '../../source/encodings';
 import { dimensions } from './support';
 import { module, test } from 'qunit';
-import { parseTime } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
+import { parseTime } from '../../source/time';
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
 
 module('Unit | Component | falcon-charts | encoders', () => {

@@ -3,7 +3,7 @@ import {
   format,
   rotation,
   truncate,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/text';
+} from '../../source/text';
 import { module, test } from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
 

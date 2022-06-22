@@ -1,8 +1,8 @@
 import { dimensions } from './support.js';
 import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/line';
 import { module, test } from 'qunit';
-import { parseScales } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/scales';
-import { parseTime } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
+import { parseScales } from '../../source/scales.js';
+import { parseTime } from '../../source/time.js';
 import { specificationFixture } from '../test-helpers.js';
 
 const stackedBarChartSpec = specificationFixture('stackedBar');

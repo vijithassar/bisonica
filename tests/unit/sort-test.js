@@ -1,6 +1,6 @@
 import { ascending } from 'd3';
 import { module, test } from 'qunit';
-import { parseScales } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/scales';
+import { parseScales } from '../../source/scales';
 
 const extra = { group: 'z', label: 'a', value: 3 };
 const specification = () => {

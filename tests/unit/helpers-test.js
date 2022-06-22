@@ -1,4 +1,4 @@
-import * as helpers from '@crowdstrike/falcon-charts/components/falcon-charts/shared/helpers';
+import * as helpers from '../../source/helpers';
 import { module, test } from 'qunit';
 
 module('Unit | Component | falcon-charts | helpers', () => {
