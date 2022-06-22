@@ -704,10 +704,4 @@ const circularChartSpec = {
   },
 };
 
-const count = new Set(circularChartSpec.data.values.map((item) => item.group)).size;
-
-circularChartSpec.encoding.color.scale = {
-  range: getGraphColors(count).map((item) => `var(--${item.swatchName})`),
-};
-
 export { circularChartSpec };

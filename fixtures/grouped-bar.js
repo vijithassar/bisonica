@@ -102,10 +102,4 @@ const groupedBarChartSpec = {
   },
 };
 
-const count = new Set(groupedBarChartSpec.data.values.map((item) => item.group)).size;
-
-groupedBarChartSpec.encoding.color.scale = {
-  range: getGraphColors(count).map((item) => `var(--${item.swatchName})`),
-};
-
 export { groupedBarChartSpec };

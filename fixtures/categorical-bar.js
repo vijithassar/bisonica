@@ -18,8 +18,4 @@ const categoricalBarChartSpec = {
   },
 };
 
-categoricalBarChartSpec.encoding.color.scale = {
-  range: getGraphColors(1).map((item) => `var(--${item.swatchName})`),
-};
-
 export { categoricalBarChartSpec };
