@@ -1,4 +1,6 @@
-import { timeFormat } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/helpers';
+// import { timeFormat } from '../source/time.js';
+
+const timeFormat = () => null
 
 const day = () => Math.floor(Math.random() * 10);
 const groups = 5;
