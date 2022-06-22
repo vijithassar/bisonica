@@ -1,4 +1,3 @@
-import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 import {
   nodesHavePositiveHeights,

@@ -1,4 +1,3 @@
-import hbs from 'htmlbars-inline-precompile';
 import { LEFT, RIGHT } from 'key-codes';
 import { create } from 'ember-cli-page-object';
 import {

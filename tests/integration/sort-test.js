@@ -1,4 +1,3 @@
-import hbs from 'htmlbars-inline-precompile';
 import * as d3 from 'd3';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
