@@ -1,12 +1,10 @@
 import { module, test } from 'qunit';
 import { render, specificationFixture } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 import { testSelector } from '../test-helpers.js';
 
 const pointSelector = testSelector('marks-mark-point');
 
-module('Integration | Component | falcon-charts | line', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | line', function () {
   test('renders a line chart', async function (assert) {
     this.set('spec', specificationFixture('line'));
     await render(hbs`

@@ -1,9 +1,7 @@
 import { module, test } from 'qunit';
 import { render, specificationFixture, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | falcon-charts | views', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | views', function () {
   test('renders a chart without layers', async function (assert) {
     this.set('spec', specificationFixture('line'));
     await render(hbs`

@@ -7,10 +7,8 @@ import {
   tooltipContentUpdate,
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | falcon-charts | tooltips', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | tooltips', function () {
 
   test('renders a chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('stackedBar');

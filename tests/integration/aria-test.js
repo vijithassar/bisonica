@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import { specificationFixture, testSelector } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | aria', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | aria', function () {
 
   test('aria-label matches tooltip by default', async function (assert) {
     const spec = specificationFixture('stackedBar');

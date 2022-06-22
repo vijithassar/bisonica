@@ -4,12 +4,10 @@ import {
   specificationFixture,
 } from '../test-helpers.js';
 import { render, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 
 const approximate = (value) => Math.round(value * 100) / 100;
 
-module('Integration | Component | falcon-charts | categorical-bar', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | categorical-bar', function () {
   test('renders a categorical bar chart', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 

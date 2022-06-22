@@ -7,10 +7,8 @@ import {
   tooltipContentUpdate,
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | falcon-charts | keyboard', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | keyboard', function () {
 
   test('keyboard navigation works', async function (assert) {
     const dispatchEvents = {

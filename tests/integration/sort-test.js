@@ -1,11 +1,9 @@
 import * as d3 from 'd3';
 import { module, test } from 'qunit';
 import { render, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | sort', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | sort', function () {
   test('renders marks in ascending order', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 

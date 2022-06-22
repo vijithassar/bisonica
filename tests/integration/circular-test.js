@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { render, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 import { specificationFixture } from '../test-helpers.js';
 
 const JITTER_RATIO = 0.01;
@@ -71,8 +70,7 @@ const isPie = (marks) => {
   return isCircular(marks) && contained;
 };
 
-module('Integration | Component | falcon-charts | circular', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | circular', function () {
   test('renders a circular chart', async function (assert) {
     const spec = specificationFixture('circular');
 

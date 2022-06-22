@@ -1,10 +1,8 @@
 import { module, test } from 'qunit';
 import { render, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | rules', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | rules', function () {
   test('renders rules', async function (assert) {
     this.set('spec', specificationFixture('rules'));
     await render(hbs`

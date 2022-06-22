@@ -1,9 +1,7 @@
 import { module, test } from 'qunit';
 import { render, specificationFixture, testSelector } from '../test-helpers.js';
-import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | falcon-charts | legend', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | legend', function () {
   test('renders a chart with legend', async function (assert) {
     this.set('spec', specificationFixture('stackedBar'));
     await render(hbs`

@@ -8,10 +8,8 @@ import {
   testSelector
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 
-module('Integration | Component | falcon-charts | pivot urls', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | pivot urls', function () {
 
   const getUrl = (item) => d3.select(item).datum().url;
 
