@@ -74,7 +74,6 @@ module('Integration | Component | falcon-charts | circular', function () {
   test('renders a circular chart', async function (assert) {
     const spec = specificationFixture('circular');
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -102,7 +101,7 @@ module('Integration | Component | falcon-charts | circular', function () {
     const spec = specificationFixture('circular');
 
     spec.mark = 'arc';
-    this.set('spec', spec);
+
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -138,7 +137,6 @@ module('Integration | Component | falcon-charts | circular', function () {
       },
     };
 
-    this.set('spec', donutChartSpec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}

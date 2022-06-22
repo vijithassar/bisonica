@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 module('Integration | Component | falcon-charts | views', function () {
   test('renders a chart without layers', async function (assert) {
-    this.set('spec', specificationFixture('line'));
+    const spec = specificationFixture('line');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -25,7 +25,6 @@ module('Integration | Component | falcon-charts | views', function () {
     delete spec.mark;
     delete spec.encoding;
     spec.layer = [lineLayer];
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -55,7 +54,6 @@ module('Integration | Component | falcon-charts | views', function () {
     };
 
     spec.layer = [lineLayer, ruleLayer];
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -80,7 +78,6 @@ module('Integration | Component | falcon-charts | views', function () {
     delete layerSpec.encoding;
     layerSpec.layer = [lineLayer];
 
-    this.set('spec', layerSpec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}

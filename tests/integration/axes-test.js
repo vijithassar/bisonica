@@ -4,8 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js';
 module('Integration | Component | falcon-charts | axes', function () {
   test('renders a chart with axes', async function (assert) {
     const spec = specificationFixture('stackedBar');
-
-    this.spec = spec;
+    const element = render(spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -26,7 +25,6 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
-    this.set('spec', spec);
     await render(hbs`
 
       <FalconCharts::Chart
@@ -40,7 +38,12 @@ module('Integration | Component | falcon-charts | axes', function () {
   });
 
   test('renders a chart without y-axis tick labels', async function (assert) {
-    this.spec = specificationFixture('stackedBar');
+    let spec, element;
+
+    spec = specificationFixture('stackedBar');
+
+    element = render(spec);
+
     await render(hbs`
 
       <FalconCharts::Chart
@@ -54,10 +57,11 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     assert.ok(tickLabelTexts.every((el) => el.textContent.length));
 
-    const spec = specificationFixture('stackedBar');
+    spec = specificationFixture('stackedBar');
 
     spec.encoding.y.axis.labels = false;
-    this.spec = spec;
+
+    element = render(spec);
     await render(hbs`
 
       <FalconCharts::Chart
@@ -79,9 +83,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utchour' } };
-    this.spec = spec;
     await render(hbs`
-
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -94,7 +96,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     assert.ok(hourly.length > differenceDays);
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcweek' } };
-    this.spec = spec;
+    element = render(spec);
     await render(hbs`
 
       <FalconCharts::Chart
@@ -117,7 +119,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcday', step: 2 } };
-    this.spec = spec;
+    const element = render(spec);
     await render(hbs`
 
       <FalconCharts::Chart
@@ -137,7 +139,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { title: null };
     spec.encoding.y.axis = { title: null };
-    this.spec = spec;
+    const element = render(spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -157,7 +159,6 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { labelLimit: max };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}

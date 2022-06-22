@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 module('Integration | Component | falcon-charts | legend', function () {
   test('renders a chart with legend', async function (assert) {
-    this.set('spec', specificationFixture('stackedBar'));
+    const spec = specificationFixture('stackedBar');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -16,7 +16,7 @@ module('Integration | Component | falcon-charts | legend', function () {
   });
 
   test('renders a chart with legend automatically omitted', async function (assert) {
-    this.set('spec', specificationFixture('categoricalBar'));
+    const spec = specificationFixture('categoricalBar');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -32,7 +32,6 @@ module('Integration | Component | falcon-charts | legend', function () {
     const spec = specificationFixture('line');
 
     spec.encoding.color.legend = null;
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -48,7 +47,6 @@ module('Integration | Component | falcon-charts | legend', function () {
     const spec = specificationFixture('line');
     const categories = [...new Set(spec.data.values.map((item) => item.group))];
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -60,7 +58,7 @@ module('Integration | Component | falcon-charts | legend', function () {
   });
 
   test('partitions legend into popup when content overflows', async function (assert) {
-    this.set('spec', specificationFixture('line'));
+    const spec = specificationFixture('line');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -85,7 +83,6 @@ module('Integration | Component | falcon-charts | legend', function () {
 
       return { ...item, group: ids.get(item.group) };
     });
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}

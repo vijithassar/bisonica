@@ -15,7 +15,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -33,7 +32,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     spec.usermeta = { tooltipHandler: false };
 
     delete spec.mark.tooltip;
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -50,7 +48,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: true };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -66,7 +63,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.tooltip = null;
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -83,7 +79,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -115,7 +110,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -134,7 +128,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -153,7 +146,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -183,7 +175,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: true };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -200,7 +191,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     const spec = specificationFixture('circular');
 
     this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -237,7 +227,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     const spec = specificationFixture('circular');
 
     this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}

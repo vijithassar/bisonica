@@ -9,7 +9,6 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -33,7 +32,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     spec.mark.tooltip = true;
     spec.encoding.tooltip = 'value';
-    this.set('spec', spec);
+
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -51,7 +50,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   });
 
   test('aria-label can be set with description field', async function (assert) {
-    this.set('spec', specificationFixture('stackedBar'));
+    const spec = specificationFixture('stackedBar');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -69,7 +68,6 @@ module('Integration | Component | falcon-charts | aria', function () {
     spec.transform = [{ calculate: "'START:' + datum.value + ':END'", as: 'test' }];
     spec.encoding.description = { field: 'test' };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -93,7 +91,6 @@ module('Integration | Component | falcon-charts | aria', function () {
     spec.encoding.description = { field: 'a' };
     spec.encoding.tooltip = { field: 'b' };
 
-    this.set('spec', spec);
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -111,7 +108,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   });
 
   test('every bar chart mark has an aria-label attribute by default', async function (assert) {
-    this.set('spec', specificationFixture('stackedBar'));
+    const spec = specificationFixture('stackedBar');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -124,7 +121,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   });
 
   test('every circular chart mark has an aria-label attribute by default', async function (assert) {
-    this.set('spec', specificationFixture('circular'));
+    const spec = specificationFixture('circular');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -137,7 +134,7 @@ module('Integration | Component | falcon-charts | aria', function () {
   });
 
   test('every line chart point mark has an aria-label attribute by default', async function (assert) {
-    this.set('spec', specificationFixture('line'));
+    const spec = specificationFixture('line');
     await render(hbs`
       <FalconCharts::Chart
         @spec={{this.spec}}
