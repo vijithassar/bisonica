@@ -2,8 +2,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import { render, testSelector, specificationFixture } from '../test-helpers.js';
 
 module('Integration | Component | falcon-charts | axes', function (hooks) {
   setupRenderingTest(hooks);

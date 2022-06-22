@@ -2,7 +2,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { specificationFixture } from '../test-helpers.js';
 import { testSelector } from 'test-support';
 
 module('Integration | Component | falcon-charts | text', function (hooks) {

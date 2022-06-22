@@ -3,7 +3,7 @@ import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-char
 import { module, test } from 'qunit';
 import { parseScales } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/scales';
 import { parseTime } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { specificationFixture } from '../test-helpers.js';
 
 const stackedBarChartSpec = specificationFixture('stackedBar');
 const ordinalSpec = specificationFixture('stackedBar');

@@ -4,7 +4,7 @@ import {
   falconChartsDefinition,
   specificationFixture,
   tooltipContentUpdate,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+} from '../test-helpers.js';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';

@@ -5,7 +5,7 @@ import {
 import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
 import { getTimeParser } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
 import { module, test } from 'qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { specificationFixture } from '../test-helpers.js';
 
 module('Unit | Component | falcon-charts | data', () => {
   test('compiles stacked bar data', (assert) => {

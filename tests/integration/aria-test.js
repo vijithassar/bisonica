@@ -2,8 +2,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import { specificationFixture, testSelector } from '../test-helpers.js';
 
 module('Integration | Component | falcon-charts | aria', function (hooks) {
   setupRenderingTest(hooks);

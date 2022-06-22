@@ -5,7 +5,7 @@ import {
   truncate,
 } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/text';
 import { module, test } from 'qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { specificationFixture } from '../test-helpers.js';
 
 module('Unit | Component | falcon-charts | axes', () => {
   test('retrieves x axis text rotation', (assert) => {

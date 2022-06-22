@@ -1,6 +1,6 @@
 import { meta } from '@crowdstrike/falcon-charts/components/falcon-charts/chart/meta';
 import { module, test } from 'qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+import { specificationFixture } from '../test-helpers.js';
 
 module('Unit | Component | falcon-charts | usermeta', () => {
   test('creates usermeta', (assert) => {
