@@ -5,11 +5,18 @@ import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-char
 import { meta } from './chart/meta';
 import { rulesSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/rules';
 import { scatterPlotSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/scatter-plot';
-import { testSelector } from 'test-support';
-
-import { select } from 'd3';
 import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
 import { temporalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/temporal-bar';
+
+import { testSelector } from 'test-support';
+import { select } from 'd3';
+import { chart } from '../source/chart.js';
+
+export const render = (specification, dimensions = { x: 500, y: 500 }) => {
+  const node = document.createElement('div');
+  select(node).call(chart(specification, dimensions));
+  return node;
+}
 
 const scopeIdentifier = () => {
   throw new Error('not implemented');
