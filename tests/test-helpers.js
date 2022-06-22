@@ -7,7 +7,6 @@ import { scatterPlotSpec } from '../fixtures/scatter-plot.js';
 import { stackedBarChartSpec } from '../fixtures/stacked-bar.js';
 import { temporalBarChartSpec } from '../fixtures/temporal-bar.js';
 
-import { meta } from './chart/meta';
 import { select } from 'd3';
 import { chart } from '../source/chart.js';
 
@@ -93,8 +92,6 @@ export function specificationFixture(type) {
   }
 
   const result = JSON.parse(JSON.stringify(spec));
-
-  meta(result);
 
   return result;
 }
