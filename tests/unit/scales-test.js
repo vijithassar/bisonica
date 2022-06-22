@@ -1,4 +1,4 @@
-import { dimensions } from './support';
+import { dimensions } from './support.js';
 import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/line';
 import { module, test } from 'qunit';
 import { parseScales } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/scales';
