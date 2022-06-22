@@ -9,7 +9,7 @@
     "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests/unit tests/integration",
-    "test-build": "esbuild ./tests/unit/*-test.js --bundle --splitting --format=esm --outdir=tests/build",
+    "test-build": "esbuild tests/unit/* tests/integration/* --bundle --splitting --format=esm --outdir=tests/build",
     "test": "qunit tests/*",
     "test-serve": "testem --file ./tests/testem.cjs",
     "test-ci": "testem --file ./tests/testem.cjs ci",
