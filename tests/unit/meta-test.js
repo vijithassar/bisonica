@@ -1,4 +1,4 @@
-import { meta } from '@crowdstrike/falcon-charts/components/falcon-charts/chart/meta';
+// import { meta } from '@crowdstrike/falcon-charts/components/falcon-charts/chart/meta';
 import { module, test } from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
 

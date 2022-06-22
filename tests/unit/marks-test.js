@@ -2,8 +2,10 @@ import { barWidth } from '../../source/marks';
 import { categoricalBarChartSpec } from '../../fixtures/categorical-bar';
 import { encodingField } from '../../source/encodings';
 import { module, test } from 'qunit';
-import { set } from '@ember/object';
+// import { set } from '@ember/object';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+
+const set = () => null
 
 module('Unit | Component | falcon-charts | marks', () => {
   test('bar width', (assert) => {
