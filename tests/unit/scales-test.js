@@ -3,7 +3,6 @@ import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-char
 import { module, test } from 'qunit';
 import { parseScales } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/scales';
 import { parseTime } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
-import { setupTest } from 'ember-qunit';
 import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
 
 const stackedBarChartSpec = specificationFixture('stackedBar');
@@ -20,7 +19,6 @@ module('Unit | Component | falcon-charts | scales', (hooks) => {
       colorOrdinal: parseScales(ordinalSpec, dimensions).color,
     };
   });
-  setupTest(hooks);
 
   const scaleTypes = {
     x: 'temporal',
