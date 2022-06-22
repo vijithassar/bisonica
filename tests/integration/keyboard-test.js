@@ -1,4 +1,3 @@
-import { LEFT, RIGHT } from 'key-codes';
 import {
   create,
   falconChartsDefinition,
@@ -7,6 +6,9 @@ import {
   tooltipContentUpdate,
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
+
+const LEFT = 'ArrowLeft';
+const RIGHT = 'ArrowRight';
 
 module('Integration | Component | falcon-charts | keyboard', function () {
 
