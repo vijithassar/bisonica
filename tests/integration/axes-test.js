@@ -7,13 +7,6 @@ module('Integration | Component | falcon-charts | axes', function () {
   test('renders a chart with axes', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
 
     const single = [testSelector('axes'), testSelector('axes-x'), testSelector('axes-y')];
 
@@ -27,14 +20,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
-    await render(`
-
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
     assert.dom(testSelector('axes-x-title')).hasText(spec.encoding.x.axis.title);
     assert.dom(testSelector('axes-y-title')).hasText(spec.encoding.y.axis.title);
   });
@@ -46,14 +32,6 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     element = render(spec);
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-
     let tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
 
     assert.ok(tickLabelTexts.every((el) => el.textContent.length));
@@ -63,14 +41,6 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.y.axis.labels = false;
 
     element = render(spec);
-    await render(`
-
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
     tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
 
     assert.ok(!tickLabelTexts.some((el) => el.textContent.length));
@@ -84,13 +54,10 @@ module('Integration | Component | falcon-charts | axes', function () {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utchour' } };
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+
+    let element;
+
+    element = render(spec);
 
     const hourly = findAll(`${testSelector('axes-x')} .tick`);
 
@@ -98,14 +65,6 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcweek' } };
     element = render(spec);
-
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
 
     const weekly = findAll(`${testSelector('axes-x')} .tick`);
 
@@ -120,15 +79,8 @@ module('Integration | Component | falcon-charts | axes', function () {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcday', step: 2 } };
-    const element = render(spec);
-    await render(`
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const ticks = findAll(`${testSelector('axes-x')} .tick`);
 
@@ -141,13 +93,6 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.x.axis = { title: null };
     spec.encoding.y.axis = { title: null };
     const element = render(spec);
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
 
     const selectors = [testSelector('axes-x-title'), testSelector('axes-y-title')];
 
@@ -160,13 +105,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { labelLimit: max };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     [...this.element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
       assert.ok(node.getBoundingClientRect().width <= max);

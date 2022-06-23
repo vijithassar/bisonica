@@ -10,13 +10,7 @@ module('Integration | Component | falcon-charts | sort', function () {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = 'y';
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=500
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
@@ -31,13 +25,7 @@ module('Integration | Component | falcon-charts | sort', function () {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = '-y';
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=500
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 

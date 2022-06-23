@@ -6,13 +6,7 @@ const { module, test } = qunit;
 module('Integration | Component | falcon-charts | views', function () {
   test('renders a chart without layers', async function (assert) {
     const spec = specificationFixture('line');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('layer')).doesNotExist();
   });
@@ -27,13 +21,7 @@ module('Integration | Component | falcon-charts | views', function () {
     delete spec.mark;
     delete spec.encoding;
     spec.layer = [lineLayer];
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('layer')).exists();
   });
@@ -56,13 +44,7 @@ module('Integration | Component | falcon-charts | views', function () {
     };
 
     spec.layer = [lineLayer, ruleLayer];
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('layer')).exists({ count: 2 });
   });
@@ -80,13 +62,7 @@ module('Integration | Component | falcon-charts | views', function () {
     delete layerSpec.encoding;
     layerSpec.layer = [lineLayer];
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(layerSpec);
 
     assert.dom(testSelector('layer')).exists();
     assert.dom(testSelector('mark')).exists();

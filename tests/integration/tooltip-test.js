@@ -17,13 +17,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).exists();
   });
@@ -34,13 +28,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     spec.usermeta = { tooltipHandler: false };
 
     delete spec.mark.tooltip;
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
@@ -50,13 +38,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: true };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
@@ -65,13 +47,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.tooltip = null;
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
@@ -81,13 +57,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     Object.entries(spec.encoding).forEach(([channel, definition]) => {
       const field = definition.field || definition.aggregate;
@@ -112,13 +82,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).exists();
     assert.dom(testSelector('mark-title')).hasAnyText();
@@ -130,13 +94,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark-title')).exists();
     assert.dom(testSelector('mark-title')).hasAnyText();
@@ -148,13 +106,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('point-title')).exists();
     assert.dom(testSelector('point-title')).hasAnyText();
@@ -177,30 +129,14 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     spec.usermeta = { tooltipHandler: true };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark')).exists();
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
 
   test('emits a CustomEvent with tooltip details in response to mouseover', async function (assert) {
-    const spec = specificationFixture('circular');
-
-    this.page = create(falconChartsDefinition());
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-      <div data-falcon-portal="tooltip"></div>
-    `);
+    const element = render(specificationFixture('circular'));
 
     const event = new MouseEvent('mouseover', { bubbles: true });
     let tooltipEvent = null;

@@ -22,13 +22,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
     assert.equal(this.page.marksWithUrls().length, 2);
 
     const urls = this.page.marksWithUrls().map(getUrl);
@@ -43,13 +37,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
     assert.equal(this.page.marksWithUrls().length, 2);
 
     const urls = this.page.marksWithUrls().map(getUrl);
@@ -64,13 +52,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     // in this case because of the nested series we need to
     // bypass the marksWithUrls() helper in order to flatten the array
@@ -104,13 +86,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
 
     spec.encoding.href = { field: 'url' };
     this.page = create(falconChartsDefinition());
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const getUrl = (mark) => d3.select(mark).datum().data[encodingField(spec, 'href')];
     const marks = [...this.element.querySelectorAll(testSelector('mark'))];

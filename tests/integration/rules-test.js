@@ -7,13 +7,7 @@ const { module, test } = qunit;
 module('Integration | Component | falcon-charts | rules', function () {
   test('renders rules', async function (assert) {
     const spec = specificationFixture('rules');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
     const axisSelectors = {

@@ -76,13 +76,7 @@ module('Integration | Component | falcon-charts | circular', function () {
   test('renders a circular chart', async function (assert) {
     const spec = specificationFixture('circular');
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
@@ -104,13 +98,7 @@ module('Integration | Component | falcon-charts | circular', function () {
 
     spec.mark = 'arc';
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const mark = testSelector('mark');
 
@@ -139,13 +127,7 @@ module('Integration | Component | falcon-charts | circular', function () {
       },
     };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(donutChartSpec);
 
     const marksSelector = testSelector('marks');
     const markSelector = testSelector('mark');

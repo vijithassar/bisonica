@@ -1,6 +1,5 @@
 import qunit from 'qunit';
-import { render } from '@ember/test-helpers';
-import { specificationFixture, testSelector } from '../test-helpers.js';
+import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
@@ -11,13 +10,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     spec.usermeta = { tooltipHandler: false };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const marks = [...this.element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
@@ -35,13 +28,7 @@ module('Integration | Component | falcon-charts | aria', function () {
     spec.mark.tooltip = true;
     spec.encoding.tooltip = 'value';
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const marks = [...this.element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
@@ -53,13 +40,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
   test('aria-label can be set with description field', async function (assert) {
     const spec = specificationFixture('stackedBar');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark')).hasAttribute('aria-label');
   });
@@ -70,13 +51,7 @@ module('Integration | Component | falcon-charts | aria', function () {
     spec.transform = [{ calculate: "'START:' + datum.value + ':END'", as: 'test' }];
     spec.encoding.description = { field: 'test' };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark')).hasAttribute('aria-label', /^START.*END$/);
   });
@@ -93,13 +68,7 @@ module('Integration | Component | falcon-charts | aria', function () {
     spec.encoding.description = { field: 'a' };
     spec.encoding.tooltip = { field: 'b' };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const marks = [...this.element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
@@ -111,39 +80,21 @@ module('Integration | Component | falcon-charts | aria', function () {
 
   test('every bar chart mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('stackedBar');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark')).hasAttribute('aria-label');
   });
 
   test('every circular chart mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('circular');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('mark')).hasAttribute('aria-label');
   });
 
   test('every line chart point mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('line');
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     assert.dom(testSelector('marks-mark-point')).hasAttribute('aria-label');
   });

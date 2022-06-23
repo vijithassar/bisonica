@@ -25,13 +25,7 @@ module('Integration | Component | falcon-charts | text', function () {
       },
     };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
@@ -46,13 +40,7 @@ module('Integration | Component | falcon-charts | text', function () {
     spec.encoding.color = { field: 'group', type: 'nominal' };
     spec.encoding.text = { field: 'group', type: 'nominal' };
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const marks = [...this.element.querySelectorAll(testSelector('mark'))];
 

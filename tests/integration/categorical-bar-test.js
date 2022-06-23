@@ -13,14 +13,7 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
   test('renders a categorical bar chart', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height={{500}}
-        @width={{1000}}
-      />
-    `);
-
+    const element = render(spec);
     const mark = testSelector('mark');
 
     assert.dom(mark).exists();
@@ -53,14 +46,7 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
       item.value = 0;
     });
 
-    await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height={{500}}
-        @width={{1000}}
-      />
-    `);
-
+    const element = render(spec);
     assert.dom('rect.mark').hasAttribute('height', '0');
   });
 });
