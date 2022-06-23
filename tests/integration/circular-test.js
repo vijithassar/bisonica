@@ -83,7 +83,7 @@ module('Integration | Component | falcon-charts | circular', function () {
     assert.dom(markSelector).exists();
     assert.dom(markSelector).hasTagName('path');
 
-    const marks = this.element.querySelector(testSelector('marks'));
+    const marks = element.querySelector(testSelector('marks'));
 
     assert.ok(isCircular(marks), 'marks group has approximately equal height and width');
 
@@ -105,7 +105,7 @@ module('Integration | Component | falcon-charts | circular', function () {
     assert.dom(mark).exists();
     assert.dom(mark).hasTagName('path');
 
-    const marks = this.element.querySelector(testSelector('marks'));
+    const marks = element.querySelector(testSelector('marks'));
 
     assert.ok(isPie(marks));
   });
@@ -135,7 +135,7 @@ module('Integration | Component | falcon-charts | circular', function () {
     assert.dom(markSelector).exists();
     assert.dom(markSelector).hasTagName('path');
 
-    const marks = this.element.querySelector(marksSelector);
+    const marks = element.querySelector(marksSelector);
 
     assert.ok(isDonut(marks));
   });

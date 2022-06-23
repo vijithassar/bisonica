@@ -141,7 +141,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     const event = new MouseEvent('mouseover', { bubbles: true });
     let tooltipEvent = null;
 
-    this.element.querySelector('.chart').addEventListener('tooltip', (event) => {
+    element.querySelector('.chart').addEventListener('tooltip', (event) => {
       // eslint-disable-next-line no-unused-vars
       tooltipEvent = event;
     });

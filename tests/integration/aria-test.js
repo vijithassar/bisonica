@@ -12,7 +12,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     const element = render(spec);
 
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
     const titles = marks.map((mark) => mark.querySelector(testSelector('mark-title')));
     const match = labels.every((label, index) => label === titles[index].textContent);
@@ -30,7 +30,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     const element = render(spec);
 
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
     const titles = marks.map((mark) => mark.querySelector(testSelector('mark-title')).textContent);
     const match = labels.every((label, index) => label === titles[index]);
@@ -70,7 +70,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     const element = render(spec);
 
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
     const titles = marks.map((mark) => mark.querySelector(testSelector('mark-title')).textContent);
     const match = labels.every((label, index) => label === titles[index]);

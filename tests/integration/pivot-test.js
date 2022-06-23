@@ -89,7 +89,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     const element = render(spec);
 
     const getUrl = (mark) => d3.select(mark).datum().data[encodingField(spec, 'href')];
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
     const links = marks.filter(getUrl).map(getUrl);
 
     assert.equal(links.length, 3);

@@ -107,7 +107,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     const element = render(spec);
 
-    [...this.element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
+    [...element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
       assert.ok(node.getBoundingClientRect().width <= max);
     });
   });

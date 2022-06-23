@@ -16,7 +16,7 @@ module('Integration | Component | falcon-charts | line', function () {
     assert.dom(selector).exists();
     assert.dom(selector).hasAttribute('d');
 
-    const pathStrings = [...this.element.querySelectorAll(selector)].map((node) =>
+    const pathStrings = [...element.querySelectorAll(selector)].map((node) =>
       node.getAttribute('d'),
     );
 

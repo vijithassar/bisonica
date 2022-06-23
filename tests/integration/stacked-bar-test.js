@@ -15,7 +15,7 @@ module('Integration | Component | falcon-charts | stacked-bar', function () {
     assert.dom(mark).hasTagName('rect');
 
     const nodeHasPositiveHeight = (node) => Number(node.getAttribute('height')) >= 0;
-    const nodesHavePositiveHeights = [...this.element.querySelectorAll(mark)].every(
+    const nodesHavePositiveHeights = [...element.querySelectorAll(mark)].every(
       nodeHasPositiveHeight,
     );
 

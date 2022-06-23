@@ -14,7 +14,7 @@ module('Integration | Component | falcon-charts | sort', function () {
 
     const markSelector = testSelector('mark');
 
-    const marks = [...this.element.querySelectorAll(markSelector)];
+    const marks = [...element.querySelectorAll(markSelector)];
     const data = marks.map((mark) => d3.select(mark).datum());
     const values = data.map((item) => item.data._.value);
     const sorted = values.slice().sort(d3.ascending);
@@ -29,7 +29,7 @@ module('Integration | Component | falcon-charts | sort', function () {
 
     const markSelector = testSelector('mark');
 
-    const marks = [...this.element.querySelectorAll(markSelector)];
+    const marks = [...element.querySelectorAll(markSelector)];
     const data = marks.map((mark) => d3.select(mark).datum());
     const values = data.map((item) => item.data._.value);
     const sorted = values.slice().sort(d3.descending);

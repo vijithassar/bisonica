@@ -19,7 +19,7 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
     assert.dom(mark).exists();
     assert.dom(mark).hasTagName('rect');
 
-    const nodes = [...this.element.querySelectorAll(mark)];
+    const nodes = [...element.querySelectorAll(mark)];
 
     assert.ok(
       nodesHavePositiveHeights(nodes),

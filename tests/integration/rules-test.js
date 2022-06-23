@@ -14,7 +14,7 @@ module('Integration | Component | falcon-charts | rules', function () {
       y: testSelector('axes-y'),
       x: testSelector('axes-x'),
     };
-    const mark = [...this.element.querySelectorAll(markSelector)];
+    const mark = [...element.querySelectorAll(markSelector)];
 
     assert.dom(axisSelectors.y).exists();
     assert.dom(axisSelectors.x).doesNotExist();

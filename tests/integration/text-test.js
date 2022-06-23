@@ -42,7 +42,7 @@ module('Integration | Component | falcon-charts | text', function () {
 
     const element = render(spec);
 
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
 
     const groups = [...new Set(spec.data.values.map((item) => item.group)).values()];
 
