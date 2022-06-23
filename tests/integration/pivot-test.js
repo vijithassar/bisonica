@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { encodingField } from '../../source/encodings';
+import { encodingField } from '../../source/encodings.js';
 import {
   create,
   falconChartsDefinition,

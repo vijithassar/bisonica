@@ -1,5 +1,5 @@
-import { chart } from '../../source/chart';
-import { init } from '../../source/init';
+import { chart } from '../../source/chart.js';
+import { init } from '../../source/init.js';
 import qunit from 'qunit';
 import { select } from 'd3';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';

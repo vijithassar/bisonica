@@ -1,4 +1,4 @@
-import { memoize } from '../../source/memoize';
+import { memoize } from '../../source/memoize.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;

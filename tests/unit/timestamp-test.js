@@ -3,7 +3,7 @@ import {
   getTimeParser,
   parseTime,
   timeMethod,
-} from '../../source/time';
+} from '../../source/time.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;

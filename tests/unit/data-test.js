@@ -1,9 +1,9 @@
 import {
   data,
   transplantFields,
-} from '../../source/data';
-import { encodingField } from '../../source/encodings';
-import { getTimeParser } from '../../source/time';
+} from '../../source/data.js';
+import { encodingField } from '../../source/encodings.js';
+import { getTimeParser } from '../../source/time.js';
 import qunit from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
 

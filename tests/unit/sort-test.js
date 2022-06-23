@@ -1,6 +1,6 @@
 import { ascending } from 'd3';
 import qunit from 'qunit';
-import { parseScales } from '../../source/scales';
+import { parseScales } from '../../source/scales.js';
 
 const { module, test } = qunit;
 

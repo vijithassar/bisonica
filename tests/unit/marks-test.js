@@ -1,6 +1,6 @@
-import { barWidth } from '../../source/marks';
+import { barWidth } from '../../source/marks.js';
 import { categoricalBarChartSpec } from '../../fixtures/categorical-bar';
-import { encodingField } from '../../source/encodings';
+import { encodingField } from '../../source/encodings.js';
 import qunit from 'qunit';
 // import { set } from '@ember/object';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';

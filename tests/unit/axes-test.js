@@ -3,7 +3,7 @@ import {
   format,
   rotation,
   truncate,
-} from '../../source/text';
+} from '../../source/text.js';
 import qunit from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
 

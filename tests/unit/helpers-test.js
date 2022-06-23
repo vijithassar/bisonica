@@ -1,4 +1,4 @@
-import * as helpers from '../../source/helpers';
+import * as helpers from '../../source/helpers.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;

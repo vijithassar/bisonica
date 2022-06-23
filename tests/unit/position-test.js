@@ -1,4 +1,4 @@
-import { margin } from '../../source/position';
+import { margin } from '../../source/position.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;

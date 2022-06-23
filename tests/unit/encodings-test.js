@@ -5,10 +5,10 @@ import {
   encodingFieldQuantitative,
   encodingType,
   encodingValue,
-} from '../../source/encodings';
+} from '../../source/encodings.js';
 import { dimensions } from './support';
 import qunit from 'qunit';
-import { parseTime } from '../../source/time';
+import { parseTime } from '../../source/time.js';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
 
 const { module, test } = qunit;

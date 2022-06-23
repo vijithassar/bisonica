@@ -1,7 +1,7 @@
 import {
   layerMatch,
   layerNode,
-} from '../../source/views';
+} from '../../source/views.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;

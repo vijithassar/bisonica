@@ -1,5 +1,5 @@
 import qunit from 'qunit';
-import { tooltipContent } from '../../source/tooltips';
+import { tooltipContent } from '../../source/tooltips.js';
 
 const { module, test } = qunit;
 
