@@ -29,8 +29,9 @@ module('Integration | Component | falcon-charts | text', function () {
 
     const markSelector = testSelector('mark');
 
-    assert.dom(markSelector).exists({ count: 1 });
-    assert.dom(markSelector).hasTagName('text');
+    assert.equal(element.querySelectorAll(markSelector).length, 1);
+    assert.equal(element.querySelector(markSelector).tagName, 'text');
+
   });
 
   test('renders text marks with dynamic attributes', async function (assert) {

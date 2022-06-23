@@ -8,14 +8,13 @@ module('Integration | Component | falcon-charts | legend', function () {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
 
-    assert.dom(testSelector('legend')).exists();
+    assert.ok(element.querySelector(testSelector('legend')));
   });
 
   test('renders a chart with legend automatically omitted', async function (assert) {
     const spec = specificationFixture('categoricalBar');
     const element = render(spec);
-
-    assert.dom(testSelector('legend')).hasNoText('legend is empty');
+    assert.equal(element.querySelector(testSelector('legend')).textContent, '');
   });
 
   test('renders a chart with legend explicitly omitted', async function (assert) {
@@ -24,7 +23,7 @@ module('Integration | Component | falcon-charts | legend', function () {
     spec.encoding.color.legend = null;
     const element = render(spec);
 
-    assert.dom(testSelector('legend')).hasNoText('legend is empty');
+    assert.equal(element.querySelector(testSelector('legend')).textContent, '');
   });
 
   test('renders a legend with all categories', async function (assert) {
@@ -32,13 +31,14 @@ module('Integration | Component | falcon-charts | legend', function () {
     const categories = [...new Set(spec.data.values.map((item) => item.group))];
 
     const element = render(spec);
-    assert.dom(testSelector('legend-pair')).exists({ count: categories.length });
+
+    assert.equal(element.querySelectorAll(testSelector('legend-pair')).length, categories.length)
   });
 
   test('partitions legend into popup when content overflows', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);
-    assert.dom(testSelector('legend-items-more')).exists();
+    assert.ok(element.querySelector(testSelector('legend-items-more')));
   });
 
   test('renders legend in full when content does not overflow', async function (assert) {
@@ -57,6 +57,6 @@ module('Integration | Component | falcon-charts | legend', function () {
     });
     const element = render(spec);
 
-    assert.dom(testSelector('legend-items-more')).doesNotExist();
+    assert.notOk(element.querySelector(testSelector('legend-items-more')));
   });
 });

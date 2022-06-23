@@ -8,7 +8,7 @@ module('Integration | Component | falcon-charts | views', function () {
     const spec = specificationFixture('line');
     const element = render(spec);
 
-    assert.dom(testSelector('layer')).doesNotExist();
+    assert.notOk(element.querySelector(testSelector('layer')));
   });
 
   test('renders a chart with one layer', async function (assert) {
@@ -23,7 +23,7 @@ module('Integration | Component | falcon-charts | views', function () {
     spec.layer = [lineLayer];
     const element = render(spec);
 
-    assert.dom(testSelector('layer')).exists();
+    assert.ok(element.querySelector(testSelector('layer')));
   });
 
   test('renders a chart with two layers', async function (assert) {
@@ -46,7 +46,7 @@ module('Integration | Component | falcon-charts | views', function () {
     spec.layer = [lineLayer, ruleLayer];
     const element = render(spec);
 
-    assert.dom(testSelector('layer')).exists({ count: 2 });
+    assert.equal(element.querySelectorAll(testSelector('layer')).length, 2);
   });
 
   test('renders a chart with nested layer data', async function (assert) {
@@ -64,7 +64,7 @@ module('Integration | Component | falcon-charts | views', function () {
 
     const element = render(layerSpec);
 
-    assert.dom(testSelector('layer')).exists();
-    assert.dom(testSelector('mark')).exists();
+    assert.ok(element.querySelector(testSelector('layer')));
+    assert.ok(element.querySelector(testSelector('mark')));
   });
 });

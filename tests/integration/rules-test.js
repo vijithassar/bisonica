@@ -16,10 +16,11 @@ module('Integration | Component | falcon-charts | rules', function () {
     };
     const mark = [...element.querySelectorAll(markSelector)];
 
-    assert.dom(axisSelectors.y).exists();
-    assert.dom(axisSelectors.x).doesNotExist();
-    assert.dom(markSelector).exists();
-    assert.dom(markSelector).hasTagName('line');
+    assert.ok(element.querySelector(axisSelectors.y));
+    assert.notOk(element.querySelector(axisSelectors.x));
+    assert.ok(element.querySelector(markSelector));
+    assert.equal(element.querySelector(markSelector).tagName, 'line');
+
     mark.forEach((item) => {
       assert.equal(
         item.getAttribute('y1'),

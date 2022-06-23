@@ -13,8 +13,8 @@ module('Integration | Component | falcon-charts | line', function () {
 
     const selector = testSelector('mark');
 
-    assert.dom(selector).exists();
-    assert.dom(selector).hasAttribute('d');
+    assert.ok(element.querySelector(selector));
+    assert.ok(element.querySelector(selector).getAttribute('d'));
 
     const pathStrings = [...element.querySelectorAll(selector)].map((node) =>
       node.getAttribute('d'),
@@ -29,7 +29,7 @@ module('Integration | Component | falcon-charts | line', function () {
   test('renders a line chart with points', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);
-    assert.dom(pointSelector).exists();
+    assert.ok(element.querySelector(pointSelector));
   });
 
   test('renders a line chart without points', async function (assert) {
@@ -37,7 +37,7 @@ module('Integration | Component | falcon-charts | line', function () {
 
     delete spec.mark.point;
     const element = render(spec);
-    assert.dom(pointSelector).doesNotExist();
+    assert.notOk(element.querySelector(pointSelector));
   });
 
   test('renders a line chart with arbitrary field names', async function (assert) {
@@ -62,6 +62,6 @@ module('Integration | Component | falcon-charts | line', function () {
       definition.field = propertyMap[old];
     });
     const element = render(spec);
-    assert.dom(pointSelector).exists();
+    assert.ok(element.querySelector(pointSelector));
   });
 });

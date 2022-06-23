@@ -80,8 +80,8 @@ module('Integration | Component | falcon-charts | circular', function () {
 
     const markSelector = testSelector('mark');
 
-    assert.dom(markSelector).exists();
-    assert.dom(markSelector).hasTagName('path');
+    assert.ok(element.querySelector(markSelector));
+    assert.equal(element.querySelector(markSelector).tagName, 'path');
 
     const marks = element.querySelector(testSelector('marks'));
 
@@ -102,8 +102,8 @@ module('Integration | Component | falcon-charts | circular', function () {
 
     const mark = testSelector('mark');
 
-    assert.dom(mark).exists();
-    assert.dom(mark).hasTagName('path');
+    assert.ok(element.querySelector(mark));
+    assert.equal(element.querySelector(mark).tagName, 'path');
 
     const marks = element.querySelector(testSelector('marks'));
 
@@ -132,8 +132,8 @@ module('Integration | Component | falcon-charts | circular', function () {
     const marksSelector = testSelector('marks');
     const markSelector = testSelector('mark');
 
-    assert.dom(markSelector).exists();
-    assert.dom(markSelector).hasTagName('path');
+    assert.ok(element.querySelector(markSelector));
+    assert.equal(element.querySelector(markSelector).tagName, 'path');
 
     const marks = element.querySelector(marksSelector);
 

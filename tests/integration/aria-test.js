@@ -42,7 +42,10 @@ module('Integration | Component | falcon-charts | aria', function () {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
 
-    assert.dom(testSelector('mark')).hasAttribute('aria-label');
+    [...element.querySelectorAll(testSelector('mark'))].forEach(mark => {
+      assert.ok(mark.getAttribute('aria-label'));
+    })
+
   });
 
   test('aria-label can be set to a calculate transform field', async function (assert) {
@@ -53,7 +56,7 @@ module('Integration | Component | falcon-charts | aria', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark')).hasAttribute('aria-label', /^START.*END$/);
+    assert.ok(element.querySelector(testSelector('mark')).getAttribute('aria-label').match(/^START.*END$/));
   });
 
   test('aria-label can diverge from tooltip', async function (assert) {
@@ -81,21 +84,24 @@ module('Integration | Component | falcon-charts | aria', function () {
   test('every bar chart mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
-
-    assert.dom(testSelector('mark')).hasAttribute('aria-label');
+    element.querySelectorAll(testSelector('mark')).forEach((mark => {
+      assert.ok(mark.getAttribute('aria-label'));
+    }));
   });
 
   test('every circular chart mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('circular');
     const element = render(spec);
-
-    assert.dom(testSelector('mark')).hasAttribute('aria-label');
+    element.querySelectorAll(testSelector('mark')).forEach((mark) => {
+      assert.ok(mark.getAttribute('aria-label'));
+    });
   });
 
   test('every line chart point mark has an aria-label attribute by default', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);
-
-    assert.dom(testSelector('marks-mark-point')).hasAttribute('aria-label');
+    element.querySelectorAll(testSelector('mark')).forEach((mark) => {
+      assert.ok(mark.getAttribute('aria-label'));
+    });
   });
 });

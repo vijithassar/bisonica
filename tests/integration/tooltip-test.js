@@ -17,7 +17,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark-title')).exists();
+    assert.ok(element.querySelector(testSelector('mark-title')));
   });
 
   test('renders a chart without SVG title tooltips', async function (assert) {
@@ -28,7 +28,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     delete spec.mark.tooltip;
     const element = render(spec);
 
-    assert.dom(testSelector('mark-title')).doesNotExist();
+    assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
   test('disables SVG title tooltips when a custom tooltip handler is indicated', async function (assert) {
@@ -38,7 +38,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark-title')).doesNotExist();
+    assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
   test('disables tooltips from the encoding hash', async function (assert) {
@@ -59,19 +59,11 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     Object.entries(spec.encoding).forEach(([channel, definition]) => {
       const field = definition.field || definition.aggregate;
-
-      assert
-        .dom(testSelector('mark-title'))
-        .includesText(
-          `${field}:`,
-          `${field} field for ${channel} encoding is included in tooltip content`,
-        );
-      assert
-        .dom(testSelector('mark-title'))
-        .doesNotIncludeText(
-          `${field}: undefined`,
-          `value of ${field} field for ${channel} encoding is undefined`,
-        );
+      const title = element.querySelector(testSelector('mark-title'));
+      const prefix = `${field}:`;
+      const undefinedText = `${field}: undefined`;
+      assert.ok(title.textContent.includes(prefix), `${field} field for ${channel} encoding is included in tooltip content`)
+      assert.ok(!title.textContent.includes(undefinedText), `value of ${field} field for ${channel} encoding is undefined`)
     });
   });
 
@@ -82,9 +74,10 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark-title')).exists();
-    assert.dom(testSelector('mark-title')).hasAnyText();
-    assert.dom(testSelector('mark-title')).doesNotIncludeText('undefined');
+    assert.ok(element.querySelector(testSelector('mark-title')));
+    assert.ok(element.querySelector(testSelector('mark-title')).textContent.length);
+    assert.ok(!element.querySelector(testSelector('mark-title')).textContent.includes('undefined'));
+
   });
 
   test('renders a circular chart with SVG title tooltips', async function (assert) {
@@ -94,9 +87,9 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark-title')).exists();
-    assert.dom(testSelector('mark-title')).hasAnyText();
-    assert.dom(testSelector('mark-title')).doesNotIncludeText('undefined');
+    assert.ok(element.querySelector(testSelector('mark-title')));
+    assert.ok(element.querySelector(testSelector('mark-title')).textContent.length);
+    assert.ok(!element.querySelector(testSelector('mark-title')).textContent.includes('undefined'));
   });
 
   test('renders a line chart with SVG title tooltips', async function (assert) {
@@ -106,9 +99,9 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('point-title')).exists();
-    assert.dom(testSelector('point-title')).hasAnyText();
-    assert.dom(testSelector('point-title')).doesNotIncludeText('undefined');
+    assert.ok(element.querySelector(testSelector('point-title')));
+    assert.ok(element.querySelector(testSelector('point-title')).textContent.length);
+    assert.ok(!element.querySelector(testSelector('point-title')).textContent.includes('undefined'));
   });
 
   test('follows tooltip rendering instructions in charts with nested layers', async function (assert) {
@@ -129,8 +122,8 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     const element = render(spec);
 
-    assert.dom(testSelector('mark')).exists();
-    assert.dom(testSelector('mark-title')).doesNotExist();
+    assert.ok(element.querySelector(testSelector('mark')));
+    assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
   test('emits a CustomEvent with tooltip details in response to mouseover', async function (assert) {

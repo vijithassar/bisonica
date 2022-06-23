@@ -16,8 +16,8 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
     const element = render(spec);
     const mark = testSelector('mark');
 
-    assert.dom(mark).exists();
-    assert.dom(mark).hasTagName('rect');
+    assert.ok(element.querySelector(mark));
+    assert.equal(element.querySelector(mark).tagName, 'rect');
 
     const nodes = [...element.querySelectorAll(mark)];
 
@@ -47,6 +47,8 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
     });
 
     const element = render(spec);
-    assert.dom('rect.mark').hasAttribute('height', '0');
+    element.querySelectorAll('rect.mark').forEach((mark) => {
+      assert.equal(mark.getAttribute('height'), 0);
+    });
   });
 });

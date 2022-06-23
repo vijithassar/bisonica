@@ -10,9 +10,9 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     const single = [testSelector('axes'), testSelector('axes-x'), testSelector('axes-y')];
 
-    single.forEach((selector) => assert.dom(selector).exists({ count: 1 }));
+    single.forEach((selector) => assert.equal(element.querySelectorAll(selector).length, 1));
 
-    assert.dom(testSelector('tick')).exists();
+    assert.ok(element.querySelector(testSelector('tick')));
   });
 
   test('renders a chart with custom axis titles', async function (assert) {
@@ -21,8 +21,8 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
     const element = render(spec);
-    assert.dom(testSelector('axes-x-title')).hasText(spec.encoding.x.axis.title);
-    assert.dom(testSelector('axes-y-title')).hasText(spec.encoding.y.axis.title);
+    assert.equal(element.querySelector(testSelector('axes-x-title')).textContent, spec.encoding.x.axis.title);
+    assert.equal(element.querySelector(testSelector('axes-y-title')).textContent, spec.encoding.y.axis.title);
   });
 
   test('renders a chart without y-axis tick labels', async function (assert) {
@@ -98,7 +98,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     const selectors = [testSelector('axes-x-title'), testSelector('axes-y-title')];
 
-    selectors.forEach((selector) => assert.dom(selector).doesNotExist());
+    selectors.forEach((selector) => assert.notOk(element.querySelector(selector)));
   });
 
   test('renders a chart with truncated axis labels', async function (assert) {
