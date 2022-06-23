@@ -4,6 +4,7 @@ import {
   create,
   falconChartsDefinition,
   render,
+  marksWithUrls,
   specificationFixture,
   testSelector
 } from '../test-helpers.js';
@@ -23,9 +24,9 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
     const element = render(spec);
-    assert.equal(this.page.marksWithUrls().length, 2);
+    assert.equal(marksWithUrls(element).length, 2);
 
-    const urls = this.page.marksWithUrls().map(getUrl);
+    const urls = marksWithUrls(element).map(getUrl);
 
     assert.notEqual(urls[0], urls[1]);
   });
@@ -38,9 +39,9 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
     const element = render(spec);
-    assert.equal(this.page.marksWithUrls().length, 2);
+    assert.equal(marksWithUrls(element).length, 2);
 
-    const urls = this.page.marksWithUrls().map(getUrl);
+    const urls = marksWithUrls(element).map(getUrl);
 
     assert.notEqual(urls[0], urls[1]);
   });

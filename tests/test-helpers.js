@@ -42,10 +42,14 @@ export function falconChartsDefinition(identifier) {
     },
   };
 
-  page.marksWithUrls = () => page.mark().filter((mark) => select(mark).datum().url);
-
   return page;
 }
+
+export const marksWithUrls = (element) => {
+  return [
+    ...element.querySelectorAll(testSelector(TEST_SELECTORS.mark))
+  ].filter((mark) => select(mark).datum().url)
+};
 
 export const tooltipContentUpdate = (page) => {
   return new Promise((resolve) => {
