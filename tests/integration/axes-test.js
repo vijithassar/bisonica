@@ -32,7 +32,9 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     element = render(spec);
 
-    let tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
+    let tickLabelTexts;
+
+    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
 
     assert.ok(tickLabelTexts.every((el) => el.textContent.length));
 
@@ -41,7 +43,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.y.axis.labels = false;
 
     element = render(spec);
-    tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
+    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
 
     assert.ok(!tickLabelTexts.some((el) => el.textContent.length));
   });
@@ -59,14 +61,14 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     element = render(spec);
 
-    const hourly = findAll(`${testSelector('axes-x')} .tick`);
+    const hourly = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(hourly.length > differenceDays);
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcweek' } };
     element = render(spec);
 
-    const weekly = findAll(`${testSelector('axes-x')} .tick`);
+    const weekly = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(weekly.length < differenceDays);
   });
@@ -82,7 +84,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     const element = render(spec);
 
-    const ticks = findAll(`${testSelector('axes-x')} .tick`);
+    const ticks = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(ticks.length < differenceDays);
   });
