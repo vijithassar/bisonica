@@ -1,6 +1,4 @@
 import {
-  create,
-  falconChartsDefinition,
   render,
   specificationFixture,
   tooltipContentUpdate,
@@ -24,8 +22,6 @@ module('Integration | Component | falcon-charts | keyboard', function () {
       }),
     };
     const spec = specificationFixture('circular');
-
-    this.page = create(falconChartsDefinition());
 
     await render(`
       <FalconCharts::Chart

@@ -32,19 +32,6 @@ const TEST_SELECTORS = {
   mark: 'mark',
 };
 
-export function falconChartsDefinition(identifier) {
-  const page = {
-    scope: scopeIdentifier(identifier),
-    marks: () => document.querySelector(testSelector(TEST_SELECTORS.marks)),
-    mark: () => [...document.querySelectorAll(testSelector(TEST_SELECTORS.mark))],
-    tooltipContent: () => {
-      return document.querySelector(testSelector(TEST_SELECTORS.tooltipContent));
-    },
-  };
-
-  return page;
-}
-
 export const marksWithUrls = (element) => {
   return [
     ...element.querySelectorAll(testSelector(TEST_SELECTORS.mark))

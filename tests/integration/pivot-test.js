@@ -1,8 +1,6 @@
 import * as d3 from 'd3';
 import { encodingField } from '../../source/encodings.js';
 import {
-  create,
-  falconChartsDefinition,
   render,
   marksWithUrls,
   specificationFixture,
@@ -22,7 +20,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
+
     const element = render(spec);
     assert.equal(marksWithUrls(element).length, 2);
 
@@ -37,7 +35,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
+
     const element = render(spec);
     assert.equal(marksWithUrls(element).length, 2);
 
@@ -52,15 +50,15 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
+
     const element = render(spec);
 
     // in this case because of the nested series we need to
     // bypass the marksWithUrls() helper in order to flatten the array
     // and likewise bypass the getUrl() helper since the mark datum has
     // already been retrieved during that flat map
-    const data = this.page
-      .mark()
+    const data = [...element
+      .querySelectorAll(testSelector('mark'))]
       .map((mark) => d3.select(mark).datum().values)
       .flat();
 
@@ -86,7 +84,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     ];
 
     spec.encoding.href = { field: 'url' };
-    this.page = create(falconChartsDefinition());
+
     const element = render(spec);
 
     const getUrl = (mark) => d3.select(mark).datum().data[encodingField(spec, 'href')];

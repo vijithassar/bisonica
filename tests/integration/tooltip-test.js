@@ -1,6 +1,4 @@
 import {
-  create,
-  falconChartsDefinition,
   render,
   specificationFixture,
   testSelector,
@@ -146,7 +144,7 @@ module('Integration | Component | falcon-charts | tooltips', function () {
       tooltipEvent = event;
     });
 
-    this.page.mark()[0].dispatchEvent(event);
+    element.querySelectorAll(testSelector('mark'))[0].dispatchEvent(event);
 
     assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
     assert.equal(
@@ -164,7 +162,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
   test('displays a custom tooltip', async function (assert) {
     const spec = specificationFixture('circular');
 
-    this.page = create(falconChartsDefinition());
     await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
