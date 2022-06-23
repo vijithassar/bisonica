@@ -5,7 +5,9 @@ import {
   specificationFixture,
   tooltipContentUpdate,
 } from '../test-helpers.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 const LEFT = 'ArrowLeft';
 const RIGHT = 'ArrowRight';

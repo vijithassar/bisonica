@@ -1,5 +1,7 @@
 import { memoize } from '../../source/memoize';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | component | falcon-charts | memoize', () => {
   test('memoizes functions', (assert) => {

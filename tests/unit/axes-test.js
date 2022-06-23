@@ -4,8 +4,10 @@ import {
   rotation,
   truncate,
 } from '../../source/text';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | axes', () => {
   test('retrieves x axis text rotation', (assert) => {

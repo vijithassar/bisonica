@@ -6,7 +6,9 @@ import {
   testSelector,
   tooltipContentUpdate,
 } from '../test-helpers.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Integration | Component | falcon-charts | tooltips', function () {
 

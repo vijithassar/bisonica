@@ -4,8 +4,10 @@ import {
 } from '../../source/data';
 import { encodingField } from '../../source/encodings';
 import { getTimeParser } from '../../source/time';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | data', () => {
   test('compiles stacked bar data', (assert) => {

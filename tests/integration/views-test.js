@@ -1,5 +1,7 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { render, specificationFixture, testSelector } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Integration | Component | falcon-charts | views', function () {
   test('renders a chart without layers', async function (assert) {

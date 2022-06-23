@@ -1,9 +1,11 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import {
   nodesHavePositiveHeights,
   specificationFixture,
 } from '../test-helpers.js';
 import { render, testSelector } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 const approximate = (value) => Math.round(value * 100) / 100;
 

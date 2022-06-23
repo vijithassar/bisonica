@@ -1,9 +1,11 @@
 import { barWidth } from '../../source/marks';
 import { categoricalBarChartSpec } from '../../fixtures/categorical-bar';
 import { encodingField } from '../../source/encodings';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 // import { set } from '@ember/object';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+
+const { module, test } = qunit;
 
 const set = () => null
 

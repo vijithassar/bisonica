@@ -3,7 +3,9 @@ import {
   transform,
 } from '../../source/transform.js';
 import { encodingValue } from '../../source/encodings.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 const expressions = {
   naive: "'https://www.crowdstrike.com' + '/' + 'test'",

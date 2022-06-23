@@ -4,7 +4,9 @@ import {
   parseTime,
   timeMethod,
 } from '../../source/time';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | timestamps', () => {
   const timestamps = [

@@ -1,9 +1,11 @@
 import { dimensions } from './support.js';
 import { lineChartSpec } from '../../fixtures/line.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { parseScales } from '../../source/scales.js';
 import { parseTime } from '../../source/time.js';
 import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 const stackedBarChartSpec = specificationFixture('stackedBar');
 const ordinalSpec = specificationFixture('stackedBar');

@@ -7,7 +7,9 @@ import {
   specificationFixture,
   testSelector
 } from '../test-helpers.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Integration | Component | falcon-charts | pivot urls', function () {
 

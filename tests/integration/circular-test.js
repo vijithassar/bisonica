@@ -1,6 +1,8 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { render, testSelector } from '../test-helpers.js';
 import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 const JITTER_RATIO = 0.01;
 

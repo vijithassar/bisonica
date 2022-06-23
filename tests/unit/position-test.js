@@ -1,5 +1,7 @@
 import { margin } from '../../source/position';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 const round = (i, precision = 1000) => Math.round(i * precision) / precision;
 

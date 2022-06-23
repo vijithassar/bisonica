@@ -7,9 +7,11 @@ import {
   encodingValue,
 } from '../../source/encodings';
 import { dimensions } from './support';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { parseTime } from '../../source/time';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | encoders', () => {
   test('creates encoders', (assert) => {

@@ -1,8 +1,10 @@
 import { chart } from '../../source/chart';
 import { init } from '../../source/init';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { select } from 'd3';
 import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+
+const { module, test } = qunit;
 
 /**
  * recursively freeze a nested object

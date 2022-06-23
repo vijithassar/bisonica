@@ -1,5 +1,7 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { tooltipContent } from '../../source/tooltips';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | tooltips', () => {
   test('it is a function factory', (assert) => {

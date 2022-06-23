@@ -2,7 +2,9 @@ import {
   layerMatch,
   layerNode,
 } from '../../source/views';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | views', () => {
   const specifications = {

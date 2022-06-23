@@ -1,5 +1,7 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { render, specificationFixture, testSelector } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Integration | Component | falcon-charts | legend', function () {
   test('renders a chart with legend', async function (assert) {

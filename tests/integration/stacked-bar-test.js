@@ -1,6 +1,8 @@
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { render, testSelector } from '../test-helpers.js';
 import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Integration | Component | falcon-charts | stacked-bar', function () {
   test('renders a stacked bar chart', async function (assert) {

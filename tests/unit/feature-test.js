@@ -1,5 +1,7 @@
 import { feature } from '../../source/feature.js';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | feature', () => {
   test('identifies chart features', (assert) => {

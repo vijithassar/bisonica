@@ -1,6 +1,8 @@
 import { ascending } from 'd3';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import { parseScales } from '../../source/scales';
+
+const { module, test } = qunit;
 
 const extra = { group: 'z', label: 'a', value: 3 };
 const specification = () => {

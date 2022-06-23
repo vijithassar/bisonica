@@ -1,5 +1,7 @@
 import * as helpers from '../../source/helpers';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | helpers', () => {
   test('extracts values from s', (assert) => {
