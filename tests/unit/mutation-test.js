@@ -2,7 +2,7 @@ import { chart } from '../../source/chart.js';
 import { init } from '../../source/init.js';
 import qunit from 'qunit';
 import { select } from 'd3';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
 
 const { module, test } = qunit;
 

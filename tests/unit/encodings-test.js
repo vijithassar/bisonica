@@ -9,7 +9,7 @@ import {
 import { dimensions } from './support.js';
 import qunit from 'qunit';
 import { parseTime } from '../../source/time.js';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
 
 const { module, test } = qunit;
 
