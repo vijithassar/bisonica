@@ -140,8 +140,8 @@ module('Integration | Component | falcon-charts | tooltips', function () {
 
     assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
     assert.equal(
-      typeof tooltipEvent.detail.interaction.target.querySelector,
-      'function',
+      typeof tooltipEvent.detail.interaction.bubbles,
+      'boolean',
       'custom event detail has original interaction event',
     );
     assert.equal(
