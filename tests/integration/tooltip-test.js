@@ -133,7 +133,6 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     let tooltipEvent = null;
 
     element.querySelector('.chart').addEventListener('tooltip', (event) => {
-      // eslint-disable-next-line no-unused-vars
       tooltipEvent = event;
     });
 
