@@ -1,10 +1,13 @@
-This is an alternative renderer for the [Vega Lite](https://vega.github.io/vega-lite/) data visualization format, built to increase speed, accessibility, and security.
+# Overview
 
-It is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in `source/marks.js`.
+bisonica is a minimalist and accessibility-first alternative renderer for the [Vega Lite](https://vega.github.io/vega-lite/) data visualization format, a replacement for the [original `vega-lite.js` library](https://github.com/vega/vega-lite) which reads in the same JSON configuration objects and outputs charts.
 
-To use:
+# Quick Start
+
+The `chart()` function takes a Vega Lite JSON specification object and uses it to create a chart rendering function which can be run using [`d3-selection`](https://github.com/d3/d3-selection).
 
 ```javascript
+import select from 'd3';
 import { chart } from 'bisonica';
 
 const dimensions = {
@@ -12,46 +15,49 @@ const dimensions = {
     y: 500
 };
 
-d3.select(node).call(chart(specification, dimensions));
+// create a chart rendering function
+const renderer = chart(specification, dimensions);
+
+// render the chart
+renderer(select('div'));
 ```
 
-A more verbose example including markup:
+Or the equivalent syntax with `selection.call()`:
+
+```javascript
+// render the chart
+select('div').call(renderer);
+```
+
+
+You'll probably want to load the included stylesheet? Feel free to use your own alternative if you want, though.
 
 ```html
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="./source/index.css" />
-        <script type="text/javascript" src="//d3js.org/d3.v6.js"></script>
-        <script type="module">
-            import { chart } from './build/charts.js'
-
-            const specification = {
-                "title": {
-                    "text": "demo"
-                },
-                "data": {
-                    "values": [
-                        { value: 1, group: 'z' },
-                        { value: 2, group: 'y' },
-                        { value: 3, group: 'x' },
-                        { value: 4, group: 'w' },
-                        { value: 5, group: 'v' }
-                    ]
-                },
-                "mark": {type: "arc", innerRadius: 50},
-                "encoding": {
-                    "theta": {field: "value", type: "quantitative"},
-                    "color": {field: "group", type: "nominal"}
-                }
-            }
-            d3.select('main .chart').call(chart(specification, {x: 500, y: 500}))
-        </script>
-    </head>
-    <body>
-        <main>
-            <div class="chart"></div>
-        </main>
-    </body>
-</html>
+<head>
+    <link rel="stylesheet" href="./source/index.css" />
+</head>
 ```
+
+# Why?
+
+## Accessibility
+
+When faced with an accessibility concern, bisonica typically just defaults to the most accessible option, whereas `vega-lite.js` might require more elaborate JSON in the specification object in order to achieve the same result. Some accessibility features such as the built in keyboard navigation may not be possible to replicate with the standard `vega-lite.js` renderer at all.
+
+## Performance
+
+bisonica is often considerably faster than rendering the same chart using `vega-lite.js`. This will depend on the specific chart configuration and the input data, but as an example, pie charts have been clocked rendering in as little as 8 milliseconds.
+
+## Customization
+
+Unlike `vega-lite.js`, bisonica renders legends as HTML next to the SVG instead of inside the SVG, and as a result they are much easier to restyle with CSS or even control with custom JavaScript behaviors.
+
+# Omissions
+
+bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`source/marks.js`](./source/marks.js).
+
+Data must be supplied [inline](https://vega.github.io/vega-lite/docs/data.html#inline) as an array of JavaScript objects attached to `specification.data.values`.
+
+Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
+
+Rendering to alternative output formats such as `<canvas>` instead of SVG will most likely never be supported.
