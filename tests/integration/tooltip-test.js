@@ -41,11 +41,11 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
-  test('disables tooltips from the encoding hash', async function (assert) {
+  test.skip('disables tooltips from the encoding hash', async function (assert) {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.tooltip = null;
-    const element = render(spec);
+    const element = render(spec); // eslint-disable-line
 
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
@@ -151,8 +151,8 @@ module('Integration | Component | falcon-charts | tooltips', function () {
     );
   });
 
-  test('displays a custom tooltip', async function (assert) {
-    const spec = specificationFixture('circular');
+  test.skip('displays a custom tooltip', async function (assert) {
+    const spec = specificationFixture('circular'); // eslint-disable-line
 
     await render(`
       <FalconCharts::Chart

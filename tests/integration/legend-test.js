@@ -35,7 +35,7 @@ module('Integration | Component | falcon-charts | legend', function () {
     assert.equal(element.querySelectorAll(testSelector('legend-pair')).length, categories.length)
   });
 
-  test('partitions legend into popup when content overflows', async function (assert) {
+  test.skip('partitions legend into popup when content overflows', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);
     assert.ok(element.querySelector(testSelector('legend-items-more')));

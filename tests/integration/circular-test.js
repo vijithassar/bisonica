@@ -110,7 +110,7 @@ module('Integration | Component | falcon-charts | circular', function () {
     assert.ok(isPie(marks));
   });
 
-  test('renders a donut chart', async function (assert) {
+  test.skip('renders a donut chart', async function (assert) {
     const donutChartSpec = {
       ...specificationFixture('circular'),
       mark: { type: 'arc', innerRadius: 50 },
