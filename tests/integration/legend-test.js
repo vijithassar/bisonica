@@ -4,7 +4,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 module('Integration | Component | falcon-charts | legend', function () {
   test('renders a chart with legend', async function (assert) {
     const spec = specificationFixture('stackedBar');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -17,7 +17,7 @@ module('Integration | Component | falcon-charts | legend', function () {
 
   test('renders a chart with legend automatically omitted', async function (assert) {
     const spec = specificationFixture('categoricalBar');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -32,7 +32,7 @@ module('Integration | Component | falcon-charts | legend', function () {
     const spec = specificationFixture('line');
 
     spec.encoding.color.legend = null;
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -47,7 +47,7 @@ module('Integration | Component | falcon-charts | legend', function () {
     const spec = specificationFixture('line');
     const categories = [...new Set(spec.data.values.map((item) => item.group))];
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -59,7 +59,7 @@ module('Integration | Component | falcon-charts | legend', function () {
 
   test('partitions legend into popup when content overflows', async function (assert) {
     const spec = specificationFixture('line');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -83,7 +83,7 @@ module('Integration | Component | falcon-charts | legend', function () {
 
       return { ...item, group: ids.get(item.group) };
     });
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

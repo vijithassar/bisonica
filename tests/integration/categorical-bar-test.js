@@ -11,7 +11,7 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
   test('renders a categorical bar chart', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height={{500}}
@@ -51,7 +51,7 @@ module('Integration | Component | falcon-charts | categorical-bar', function () 
       item.value = 0;
     });
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height={{500}}

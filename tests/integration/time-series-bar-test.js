@@ -12,7 +12,7 @@ module('Integration | Component | falcon-charts | temporal-bar', function () {
   test('renders a time series bar chart', async function (assert) {
     const spec = specificationFixture('temporalBar');
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height={{500}}
@@ -52,7 +52,7 @@ module('Integration | Component | falcon-charts | temporal-bar', function () {
       item.value = 0;
     });
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height={{500}}

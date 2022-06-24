@@ -23,7 +23,7 @@ module('Integration | Component | falcon-charts | text', function () {
       },
     };
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -44,7 +44,7 @@ module('Integration | Component | falcon-charts | text', function () {
     spec.encoding.color = { field: 'group', type: 'nominal' };
     spec.encoding.text = { field: 'group', type: 'nominal' };
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

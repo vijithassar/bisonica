@@ -7,7 +7,7 @@ const pointSelector = testSelector('marks-mark-point');
 module('Integration | Component | falcon-charts | line', function () {
   test('renders a line chart', async function (assert) {
     const spec = specificationFixture('line');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -32,7 +32,7 @@ module('Integration | Component | falcon-charts | line', function () {
 
   test('renders a line chart with points', async function (assert) {
     const spec = specificationFixture('line');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -46,7 +46,7 @@ module('Integration | Component | falcon-charts | line', function () {
     const spec = specificationFixture('line');
 
     delete spec.mark.point;
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -77,7 +77,7 @@ module('Integration | Component | falcon-charts | line', function () {
 
       definition.field = propertyMap[old];
     });
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

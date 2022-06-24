@@ -20,7 +20,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -41,7 +41,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -62,7 +62,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
     this.page = create(falconChartsDefinition());
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -102,7 +102,7 @@ module('Integration | Component | falcon-charts | pivot urls', function () {
 
     spec.encoding.href = { field: 'url' };
     this.page = create(falconChartsDefinition());
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

@@ -25,7 +25,7 @@ module('Integration | Component | falcon-charts | keyboard', function () {
 
     this.page = create(falconChartsDefinition());
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

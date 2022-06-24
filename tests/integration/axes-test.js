@@ -5,7 +5,7 @@ module('Integration | Component | falcon-charts | axes', function () {
   test('renders a chart with axes', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -25,7 +25,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
-    await render(hbs`
+    await render(`
 
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -44,8 +44,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     element = render(spec);
 
-    await render(hbs`
-
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -62,7 +61,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.y.axis.labels = false;
 
     element = render(spec);
-    await render(hbs`
+    await render(`
 
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -83,7 +82,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utchour' } };
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -97,8 +96,8 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcweek' } };
     element = render(spec);
-    await render(hbs`
 
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -120,7 +119,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcday', step: 2 } };
     const element = render(spec);
-    await render(hbs`
+    await render(`
 
       <FalconCharts::Chart
         @spec={{this.spec}}
@@ -140,7 +139,7 @@ module('Integration | Component | falcon-charts | axes', function () {
     spec.encoding.x.axis = { title: null };
     spec.encoding.y.axis = { title: null };
     const element = render(spec);
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
@@ -159,7 +158,7 @@ module('Integration | Component | falcon-charts | axes', function () {
 
     spec.encoding.x.axis = { labelLimit: max };
 
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

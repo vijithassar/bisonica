@@ -5,7 +5,7 @@ import { specificationFixture } from '../test-helpers.js';
 module('Integration | Component | falcon-charts | stacked-bar', function () {
   test('renders a stacked bar chart', async function (assert) {
     const spec = specificationFixture('stackedBar');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

@@ -5,7 +5,7 @@ import { specificationFixture } from '../test-helpers.js';
 module('Integration | Component | falcon-charts | rules', function () {
   test('renders rules', async function (assert) {
     const spec = specificationFixture('rules');
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500
