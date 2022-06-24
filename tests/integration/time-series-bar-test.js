@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import {
   nodesHavePositiveHeights,
+  render,
   specificationFixture,
+  testSelector,
 } from '../test-helpers.js';
-import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
 
 const approximate = (value) => Math.round(value * 100) / 100;
 

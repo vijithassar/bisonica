@@ -3,12 +3,12 @@ import { create } from 'ember-cli-page-object';
 import { encodingField } from '../../source/encodings';
 import {
   falconChartsDefinition,
+  render,
   specificationFixture,
+  testSelector
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
 
 module('Integration | Component | falcon-charts | pivot urls', function (hooks) {
   setupRenderingTest(hooks);

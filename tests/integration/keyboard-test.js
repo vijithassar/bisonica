@@ -2,11 +2,11 @@ import { LEFT, RIGHT } from 'key-codes';
 import { create } from 'ember-cli-page-object';
 import {
   falconChartsDefinition,
+  render,
   specificationFixture,
   tooltipContentUpdate,
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 
 module('Integration | Component | falcon-charts | keyboard', function (hooks) {

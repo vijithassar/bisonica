@@ -3,9 +3,8 @@ import {
   nodesHavePositiveHeights,
   specificationFixture,
 } from '../test-helpers.js';
-import { render } from '@ember/test-helpers';
+import { render, testSelector } from '../test-helpers.js';
 import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
 
 const approximate = (value) => Math.round(value * 100) / 100;
 

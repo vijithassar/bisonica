@@ -1,8 +1,6 @@
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
+import { render, specificationFixture, testSelector } from '../test-helpers.js';
 import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '../test-helpers.js';
-import { testSelector } from 'test-support';
 
 module('Integration | Component | falcon-charts | views', function (hooks) {
   setupRenderingTest(hooks);

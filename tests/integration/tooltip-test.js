@@ -1,13 +1,13 @@
 import { create } from 'ember-cli-page-object';
 import {
   falconChartsDefinition,
+  render,
   specificationFixture,
+  testSelector,
   tooltipContentUpdate,
 } from '../test-helpers.js';
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
 
 module('Integration | Component | falcon-charts | tooltips', function (hooks) {
   setupRenderingTest(hooks);

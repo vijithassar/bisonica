@@ -1,9 +1,8 @@
 import * as d3 from 'd3';
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
+import { render, testSelector } from '../test-helpers.js';
 import { setupRenderingTest } from 'ember-qunit';
 import { specificationFixture } from '../test-helpers.js';
-import { testSelector } from '@crowdstrike/test-helpers/test-support';
 
 module('Integration | Component | falcon-charts | sort', function (hooks) {
   setupRenderingTest(hooks);

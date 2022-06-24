@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
+import { render, specificationFixture } from '../test-helpers.js';
 import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '../test-helpers.js';
-import { testSelector } from 'test-support';
+import { testSelector } from '../test-helpers.js';
 
 const pointSelector = testSelector('marks-mark-point');
 
