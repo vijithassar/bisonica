@@ -18,10 +18,4 @@ const rulesSpec = {
   },
 };
 
-const count = new Set(rulesSpec.data.values.map((item) => item.group)).size;
-
-rulesSpec.encoding.color.scale = {
-  range: getGraphColors(count).map((item) => `var(--${item.swatchName})`),
-};
-
 export { rulesSpec };

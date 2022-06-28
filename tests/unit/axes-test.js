@@ -3,9 +3,11 @@ import {
   format,
   rotation,
   truncate,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/text';
-import { module, test } from 'qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+} from '../../source/text.js';
+import qunit from 'qunit';
+import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | axes', () => {
   test('retrieves x axis text rotation', (assert) => {

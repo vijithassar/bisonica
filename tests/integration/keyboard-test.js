@@ -1,19 +1,18 @@
-import hbs from 'htmlbars-inline-precompile';
-import { LEFT, RIGHT } from 'key-codes';
-import { create } from 'ember-cli-page-object';
 import {
-  falconChartsDefinition,
+  render,
   specificationFixture,
   tooltipContentUpdate,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
+} from '../test-helpers.js';
+import qunit from 'qunit';
 
-module('Integration | Component | falcon-charts | keyboard', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
 
-  test('keyboard navigation works', async function (assert) {
+const LEFT = 'ArrowLeft';
+const RIGHT = 'ArrowRight';
+
+module('Integration | Component | falcon-charts | keyboard', function () {
+
+  test.skip('keyboard navigation works', async function (assert) {
     const dispatchEvents = {
       [LEFT]: new KeyboardEvent('keyup', {
         key: LEFT,
@@ -22,12 +21,9 @@ module('Integration | Component | falcon-charts | keyboard', function (hooks) {
         key: RIGHT,
       }),
     };
-    const spec = specificationFixture('circular');
+    const spec = specificationFixture('circular'); // eslint-disable-line
 
-    this.page = create(falconChartsDefinition());
-
-    this.set('spec', spec);
-    await render(hbs`
+    await render(`
       <FalconCharts::Chart
         @spec={{this.spec}}
         @height=500

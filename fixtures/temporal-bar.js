@@ -16,7 +16,6 @@ const temporalBarChartSpec = {
   encoding: {
     y: { field: 'value', type: 'quantitative' },
     x: { field: 'date', type: 'temporal', timeUnit: 'utcyear', axis: { format: '%Y' } },
-    color: { value: `var(--${getGraphColors(1).pop().swatchName})` },
   },
 };
 

@@ -1,9 +1,11 @@
 import {
   calculate,
   transform,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/transform';
-import { encodingValue } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
-import { module, test } from 'qunit';
+} from '../../source/transform.js';
+import { encodingValue } from '../../source/encodings.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 const expressions = {
   naive: "'https://www.crowdstrike.com' + '/' + 'test'",

@@ -1,9 +1,13 @@
-import { barWidth } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/marks';
-import { categoricalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/categorical-bar';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
-import { module, test } from 'qunit';
-import { set } from '@ember/object';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
+import { barWidth } from '../../source/marks.js';
+import { categoricalBarChartSpec } from '../../fixtures/categorical-bar.js';
+import { encodingField } from '../../source/encodings.js';
+import qunit from 'qunit';
+// import { set } from '@ember/object';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+
+const { module, test } = qunit;
+
+const set = () => null
 
 module('Unit | Component | falcon-charts | marks', () => {
   test('bar width', (assert) => {

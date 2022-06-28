@@ -1,29 +1,21 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import qunit from 'qunit';
+import { render, testSelector } from '../test-helpers.js';
+import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | stacked-bar', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | stacked-bar', function () {
   test('renders a stacked bar chart', async function (assert) {
-    this.set('spec', specificationFixture('stackedBar'));
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const spec = specificationFixture('stackedBar');
+    const element = render(spec);
 
     const mark = testSelector('mark');
 
-    assert.dom(mark).exists();
-    assert.dom(mark).hasTagName('rect');
+    assert.ok(element.querySelector(mark));
+    assert.ok(element.querySelector(mark).tagName, 'rect');
 
     const nodeHasPositiveHeight = (node) => Number(node.getAttribute('height')) >= 0;
-    const nodesHavePositiveHeights = [...this.element.querySelectorAll(mark)].every(
+    const nodesHavePositiveHeights = [...element.querySelectorAll(mark)].every(
       nodeHasPositiveHeight,
     );
 

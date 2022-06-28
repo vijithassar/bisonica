@@ -3,8 +3,10 @@ import {
   getTimeParser,
   parseTime,
   timeMethod,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
-import { module, test } from 'qunit';
+} from '../../source/time.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | timestamps', () => {
   const timestamps = [

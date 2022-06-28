@@ -720,10 +720,4 @@ const stackedBarChartSpec = {
   },
 };
 
-const count = new Set(stackedBarChartSpec.data.values.map((item) => item.group)).size;
-
-stackedBarChartSpec.encoding.color.scale = {
-  range: getGraphColors(count).map((item) => `var(--${item.swatchName})`),
-};
-
 export { stackedBarChartSpec };

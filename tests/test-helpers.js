@@ -1,14 +1,30 @@
-import { categoricalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/categorical-bar';
-import { circularChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/circular';
-import { groupedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/grouped-bar';
-import { lineChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/line';
-import { meta } from './chart/meta';
-import { rulesSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/rules';
-import { scatterPlotSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/scatter-plot';
-import { scopeIdentifier, testSelector } from 'test-support';
+import { categoricalBarChartSpec } from '../fixtures/categorical-bar.js';
+import { circularChartSpec } from '../fixtures/circular.js';
+import { groupedBarChartSpec } from '../fixtures/grouped-bar.js';
+import { lineChartSpec } from '../fixtures/line.js';
+import { rulesSpec } from '../fixtures/rules.js';
+import { scatterPlotSpec } from '../fixtures/scatter-plot.js';
+import { stackedBarChartSpec } from '../fixtures/stacked-bar.js';
+import { temporalBarChartSpec } from '../fixtures/temporal-bar.js';
+
 import { select } from 'd3';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
-import { temporalBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/temporal-bar';
+import { chart } from '../source/chart.js';
+
+export const testSelector = (string) => `[data-test-selector="${string}"]`;
+
+export const render = (specification, dimensions = { x: 500, y: 500 }) => {
+  const node = document.createElement('div');
+  select(node).call(chart(specification, dimensions));
+  return node;
+}
+
+const scopeIdentifier = () => {
+  throw new Error('not implemented');
+}
+
+export const create = () => {
+  throw new Error('not yet implemented');
+}
 
 const TEST_SELECTORS = {
   tooltipContent: 'chart-tooltip-content',
@@ -16,20 +32,11 @@ const TEST_SELECTORS = {
   mark: 'mark',
 };
 
-export function falconChartsDefinition(identifier) {
-  const page = {
-    scope: scopeIdentifier(identifier),
-    marks: () => document.querySelector(testSelector(TEST_SELECTORS.marks)),
-    mark: () => [...document.querySelectorAll(testSelector(TEST_SELECTORS.mark))],
-    tooltipContent: () => {
-      return document.querySelector(testSelector(TEST_SELECTORS.tooltipContent));
-    },
-  };
-
-  page.marksWithUrls = () => page.mark().filter((mark) => select(mark).datum().url);
-
-  return page;
-}
+export const marksWithUrls = (element) => {
+  return [
+    ...element.querySelectorAll(testSelector(TEST_SELECTORS.mark))
+  ].filter((mark) => select(mark).datum().url)
+};
 
 export const tooltipContentUpdate = (page) => {
   return new Promise((resolve) => {
@@ -76,8 +83,6 @@ export function specificationFixture(type) {
   }
 
   const result = JSON.parse(JSON.stringify(spec));
-
-  meta(result);
 
   return result;
 }

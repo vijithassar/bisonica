@@ -1,35 +1,26 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
+import qunit from 'qunit';
 import {
   nodesHavePositiveHeights,
+  render,
   specificationFixture,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
+  testSelector,
+} from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 const approximate = (value) => Math.round(value * 100) / 100;
 
-module('Integration | Component | falcon-charts | temporal-bar', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | temporal-bar', function () {
   test('renders a time series bar chart', async function (assert) {
     const spec = specificationFixture('temporalBar');
 
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height={{500}}
-        @width={{1000}}
-      />
-    `);
-
+    const element = render(spec);
     const mark = testSelector('mark');
 
-    assert.dom(mark).exists();
-    assert.dom(mark).hasTagName('rect');
+    assert.ok(element.querySelector(mark));
+    assert.equal(element.querySelector(mark).tagName, 'rect');
 
-    const nodes = [...this.element.querySelectorAll(mark)];
+    const nodes = [...element.querySelectorAll(mark)];
 
     assert.ok(
       nodesHavePositiveHeights(nodes),
@@ -56,15 +47,9 @@ module('Integration | Component | falcon-charts | temporal-bar', function (hooks
       item.value = 0;
     });
 
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height={{500}}
-        @width={{1000}}
-      />
-    `);
-
-    assert.dom('rect.mark').hasAttribute('height', '0');
+    const element = render(spec);
+    element.querySelectorAll('rect.mark').forEach((mark) => {
+      assert.equal(mark.getAttribute('height'), 0);
+    });
   });
 });

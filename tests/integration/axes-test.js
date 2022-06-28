@@ -1,29 +1,18 @@
-import hbs from 'htmlbars-inline-precompile';
-import { findAll, render } from '@ember/test-helpers';
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import qunit from 'qunit';
+import { render, testSelector, specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | axes', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | axes', function () {
   test('renders a chart with axes', async function (assert) {
     const spec = specificationFixture('stackedBar');
-
-    this.spec = spec;
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const single = [testSelector('axes'), testSelector('axes-x'), testSelector('axes-y')];
 
-    single.forEach((selector) => assert.dom(selector).exists({ count: 1 }));
+    single.forEach((selector) => assert.equal(element.querySelectorAll(selector).length, 1));
 
-    assert.dom(testSelector('tick')).exists();
+    assert.ok(element.querySelector(testSelector('tick')));
   });
 
   test('renders a chart with custom axis titles', async function (assert) {
@@ -31,47 +20,30 @@ module('Integration | Component | falcon-charts | axes', function (hooks) {
 
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
-    this.set('spec', spec);
-    await render(hbs`
-
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.dom(testSelector('axes-x-title')).hasText(spec.encoding.x.axis.title);
-    assert.dom(testSelector('axes-y-title')).hasText(spec.encoding.y.axis.title);
+    const element = render(spec);
+    assert.equal(element.querySelector(testSelector('axes-x-title')).textContent, spec.encoding.x.axis.title);
+    assert.equal(element.querySelector(testSelector('axes-y-title')).textContent, spec.encoding.y.axis.title);
   });
 
   test('renders a chart without y-axis tick labels', async function (assert) {
-    this.spec = specificationFixture('stackedBar');
-    await render(hbs`
+    let spec, element;
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    spec = specificationFixture('stackedBar');
 
-    let tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
+    element = render(spec);
+
+    let tickLabelTexts;
+
+    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
 
     assert.ok(tickLabelTexts.every((el) => el.textContent.length));
 
-    const spec = specificationFixture('stackedBar');
+    spec = specificationFixture('stackedBar');
 
     spec.encoding.y.axis.labels = false;
-    this.spec = spec;
-    await render(hbs`
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    tickLabelTexts = findAll(`${testSelector('axes-y')} .tick text`);
+    element = render(spec);
+    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
 
     assert.ok(!tickLabelTexts.some((el) => el.textContent.length));
   });
@@ -84,32 +56,19 @@ module('Integration | Component | falcon-charts | axes', function (hooks) {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utchour' } };
-    this.spec = spec;
-    await render(hbs`
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    let element;
 
-    const hourly = findAll(`${testSelector('axes-x')} .tick`);
+    element = render(spec);
+
+    const hourly = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(hourly.length > differenceDays);
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcweek' } };
-    this.spec = spec;
-    await render(hbs`
+    element = render(spec);
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-
-    const weekly = findAll(`${testSelector('axes-x')} .tick`);
+    const weekly = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(weekly.length < differenceDays);
   });
@@ -122,17 +81,10 @@ module('Integration | Component | falcon-charts | axes', function (hooks) {
     const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000));
 
     spec.encoding.x.axis = { tickCount: { interval: 'utcday', step: 2 } };
-    this.spec = spec;
-    await render(hbs`
 
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
-    const ticks = findAll(`${testSelector('axes-x')} .tick`);
+    const ticks = element.querySelectorAll(`${testSelector('axes-x')} .tick`);
 
     assert.ok(ticks.length < differenceDays);
   });
@@ -142,18 +94,11 @@ module('Integration | Component | falcon-charts | axes', function (hooks) {
 
     spec.encoding.x.axis = { title: null };
     spec.encoding.y.axis = { title: null };
-    this.spec = spec;
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const selectors = [testSelector('axes-x-title'), testSelector('axes-y-title')];
 
-    selectors.forEach((selector) => assert.dom(selector).doesNotExist());
+    selectors.forEach((selector) => assert.notOk(element.querySelector(selector)));
   });
 
   test('renders a chart with truncated axis labels', async function (assert) {
@@ -162,16 +107,9 @@ module('Integration | Component | falcon-charts | axes', function (hooks) {
 
     spec.encoding.x.axis = { labelLimit: max };
 
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
-    [...this.element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
+    [...element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
       assert.ok(node.getBoundingClientRect().width <= max);
     });
   });

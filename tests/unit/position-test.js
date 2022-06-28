@@ -1,5 +1,7 @@
-import { margin } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/position';
-import { module, test } from 'qunit';
+import { margin } from '../../source/position.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 const round = (i, precision = 1000) => Math.round(i * precision) / precision;
 

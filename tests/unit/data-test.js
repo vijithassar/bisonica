@@ -1,11 +1,13 @@
 import {
   data,
   transplantFields,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/data';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
-import { getTimeParser } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
-import { module, test } from 'qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
+} from '../../source/data.js';
+import { encodingField } from '../../source/encodings.js';
+import { getTimeParser } from '../../source/time.js';
+import qunit from 'qunit';
+import { specificationFixture } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | data', () => {
   test('compiles stacked bar data', (assert) => {

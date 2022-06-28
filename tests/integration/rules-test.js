@@ -1,33 +1,26 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from '@crowdstrike/test-helpers/test-support';
+import qunit from 'qunit';
+import { render, testSelector } from '../test-helpers.js';
+import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | rules', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | rules', function () {
   test('renders rules', async function (assert) {
-    this.set('spec', specificationFixture('rules'));
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const spec = specificationFixture('rules');
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
     const axisSelectors = {
       y: testSelector('axes-y'),
       x: testSelector('axes-x'),
     };
-    const mark = [...this.element.querySelectorAll(markSelector)];
+    const mark = [...element.querySelectorAll(markSelector)];
 
-    assert.dom(axisSelectors.y).exists();
-    assert.dom(axisSelectors.x).doesNotExist();
-    assert.dom(markSelector).exists();
-    assert.dom(markSelector).hasTagName('line');
+    assert.ok(element.querySelector(axisSelectors.y));
+    assert.notOk(element.querySelector(axisSelectors.x));
+    assert.ok(element.querySelector(markSelector));
+    assert.equal(element.querySelector(markSelector).tagName, 'line');
+
     mark.forEach((item) => {
       assert.equal(
         item.getAttribute('y1'),

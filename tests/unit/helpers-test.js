@@ -1,5 +1,7 @@
-import * as helpers from '@crowdstrike/falcon-charts/components/falcon-charts/shared/helpers';
-import { module, test } from 'qunit';
+import * as helpers from '../../source/helpers.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | helpers', () => {
   test('extracts values from s', (assert) => {

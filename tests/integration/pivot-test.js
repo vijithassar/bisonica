@@ -1,18 +1,16 @@
-import hbs from 'htmlbars-inline-precompile';
 import * as d3 from 'd3';
-import { create } from 'ember-cli-page-object';
-import { encodingField } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
+import { encodingField } from '../../source/encodings.js';
 import {
-  falconChartsDefinition,
+  render,
+  marksWithUrls,
   specificationFixture,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { testSelector } from 'test-support';
+  testSelector
+} from '../test-helpers.js';
+import qunit from 'qunit';
 
-module('Integration | Component | falcon-charts | pivot urls', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | pivot urls', function () {
 
   const getUrl = (item) => d3.select(item).datum().url;
 
@@ -22,18 +20,11 @@ module('Integration | Component | falcon-charts | pivot urls', function (hooks) 
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.equal(this.page.marksWithUrls().length, 2);
 
-    const urls = this.page.marksWithUrls().map(getUrl);
+    const element = render(spec);
+    assert.equal(marksWithUrls(element).length, 2);
+
+    const urls = marksWithUrls(element).map(getUrl);
 
     assert.notEqual(urls[0], urls[1]);
   });
@@ -44,18 +35,11 @@ module('Integration | Component | falcon-charts | pivot urls', function (hooks) 
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.equal(this.page.marksWithUrls().length, 2);
 
-    const urls = this.page.marksWithUrls().map(getUrl);
+    const element = render(spec);
+    assert.equal(marksWithUrls(element).length, 2);
+
+    const urls = marksWithUrls(element).map(getUrl);
 
     assert.notEqual(urls[0], urls[1]);
   });
@@ -66,22 +50,15 @@ module('Integration | Component | falcon-charts | pivot urls', function (hooks) 
     spec.encoding.href = { field: 'url' };
     spec.data.values[0].url = 'https://www.crowdstrike.com/a';
     spec.data.values[1].url = 'https://www.crowdstrike.com/b';
-    this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+
+    const element = render(spec);
 
     // in this case because of the nested series we need to
     // bypass the marksWithUrls() helper in order to flatten the array
     // and likewise bypass the getUrl() helper since the mark datum has
     // already been retrieved during that flat map
-    const data = this.page
-      .mark()
+    const data = [...element
+      .querySelectorAll(testSelector('mark'))]
       .map((mark) => d3.select(mark).datum().values)
       .flat();
 
@@ -107,18 +84,11 @@ module('Integration | Component | falcon-charts | pivot urls', function (hooks) 
     ];
 
     spec.encoding.href = { field: 'url' };
-    this.page = create(falconChartsDefinition());
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+
+    const element = render(spec);
 
     const getUrl = (mark) => d3.select(mark).datum().data[encodingField(spec, 'href')];
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
     const links = marks.filter(getUrl).map(getUrl);
 
     assert.equal(links.length, 3);

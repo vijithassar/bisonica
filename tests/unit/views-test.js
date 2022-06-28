@@ -1,8 +1,10 @@
 import {
   layerMatch,
   layerNode,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/views';
-import { module, test } from 'qunit';
+} from '../../source/views.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | views', () => {
   const specifications = {

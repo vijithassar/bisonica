@@ -1,29 +1,20 @@
-import hbs from 'htmlbars-inline-precompile';
 import * as d3 from 'd3';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from '@crowdstrike/test-helpers/test-support';
+import qunit from 'qunit';
+import { render, testSelector } from '../test-helpers.js';
+import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | sort', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | sort', function () {
   test('renders marks in ascending order', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = 'y';
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=500
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
-    const marks = [...this.element.querySelectorAll(markSelector)];
+    const marks = [...element.querySelectorAll(markSelector)];
     const data = marks.map((mark) => d3.select(mark).datum());
     const values = data.map((item) => item.data._.value);
     const sorted = values.slice().sort(d3.ascending);
@@ -34,18 +25,11 @@ module('Integration | Component | falcon-charts | sort', function (hooks) {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = '-y';
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=500
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
-    const marks = [...this.element.querySelectorAll(markSelector)];
+    const marks = [...element.querySelectorAll(markSelector)];
     const data = marks.map((mark) => d3.select(mark).datum());
     const values = data.map((item) => item.data._.value);
     const sorted = values.slice().sort(d3.descending);

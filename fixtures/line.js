@@ -716,10 +716,4 @@ const lineChartSpec = {
   },
 };
 
-const count = new Set(lineChartSpec.data.values.map((item) => item.group)).size;
-
-lineChartSpec.encoding.color.scale = {
-  range: getGraphColors(count).map((item) => `var(--${item.swatchName})`),
-};
-
 export { lineChartSpec };

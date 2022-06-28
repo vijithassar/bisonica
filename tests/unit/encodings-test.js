@@ -5,11 +5,13 @@ import {
   encodingFieldQuantitative,
   encodingType,
   encodingValue,
-} from '@crowdstrike/falcon-charts/components/falcon-charts/shared/encodings';
-import { dimensions } from './support';
-import { module, test } from 'qunit';
-import { parseTime } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/time';
-import { stackedBarChartSpec } from '@crowdstrike/falcon-charts/components/falcon-charts/-meta/specification-fixtures/stacked-bar';
+} from '../../source/encodings.js';
+import { dimensions } from './support.js';
+import qunit from 'qunit';
+import { parseTime } from '../../source/time.js';
+import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | encoders', () => {
   test('creates encoders', (assert) => {

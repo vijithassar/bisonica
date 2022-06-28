@@ -1,23 +1,14 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import qunit from 'qunit';
+import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | views', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | views', function () {
   test('renders a chart without layers', async function (assert) {
-    this.set('spec', specificationFixture('line'));
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const spec = specificationFixture('line');
+    const element = render(spec);
 
-    assert.dom(testSelector('layer')).doesNotExist();
+    assert.notOk(element.querySelector(testSelector('layer')));
   });
 
   test('renders a chart with one layer', async function (assert) {
@@ -30,16 +21,9 @@ module('Integration | Component | falcon-charts | views', function (hooks) {
     delete spec.mark;
     delete spec.encoding;
     spec.layer = [lineLayer];
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
-    assert.dom(testSelector('layer')).exists();
+    assert.ok(element.querySelector(testSelector('layer')));
   });
 
   test('renders a chart with two layers', async function (assert) {
@@ -60,16 +44,9 @@ module('Integration | Component | falcon-charts | views', function (hooks) {
     };
 
     spec.layer = [lineLayer, ruleLayer];
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
-    assert.dom(testSelector('layer')).exists({ count: 2 });
+    assert.equal(element.querySelectorAll(testSelector('layer')).length, 2);
   });
 
   test('renders a chart with nested layer data', async function (assert) {
@@ -85,16 +62,9 @@ module('Integration | Component | falcon-charts | views', function (hooks) {
     delete layerSpec.encoding;
     layerSpec.layer = [lineLayer];
 
-    this.set('spec', layerSpec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(layerSpec);
 
-    assert.dom(testSelector('layer')).exists();
-    assert.dom(testSelector('mark')).exists();
+    assert.ok(element.querySelector(testSelector('layer')));
+    assert.ok(element.querySelector(testSelector('mark')));
   });
 });

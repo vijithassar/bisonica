@@ -1,30 +1,22 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import qunit from 'qunit';
+import { render, specificationFixture } from '../test-helpers.js';
+import { testSelector } from '../test-helpers.js';
+
+const { module, test } = qunit;
 
 const pointSelector = testSelector('marks-mark-point');
 
-module('Integration | Component | falcon-charts | line', function (hooks) {
-  setupRenderingTest(hooks);
+module('Integration | Component | falcon-charts | line', function () {
   test('renders a line chart', async function (assert) {
-    this.set('spec', specificationFixture('line'));
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const spec = specificationFixture('line');
+    const element = render(spec);
 
     const selector = testSelector('mark');
 
-    assert.dom(selector).exists();
-    assert.dom(selector).hasAttribute('d');
+    assert.ok(element.querySelector(selector));
+    assert.ok(element.querySelector(selector).getAttribute('d'));
 
-    const pathStrings = [...this.element.querySelectorAll(selector)].map((node) =>
+    const pathStrings = [...element.querySelectorAll(selector)].map((node) =>
       node.getAttribute('d'),
     );
 
@@ -35,30 +27,17 @@ module('Integration | Component | falcon-charts | line', function (hooks) {
   });
 
   test('renders a line chart with points', async function (assert) {
-    this.set('spec', specificationFixture('line'));
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.dom(pointSelector).exists();
+    const spec = specificationFixture('line');
+    const element = render(spec);
+    assert.ok(element.querySelector(pointSelector));
   });
 
   test('renders a line chart without points', async function (assert) {
     const spec = specificationFixture('line');
 
     delete spec.mark.point;
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.dom(pointSelector).doesNotExist();
+    const element = render(spec);
+    assert.notOk(element.querySelector(pointSelector));
   });
 
   test('renders a line chart with arbitrary field names', async function (assert) {
@@ -82,14 +61,7 @@ module('Integration | Component | falcon-charts | line', function (hooks) {
 
       definition.field = propertyMap[old];
     });
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
-    assert.dom(pointSelector).exists();
+    const element = render(spec);
+    assert.ok(element.querySelector(pointSelector));
   });
 });

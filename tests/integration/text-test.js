@@ -1,12 +1,10 @@
-import hbs from 'htmlbars-inline-precompile';
-import { module, test } from 'qunit';
-import { render } from '@ember/test-helpers';
-import { setupRenderingTest } from 'ember-qunit';
-import { specificationFixture } from '@crowdstrike/falcon-charts/components/falcon-charts/test-helpers';
-import { testSelector } from 'test-support';
+import qunit from 'qunit';
+import { render, testSelector } from '../test-helpers.js';
+import { specificationFixture } from '../test-helpers.js';
 
-module('Integration | Component | falcon-charts | text', function (hooks) {
-  setupRenderingTest(hooks);
+const { module, test } = qunit;
+
+module('Integration | Component | falcon-charts | text', function () {
 
   test('renders text marks', async function (assert) {
     const spec = {
@@ -27,19 +25,13 @@ module('Integration | Component | falcon-charts | text', function (hooks) {
       },
     };
 
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
     const markSelector = testSelector('mark');
 
-    assert.dom(markSelector).exists({ count: 1 });
-    assert.dom(markSelector).hasTagName('text');
+    assert.equal(element.querySelectorAll(markSelector).length, 1);
+    assert.equal(element.querySelector(markSelector).tagName, 'text');
+
   });
 
   test('renders text marks with dynamic attributes', async function (assert) {
@@ -49,16 +41,9 @@ module('Integration | Component | falcon-charts | text', function (hooks) {
     spec.encoding.color = { field: 'group', type: 'nominal' };
     spec.encoding.text = { field: 'group', type: 'nominal' };
 
-    this.set('spec', spec);
-    await render(hbs`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-    `);
+    const element = render(spec);
 
-    const marks = [...this.element.querySelectorAll(testSelector('mark'))];
+    const marks = [...element.querySelectorAll(testSelector('mark'))];
 
     const groups = [...new Set(spec.data.values.map((item) => item.group)).values()];
 

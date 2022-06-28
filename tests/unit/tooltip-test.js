@@ -1,5 +1,7 @@
-import { module, test } from 'qunit';
-import { tooltipContent } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/tooltips';
+import qunit from 'qunit';
+import { tooltipContent } from '../../source/tooltips.js';
+
+const { module, test } = qunit;
 
 module('Unit | Component | falcon-charts | tooltips', () => {
   test('it is a function factory', (assert) => {

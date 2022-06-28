@@ -1,5 +1,7 @@
-import { memoize } from '@crowdstrike/falcon-charts/components/falcon-charts/shared/memoize';
-import { module, test } from 'qunit';
+import { memoize } from '../../source/memoize.js';
+import qunit from 'qunit';
+
+const { module, test } = qunit;
 
 module('Unit | component | falcon-charts | memoize', () => {
   test('memoizes functions', (assert) => {
