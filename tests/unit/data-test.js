@@ -9,7 +9,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | data', () => {
+module('unit > data', () => {
   test('compiles stacked bar data', (assert) => {
     const stacked = data(specificationFixture('stackedBar'));
 

@@ -9,7 +9,7 @@ const { module, test } = qunit;
 
 const set = () => null
 
-module('Unit | Component | falcon-charts | marks', () => {
+module('unit > marks', () => {
   test('bar width', (assert) => {
     const dimensions = { x: 100, y: 100 };
 

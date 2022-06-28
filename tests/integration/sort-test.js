@@ -5,7 +5,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | sort', function () {
+module('integration > sort', function () {
   test('renders marks in ascending order', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 

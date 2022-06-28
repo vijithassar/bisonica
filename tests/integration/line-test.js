@@ -6,7 +6,7 @@ const { module, test } = qunit;
 
 const pointSelector = testSelector('marks-mark-point');
 
-module('Integration | Component | falcon-charts | line', function () {
+module('integration > line', function () {
   test('renders a line chart', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);

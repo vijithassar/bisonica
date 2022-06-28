@@ -9,7 +9,7 @@ const { module, test } = qunit;
 
 const approximate = (value) => Math.round(value * 100) / 100;
 
-module('Integration | Component | falcon-charts | categorical-bar', function () {
+module('integration > categorical-bar', function () {
   test('renders a categorical bar chart', async function (assert) {
     const spec = specificationFixture('categoricalBar');
 
