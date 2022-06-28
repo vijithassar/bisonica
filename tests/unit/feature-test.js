@@ -3,7 +3,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | feature', () => {
+module('unit > feature', () => {
   test('identifies chart features', (assert) => {
     assert.ok(feature({ mark: { type: 'bar' } }).isBar(), 'identifies bar charts');
     assert.ok(feature({ mark: { type: 'arc' } }).isCircular(), 'identifies circular charts');

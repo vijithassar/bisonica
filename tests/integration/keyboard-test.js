@@ -10,7 +10,7 @@ const { module, test } = qunit;
 const LEFT = 'ArrowLeft';
 const RIGHT = 'ArrowRight';
 
-module('Integration | Component | falcon-charts | keyboard', function () {
+module('integration > keyboard', function () {
 
   test.skip('keyboard navigation works', async function (assert) {
     const dispatchEvents = {

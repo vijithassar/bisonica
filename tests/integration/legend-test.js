@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | legend', function () {
+module('integration > legend', function () {
   test('renders a chart with legend', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);

@@ -8,7 +8,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | timestamps', () => {
+module('unit > timestamps', () => {
   const timestamps = [
     '2020-01-01',
     '2020-07-04T20:00:33.245Z',

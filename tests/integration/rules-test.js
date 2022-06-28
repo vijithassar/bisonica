@@ -4,7 +4,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | rules', function () {
+module('integration > rules', function () {
   test('renders rules', async function (assert) {
     const spec = specificationFixture('rules');
     const element = render(spec);

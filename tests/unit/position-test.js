@@ -52,7 +52,7 @@ const dimensions = { x: 500, y: 500 };
 
 const bottom = (angle) => round(margin(s(angle), dimensions).bottom);
 
-module('Unit | Component | falcon-charts | margin', () => {
+module('unit > margin', () => {
   test('increases bottom margins to reserve space for labelAngle rotation', (assert) => {
     assert.ok(margin(s(0), dimensions).bottom < margin(s(45), dimensions).bottom);
     assert.ok(margin(s(45), dimensions).bottom < margin(s(90), dimensions).bottom);

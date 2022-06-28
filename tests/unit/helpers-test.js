@@ -3,7 +3,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | helpers', () => {
+module('unit > helpers', () => {
   test('extracts values from s', (assert) => {
     const value = {};
     const s = { data: { values: [value] } };

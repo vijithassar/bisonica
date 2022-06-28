@@ -13,7 +13,7 @@ const expressions = {
   multiple: "'https://www.crowdstrike.com' + '/' + datum.a + datum.b",
 };
 
-module('Unit | Component | falcon-charts | transform', () => {
+module('unit > transform', () => {
   module('transform', () => {
     test('requires a calculate transform', (assert) => {
       const s = { transform: [{ filter: null }] };

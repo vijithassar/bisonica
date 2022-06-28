@@ -72,7 +72,7 @@ const isPie = (marks) => {
   return isCircular(marks) && contained;
 };
 
-module('Integration | Component | falcon-charts | circular', function () {
+module('integration > circular', function () {
   test('renders a circular chart', async function (assert) {
     const spec = specificationFixture('circular');
 

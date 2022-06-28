@@ -8,7 +8,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | tooltips', function () {
+module('integration > tooltips', function () {
 
   test('renders a chart with SVG title tooltips', async function (assert) {
     const spec = specificationFixture('stackedBar');

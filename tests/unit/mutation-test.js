@@ -25,7 +25,7 @@ const freeze = (object) => {
   return Object.freeze(object);
 };
 
-module('Unit | Component | falcon-charts | mutation', () => {
+module('unit > mutation', () => {
   test('does not mutate specifications', (assert) => {
     const s = freeze(JSON.parse(JSON.stringify(stackedBarChartSpec)));
     const dimensions = { x: 500, y: 500 };

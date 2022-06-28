@@ -4,7 +4,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | stacked-bar', function () {
+module('integration > stacked-bar', function () {
   test('renders a stacked bar chart', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);

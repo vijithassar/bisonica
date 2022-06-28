@@ -3,7 +3,7 @@ import { tooltipContent } from '../../source/tooltips.js';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | tooltips', () => {
+module('unit > tooltips', () => {
   test('it is a function factory', (assert) => {
     assert.equal(typeof tooltipContent({}), 'function');
   });

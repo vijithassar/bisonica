@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | aria', function () {
+module('integration > aria', function () {
 
   test('aria-label matches tooltip by default', async function (assert) {
     const spec = specificationFixture('stackedBar');

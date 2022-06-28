@@ -6,7 +6,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | views', () => {
+module('unit > views', () => {
   const specifications = {
     data: { values: [1, 2, 3, 5, 6] },
     layer: [

@@ -12,7 +12,7 @@ const ordinalSpec = specificationFixture('stackedBar');
 
 ordinalSpec.encoding.color.type = 'ordinal';
 
-module('Unit | Component | falcon-charts | scales', (hooks) => {
+module('unit > scales', (hooks) => {
   let scales;
 
   hooks.beforeEach(() => {

@@ -13,7 +13,7 @@ import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | encoders', () => {
+module('unit > encoders', () => {
   test('creates encoders', (assert) => {
     const accessors = {
       x: (d) => parseTime(d.label),

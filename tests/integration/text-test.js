@@ -4,7 +4,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | text', function () {
+module('integration > text', function () {
 
   test('renders text marks', async function (assert) {
     const spec = {

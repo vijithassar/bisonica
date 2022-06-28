@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | views', function () {
+module('integration > views', function () {
   test('renders a chart without layers', async function (assert) {
     const spec = specificationFixture('line');
     const element = render(spec);

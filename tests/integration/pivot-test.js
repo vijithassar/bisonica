@@ -10,7 +10,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | pivot urls', function () {
+module('integration > pivot urls', function () {
 
   const getUrl = (item) => d3.select(item).datum().url;
 

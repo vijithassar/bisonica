@@ -48,7 +48,7 @@ const dates = (s) => {
 
 const dimensions = { x: 500, y: 500 };
 
-module('Unit | Component | falcon-charts | sort', () => {
+module('unit > sort', () => {
   test('natural sort for quantitative scales', function (assert) {
     const asc = specification();
 

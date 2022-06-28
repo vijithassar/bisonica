@@ -3,7 +3,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Integration | Component | falcon-charts | axes', function () {
+module('integration > axes', function () {
   test('renders a chart with axes', async function (assert) {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);

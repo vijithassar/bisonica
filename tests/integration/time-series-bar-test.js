@@ -10,7 +10,7 @@ const { module, test } = qunit;
 
 const approximate = (value) => Math.round(value * 100) / 100;
 
-module('Integration | Component | falcon-charts | temporal-bar', function () {
+module('integration > temporal-bar', function () {
   test('renders a time series bar chart', async function (assert) {
     const spec = specificationFixture('temporalBar');
 

@@ -3,7 +3,7 @@ import qunit from 'qunit';
 
 const { module, test } = qunit;
 
-module('Unit | component | falcon-charts | memoize', () => {
+module('unit > memoize', () => {
   test('memoizes functions', (assert) => {
     const fn = (input) => {
       return Math.random() + input;

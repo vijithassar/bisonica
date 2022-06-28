@@ -9,7 +9,7 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('Unit | Component | falcon-charts | axes', () => {
+module('unit > axes', () => {
   test('retrieves x axis text rotation', (assert) => {
     const s = specificationFixture('stackedBar');
 
