@@ -319,7 +319,7 @@ const extendScales = (s, dimensions, scales) => {
   return extendedScales;
 };
 
-const _parseScales = (s, dimensions) => {
+const _parseScales = (s, dimensions = { x: 0, y: 0 }) => {
   const core = coreScales(s, dimensions);
   const extended = extendScales(s, dimensions, core);
 
@@ -329,7 +329,7 @@ const _parseScales = (s, dimensions) => {
 /**
  * generate all scale functions necessary to render a s
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {object} [dimensions] chart dimensions
  * @returns {object} hash of all necessary d3 scale functions
  */
 const parseScales = memoize(_parseScales);

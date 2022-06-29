@@ -376,7 +376,7 @@ const circularMarks = (s, dimensions) => {
   const outerRadius = radius(dimensions);
   const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0;
   const innerRadius = outerRadius * innerRadiusRatio;
-  const { color } = parseScales(s, { x: 0, y: 0 });
+  const { color } = parseScales(s);
   const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group);
   const layout = d3.pie().value(encodingValueQuantitative(s)).sort(sort);
   const encoders = createEncoders(s, dimensions, createAccessors(s));

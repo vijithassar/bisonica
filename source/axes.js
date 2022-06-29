@@ -41,7 +41,7 @@ const ticks = (s, channel) => {
     }
   }
 
-  const scales = parseScales(s, { x: 0, y: 0 });
+  const scales = parseScales(s);
 
   const hasSingleValue = scales[channel].domain()[0] === scales[channel].domain()[1];
 

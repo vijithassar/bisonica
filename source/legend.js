@@ -50,7 +50,7 @@ const color = (_s) => {
 
   const renderer = (selection) => {
     try {
-      const { color } = parseScales(s, { x: 0, y: 0 });
+      const { color } = parseScales(s);
 
       const dispatcher = dispatchers.get(selection.node());
 
