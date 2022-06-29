@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
-import { circularData, lineData, stackedBarData } from './data';
-import { dispatchers } from './interactions';
-import { feature } from './feature';
-import { markInteractionSelector } from './marks';
-import { noop } from './helpers';
+import { data } from './data.js';
+import { dispatchers } from './interactions.js';
+import { feature } from './feature.js';
+import { markInteractionSelector } from './marks.js';
+import { noop } from './helpers.js';
 
 const context = new AudioContext();
 
