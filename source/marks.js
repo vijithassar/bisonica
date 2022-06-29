@@ -283,6 +283,45 @@ const barMarks = (s, dimensions) => {
 };
 
 /**
+ * render area marks
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} area mark renderer
+ */
+const areaMarks = (s, dimensions) => {
+  const encoders = stackEncoders(s, dimensions);
+  const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'));
+  const renderer = (selection) => {
+    const marks = selection
+      .append('g')
+      .attr('class', 'marks');
+
+    const area = d3.area();
+
+    ['x0', 'x1', 'y0', 'y1'].forEach((point) => {
+      area[point](encoders[point]);
+    });
+
+    const layout = data(s);
+
+    marks
+      .selectAll(markSelector(s))
+      .data(layout)
+      .enter()
+      .append('path')
+      .attr('d', area)
+      .attr('role', 'region')
+      .attr('aria-roledescription', 'data series')
+      .attr('tabindex', -1)
+      .attr('fill', color)
+      .attr('class', 'area mark')
+      .attr('aria-label', (d) => d.key);
+
+  }
+  return renderer;
+}
+
+/**
  * render point marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
@@ -614,6 +653,8 @@ const marks = (s, dimensions) => {
   try {
     if (feature(s).isBar()) {
       return barMarks(s, dimensions);
+    } else if (feature(s).isArea()) {
+      return areaMarks(s, dimensions);
     } else if (feature(s).isCircular()) {
       return circularMarks(s, dimensions);
     } else if (feature(s).isLine()) {
