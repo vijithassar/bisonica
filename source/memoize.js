@@ -10,11 +10,17 @@ const argumentKey = (arg) => {
 
   if (type === 'undefined' || arg === null) {
     key = `${arg}`;
+  } else if (type === 'function') {
+    key = 'function';
+  } else if (type === 'object') {
+    key = 'object';
   } else {
     key = arg.toString();
   }
 
-  if (key !== '[object Object]') {
+  const primitive = type !== 'object' && type !== 'function';
+
+  if (primitive) {
     return key;
   }
 
