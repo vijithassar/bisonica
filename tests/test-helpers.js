@@ -1,3 +1,4 @@
+import { stackedAreaChartSpec } from '../fixtures/stacked-area.js'
 import { categoricalBarChartSpec } from '../fixtures/categorical-bar.js';
 import { circularChartSpec } from '../fixtures/circular.js';
 import { groupedBarChartSpec } from '../fixtures/grouped-bar.js';
@@ -64,6 +65,8 @@ export function specificationFixture(type) {
 
   if (type === 'stackedBar') {
     spec = stackedBarChartSpec;
+  } else if (type === 'stackedArea') {
+    spec = stackedAreaChartSpec;
   } else if (type === 'circular') {
     spec = circularChartSpec;
   } else if (type === 'line') {
