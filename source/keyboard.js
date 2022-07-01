@@ -207,77 +207,82 @@ const keyMap = (key) => {
  * @returns {function}
  */
 const keyboard = (_s) => {
-  const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText();
-  const s = layerMatch(_s, keyboardTest);
+  try {
 
-  const exit =
-    !s || // no specification
-    !mark(s) || // no mark
-    feature(s).isRule() || // rule mark
-    feature(s).isText() || // text marks
-    (!feature(s).isLine() && feature(s).hasPoints()) || // points with no line
-    (feature(s).isLine() && !feature(s).hasPoints()); // line with no points
+    const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText();
+    const s = layerMatch(_s, keyboardTest);
 
-  if (exit) {
-    return noop;
-  }
+    const exit =
+      !s || // no specification
+      !mark(s) || // no mark
+      feature(s).isRule() || // rule mark
+      feature(s).isText() || // text marks
+      (!feature(s).isLine() && feature(s).hasPoints()) || // points with no line
+      (feature(s).isLine() && !feature(s).hasPoints()); // line with no points
 
-  const navigation = (wrapper) => {
-    let navigator = {};
-
-    navigator[LEFT] = key(s, LEFT);
-    navigator[RIGHT] = key(s, RIGHT);
-
-    if (feature(s).isMulticolor() && feature(s).isCartesian()) {
-      navigator[UP] = key(s, UP);
-      navigator[DOWN] = key(s, DOWN);
+    if (exit) {
+      return noop;
     }
 
-    const mark = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
+    const navigation = (wrapper) => {
+      let navigator = {};
 
-    const state = createState();
-    const dispatcher = dispatchers.get(mark.node());
+      navigator[LEFT] = key(s, LEFT);
+      navigator[RIGHT] = key(s, RIGHT);
 
-    const first = mark.filter((d, i) => i === 0);
-
-    first.attr('tabindex', 0);
-
-    // fire navigation initialization behaviors on first focus
-
-    mark.on('focus', function (event) {
-      if (typeof state.index() === 'undefined') {
-        navigator[RIGHT](mark, state);
+      if (feature(s).isMulticolor() && feature(s).isCartesian()) {
+        navigator[UP] = key(s, UP);
+        navigator[DOWN] = key(s, DOWN);
       }
 
-      dispatcher.call('tooltip', this, event);
-    });
+      const mark = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
 
-    mark.on('keydown', (event) => {
-      stopScroll(event);
+      const state = createState();
+      const dispatcher = dispatchers.get(mark.node());
 
-      if (event.key === 'Enter') {
-        const node = mark.nodes()[state.index()];
-        const d = d3.select(node).datum();
-        const url = getUrl(s, d);
+      const first = mark.filter((d, i) => i === 0);
 
-        if (url) {
-          dispatcher.call('link', node, url);
+      first.attr('tabindex', 0);
+
+      // fire navigation initialization behaviors on first focus
+
+      mark.on('focus', function (event) {
+        if (typeof state.index() === 'undefined') {
+          navigator[RIGHT](mark, state);
         }
-      }
-    });
-    mark.on('keyup', (event) => {
-      stopScroll(event);
 
-      const move = navigator[keyMap(event.key)];
+        dispatcher.call('tooltip', this, event);
+      });
 
-      if (typeof move === 'function') {
-        move(mark, state);
-        dispatcher.call('tooltip', mark.nodes()[state.index()], event);
-      }
-    });
-  };
+      mark.on('keydown', (event) => {
+        stopScroll(event);
 
-  return navigation;
+        if (event.key === 'Enter') {
+          const node = mark.nodes()[state.index()];
+          const d = d3.select(node).datum();
+          const url = getUrl(s, d);
+
+          if (url) {
+            dispatcher.call('link', node, url);
+          }
+        }
+      });
+      mark.on('keyup', (event) => {
+        stopScroll(event);
+
+        const move = navigator[keyMap(event.key)];
+
+        if (typeof move === 'function') {
+          move(mark, state);
+          dispatcher.call('tooltip', mark.nodes()[state.index()], event);
+        }
+      });
+    };
+
+    return navigation;
+  } catch (error) {
+    throw new Error(`keyboard navigation failure - ${error.message}`);
+  }
 };
 
 export { keyboard };
