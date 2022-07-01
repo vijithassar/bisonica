@@ -65,7 +65,7 @@ const unionDomains = (s, channel) => {
         }
       }
 
-      return parseScales(layer, { x: 0, y: 0 })[channel];
+      return parseScales(layer)[channel];
     })
     .filter((item) => !!item);
 

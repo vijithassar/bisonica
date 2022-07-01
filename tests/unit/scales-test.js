@@ -179,7 +179,7 @@ module('unit > scales', (hooks) => {
         },
       },
     };
-    const { x, y, color } = parseScales(s, { x: 0, y: 0 });
+    const { x, y, color } = parseScales(s);
 
     assert.equal(x.domain()[0].getTime(), parseTime(s.encoding.x.scale.domain[0]).getTime());
     assert.equal(x.domain()[1].getTime(), parseTime(s.encoding.x.scale.domain[1]).getTime());
@@ -204,7 +204,7 @@ module('unit > scales', (hooks) => {
         },
       },
     };
-    const { color } = parseScales(s, { x: 0, y: 0 });
+    const { color } = parseScales(s);
 
     assert.equal(color.range().length, domain.length);
   });
@@ -217,7 +217,7 @@ module('unit > scales', (hooks) => {
         },
       },
     };
-    const { size } = parseScales(s, { x: 0, y: 0 });
+    const { size } = parseScales(s);
 
     assert.equal(typeof size, 'function');
     assert.equal(size(), s.encoding.size.value);
@@ -239,7 +239,7 @@ module('unit > scales', (hooks) => {
         },
       },
     };
-    const { x } = parseScales(s, { x: 0, y: 0 });
+    const { x } = parseScales(s);
 
     assert.equal(typeof x, 'function');
     x.domain().forEach((date) => {
@@ -264,7 +264,7 @@ module('unit > scales', (hooks) => {
         },
       },
     };
-    const { x } = parseScales(s, { x: 0, y: 0 });
+    const { x } = parseScales(s);
 
     assert.equal(typeof x, 'function');
     x.domain().forEach((date) => {

@@ -61,7 +61,7 @@ function tooltipEvent(s, node, interaction) {
     const detail = { datum, node, interaction, content: tooltipContentData(s)(datum) };
 
     if (feature(s).isMulticolor()) {
-      detail.color = parseScales(s, { x: 0, y: 0 }).color(category.get(datum));
+      detail.color = parseScales(s).color(category.get(datum));
     }
 
     const customEvent = new CustomEvent('tooltip', {
