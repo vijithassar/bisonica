@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./source/chart.js"
+    ".": "./source/chart.js",
+    "./styles.css": "./source/index.css"
   },
   "scripts": {
     "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",

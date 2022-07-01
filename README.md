@@ -32,10 +32,18 @@ select('div').call(renderer);
 
 You'll probably want to load the included stylesheet? Feel free to use your own alternative if you want, though.
 
+You can load it directly:
+
 ```html
 <head>
     <link rel="stylesheet" href="./source/index.css" />
 </head>
+```
+
+Or import with a packager or build tool:
+
+```javascript
+import "bisonica/styles.css";
 ```
 
 # Why?
