@@ -18,44 +18,53 @@ import { testAttributes } from './markup.js';
  */
 const chart = (s, panelDimensions) => {
   let tooltipHandler;
+  let errorHandler = console.error;
   const renderer = (selection) => {
-    selection.call(init(s, panelDimensions));
+    try {
+      selection.call(init(s, panelDimensions));
 
-    const chartNode = selection.select('div.chart');
+      const chartNode = selection.select('div.chart');
 
-    initializeInteractions(chartNode.node(), s);
+      initializeInteractions(chartNode.node(), s);
 
-    // render legend
-    chartNode.select('.legend').call(legend(s));
+      // render legend
+      chartNode.select('.legend').call(legend(s));
 
-    const legendHeight = chartNode.select('.legend').node().getBoundingClientRect().height;
+      const legendHeight = chartNode.select('.legend').node().getBoundingClientRect().height;
 
-    const svg = chartNode.select('svg');
-    const imageHeight = panelDimensions.y - legendHeight;
+      const svg = chartNode.select('svg');
+      const imageHeight = panelDimensions.y - legendHeight;
 
-    svg.attr('height', Math.max(imageHeight, 0));
+      svg.attr('height', Math.max(imageHeight, 0));
 
-    const { top, right, bottom, left } = margin(s, panelDimensions);
+      const { top, right, bottom, left } = margin(s, panelDimensions);
 
-    // subtract rendered height of legend from dimensions
-    const dimensions = {
-      x: panelDimensions.x - left - right,
-      y: imageHeight - top - bottom,
-    };
+      // subtract rendered height of legend from dimensions
+      const dimensions = {
+        x: panelDimensions.x - left - right,
+        y: imageHeight - top - bottom,
+      };
 
-    if (dimensions.y > 0) {
-      const wrapper = chartNode
-        .select('.graphic')
-        .select('svg')
-        .call(position(s, { x: panelDimensions.x, y: imageHeight }))
-        .select(`g.${WRAPPER_CLASS}`);
+      if (dimensions.y > 0) {
+        const wrapper = chartNode
+          .select('.graphic')
+          .select('svg')
+          .call(position(s, { x: panelDimensions.x, y: imageHeight }))
+          .select(`g.${WRAPPER_CLASS}`);
 
-      wrapper
-        .call(axes(s, dimensions))
-        .call((s.layer ? layer : marks)(s, dimensions))
-        .call(keyboard(s))
-        .call(interactions(s));
-      selection.call(testAttributes);
+        wrapper
+          .call(axes(s, dimensions))
+          .call((s.layer ? layer : marks)(s, dimensions))
+          .call(keyboard(s))
+          .call(interactions(s));
+        selection.call(testAttributes);
+      }
+    } catch (error) {
+      if (typeof errorHandler === 'function') {
+        errorHandler(error);
+      } else if (errorHandler === null) {
+        throw error;
+      }
     }
   };
 
@@ -73,6 +82,8 @@ const chart = (s, panelDimensions) => {
       return renderer;
     }
   };
+
+  renderer.error = (h) => h ? (errorHandler = h, chart) : errorHandler;
 
   return renderer;
 };
