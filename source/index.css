@@ -14,9 +14,18 @@ svg .wrapper .mark {
   cursor: pointer;
 }
 
+svg .wrapper .mark:focus {
+  outline: none;
+}
+
 svg .wrapper .mark:not([data-highlight]) {
   stroke: var(--border);
   stroke-width: 1px;
+}
+
+.chart-donut svg text.mark {
+  fill: var(--text);
+  font-weight: 100;
 }
 
 svg .wrapper text.mark:not([data-highlight]) {
@@ -47,10 +56,6 @@ path.mark {
   text-align: center;
 }
 
-.mark:focus {
-  outline: none;
-}
-
 .mark[data-highlight],
 .point[data-highlight] {
   stroke: var(--highlight);
@@ -68,7 +73,7 @@ path.mark {
   grid-auto-flow: column;
   grid-gap: 0.2em;
   line-height: 2em;
-  padding: 0.2em 0.8em 0.2em 0.8em;
+  padding: 0.2em 0.8em;
 }
 
 .legend ul.items-more {
@@ -162,9 +167,4 @@ path.mark {
 
 .axes .axis.nominal.angled .tick text {
   text-anchor: end;
-}
-
-.chart-donut svg text.mark {
-  fill: var(--text);
-  font-weight: 100;
 }
