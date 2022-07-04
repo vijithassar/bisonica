@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  lint:
+  lint-js:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -10,6 +10,15 @@ jobs:
         with:
           node-version: latest
       - run: yarn && yarn run lint-js
+  lint-styles:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - run: yarn && yarn run lint-styles
   types:
     runs-on: ubuntu-latest
     timeout-minutes: 5
