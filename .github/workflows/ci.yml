@@ -19,6 +19,15 @@ jobs:
         with:
           node-version: latest
       - run: yarn && yarn run lint-styles
+  lint-git:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - run: yarn && yarn run lint-git
   types:
     runs-on: ubuntu-latest
     timeout-minutes: 5
