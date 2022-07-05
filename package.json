@@ -14,7 +14,8 @@
     "test": "qunit tests/*",
     "test-serve": "testem --file ./tests/testem.cjs",
     "test-ci": "testem --file ./tests/testem.cjs ci",
-    "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js"
+    "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
+    "release": "npx standard-version"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -22,6 +23,7 @@
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "qunit": "^2.19.1",
+    "standard-version": "^9.5.0",
     "stylelint": "^14.9.1",
     "stylelint-config-standard": "^26.0.0",
     "testem": "^3.8.0",
