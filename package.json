@@ -8,6 +8,8 @@
   },
   "scripts": {
     "build": "esbuild --bundle --format=esm --outfile=build/bisonica.js source/chart.js",
+    "postbuild": "yarn run archive",
+    "archive": "zip build/bisonica-$(npm view bisonica version).zip build/bisonica.js",
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests/unit tests/integration",
     "lint-styles": "stylelint source/index.css",
