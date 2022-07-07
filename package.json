@@ -7,7 +7,7 @@
     "./styles.css": "./source/index.css"
   },
   "scripts": {
-    "build": "esbuild --bundle --format=esm --outfile=build/charts.js source/chart.js",
+    "build": "esbuild --bundle --format=esm --outfile=build/bisonica.js source/chart.js",
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests/unit tests/integration",
     "lint-styles": "stylelint source/index.css",
