@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { barWidth } from './marks.js';
 import { data, sumByCovariates } from './data.js';
 import { defaultColor } from './config.js';
-import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { identity, isDiscrete, values } from './helpers.js';
 import { memoize } from './memoize.js';
@@ -311,7 +311,7 @@ const extendScales = (s, dimensions, scales) => {
   const extensions = detectScaleExtensions(s);
 
   if (extensions.includes('length')) {
-    const channel = encodingFieldQuantitative(s);
+    const channel = encodingChannelQuantitative(s);
 
     extendedScales.barLength = (d) => {
       if (extendedScales[channel].domain().every((endpoint) => endpoint === 0)) {

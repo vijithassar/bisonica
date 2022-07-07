@@ -1,5 +1,5 @@
 import { barDirection } from './marks.js';
-import { encodingField, encodingFieldQuantitative, encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingField, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { mark } from './helpers.js';
 import { memoize } from './memoize.js';
@@ -53,7 +53,7 @@ const _createAccessors = (s, type = null) => {
   }
 
   if (key === 'arc') {
-    accessors.theta = (d) => encodingValue(s, encodingFieldQuantitative(s))(d);
+    accessors.theta = (d) => encodingValue(s, encodingChannelQuantitative(s))(d);
     accessors.color = (d) => d.data.key;
   }
 

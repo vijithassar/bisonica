@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { axisTickLabelText, rotation } from './text.js';
 import { barWidth } from './marks.js';
 import { degrees, isDiscrete, noop, overlap } from './helpers.js';
-import { encodingType } from './encodings.js';
+import { encodingField, encodingChannelQuantitative, encodingType } from './encodings.js';
 import { feature } from './feature.js';
 import { layerMatch } from './views.js';
 import { parseScales } from './scales.js';
