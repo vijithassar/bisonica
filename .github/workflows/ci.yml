@@ -10,6 +10,15 @@ jobs:
         with:
           node-version: latest
       - run: yarn && yarn check && yarn check --integrity && yarn check --verify-tree
+  check-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - run: yarn && yarn run build
   lint-js:
     runs-on: ubuntu-latest
     timeout-minutes: 5
