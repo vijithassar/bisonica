@@ -150,9 +150,9 @@ const markInteractionSelector = (_s) => {
  * @param {object} s Vega Lite specification
  */
 const layoutDirection = (s) => {
-  if (s.encoding.x.type === 'quantitative') {
+  if (s.encoding.x?.type === 'quantitative') {
     return 'horizontal';
-  } else if (s.encoding.y.type === 'quantitative') {
+  } else if (s.encoding.y?.type === 'quantitative') {
     return 'vertical';
   }
 };
