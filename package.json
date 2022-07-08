@@ -6,6 +6,10 @@
     ".": "./source/chart.js",
     "./styles.css": "./source/index.css"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vijithassar/bisonica.git"
+  },
   "scripts": {
     "build": "esbuild --bundle --format=esm --outfile=build/bisonica.js source/chart.js",
     "postbuild": "yarn run archive",
