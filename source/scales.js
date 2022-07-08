@@ -1,11 +1,10 @@
 import * as d3 from 'd3';
-
 import { barWidth } from './marks.js';
-import { data, sumByPeriod } from './data.js';
+import { data, sumByCovariates } from './data.js';
 import { defaultColor } from './config.js';
-import { encodingFieldQuantitative, encodingType, encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
-import { identity, values } from './helpers.js';
+import { identity, isDiscrete, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 import { sorter } from './sort.js';
@@ -41,7 +40,10 @@ const scaleType = (s, channel) => {
   const key = encodingType(s, channel);
 
   if (typeof key === 'string') {
-    const method = channel === 'x' && ['nominal', 'ordinal'].includes(key) ? 'Band' : methods[key];
+    const method =
+      ['x', 'y'].includes(channelRoot(s, channel)) && isDiscrete(s, channel)
+        ? 'Band'
+        : methods[key];
 
     return `scale${method}`;
   } else if (typeof key === 'undefined') {
@@ -89,111 +91,123 @@ const channelRoot = (s, channel) => {
 };
 
 /**
- * compute scale domain
+ * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
  * @returns {number[]} domain
  */
-const domain = (s, channel) => {
-  const domains = {
-    x: (values) => {
-      const type = encodingType(s, 'x');
+const domainBaseValues = (s, channel) => {
+  const type = encodingType(s, channel);
 
-      if (type === 'temporal') {
-        const date = (d) => parseTime(encodingValue(s, 'x')(d));
+  if (channel === 'color') {
+    const colors = Array.from(new Set(values(s).map(encodingValue(s, 'color'))));
 
-        return d3.extent(values, date);
-      } else if (type === 'nominal' || type === 'ordinal') {
-        return values.map((item) => encodingValue(s, 'x')(item));
-      } else if (type === 'quantitative') {
-        return d3.extent(values, (item) => encodingValue(s, 'x')(item));
-      }
-    },
-    y: (values) => {
-      const type = encodingType(s, 'y');
-      let yMin;
-      let yMax;
-
-      if (type === 'nominal') {
-        return [...new Set(values.map((item) => encodingValue(s, 'y')(item)))];
-      } else if (feature(s).isBar()) {
-        yMin = 0;
-        yMax = d3.max(sumByPeriod(s));
-      } else if (feature(s).isLine()) {
-        const daily = data(s)
-          .map((item) => item.values)
-          .flat();
-        const y = encodingValue(s, 'y');
-        const nonzero = s.encoding.y.scale?.zero === false;
-        const min = d3.min(daily, y);
-        const positive = typeof min === 'number' && min > 0;
-
-        if (nonzero && positive) {
-          yMin = min;
-        } else if (!positive) {
-          yMin = min;
-        } else {
-          yMin = 0;
-        }
-
-        yMax = d3.max(daily, y);
-      } else {
-        yMin = 0;
-        yMax = d3.max(values, encodingValue(s, 'y'));
-      }
-
-      return [yMin, yMax];
-    },
-    theta: () => {
-      return [0, 360];
-    },
-    color: (values) => {
-      const colors = Array.from(new Set(values.map(encodingValue(s, 'color'))));
-
-      return colors;
-    },
-  };
-
-  const domain = customDomain(s, channel) || domains[channelRoot(s, channel)](values(s));
-
-  if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {
-    return domain;
+    return colors;
   }
 
-  return domain.slice().sort(sorter(s, channel));
+  if (type === 'temporal') {
+    const date = (d) => parseTime(encodingValue(s, channel)(d));
+
+    return d3.extent(values(s), date);
+  } else if (type === 'nominal' || type === 'ordinal') {
+    return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))];
+  } else if (type === 'quantitative') {
+    if (channel === 'theta') {
+      return [0, 360];
+    }
+
+    let min;
+    let max;
+
+    if (feature(s).isBar()) {
+      min = 0;
+      max = d3.max(sumByCovariates(s));
+    } else if (feature(s).isLine()) {
+      const byPeriod = data(s)
+        .map((item) => item.values)
+        .flat();
+      const nonzero = s.encoding.y.scale?.zero === false;
+      const periodMin = d3.min(byPeriod, encodingValue(s, channel));
+      const positive = typeof periodMin === 'number' && periodMin > 0;
+
+      if (nonzero && positive) {
+        min = periodMin;
+      } else if (!positive) {
+        min = periodMin;
+      } else {
+        min = 0;
+      }
+
+      max = d3.max(byPeriod, encodingValue(s, channel));
+    } else {
+      min = 0;
+      max = d3.max(values(s), encodingValue(s, channel));
+    }
+
+    return [min, max];
+  } else {
+    return d3.extent(values(s), (item) => encodingValue(s, channel)(item));
+  }
+};
+
+/**
+ * sort the domain
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ * @returns {function}
+ */
+const domainSort = (s, channel) => {
+  if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {
+    return identity;
+  }
+
+  return (domain) => domain.slice().sort(sorter(s, channel));
+};
+
+/**
+ * compute domain
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ */
+const domain = (s, channel) => {
+  return customDomain(s, channel) || domainSort(s, channel)(domainBaseValues(s, channel));
 };
 
 /**
  * compute scale range
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} dimensions chart dimensions
+ * @param {string} _channel visual encoding
  * @returns {number[]} range
  */
-const range = (s, dimensions, channel) => {
+const range = (s, dimensions, _channel) => {
+  const channel = channelRoot(s, _channel);
+  const cartesian = () => {
+    let result;
+
+    if (isDiscrete(s, channel) && scaleType(s, channel) !== 'scaleBand') {
+      const count = domain(s, channel).length;
+      const interval = dimensions[channel] / count;
+
+      const positions = Array.from({ length: count }).map((item, index) => index * interval);
+
+      result = positions;
+    } else {
+      const temporalBar = feature(s).isBar() && encodingType(s, channel) === 'temporal';
+      const offset = temporalBar ? barWidth(s, dimensions) : 0;
+
+      result = [0, dimensions[channel] - offset];
+    }
+
+    if (channel === 'y' && encodingType(s, channel) === 'quantitative') {
+      result.reverse();
+    }
+
+    return result;
+  };
   const ranges = {
-    x: () => {
-      const rangeDeltas = () => {
-        if (feature(s).isBar() && encodingType(s, 'x') === 'temporal') {
-          return { x: barWidth(s, dimensions) };
-        } else {
-          return { x: 0 };
-        }
-      };
-
-      return [0, dimensions.x - rangeDeltas().x];
-    },
-    y: () => {
-      const type = encodingType(s, 'y');
-
-      if (['nominal', 'ordinal'].includes(type)) {
-        const count = domain(s, channel).length;
-        const interval = dimensions.y / count;
-
-        return Array.from({ length: count }).map((item, index) => index * interval);
-      } else {
-        return [dimensions.y, 0];
-      }
-    },
+    x: cartesian,
+    y: cartesian,
     color: () => {
       let colorRangeProcessor;
 
@@ -205,13 +219,13 @@ const range = (s, dimensions, channel) => {
 
       return (
         s.encoding.color?.scale?.range ||
-        colors((customDomain(s, 'color') || colorRangeProcessor(s)).length)
+        colors((customDomain(s, channel) || colorRangeProcessor(s)).length)
       );
     },
     theta: () => [0, Math.PI * 2],
   };
 
-  return ranges[channelRoot(s, channel)]();
+  return ranges[channel]();
 };
 
 /**
@@ -297,18 +311,26 @@ const extendScales = (s, dimensions, scales) => {
   const extensions = detectScaleExtensions(s);
 
   if (extensions.includes('length')) {
-    const channel = encodingFieldQuantitative(s);
+    const channel = encodingChannelQuantitative(s);
 
     extendedScales.barLength = (d) => {
       if (extendedScales[channel].domain().every((endpoint) => endpoint === 0)) {
         return 0;
       }
 
-      return dimensions[channel] - extendedScales[channel](d);
+      if (channel === 'y') {
+        return dimensions[channel] - extendedScales[channel](d);
+      } else if (channel === 'x') {
+        return extendedScales[channel](d);
+      }
     };
 
     extendedScales.barStart = (d) => {
-      return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+      if (channel === 'y') {
+        return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+      } else if (channel === 'x') {
+        return extendedScales[channel](d[0]);
+      }
     };
   }
 

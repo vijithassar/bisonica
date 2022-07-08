@@ -53,7 +53,7 @@ const encodingValue = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {string} visual encoding channel
  */
-const encodingFieldQuantitative = (s) => {
+const encodingChannelQuantitative = (s) => {
   const test = (channel, definition) => definition.type === 'quantitative';
 
   return encodingTest(s, test);
@@ -66,7 +66,7 @@ const encodingFieldQuantitative = (s) => {
  * @returns {function(object)}
  */
 const encodingValueQuantitative = (s) => {
-  return encodingValue(s, encodingFieldQuantitative(s));
+  return encodingValue(s, encodingChannelQuantitative(s));
 };
 
 /**
@@ -101,7 +101,7 @@ const encodingTest = memoize(_encodingTest);
  * @param {object} s Vega Lite specification
  * @returns {string} visual encoding channel
  */
-const encodingFieldCovariate = (s) => {
+const encodingChannelCovariate = (s) => {
   if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
     return 'color';
   } else if (feature(s).isCartesian()) {
@@ -180,8 +180,8 @@ export {
   encodingField,
   encodingValue,
   encodingType,
-  encodingFieldQuantitative,
-  encodingFieldCovariate,
+  encodingChannelQuantitative,
+  encodingChannelCovariate,
   createEncoders,
   encodingValueQuantitative,
 };

@@ -4,13 +4,13 @@ import { BAR_WIDTH_MINIMUM } from './config.js';
 import { createAccessors } from './accessors.js';
 import {
   createEncoders,
-  encodingFieldCovariate,
+  encodingChannelCovariate,
   encodingType,
   encodingValue,
   encodingValueQuantitative,
 } from './encodings.js';
 import { data, pointData } from './data.js';
-import { datum, key, missingSeries, values } from './helpers.js';
+import { datum, isDiscrete, key, missingSeries, values } from './helpers.js';
 import { feature } from './feature.js';
 import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
@@ -78,7 +78,7 @@ const markDescription = memoize(_markDescription);
  * @returns {number} bar width
  */
 const _barWidth = (s, dimensions) => {
-  const channel = encodingFieldCovariate(s);
+  const channel = encodingChannelCovariate(s);
   const barWidthMaximum = dimensions[channel] / 3;
   const stacked = markData(s);
   const type = encodingType(s, channel);
@@ -146,14 +146,49 @@ const markInteractionSelector = (_s) => {
 };
 
 /**
+ * determine which way bars are oriented
+ * @param {object} s Vega Lite specification
+ */
+const barDirection = (s) => {
+  if (s.encoding.x.type === 'quantitative') {
+    return 'horizontal';
+  } else if (s.encoding.y.type === 'quantitative') {
+    return 'vertical';
+  }
+};
+
+/**
+ * shuffle around bar mark encoders to
+ * facilitate bidirectional layout
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} bar encoder methods
+ */
+const barEncoders = (s, dimensions) => {
+  const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
+  const vertical = barDirection(s) === 'vertical';
+  const barLaneChannel = vertical ? 'x' : 'y';
+  const lane = encoders[barLaneChannel];
+  const start = encoders.barStart;
+  const length = encoders.barLength;
+  const width = () => barWidth(s, dimensions);
+
+  return {
+    x: vertical ? lane : start,
+    y: vertical ? start : lane,
+    height: vertical ? length : width,
+    width: vertical ? width : length,
+  };
+};
+
+/**
  * render a single bar chart mark
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
-  const width = barWidth(s, dimensions);
+  const { x, y, height, width } = barEncoders(s, dimensions);
 
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
@@ -163,17 +198,43 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', encoders.barStart)
-      .attr('x', encoders.x)
+      .attr('y', y)
+      .attr('x', x)
       .attr('aria-label', (d) => {
         return markDescription(s)(d);
       })
-      .attr('height', encoders.barLength)
+      .attr('height', height)
       .attr('width', width)
       .call(tooltips(s));
   };
 
   return markRenderer;
+};
+
+/**
+ * lane transform for all bar marks
+ * @param {*} s
+ * @param {*} dimensions
+ * @returns {string} transform
+ */
+const barMarksTransform = (s, dimensions) => {
+  const translate = [0, 0];
+  let offsetChannel;
+  let index;
+
+  if (encodingType(s, 'y') === 'quantitative') {
+    offsetChannel = 'x';
+    index = 0;
+  } else if (encodingType(s, 'x') === 'quantitative') {
+    offsetChannel = 'y';
+    index = 1;
+  }
+
+  const offset = isDiscrete(s, offsetChannel) ? barWidth(s, dimensions) * 0.5 : 0;
+
+  translate[index] = offset;
+
+  return `translate(${translate.join(',')})`;
 };
 
 /**
@@ -184,17 +245,11 @@ const barMark = (s, dimensions) => {
  */
 const barMarks = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'));
-  const type = encodingType(s, encodingFieldCovariate(s));
   const renderer = (selection) => {
     const marks = selection
       .append('g')
       .attr('class', 'marks')
-      .attr('transform', () => {
-        const categorical = ['nominal', 'ordinal'].includes(type);
-        const x = categorical ? barWidth(s, dimensions) * 0.5 : 0;
-
-        return `translate(${x},0)`;
-      });
+      .attr('transform', barMarksTransform(s, dimensions));
 
     const series = marks
       .selectAll('g')
@@ -569,4 +624,4 @@ const marks = (s, dimensions) => {
   }
 };
 
-export { marks, radius, barWidth, markSelector, markInteractionSelector, category };
+export { marks, radius, barWidth, barDirection, markSelector, markInteractionSelector, category };

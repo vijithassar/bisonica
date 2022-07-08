@@ -1,8 +1,15 @@
 import * as d3 from 'd3';
 
-import { encodingField, encodingType, encodingValue } from './encodings.js';
+import { barDirection } from './marks.js';
+import {
+  encodingChannelCovariate,
+  encodingChannelQuantitative,
+  encodingField,
+  encodingType,
+  encodingValue,
+} from './encodings.js';
 import { feature } from './feature.js';
-import { identity, missingSeries, values } from './helpers.js';
+import { identity, isDiscrete, missingSeries, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 
@@ -82,13 +89,17 @@ const stackKeys = (data) => {
  * @param {object} s Vega Lite specification
  * @returns {array} values summed across time period
  */
-const sumByPeriod = (s) => {
-  const summedByGroup = groupAndSumByProperties(
-    s.data.values,
-    encodingField(s, 'x'),
-    encodingField(s, 'color'),
-    encodingField(s, 'y'),
-  );
+const sumByCovariates = (s) => {
+  const x = encodingField(s, 'x');
+  const y = encodingField(s, 'y');
+  const color = encodingField(s, 'color');
+
+  // determine relevance of x and y to the arguments based on encoding
+  const vertical = encodingType(s, 'y') === 'quantitative';
+  const independent = vertical ? x : y;
+  const covariate = vertical ? y : x;
+
+  const summedByGroup = groupAndSumByProperties(values(s), independent, color, covariate);
   const keys = stackKeys(summedByGroup);
   const summedByPeriod = summedByGroup.map((item) => {
     return d3.sum(keys.map((key) => item[key]?.value || 0));
@@ -126,28 +137,29 @@ const sort = (data) => {
 const transplantStackedBarMetadata = (aggregated, raw, s) => {
   const createMatcher = (key) => {
     const matcher = (aggregatedItem, raw) => {
+      const laneChannel = ['x', 'y'].find((channel) => channel !== encodingChannelQuantitative(s));
       const keys = {
-        x: encodingField(s, 'x'),
-        color: encodingField(s, 'color'),
+        lane: encodingField(s, laneChannel),
+        series: encodingField(s, 'color'),
       };
       const matches = raw
         .filter((rawItem) => {
           let seriesMatch;
 
           // single-color categorical charts are still plotted using separate series nodes
-          if (feature(s).hasColor() || ['ordinal', 'nominal'].includes(encodingType(s, 'x'))) {
-            seriesMatch = aggregatedItem[keys.color] === rawItem[keys.color];
+          if (feature(s).hasColor() || isDiscrete(s, encodingChannelCovariate(s))) {
+            seriesMatch = aggregatedItem[keys.series] === rawItem[keys.series];
           } else {
             seriesMatch = true;
           }
 
-          const xMatch =
-            aggregatedItem[keys.x] &&
-            rawItem[keys.x] &&
-            aggregatedItem[keys.x]?.toString() === rawItem[keys.x]?.toString();
+          const laneMatch =
+            aggregatedItem[keys.lane] &&
+            rawItem[keys.lane] &&
+            aggregatedItem[keys.lane]?.toString() === rawItem[keys.lane]?.toString();
           const hasField = !!rawItem[key];
 
-          return seriesMatch && xMatch && hasField;
+          return seriesMatch && laneMatch && hasField;
         })
         .map((item) => item[key])
         .filter(Boolean);
@@ -168,8 +180,8 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
         lookup[encodingField(s, 'color')] = series.key;
       }
 
-      if (encodingField(s, 'x')) {
-        lookup[encodingField(s, 'x')] = item.data.key;
+      if (encodingField(s, encodingChannelCovariate(s))) {
+        lookup[encodingField(s, encodingChannelCovariate(s))] = item.data.key;
       }
 
       const channels = ['href', 'description', 'tooltip'];
@@ -204,12 +216,13 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
 const stackValue = (d, key) => d[key]?.value || 0;
 
 const _stackedBarData = (s) => {
-  const summed = groupAndSumByProperties(
-    values(s),
-    encodingField(s, 'x'),
-    encodingField(s, 'color'),
-    encodingField(s, 'y'),
-  );
+  const dimensions = ['x', 'y'];
+
+  if (barDirection(s) === 'horizontal') {
+    dimensions.reverse();
+  }
+
+  const summed = groupAndSumByProperties(values(s), encodingField(s, dimensions[0]), encodingField(s, 'color'), encodingField(s, dimensions[1]));
   const stacker = d3.stack().keys(stackKeys).value(stackValue);
   const stacked = stacker(summed);
 
@@ -404,4 +417,4 @@ const data = (s) => {
   }
 };
 
-export { data, pointData, sumByPeriod, transplantFields };
+export { data, pointData, sumByCovariates, transplantFields };

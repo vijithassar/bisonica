@@ -1,8 +1,8 @@
 import {
   createEncoders,
   encodingField,
-  encodingFieldCovariate,
-  encodingFieldQuantitative,
+  encodingChannelCovariate,
+  encodingChannelQuantitative,
   encodingType,
   encodingValue,
 } from '../../source/encodings.js';
@@ -60,17 +60,17 @@ module('unit > encoders', () => {
       encoding: { x: { type: 'quantitative' }, y: { type: 'quantitative' } },
     };
 
-    assert.equal(encodingFieldCovariate(ordinal), 'x');
-    assert.equal(encodingFieldCovariate(nominal), 'x');
-    assert.equal(encodingFieldCovariate(temporal), 'x');
-    assert.throws(() => encodingFieldCovariate(doubleNominal));
-    assert.throws(() => encodingFieldCovariate(doubleQuantitative));
+    assert.equal(encodingChannelCovariate(ordinal), 'x');
+    assert.equal(encodingChannelCovariate(nominal), 'x');
+    assert.equal(encodingChannelCovariate(temporal), 'x');
+    assert.throws(() => encodingChannelCovariate(doubleNominal));
+    assert.throws(() => encodingChannelCovariate(doubleQuantitative));    
   });
 
   test('identifies quantitative encoding channels', (assert) => {
     const s = { encoding: { x: { type: 'nominal' }, y: { type: 'quantitative' } } };
 
-    assert.equal(encodingFieldQuantitative(s), 'y');
+    assert.equal(encodingChannelQuantitative(s), 'y');
   });
 
   test('detects encoding types', (assert) => {

@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { axisTickLabelText, rotation } from './text.js';
 import { barWidth } from './marks.js';
 import { degrees, isDiscrete, noop, overlap } from './helpers.js';
-import { encodingType } from './encodings.js';
+import { encodingChannelQuantitative, encodingType } from './encodings.js';
 import { feature } from './feature.js';
 import { layerMatch } from './views.js';
 import { parseScales } from './scales.js';
@@ -172,7 +172,10 @@ const x = (s, dimensions) => {
       let yOffset;
 
       if (scales.y) {
-        yOffset = isDiscrete(s, 'y') ? scales.y.range().pop() : scales.y.range()[0];
+        yOffset =
+          isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal'
+            ? scales.y.range().pop()
+            : scales.y.range()[0];
       } else {
         yOffset = 0;
       }
@@ -252,7 +255,7 @@ const y = (s, dimensions) => {
     }
 
     // extend y axis ticks across the whole chart
-    if (feature(s).isBar() || feature(s).isLine()) {
+    if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y') {
       selection
         .select('.y .axis')
         .selectAll('.tick')
