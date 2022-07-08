@@ -199,8 +199,8 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', y)
-      .attr('x', x)
+      .attr('y', feature(s).hasEncodingY() ? y : 0)
+      .attr('x', feature(s).hasEncodingX() ? x : 0)
       .attr('aria-label', (d) => {
         return markDescription(s)(d);
       })
