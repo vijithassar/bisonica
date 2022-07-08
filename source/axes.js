@@ -264,7 +264,11 @@ const y = (s, dimensions) => {
         .select('.y .axis')
         .selectAll('.tick')
         .select('line')
-        .attr('x1', scales.x.range()[1] + barOffset);
+        .attr('x1', () => {
+          if (feature(s).hasEncodingX()) {
+            return scales.x.range()[1] + barOffset;
+          }
+        });
     }
   };
 };
