@@ -177,7 +177,11 @@ const x = (s, dimensions) => {
             ? scales.y.range().pop()
             : scales.y.range()[0];
       } else {
-        yOffset = 0;
+        if (feature(s).isBar() && !feature(s).hasEncodingY()) {
+          yOffset = barWidth(s, dimensions)
+        } else {
+          yOffset = 0;
+        }
       }
 
       return `translate(${xOffset},${yOffset})`;
