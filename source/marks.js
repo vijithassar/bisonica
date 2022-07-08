@@ -4,7 +4,6 @@ import { BAR_WIDTH_MINIMUM } from './config.js';
 import { createAccessors } from './accessors.js';
 import {
   createEncoders,
-  encodingChannelCovariate,
   encodingChannelQuantitative,
   encodingType,
   encodingValue,
@@ -79,7 +78,7 @@ const markDescription = memoize(_markDescription);
  * @returns {number} bar width
  */
 const _barWidth = (s, dimensions) => {
-  const channel = encodingChannelCovariate(s);
+  const channel = ['x', 'y'].find((channel => channel !== encodingChannelQuantitative(s)));
   const barWidthMaximum = dimensions[channel] / 3;
   const stacked = markData(s);
   const type = encodingType(s, channel);
