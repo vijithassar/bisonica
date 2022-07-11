@@ -158,13 +158,13 @@ const layoutDirection = (s) => {
 };
 
 /**
- * shuffle around bar mark encoders to
+ * shuffle around mark encoders to
  * facilitate bidirectional layout
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {object} bar encoder methods
  */
-const barEncoders = (s, dimensions) => {
+const stackEncoders = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s));
   const vertical = layoutDirection(s) === 'vertical';
   const laneChannel = vertical ? 'x' : 'y';
@@ -188,7 +188,7 @@ const barEncoders = (s, dimensions) => {
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const { x, y, height, width } = barEncoders(s, dimensions);
+  const { x, y, height, width } = stackEncoders(s, dimensions);
 
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
