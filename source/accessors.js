@@ -33,7 +33,7 @@ const _createAccessors = (s, type = null) => {
     accessors.color = (d) => d.key;
   }
 
-  if (key === 'bar') {
+  if (['bar', 'area'].includes(key)) {
     const start = (d) => d[0];
     const lane = (d) => d.data.key;
 
