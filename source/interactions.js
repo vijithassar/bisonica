@@ -18,6 +18,7 @@ const charts = d3.local();
 const events = (s) => {
   if (
     feature(s).isBar() ||
+    feature(s).isArea() ||
     feature(s).isCircular() ||
     feature(s).isLine() ||
     feature(s).isRule() ||

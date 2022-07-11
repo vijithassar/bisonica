@@ -121,7 +121,7 @@ const barWidth = memoize(_barWidth);
 const markSelector = (s) => {
   if (feature(s).isBar()) {
     return 'rect';
-  } else if (feature(s).isLine() || feature(s).isCircular()) {
+  } else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
     return 'path';
   } else if (!feature(s).isLine() && feature(s).hasPoints()) {
     return 'circle';

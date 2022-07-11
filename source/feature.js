@@ -28,6 +28,7 @@ const _feature = (s) => {
   const tests = {
     isBar: (s) => mark(s) === 'bar',
     isLine: (s) => mark(s) === 'line',
+    isArea: (s) => mark(s) === 'area',
     hasPoints: (s) => mark(s) === 'point' || s.mark?.point === true,
     hasLayers: (s) => !!s.layer,
     isCircular: (s) => mark(s) === 'arc',

@@ -119,7 +119,7 @@ const domainBaseValues = (s, channel) => {
     let min;
     let max;
 
-    if (feature(s).isBar()) {
+    if (feature(s).isBar() || feature(s).isArea()) {
       min = 0;
       max = d3.max(sumByCovariates(s));
     } else if (feature(s).isLine()) {
@@ -287,7 +287,7 @@ const coreScales = (s, dimensions) => {
 const detectScaleExtensions = (s) => {
   const extensions = [];
 
-  if (feature(s).isBar()) {
+  if (feature(s).isBar() || feature(s).isArea()) {
     extensions.push('length');
   }
 

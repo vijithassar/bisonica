@@ -404,7 +404,7 @@ const pointData = identity;
  * @returns {array} sorted and aggregated data
  */
 const data = (s) => {
-  if (feature(s).isBar()) {
+  if (feature(s).isBar() || feature(s).isArea()) {
     return stackData(s);
   } else if (feature(s).isLine()) {
     return lineData(s);
