@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { barDirection } from './marks.js';
+import { layoutDirection } from './marks.js';
 import {
   encodingChannelCovariate,
   encodingChannelQuantitative,
@@ -218,7 +218,7 @@ const stackValue = (d, key) => d[key]?.value || 0;
 const _stackData = (s) => {
   const dimensions = ['x', 'y'];
 
-  if (barDirection(s) === 'horizontal') {
+  if (layoutDirection(s) === 'horizontal') {
     dimensions.reverse();
   }
 

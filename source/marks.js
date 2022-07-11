@@ -146,10 +146,10 @@ const markInteractionSelector = (_s) => {
 };
 
 /**
- * determine which way bars are oriented
+ * determine which way marks are oriented
  * @param {object} s Vega Lite specification
  */
-const barDirection = (s) => {
+const layoutDirection = (s) => {
   if (s.encoding.x.type === 'quantitative') {
     return 'horizontal';
   } else if (s.encoding.y.type === 'quantitative') {
@@ -166,7 +166,7 @@ const barDirection = (s) => {
  */
 const barEncoders = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
-  const vertical = barDirection(s) === 'vertical';
+  const vertical = layoutDirection(s) === 'vertical';
   const barLaneChannel = vertical ? 'x' : 'y';
   const lane = encoders[barLaneChannel];
   const start = encoders.barStart;
@@ -631,4 +631,4 @@ const marks = (s, dimensions) => {
   }
 };
 
-export { marks, radius, barWidth, barDirection, markSelector, markInteractionSelector, category };
+export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category };

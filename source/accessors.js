@@ -1,4 +1,4 @@
-import { barDirection } from './marks.js';
+import { layoutDirection } from './marks.js';
 import { encodingChannelQuantitative, encodingField, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { mark } from './helpers.js';
@@ -37,10 +37,10 @@ const _createAccessors = (s, type = null) => {
     const start = (d) => d[0];
     const lane = (d) => d.data.key;
 
-    if (barDirection(s) === 'horizontal') {
+    if (layoutDirection(s) === 'horizontal') {
       accessors.y = lane;
       accessors.x = start;
-    } else if (barDirection(s) === 'vertical') {
+    } else if (layoutDirection(s) === 'vertical') {
       accessors.y = start;
       accessors.x = lane;
     }
