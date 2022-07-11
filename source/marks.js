@@ -5,6 +5,7 @@ import { createAccessors } from './accessors.js';
 import {
   createEncoders,
   encodingChannelCovariate,
+  encodingChannelQuantitative,
   encodingType,
   encodingValue,
   encodingValueQuantitative,
@@ -283,13 +284,39 @@ const barMarks = (s, dimensions) => {
 };
 
 /**
+ * assign encoders to area mark methods
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} area encoders
+ */
+const areaEncoders = (s, dimensions) => {
+  const {x, y, width, height } = stackEncoders(s, dimensions);
+  let base = {
+    y0: y,
+    x0: x,
+    x1: (d) => x(d) + width(d),
+  };
+  if (encodingChannelQuantitative(s) === 'x') {
+    return {
+      ...base
+    };
+  } else if (encodingChannelQuantitative(s) === 'y') {
+    return {
+      x0: x,
+      y0: y,
+      y1: (d) => y(d) + height(d),
+    };
+  }
+};
+
+/**
  * render area marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {function} area mark renderer
  */
 const areaMarks = (s, dimensions) => {
-  const encoders = stackEncoders(s, dimensions);
+  const encoders = areaEncoders(s, dimensions);
   const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'));
   const renderer = (selection) => {
     const marks = selection
