@@ -219,25 +219,24 @@ const barMark = (s, dimensions) => {
  * @returns {string} transform
  */
 const barMarksTransform = (s, dimensions) => {
-  const translate = [0, 0];
-  let offsetChannel;
-  let index;
+  let x = 0;
+  let y = 0;
 
-  if (encodingType(s, 'y') === 'quantitative' && feature(s).hasEncodingX()) {
-    offsetChannel = 'x';
-    index = 0;
-  } else if (encodingType(s, 'x') === 'quantitative' && feature(s).hasEncodingY()) {
-    offsetChannel = 'y';
-    index = 1;
+  if (encodingType(s, 'y') === 'quantitative') {
+    if (feature(s).hasEncodingX()) {
+      if (isDiscrete(s, 'x')) {
+        x = barWidth(s, dimensions) * 0.5;
+      }
+    }
+  } else if (encodingType(s, 'x') === 'quantitative') {
+    if (feature(s).hasEncodingY()) {
+      if (isDiscrete(s, 'y')) {
+        y = barWidth(s, dimensions) * 0.5;
+      }
+    }
   }
 
-  const offset = isDiscrete(s, offsetChannel) ? barWidth(s, dimensions) * 0.5 : 0;
-
-  if (typeof index === 'number') {
-    translate[index] = offset;
-  }
-
-  return `translate(${translate.join(',')})`;
+  return `translate(${x},${y})`;
 };
 
 /**
