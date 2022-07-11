@@ -313,7 +313,7 @@ const extendScales = (s, dimensions, scales) => {
   if (extensions.includes('length')) {
     const channel = encodingChannelQuantitative(s);
 
-    extendedScales.barLength = (d) => {
+    extendedScales.length = (d) => {
       if (extendedScales[channel].domain().every((endpoint) => endpoint === 0)) {
         return 0;
       }
@@ -325,9 +325,9 @@ const extendScales = (s, dimensions, scales) => {
       }
     };
 
-    extendedScales.barStart = (d) => {
+    extendedScales.start = (d) => {
       if (channel === 'y') {
-        return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+        return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0]);
       } else if (channel === 'x') {
         return extendedScales[channel](d[0]);
       }

@@ -45,9 +45,9 @@ const _createAccessors = (s, type = null) => {
       accessors.x = lane;
     }
 
-    accessors.barStart = (d) => (d[1] ? d : [d[0], d[0]]);
+    accessors.start = (d) => (d[1] ? d : [d[0], d[0]]);
 
-    accessors.barLength = (d) => {
+    accessors.length = (d) => {
       return isNaN(d[1]) ? 0 : d[1] - d[0];
     };
   }
