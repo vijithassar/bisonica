@@ -7,7 +7,7 @@ import { rulesSpec } from '../fixtures/rules.js';
 import { scatterPlotSpec } from '../fixtures/scatter-plot.js';
 import { stackedBarChartSpec } from '../fixtures/stacked-bar.js';
 import { temporalBarChartSpec } from '../fixtures/temporal-bar.js';
-
+import { singleBarChartSpec } from '../fixtures/single-bar.js';
 import { select } from 'd3';
 import { chart } from '../source/chart.js';
 
@@ -67,6 +67,8 @@ export function specificationFixture(type) {
     spec = stackedBarChartSpec;
   } else if (type === 'stackedArea') {
     spec = stackedAreaChartSpec;
+  } else if (type === 'singleBar') {
+    spec = singleBarChartSpec;
   } else if (type === 'circular') {
     spec = circularChartSpec;
   } else if (type === 'line') {
