@@ -205,6 +205,7 @@ const barMark = (s, dimensions) => {
       })
       .attr('height', height)
       .attr('width', width)
+      .classed('link', encodingValue(s, 'href'))
       .call(tooltips(s));
   };
 
@@ -327,6 +328,7 @@ const pointMarks = (s, dimensions) => {
       .attr('cx', encoders.x)
       .attr('cy', encoders.y)
       .attr('r', radius)
+      .classed('link', encodingValue(s, 'href'))
       .call(tooltips(s));
 
     if (!feature(s).isLine()) {
@@ -456,6 +458,9 @@ const circularMarks = (s, dimensions) => {
         return markDescription(s)(d);
       })
       .style('fill', encoders.color)
+      .classed('link', (d) => {
+        return encodingValue(s, 'href')(datum(s, d))
+      })
       .call(tooltips(s));
   };
 
@@ -594,6 +599,8 @@ const textMarks = (s, dimensions) => {
     const dy = text.node().getBoundingClientRect().height * 0.25;
 
     text.attr('transform', `translate(0,${dy})`);
+    text.classed('link', encodingValue(s, 'href'));
+
   };
 };
 
