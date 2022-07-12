@@ -117,7 +117,7 @@ const _getTooltipField = (s, type) => {
 
   // report height instead of y position as tooltip value
   if (feature(s).isBar()) {
-    accessors.y = accessors.barLength;
+    accessors.y = accessors.length;
   }
 
   let key;

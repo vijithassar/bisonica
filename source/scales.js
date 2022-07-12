@@ -119,7 +119,7 @@ const domainBaseValues = (s, channel) => {
     let min;
     let max;
 
-    if (feature(s).isBar()) {
+    if (feature(s).isBar() || feature(s).isArea()) {
       min = 0;
       max = d3.max(sumByCovariates(s));
     } else if (feature(s).isLine()) {
@@ -287,7 +287,7 @@ const coreScales = (s, dimensions) => {
 const detectScaleExtensions = (s) => {
   const extensions = [];
 
-  if (feature(s).isBar()) {
+  if (feature(s).isBar() || feature(s).isArea()) {
     extensions.push('length');
   }
 
@@ -313,7 +313,7 @@ const extendScales = (s, dimensions, scales) => {
   if (extensions.includes('length')) {
     const channel = encodingChannelQuantitative(s);
 
-    extendedScales.barLength = (d) => {
+    extendedScales.length = (d) => {
       if (extendedScales[channel].domain().every((endpoint) => endpoint === 0)) {
         return 0;
       }
@@ -325,9 +325,9 @@ const extendScales = (s, dimensions, scales) => {
       }
     };
 
-    extendedScales.barStart = (d) => {
+    extendedScales.start = (d) => {
       if (channel === 'y') {
-        return extendedScales[channel](d[0]) - extendedScales.barLength(d[1] - d[0]);
+        return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0]);
       } else if (channel === 'x') {
         return extendedScales[channel](d[0]);
       }

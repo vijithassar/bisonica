@@ -5,6 +5,7 @@ import { createAccessors } from './accessors.js';
 import {
   createEncoders,
   encodingChannelCovariate,
+  encodingChannelQuantitative,
   encodingType,
   encodingValue,
   encodingValueQuantitative,
@@ -121,7 +122,7 @@ const barWidth = memoize(_barWidth);
 const markSelector = (s) => {
   if (feature(s).isBar()) {
     return 'rect';
-  } else if (feature(s).isLine() || feature(s).isCircular()) {
+  } else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
     return 'path';
   } else if (!feature(s).isLine() && feature(s).hasPoints()) {
     return 'circle';
@@ -146,10 +147,10 @@ const markInteractionSelector = (_s) => {
 };
 
 /**
- * determine which way bars are oriented
+ * determine which way marks are oriented
  * @param {object} s Vega Lite specification
  */
-const barDirection = (s) => {
+const layoutDirection = (s) => {
   if (s.encoding.x.type === 'quantitative') {
     return 'horizontal';
   } else if (s.encoding.y.type === 'quantitative') {
@@ -158,19 +159,19 @@ const barDirection = (s) => {
 };
 
 /**
- * shuffle around bar mark encoders to
+ * shuffle around mark encoders to
  * facilitate bidirectional layout
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {object} bar encoder methods
  */
-const barEncoders = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s, 'bar'));
-  const vertical = barDirection(s) === 'vertical';
-  const barLaneChannel = vertical ? 'x' : 'y';
-  const lane = encoders[barLaneChannel];
-  const start = encoders.barStart;
-  const length = encoders.barLength;
+const stackEncoders = (s, dimensions) => {
+  const encoders = createEncoders(s, dimensions, createAccessors(s));
+  const vertical = layoutDirection(s) === 'vertical';
+  const laneChannel = vertical ? 'x' : 'y';
+  const lane = encoders[laneChannel];
+  const start = encoders.start;
+  const length = encoders.length;
   const width = () => barWidth(s, dimensions);
 
   return {
@@ -188,7 +189,7 @@ const barEncoders = (s, dimensions) => {
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const { x, y, height, width } = barEncoders(s, dimensions);
+  const { x, y, height, width } = stackEncoders(s, dimensions);
 
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
@@ -281,6 +282,71 @@ const barMarks = (s, dimensions) => {
 
   return renderer;
 };
+
+/**
+ * assign encoders to area mark methods
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} area encoders
+ */
+const areaEncoders = (s, dimensions) => {
+  const {x, y, width, height } = stackEncoders(s, dimensions);
+  let base = {
+    y0: y,
+    x0: x,
+    x1: (d) => x(d) + width(d),
+  };
+  if (encodingChannelQuantitative(s) === 'x') {
+    return {
+      ...base
+    };
+  } else if (encodingChannelQuantitative(s) === 'y') {
+    return {
+      x0: x,
+      y0: y,
+      y1: (d) => y(d) + height(d),
+    };
+  }
+};
+
+/**
+ * render area marks
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} area mark renderer
+ */
+const areaMarks = (s, dimensions) => {
+  const encoders = areaEncoders(s, dimensions);
+  const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'));
+  const renderer = (selection) => {
+    const marks = selection
+      .append('g')
+      .attr('class', 'marks');
+
+    const area = d3.area();
+
+    ['x0', 'x1', 'y0', 'y1'].forEach((point) => {
+      area[point](encoders[point]);
+    });
+
+    const layout = data(s);
+
+    marks
+      .selectAll(markSelector(s))
+      .data(layout)
+      .enter()
+      .append('path')
+      .attr('d', area)
+      .attr('role', 'region')
+      .attr('aria-roledescription', 'data series')
+      .attr('tabindex', -1)
+      .attr('fill', color)
+      .attr('class', 'area mark')
+      .attr('aria-label', (d) => d.key);
+
+  }
+  return renderer;
+}
 
 /**
  * render point marks
@@ -614,6 +680,8 @@ const marks = (s, dimensions) => {
   try {
     if (feature(s).isBar()) {
       return barMarks(s, dimensions);
+    } else if (feature(s).isArea()) {
+      return areaMarks(s, dimensions);
     } else if (feature(s).isCircular()) {
       return circularMarks(s, dimensions);
     } else if (feature(s).isLine()) {
@@ -631,4 +699,4 @@ const marks = (s, dimensions) => {
   }
 };
 
-export { marks, radius, barWidth, barDirection, markSelector, markInteractionSelector, category };
+export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category };

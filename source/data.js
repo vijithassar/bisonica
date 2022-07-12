@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { barDirection } from './marks.js';
+import { layoutDirection } from './marks.js';
 import {
   encodingChannelCovariate,
   encodingChannelQuantitative,
@@ -215,10 +215,10 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
  */
 const stackValue = (d, key) => d[key]?.value || 0;
 
-const _stackedBarData = (s) => {
+const _stackData = (s) => {
   const dimensions = ['x', 'y'];
 
-  if (barDirection(s) === 'horizontal') {
+  if (layoutDirection(s) === 'horizontal') {
     dimensions.reverse();
   }
 
@@ -251,7 +251,7 @@ const _stackedBarData = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {array} stacked data series
  */
-const stackedBarData = memoize(_stackedBarData);
+const stackData = memoize(_stackData);
 
 const _circularData = (s) => {
   let results;
@@ -404,8 +404,8 @@ const pointData = identity;
  * @returns {array} sorted and aggregated data
  */
 const data = (s) => {
-  if (feature(s).isBar()) {
-    return stackedBarData(s);
+  if (feature(s).isBar() || feature(s).isArea()) {
+    return stackData(s);
   } else if (feature(s).isLine()) {
     return lineData(s);
   } else if (feature(s).isCircular()) {
