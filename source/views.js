@@ -127,7 +127,7 @@ const layerMatch = (s, test) => {
  * @returns {boolean}
  */
 const twoDimensional = (s) => {
-  return s.encoding.x && s.encoding.y || s.encoding.theta;
+  return s.encoding.x && s.encoding.y || s.encoding.theta && s.encoding.color;
 };
 
 /**
