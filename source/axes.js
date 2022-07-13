@@ -177,7 +177,11 @@ const x = (s, dimensions) => {
             ? scales.y.range().pop()
             : scales.y.range()[0];
       } else {
-        yOffset = 0;
+        if (feature(s).isBar() && !feature(s).hasEncodingY()) {
+          yOffset = barWidth(s, dimensions)
+        } else {
+          yOffset = 0;
+        }
       }
 
       return `translate(${xOffset},${yOffset})`;
@@ -260,7 +264,11 @@ const y = (s, dimensions) => {
         .select('.y .axis')
         .selectAll('.tick')
         .select('line')
-        .attr('x1', scales.x.range()[1] + barOffset);
+        .attr('x1', () => {
+          if (feature(s).hasEncodingX()) {
+            return scales.x.range()[1] + barOffset;
+          }
+        });
     }
   };
 };

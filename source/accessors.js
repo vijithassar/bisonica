@@ -38,11 +38,15 @@ const _createAccessors = (s, type = null) => {
     const lane = (d) => d.data.key;
 
     if (layoutDirection(s) === 'horizontal') {
-      accessors.y = lane;
       accessors.x = start;
+      if (feature(s).hasEncodingY()) {
+        accessors.y = lane;
+      }
     } else if (layoutDirection(s) === 'vertical') {
-      accessors.y = start;
-      accessors.x = lane;
+      accessors.x = start;
+      if (feature(s).hasEncodingY()) {
+        accessors.y = lane;
+      }
     }
 
     accessors.start = (d) => (d[1] ? d : [d[0], d[0]]);

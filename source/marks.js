@@ -4,7 +4,6 @@ import { BAR_WIDTH_MINIMUM } from './config.js';
 import { createAccessors } from './accessors.js';
 import {
   createEncoders,
-  encodingChannelCovariate,
   encodingChannelQuantitative,
   encodingType,
   encodingValue,
@@ -79,24 +78,24 @@ const markDescription = memoize(_markDescription);
  * @returns {number} bar width
  */
 const _barWidth = (s, dimensions) => {
-  const channel = encodingChannelCovariate(s);
+  const channel = ['x', 'y'].find((channel => channel !== encodingChannelQuantitative(s)));
   const barWidthMaximum = dimensions[channel] / 3;
   const stacked = markData(s);
   const type = encodingType(s, channel);
   const temporal = type === 'temporal';
-  // this check is logically the same as parseScales()[channel].domain()
-  // but writing it that way would be circular
-  const domain = s.encoding[channel].scale?.domain?.map(parseTime);
-  const extent = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
-  const endpoints = domain || extent;
-  const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1]);
-  const customDomain = s.encoding[channel].scale?.domain?.length;
+  const customDomain = s.encoding[channel]?.scale?.domain?.length;
 
   let count;
 
   if (customDomain) {
     count = customDomain;
   } else if (temporal) {
+    // this check is logically the same as parseScales()[channel].domain()
+    // but writing it that way would be circular
+    const domain = s.encoding[channel].scale?.domain?.map(parseTime);
+    const extent = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
+    const endpoints = domain || extent;
+    const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1]);
     count = periods;
   } else {
     count = d3.max(stacked, (d) => d.length);
@@ -151,9 +150,9 @@ const markInteractionSelector = (_s) => {
  * @param {object} s Vega Lite specification
  */
 const layoutDirection = (s) => {
-  if (s.encoding.x.type === 'quantitative') {
+  if (s.encoding.x?.type === 'quantitative') {
     return 'horizontal';
-  } else if (s.encoding.y.type === 'quantitative') {
+  } else if (s.encoding.y?.type === 'quantitative') {
     return 'vertical';
   }
 };
@@ -199,8 +198,8 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', y)
-      .attr('x', x)
+      .attr('y', feature(s).hasEncodingY() ? y : 0)
+      .attr('x', feature(s).hasEncodingX() ? x : 0)
       .attr('aria-label', (d) => {
         return markDescription(s)(d);
       })
@@ -220,23 +219,24 @@ const barMark = (s, dimensions) => {
  * @returns {string} transform
  */
 const barMarksTransform = (s, dimensions) => {
-  const translate = [0, 0];
-  let offsetChannel;
-  let index;
+  let x = 0;
+  let y = 0;
 
   if (encodingType(s, 'y') === 'quantitative') {
-    offsetChannel = 'x';
-    index = 0;
+    if (feature(s).hasEncodingX()) {
+      if (isDiscrete(s, 'x')) {
+        x = barWidth(s, dimensions) * 0.5;
+      }
+    }
   } else if (encodingType(s, 'x') === 'quantitative') {
-    offsetChannel = 'y';
-    index = 1;
+    if (feature(s).hasEncodingY()) {
+      if (isDiscrete(s, 'y')) {
+        y = barWidth(s, dimensions) * 0.5;
+      }
+    }
   }
 
-  const offset = isDiscrete(s, offsetChannel) ? barWidth(s, dimensions) * 0.5 : 0;
-
-  translate[index] = offset;
-
-  return `translate(${translate.join(',')})`;
+  return `translate(${x},${y})`;
 };
 
 /**
