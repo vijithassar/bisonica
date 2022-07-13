@@ -4,34 +4,12 @@ import { longestAxisTickLabelTextWidth, rotation } from './text.js';
 import { memoize } from './memoize.js';
 import { polarToCartesian } from './helpers.js';
 import { radius } from './marks.js';
-import { layerMatch } from './views.js';
+import { layerPrimary } from './views.js';
 
 const TITLE_MARGIN = GRID * 5;
 const MARGIN_MAXIMUM = 180 + TITLE_MARGIN;
 
 const axes = { x: 'bottom', y: 'left' };
-
-/**
- * test whether a specification has all the
- * encodings necessary for a successful two
- * dimensional layout
- * @param {object} s Vega Lite specification
- * @returns {boolean}
- */
-const twoDimensional = (s) => {
-  return s.encoding.x && s.encoding.y || s.encoding.theta;
-};
-
-/**
- * test whether a specification has all the
- * encodings necessary for a successful two
- * dimensional layout
- * @param {object} s Vega Lite specification
- * @returns {boolean}
- */
-const oneDimensional = (s) => {
-  return s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y;
-};
 
 /**
  * compute margin for a circular chart
@@ -112,12 +90,11 @@ const marginCartesian = (s, dimensions) => {
   };
 };
 
-const _margin = (_s, dimensions) => {
-  const s = _s.layer ? layerMatch(_s, twoDimensional) || layerMatch(_s, oneDimensional) : _s;
+const _margin = (s, dimensions) => {
   if (feature(s).isCircular()) {
     return marginCircular();
   } else {
-    return marginCartesian(s, dimensions);
+    return marginCartesian(layerPrimary(s), dimensions);
   }
 };
 

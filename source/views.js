@@ -119,6 +119,36 @@ const layerMatch = (s, test) => {
     }
   }
 };
+/**
+ * test whether a specification has all the
+ * encodings necessary for a successful two
+ * dimensional layout
+ * @param {object} s Vega Lite specification
+ * @returns {boolean}
+ */
+const twoDimensional = (s) => {
+  return s.encoding.x && s.encoding.y || s.encoding.theta;
+};
+
+/**
+ * test whether a specification has all the
+ * encodings necessary for a successful two
+ * dimensional layout
+ * @param {object} s Vega Lite specification
+ * @returns {boolean}
+ */
+const oneDimensional = (s) => {
+  return s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y;
+};
+
+/**
+ * select the layer that is likely to be the most important
+ * for global functionality like axes and margins across the
+ * entire chart
+ * @param {object} s Vega Lite specification
+ * @returns {object} layer specification
+ */
+const layerPrimary = (s) => s.layer ? layerMatch(s, twoDimensional) || layerMatch(s, oneDimensional) : s;
 
 /**
  * find the DOM element corresponding to a layer
@@ -258,4 +288,4 @@ const layerTestRecursive = (s, test) => {
   return test(s) || layerTest(s, test);
 };
 
-export { layer, layerMatch, layerNode, layerTestRecursive };
+export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive };
