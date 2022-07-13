@@ -43,9 +43,9 @@ const _createAccessors = (s, type = null) => {
         accessors.y = lane;
       }
     } else if (layoutDirection(s) === 'vertical') {
-      accessors.x = start;
-      if (feature(s).hasEncodingY()) {
-        accessors.y = lane;
+      accessors.y = start;
+      if (feature(s).hasEncodingX()) {
+        accessors.x = lane;
       }
     }
 
