@@ -4,6 +4,7 @@ import { longestAxisTickLabelTextWidth, rotation } from './text.js';
 import { memoize } from './memoize.js';
 import { polarToCartesian } from './helpers.js';
 import { radius } from './marks.js';
+import { layerPrimary } from './views.js';
 
 const TITLE_MARGIN = GRID * 5;
 const MARGIN_MAXIMUM = 180 + TITLE_MARGIN;
@@ -93,7 +94,7 @@ const _margin = (s, dimensions) => {
   if (feature(s).isCircular()) {
     return marginCircular();
   } else {
-    return marginCartesian(s, dimensions);
+    return marginCartesian(layerPrimary(s), dimensions);
   }
 };
 

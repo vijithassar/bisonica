@@ -121,6 +121,37 @@ const layerMatch = (s, test) => {
 };
 
 /**
+ * select the layer that is likely to be the most important
+ * for global functionality like axes and margins across the
+ * entire chart
+ * @param {object} s Vega Lite specification
+ * @returns {object} layer specification
+ */
+const layerPrimary = (s) => {
+  if (!s.layer) {
+    return s;
+  }
+  const heuristics = [
+    // explicit axis configuration
+    (s) => s.encoding.x?.axis || s.encoding.y?.axis,
+    // radial
+    (s) => s.encoding.theta && s.encoding.color,
+    // cartesian
+    (s) => s.encoding.x && s.encoding.y,
+    // linear
+    (s) => s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y,
+    // add a wrapper to require encoding
+  ].map((heuristic) => (s) => s.encoding && heuristic(s));
+
+  for (const heuristic of heuristics) {
+    let match = layerMatch(s, heuristic);
+    if (typeof match === 'object') {
+      return match;
+    }
+  }
+};
+
+/**
  * find the DOM element corresponding to a layer
  * specification
  * @param {object} s Vega Lite layer specification
@@ -258,4 +289,4 @@ const layerTestRecursive = (s, test) => {
   return test(s) || layerTest(s, test);
 };
 
-export { layer, layerMatch, layerNode, layerTestRecursive };
+export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive };
