@@ -37,18 +37,16 @@ const scaleType = (s, channel) => {
     quantitative: 'Linear',
     ordinal: 'Ordinal',
   };
-  const key = encodingType(s, channel);
 
-  if (typeof key === 'string') {
+  if (methods[encodingType(s, channel)]) {
     const method =
       ['x', 'y'].includes(channelRoot(s, channel)) && isDiscrete(s, channel)
         ? 'Band'
-        : methods[key];
-
+        : methods[encodingType(s, channel)];
     return `scale${method}`;
-  } else if (typeof key === 'undefined') {
+  } else {
     throw new Error(
-      `could not determine scale method for ${channel} channel because encoding type is undefined`,
+      `could not determine scale method for ${channel} channel because encoding type is ${encodingType(s, channel)}`,
     );
   }
 };
