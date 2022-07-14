@@ -1,6 +1,7 @@
 import {
   layerMatch,
-  layerNode
+  layerNode,
+  layerPrimary
 } from '../../source/views.js';
 import qunit from 'qunit';
 
@@ -92,6 +93,189 @@ module('unit > views', () => {
 
       assert.equal(layerNode(ruleSpec, wrapper).getAttribute('data-test-selector'), 'a');
       assert.equal(layerNode(barSpec, wrapper).getAttribute('data-test-selector'), 'b');
+    });
+    module('primary', () => {
+      test('circular', (assert) => {
+        const specification = {
+          data: {values: [
+            { group: 'a', value: 1 },
+            { group: 'b', value: 2 },
+            { group: 'c', value: 3 },
+          ]},
+          layer: [
+            {
+              mark: {
+                type: "text",
+                text: "this is a text layer"
+              }
+            },
+            {
+              mark: {
+                type: "arc",
+                innerRadius: 50,
+              },
+              encoding: {
+                theta: {
+                  field: "value",
+                  type: "quantitative"
+                },
+                color: {
+                  field: "group",
+                  type: "nominal"
+                }
+              }
+            }
+          ]
+        };
+        assert.equal(layerPrimary(specification).mark.type, 'arc', 'selects arcs from donut chart with text layer');
+      });
+      test('cartesian', (assert) => {
+        const specification = {
+          data: {
+            values: [
+              { date: "2015", value: 1 },
+              { date: "2016", value: 2 },
+              { date: "2017", value: 3 },
+              { date: "2018", value: 4 },
+              { date: "2019", value: 4 },
+              { date: "2020", value: 7 },
+              { date: "2021", value: 10 },
+              { date: "2022", value: 4 },
+            ]
+          },
+          layer: [
+            {
+              mark: {
+                type: "rule"
+              },
+              encoding: {
+                y: {
+                  datum: 5,
+                  type: 'quantitative'
+                }
+              }
+            },
+            {
+              mark: {
+                type: "line",
+              },
+              encoding: {
+                theta: {
+                  field: "value",
+                  type: "quantitative"
+                },
+                color: {
+                  field: "date",
+                  type: "temporal"
+                }
+              }
+            }
+          ]
+        };
+        assert.equal(layerPrimary(specification).mark.type, 'line', 'selects line from line chart with rule layer');
+      });      
+      test('linear', (assert) => {
+        const specification = {
+          data: {
+            values: [
+              { group: "a", value: 21 },
+              { group: "a", value: 44 },
+              { group: "b", value: 57 },
+              { group: "a", value: 82 },
+              { group: "a", value: 23 },
+              { group: "b", value: 10 },
+              { group: "b", value: 30 },
+              { group: "a", value: 57 },
+            ]
+          },
+          layer: [
+            {
+              mark: {
+                type: "text",
+                text: 'text annotation'
+              },
+              encoding: {
+                x: {
+                  datum: 20,
+                  type: 'quantitative'
+                }
+              }
+            },
+            {
+              mark: {
+                type: "point",
+              },
+              encoding: {
+                x: {
+                  field: "value",
+                  type: "quantitative"
+                },
+                color: {
+                  field: "group",
+                  type: "nominal"
+                }
+              }
+            }
+          ]
+        };
+        assert.equal(layerPrimary(specification).mark.type, 'point', 'selects points from linear chart with text layer');
+      });
+      test('multiple graphical layers', (assert) => {
+        const specification = {
+          data: {
+            values: [
+              { date: "2020", value: 14, otherValue: 66 },
+              { date: "2021", value: 45, otherValue: 65 },
+              { date: "2022", value: 22, otherValue: 66 },
+              { date: "2023", value: 22, otherValue: 64 },
+              { date: "2024", value: 23, otherValue: 62 },
+              { date: "2025", value: 24, otherValue: 55 },
+              { date: "2026", value: 26, otherValue: 57 },
+              { date: "2027", value: 11, otherValue: 53 },
+              { date: "2028", value: 24, otherValue: 44 },
+            ]
+          },
+          layer: [
+            {
+              mark: {
+                type: "line",
+              },
+              encoding: {
+                x: {
+                  field: 'date',
+                  type: 'temporal'
+                },
+                y: {
+                  field: 'value',
+                  type: 'quantitative'
+                }
+              }
+            },
+            {
+              mark: {
+                type: "bar",
+              },
+              encoding: {
+                x: {
+                  field: "date",
+                  type: "temporal",
+                  axis: {
+                    title: 'date'
+                  },
+                },
+                y: {
+                  field: "otherValue",
+                  type: "quantitative",
+                  axis: {
+                    title: 'other value'
+                  },
+                },
+              }
+            }
+          ]
+        };
+        assert.equal(layerPrimary(specification).mark.type, 'bar', 'selects layers with explicit axis configuration from charts with multiple graphical layers');
+      });
     });
   });
 });
