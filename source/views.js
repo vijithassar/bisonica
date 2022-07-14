@@ -148,7 +148,12 @@ const oneDimensional = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {object} layer specification
  */
-const layerPrimary = (s) => s.layer ? layerMatch(s, twoDimensional) || layerMatch(s, oneDimensional) : s;
+const layerPrimary = (s) => {
+  if (!s.layer) {
+    return s;
+  }
+  layerMatch(s, twoDimensional) || layerMatch(s, oneDimensional) || s;
+};
 
 /**
  * find the DOM element corresponding to a layer
