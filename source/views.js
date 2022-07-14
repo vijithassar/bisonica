@@ -119,27 +119,6 @@ const layerMatch = (s, test) => {
     }
   }
 };
-/**
- * test whether a specification has all the
- * encodings necessary for a successful two
- * dimensional layout
- * @param {object} s Vega Lite specification
- * @returns {boolean}
- */
-const twoDimensional = (s) => {
-  return s.encoding.x && s.encoding.y || s.encoding.theta && s.encoding.color;
-};
-
-/**
- * test whether a specification has all the
- * encodings necessary for a successful two
- * dimensional layout
- * @param {object} s Vega Lite specification
- * @returns {boolean}
- */
-const oneDimensional = (s) => {
-  return s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y;
-};
 
 /**
  * select the layer that is likely to be the most important
@@ -152,7 +131,22 @@ const layerPrimary = (s) => {
   if (!s.layer) {
     return s;
   }
-  layerMatch(s, twoDimensional) || layerMatch(s, oneDimensional) || s;
+  const heuristics = [
+    // explicit axis configuration
+    (s) => s.encoding.x?.axis || s.encoding.y?.axis,
+    // two dimensions
+    (s) => s.encoding.x && s.encoding.y || s.encoding.theta && s.encoding.color,
+    // one dimension
+    (s) => s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y,
+    // add a wrapper to require encoding
+  ].map((heuristic) => (s) => s.encoding && heuristic(s));
+
+  for (const heuristic of heuristics) {
+    let match = layerMatch(s, heuristic);
+    if (typeof match === 'object') {
+      return match;
+    }
+  }
 };
 
 /**
