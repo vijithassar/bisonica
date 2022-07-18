@@ -31,19 +31,26 @@ const colors = (count = 5) => {
  * @returns {string} d3 scale type
  */
 const scaleType = (s, channel) => {
-  let methods = {
-    temporal: 'Utc',
-    nominal: 'Ordinal',
-    quantitative: 'Linear',
-    ordinal: 'Ordinal',
-  };
 
-  if (methods[encodingType(s, channel)]) {
-    const method =
-      ['x', 'y'].includes(channelRoot(s, channel)) && isDiscrete(s, channel)
-        ? 'Band'
-        : methods[encodingType(s, channel)];
-    return `scale${method}`;
+  let method;
+
+  if (['x', 'y'].includes(channelRoot(s, channel)) && isDiscrete(s, channel)) {
+    if (feature(s).isBar()) {
+      method = 'scaleBand'
+    } else {
+      method = 'scalePoint'
+    }
+  } else {
+    let methods = {
+      temporal: 'scaleUtc',
+      nominal: 'scaleOrdinal',
+      quantitative: 'scaleLinear',
+      ordinal: 'scaleOrdinal',
+    }
+    method = methods[encodingType(s, channel)]
+  }
+  if (typeof d3[method] === 'function') {
+    return method;
   } else {
     throw new Error(
       `could not determine scale method for ${channel} channel because encoding type is ${encodingType(s, channel)}`,
@@ -183,7 +190,7 @@ const range = (s, dimensions, _channel) => {
   const cartesian = () => {
     let result;
 
-    if (isDiscrete(s, channel) && scaleType(s, channel) !== 'scaleBand') {
+    if (isDiscrete(s, channel) && !['scaleBand', 'scalePoint'].includes(scaleType(s, channel))) {
       const count = domain(s, channel).length;
       const interval = dimensions[channel] / count;
 
