@@ -271,4 +271,30 @@ module('unit > scales', (hooks) => {
       assert.equal(typeof date, 'string');
     });
   });
+
+  test('throws errors for unknown encoding types', (assert) => {
+    const s = {
+      data: {
+        values: [
+          { group: 'a', value: 0 },
+          { group: 'b', value: 10 },
+          { group: 'c', value: 100 },
+        ],
+      },
+      mark: {
+        type: 'arc'
+      },
+      encoding: {
+        theta: {
+          type: 'unknown encoding type',
+          field: 'value',
+        },
+        color: {
+          type: 'nominal',
+          field: 'group',
+        }
+      },
+    };
+    assert.throws(() => parseScales(s));
+  });
 });
