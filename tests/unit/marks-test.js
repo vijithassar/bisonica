@@ -10,38 +10,42 @@ const set = () => null
 module('unit > marks', () => {
   module('bar width', () => {
 
-    const stackedBarChartSpec = specificationFixture('stackedBar');
-    const categoricalBarChartSpec = specificationFixture('categoricalBar');
-
     const dimensions = { x: 100, y: 100 };
 
-    const dates = new Set(stackedBarChartSpec.data.values.map((item) => item.label)).size;
-
-    const categories = categoricalBarChartSpec.data.values.map((item) => item.label).length;
-
     test('return value', (assert) => {
+      const specification = specificationFixture('stackedBar');
+
       assert.equal(
-        typeof barWidth(stackedBarChartSpec, dimensions),
+        typeof barWidth(specification, dimensions),
         'number',
         'bar width is a number',
       );
     });
 
     test('temporal encoding', (assert) => {
+      const specification = specificationFixture('stackedBar');
+      const dates = new Set(specification.data.values.map((item) => item.label)).size;
+
       assert.ok(
-        barWidth(stackedBarChartSpec, dimensions) <= dimensions.x / dates,
+        barWidth(specification, dimensions) <= dimensions.x / dates,
         'time series bar width sized according to number of timestamps',
       );
     });
 
     test('nominal encoding', (assert) => {
+      const specification = specificationFixture('categoricalBar');
+      const categories = specification.data.values.map((item) => item.label).length;
+
       assert.ok(
-        barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / categories,
+        barWidth(specification, dimensions) <= dimensions.x / categories,
         'time series bar width sized according to number of categories',
       );
     });
 
     test('mutation', (assert) => {
+      const stackedBarChartSpec = specificationFixture('stackedBar');
+      const categoricalBarChartSpec = specificationFixture('categoricalBar');
+
       const twoBarsTimeSeries = [
         { label: '2020-01-01', value: 10, group: 'a' },
         { label: '2020-01-01', value: 20, group: 'b' },
