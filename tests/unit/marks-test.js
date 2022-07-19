@@ -54,13 +54,13 @@ module('unit > marks', () => {
     });
 
     test('nominal gap', (assert) => {
-      const categoricalBarChartSpec = specificationFixture('categoricalBar');
-      categoricalBarChartSpec.data.values = [
+      const specification = specificationFixture('categoricalBar');
+      specification.data.values = [
         { group: 'a', value: 10 },
         { group: 'b', value: 20 },
       ];
       assert.ok(
-        barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / 3,
+        barWidth(specification, dimensions) <= dimensions.x / 3,
         'gap left between two categorical bars',
       );
     });
