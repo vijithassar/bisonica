@@ -39,31 +39,26 @@ module('unit > marks', () => {
       );
     });
 
-    test('mutation', (assert) => {
-      const stackedBarChartSpec = specificationFixture('stackedBar');
-      const categoricalBarChartSpec = specificationFixture('categoricalBar');
-
-      const twoBarsTimeSeries = [
+    test('temporal gap', (assert) => {
+      const specification = specificationFixture('stackedBar');
+      specification.data.values = [
         { label: '2020-01-01', value: 10, group: 'a' },
         { label: '2020-01-01', value: 20, group: 'b' },
         { label: '2020-01-02', value: 30, group: 'a' },
         { label: '2020-01-02', value: 40, group: 'b' },
       ];
+      assert.ok(
+        barWidth(specification, dimensions) <= dimensions.x / 3,
+        'gap left between two time series bars',
+      );
+    });
 
-      const twoBarsCategorical = [
+    test('nominal gap', (assert) => {
+      const categoricalBarChartSpec = specificationFixture('categoricalBar');
+      categoricalBarChartSpec.data.values = [
         { group: 'a', value: 10 },
         { group: 'b', value: 20 },
       ];
-
-      set(stackedBarChartSpec.data, 'values', twoBarsTimeSeries);
-
-      set(categoricalBarChartSpec.data, 'values', twoBarsCategorical);
-
-      assert.ok(
-        barWidth(stackedBarChartSpec, dimensions) <= dimensions.x / 3,
-        'gap left between two time series bars',
-      );
-
       assert.ok(
         barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / 3,
         'gap left between two categorical bars',
