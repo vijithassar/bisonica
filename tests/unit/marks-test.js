@@ -1,9 +1,8 @@
 import { barWidth } from '../../source/marks.js';
-import { categoricalBarChartSpec } from '../../fixtures/categorical-bar.js';
 import { encodingField } from '../../source/encodings.js';
 import qunit from 'qunit';
 // import { set } from '@ember/object';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
@@ -11,6 +10,10 @@ const set = () => null
 
 module('unit > marks', () => {
   test('bar width', (assert) => {
+
+    const stackedBarChartSpec = specificationFixture('stackedBar');
+    const categoricalBarChartSpec = specificationFixture('categoricalBar');
+
     const dimensions = { x: 100, y: 100 };
 
     const dates = new Set(
