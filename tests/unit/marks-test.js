@@ -1,66 +1,69 @@
 import { barWidth } from '../../source/marks.js';
-import { categoricalBarChartSpec } from '../../fixtures/categorical-bar.js';
-import { encodingField } from '../../source/encodings.js';
 import qunit from 'qunit';
-// import { set } from '@ember/object';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-const set = () => null
-
 module('unit > marks', () => {
-  test('bar width', (assert) => {
+  module('bar width', () => {
+
     const dimensions = { x: 100, y: 100 };
 
-    const dates = new Set(
-      stackedBarChartSpec.data.values.map((item) => item[encodingField(stackedBarChartSpec, 'x')]),
-    ).size;
+    test('return value', (assert) => {
+      const specification = specificationFixture('stackedBar');
 
-    const categories = categoricalBarChartSpec.data.values.map(
-      (item) => item[encodingField(categoricalBarChartSpec, 'x')],
-    ).length;
+      assert.equal(
+        typeof barWidth(specification, dimensions),
+        'number',
+        'bar width is a number',
+      );
+    });
 
-    assert.equal(
-      typeof barWidth(stackedBarChartSpec, dimensions),
-      'number',
-      'bar width is a number',
-    );
+    test('temporal encoding', (assert) => {
+      const specification = specificationFixture('stackedBar');
+      const dates = new Set(specification.data.values.map((item) => item.label)).size;
 
-    assert.ok(
-      barWidth(stackedBarChartSpec, dimensions) <= dimensions.x / dates,
-      'time series bar width sized according to number of timestamps',
-    );
+      assert.ok(
+        barWidth(specification, dimensions) <= dimensions.x / dates,
+        'time series bar width sized according to number of timestamps',
+      );
+    });
 
-    assert.ok(
-      barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / categories,
-      'time series bar width sized according to number of categories',
-    );
+    test('nominal encoding', (assert) => {
+      const specification = specificationFixture('categoricalBar');
+      const categories = specification.data.values.map((item) => item.label).length;
 
-    const twoBarsTimeSeries = [
-      { label: '2020-01-01', value: 10, group: 'a' },
-      { label: '2020-01-01', value: 20, group: 'b' },
-      { label: '2020-01-02', value: 30, group: 'a' },
-      { label: '2020-01-02', value: 40, group: 'b' },
-    ];
+      assert.ok(
+        barWidth(specification, dimensions) <= dimensions.x / categories,
+        'time series bar width sized according to number of categories',
+      );
+    });
 
-    const twoBarsCategorical = [
-      { group: 'a', value: 10 },
-      { group: 'b', value: 20 },
-    ];
+    test('temporal gap', (assert) => {
+      const specification = specificationFixture('stackedBar');
+      specification.data.values = [
+        { label: '2020-01-01', value: 10, group: 'a' },
+        { label: '2020-01-01', value: 20, group: 'b' },
+        { label: '2020-01-02', value: 30, group: 'a' },
+        { label: '2020-01-02', value: 40, group: 'b' },
+      ];
+      assert.ok(
+        barWidth(specification, dimensions) <= dimensions.x / 3,
+        'gap left between two time series bars',
+      );
+    });
 
-    set(stackedBarChartSpec.data, 'values', twoBarsTimeSeries);
+    test('nominal gap', (assert) => {
+      const categoricalBarChartSpec = specificationFixture('categoricalBar');
+      categoricalBarChartSpec.data.values = [
+        { group: 'a', value: 10 },
+        { group: 'b', value: 20 },
+      ];
+      assert.ok(
+        barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / 3,
+        'gap left between two categorical bars',
+      );
+    });
 
-    set(categoricalBarChartSpec.data, 'values', twoBarsCategorical);
-
-    assert.ok(
-      barWidth(stackedBarChartSpec, dimensions) <= dimensions.x / 3,
-      'gap left between two time series bars',
-    );
-
-    assert.ok(
-      barWidth(categoricalBarChartSpec, dimensions) <= dimensions.x / 3,
-      'gap left between two categorical bars',
-    );
   });
 });
