@@ -1,5 +1,4 @@
 import { barWidth } from '../../source/marks.js';
-import { encodingField } from '../../source/encodings.js';
 import qunit from 'qunit';
 // import { set } from '@ember/object';
 import { specificationFixture } from '../test-helpers.js';
@@ -16,13 +15,9 @@ module('unit > marks', () => {
 
     const dimensions = { x: 100, y: 100 };
 
-    const dates = new Set(
-      stackedBarChartSpec.data.values.map((item) => item[encodingField(stackedBarChartSpec, 'x')]),
-    ).size;
+    const dates = new Set(stackedBarChartSpec.data.values.map((item) => item.label)).size;
 
-    const categories = categoricalBarChartSpec.data.values.map(
-      (item) => item[encodingField(categoricalBarChartSpec, 'x')],
-    ).length;
+    const categories = categoricalBarChartSpec.data.values.map((item) => item.label).length;
 
     assert.equal(
       typeof barWidth(stackedBarChartSpec, dimensions),
