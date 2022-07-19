@@ -1,11 +1,8 @@
 import { barWidth } from '../../source/marks.js';
 import qunit from 'qunit';
-// import { set } from '@ember/object';
 import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
-
-const set = () => null
 
 module('unit > marks', () => {
   module('bar width', () => {
