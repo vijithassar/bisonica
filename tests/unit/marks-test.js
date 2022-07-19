@@ -7,7 +7,7 @@ const { module, test } = qunit;
 module('unit > marks', () => {
   module('bar width', () => {
 
-    const dimensions = { x: 100, y: 100 };
+    const dimensions = { x: 1000, y: 1000 };
 
     test('return value', (assert) => {
       const specification = specificationFixture('stackedBar');
@@ -63,6 +63,15 @@ module('unit > marks', () => {
         barWidth(specification, dimensions) <= dimensions.x / 3,
         'gap left between two categorical bars',
       );
+    });
+
+    test('iterates through temporal periods for custom domains', (assert) => {
+      const standardSpec = specificationFixture('stackedBar');
+      const customSpec = specificationFixture('stackedBar');
+      const standardWidth = barWidth(standardSpec, dimensions);
+      customSpec.encoding.x.scale = {domain: ['2020-04-20', '2020-07-01']};
+      const customWidth = barWidth(customSpec, dimensions);
+      assert.ok(standardWidth > customWidth);
     });
 
   });

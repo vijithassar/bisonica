@@ -83,16 +83,16 @@ const _barWidth = (s, dimensions) => {
   const stacked = markData(s);
   const type = encodingType(s, channel);
   const temporal = type === 'temporal';
-  const customDomain = s.encoding[channel]?.scale?.domain?.length;
+  const customDomain = s.encoding[channel]?.scale?.domain;
 
   let count;
 
-  if (customDomain) {
-    count = customDomain;
+  if (customDomain && !temporal) {
+    count = customDomain.length;
   } else if (temporal) {
     // this check is logically the same as parseScales()[channel].domain()
     // but writing it that way would be circular
-    const domain = s.encoding[channel].scale?.domain?.map(parseTime);
+    const domain = customDomain?.map(parseTime);
     const extent = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
     const endpoints = domain || extent;
     const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1]);
