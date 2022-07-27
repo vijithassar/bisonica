@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.1 (2022-07-27)
+
+
+### Features
+
+* **core:** point scales ([d3dc0b4](https://github.com/vijithassar/bisonica/commit/d3dc0b4c7f8daf70ad07790bd4e19c65b97eebb2))
+* **core** single bar ([bcd0a56](https://github.com/vijithassar/bisonica/commit/bcd0a56ab9a4c27c955ebb6682a8968fcd4a9683))
+* **core** area charts ([ddcb62d](https://github.com/vijithassar/bisonica/commit/ddcb62d020d683e63e22d4c61720b6fbdad6e7b5))
+* **core:** bidirectional bar encoding ([51ff4d2](https://github.com/vijithassar/bisonica/commit/51ff4d2f2b9af978a167381ac23565095fbf3a4a))
+
+
+### Bug Fixes
+
+* **core:** always process periods in temporal domains ([3287755](https://github.com/vijithassar/bisonica/commit/3287755fff2440b799775a8b28f4490ee11ec497))
+* **core** unknown encoding type errors ([fb3ed75](https://github.com/vijithassar/bisonica/commit/fb3ed756eef521df28f239bbdf4699f65b10d0c4))
+* **core** primary layer view helper ([a2f6622](https://github.com/vijithassar/bisonica/commit/a2f662249414ab69cfa1f2f9f237d07998e0126b))
+* **core** text mark link fix ([25292ae](https://github.com/vijithassar/bisonica/commit/25292aeaa89ddd27df21d21f7c3f5959abb2d65e))
+
 ## 0.1.0 (2022-07-06)
 
 
