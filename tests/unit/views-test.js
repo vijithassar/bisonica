@@ -4,6 +4,7 @@ import {
   layerPrimary
 } from '../../source/views.js';
 import qunit from 'qunit';
+import { parseScales } from '../../source/scales.js';
 
 const { module, test } = qunit;
 
@@ -219,6 +220,213 @@ module('unit > views', () => {
           ]
         };
         assert.equal(layerPrimary(specification).mark.type, 'point', 'selects points from linear chart with text layer');
+      });
+      test('unions color domain', (assert) => {
+        const specification = {
+          "title": { "text": "layer color legend test specification" },
+          "data": {
+            "values": [
+              {
+                "a": "2016",
+                "b": 10,
+                "c": "_",
+                "d": 10,
+                "e": ">"
+              },
+              {
+                "a": "2017",
+                "b": 20,
+                "c": "_",
+                "d": 10,
+                "e": "<"
+              },
+              {
+                "a": "2018",
+                "b": 10,
+                "c": "_",
+                "d": 20,
+                "e": ">"
+              },
+              {
+                "a": "2019",
+                "b": 40,
+                "c": "_",
+                "d": 10,
+                "e": ">"
+              },
+              {
+                "a": "2020",
+                "b": 60,
+                "c": "_",
+                "d": 20,
+                "e": ">"
+              },
+              {
+                "a": "2021",
+                "b": 80,
+                "c": "_",
+                "d": 30,
+                "e": "<"
+              },
+              {
+                "a": "2022",
+                "b": 40,
+                "c": "_",
+                "d": 40,
+                "e": "<"
+              },
+              {
+                "a": "2016",
+                "b": 50,
+                "c": "•",
+                "d": 30,
+                "e": ">"
+              },
+              {
+                "a": "2017",
+                "b": 60,
+                "c": "•",
+                "d": 30,
+                "e": "<"
+              },
+              {
+                "a": "2018",
+                "b": 50,
+                "c": "•",
+                "d": 30,
+                "e": ">"
+              },
+              {
+                "a": "2019",
+                "b": 30,
+                "c": "•",
+                "d": 40,
+                "e": ">"
+              },
+              {
+                "a": "2020",
+                "b": 10,
+                "c": "•",
+                "d": 60,
+                "e": "<"
+              },
+              {
+                "a": "2021",
+                "b": 10,
+                "c": "•",
+                "d": 60,
+                "e": ">"
+              },
+              {
+                "a": "2022",
+                "b": 20,
+                "c": "•",
+                "d": 30,
+                "e": ">"
+              },
+              {
+                "a": "2016",
+                "b": 70,
+                "c": "+",
+                "d": 50,
+                "e": "<"
+              },
+              {
+                "a": "2017",
+                "b": 50,
+                "c": "+",
+                "d": 20,
+                "e": "<"
+              },
+              {
+                "a": "2018",
+                "b": 40,
+                "c": "+",
+                "d": 10,
+                "e": ">"
+              },
+              {
+                "a": "2019",
+                "b": 60,
+                "c": "+",
+                "d": 50,
+                "e": ">"
+              },
+              {
+                "a": "2020",
+                "b": 30,
+                "c": "+",
+                "d": 20,
+                "e": "<"
+              },
+              {
+                "a": "2021",
+                "b": 10,
+                "c": "+",
+                "d": 20,
+                "e": ">"
+              },
+              {
+                "a": "2022",
+                "b": 20,
+                "c": "+",
+                "d": 50,
+                "e": ">"
+              }
+            ]
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "line"
+              },
+              "encoding": {
+                "x": {
+                  "field": "a",
+                  "type": "temporal"
+                },
+                "y": {
+                  "field": "b",
+                  "type": "quantitative"
+                },
+                "color": {
+                  "field": "e",
+                  "type": "nominal"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "bar"
+              },
+              "encoding": {
+                "x": {
+                  "field": "a",
+                  "type": "temporal"
+                },
+                "y": {
+                  "field": "d",
+                  "type": "quantitative"
+                },
+                "color": {
+                  "field": "c",
+                  "type": "nominal"
+                }
+              }
+            }
+          ]
+        };
+        const domain = parseScales(layerPrimary(specification)).color.domain();
+        assert.equal(domain.length, 5)
+
+        const layers = [0, 1]
+        const fields = layers.map((index) => specification.layer[index].encoding.color.field)
+        const values = fields.map((field) => specification.data.values.map((item) => item[field])).flat()
+        const unique = [...new Set(values)]
+
+        unique.forEach((value) => {
+          assert.ok(domain.includes(value))
+        });
       });
       test('multiple graphical layers', (assert) => {
         const specification = {
