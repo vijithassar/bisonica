@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { feature } from './feature.js';
 
 import { mark, noop, values } from './helpers.js';
 import { markSelector, marks } from './marks.js';
@@ -73,7 +74,7 @@ const unionDomains = (s, channel) => {
     .map((item) => (typeof item.domain === 'function' ? item.domain() : null))
     .flat();
 
-  const getType = (s) => s.encoding?.[channel].type;
+  const getType = (s) => s.encoding?.[channel]?.type;
 
   const type = getType(s) || getType(s.layer.find(getType));
 
@@ -146,6 +147,15 @@ const layerPrimary = (s) => {
   for (const heuristic of heuristics) {
     let match = layerMatch(s, heuristic);
     if (typeof match === 'object') {
+      if (feature(s).hasColor() && !match.encoding.color?.scale?.domain) {
+        if (!match.encoding.color) {
+          match.encoding.color = {};
+        }
+        if (!match.encoding.color.scale) {
+          match.encoding.color.scale = {};
+        }
+        match.encoding.color.scale = { domain: unionDomains(s, 'color') };
+      }
       return match;
     }
   }

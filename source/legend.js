@@ -4,7 +4,7 @@ import { dispatchers } from './interactions.js';
 import { encodingField } from './encodings.js';
 import { feature } from './feature.js';
 import { key, noop } from './helpers.js';
-import { layerMatch } from './views.js';
+import { layerPrimary } from './views.js';
 import { parseScales } from './scales.js';
 
 /**
@@ -45,13 +45,11 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
  * @returns {function} renderer
  */
 const color = (_s) => {
-  const test = (s) => s.encoding.color;
-  let s = layerMatch(_s, test);
+  let s = _s.layer ? layerPrimary(_s) : _s;
 
   const renderer = (selection) => {
     try {
       const { color } = parseScales(s);
-
       const dispatcher = dispatchers.get(selection.node());
 
       if (feature(s).hasLegendTitle()) {
