@@ -1,5 +1,6 @@
 import qunit from 'qunit';
 import { tooltipContent } from '../../source/tooltips.js';
+import { data } from '../../source/data.js';
 
 const { module, test } = qunit;
 
@@ -109,4 +110,37 @@ module('unit > tooltips', () => {
 
     assert.equal(text, 'tooltip value is: 1');
   });
+  test('handles bidirectional cartesian encodings', (assert) => {
+    const length = {field: 'a', type: 'quantitative'};
+    const category = {field: 'b', type: 'nominal'};
+    const values = [
+      { a: 10, b: '_'},
+      { a: 20, b: '•' },
+      { a: 30, b: '+' }
+    ];
+    const mark = {type: 'bar', tooltip: true};
+    const horizontal = {
+      data: {values},
+      mark,
+      encoding: {
+        x: length,
+        y: category
+      }
+    };
+    const vertical = {
+      data: {values},
+      mark,
+      encoding: {
+        y: length,
+        x: category
+      }
+    };
+
+    const datum = (s) => data(s)[0][2];
+    const text = (s) => tooltipContent(s)(datum(s));
+
+    assert.equal(text(horizontal), 'a: 30; b: +');
+    assert.equal(text(vertical), 'a: 30; b: +');
+
+  })
 });

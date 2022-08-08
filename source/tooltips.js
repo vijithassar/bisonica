@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 
 import { category } from './marks.js';
 import { createAccessors } from './accessors.js';
-import { encodingField, encodingType, encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingField, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { getTimeFormatter } from './time.js';
 import { memoize } from './memoize.js';
@@ -115,9 +115,9 @@ const _getTooltipField = (s, type) => {
 
   accessors = createAccessors(s);
 
-  // report height instead of y position as tooltip value
-  if (feature(s).isBar()) {
-    accessors.y = accessors.length;
+  // report length instead of start position as tooltip value for stacks
+  if (feature(s).isBar() || feature(s).isArea()) {
+    accessors[encodingChannelQuantitative(s)] = accessors.length;
   }
 
   let key;
