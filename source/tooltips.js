@@ -115,8 +115,8 @@ const _getTooltipField = (s, type) => {
 
   accessors = createAccessors(s);
 
-  // report length instead of start position as tooltip value for bars
-  if (feature(s).isBar()) {
+  // report length instead of start position as tooltip value for stacks
+  if (feature(s).isBar() || feature(s).isArea()) {
     accessors[encodingChannelQuantitative(s)] = accessors.length;
   }
 
