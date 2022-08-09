@@ -214,8 +214,8 @@ const barMark = (s, dimensions) => {
 
 /**
  * lane transform for all bar marks
- * @param {*} s
- * @param {*} dimensions
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
  * @returns {string} transform
  */
 const barMarksTransform = (s, dimensions) => {
