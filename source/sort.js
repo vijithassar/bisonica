@@ -19,7 +19,7 @@ const isInverted = (sort) => {
 /**
  * look up sorting field
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {string} encoding parameter
  */
 const _sortField = (s, channel) => {
@@ -50,7 +50,7 @@ const sortField = memoize(_sortField);
 /**
  * look up sorting direction
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {string|null} sorting direction
  */
 const _sortOrder = (s, channel) => {
@@ -79,7 +79,7 @@ const sortOrder = memoize(_sortOrder);
 /**
  * look up the channel used for sorting
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {string} visual encoding channel used for sorting
  */
 const _sortChannel = (s, channel) => {
@@ -90,7 +90,7 @@ const sortChannel = memoize(_sortChannel);
 /**
  * determine whether sort is ascending
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {boolean} sorting direction is ascending
  */
 const isAscending = (s, channel) => {
@@ -100,7 +100,7 @@ const isAscending = (s, channel) => {
 /**
  * determine whether sort is descending
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {boolean} sorting direction is descending
  */
 const isDescending = (s, channel) => {
@@ -321,7 +321,7 @@ const sortNone = () => () => 0;
 /**
  * create sort comparator function
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {function} sort comparator
  */
 const _sorter = (s, channel) => {

@@ -64,7 +64,7 @@ const ticks = (s, channel) => {
 /**
  * retrieve axis title
  * @param {object} s Vega Lite specification
- * @param {object} channel visual encoding channel
+ * @param {'x'|'y'} channel encoding channel
  * @returns {string} title
  */
 const title = (s, channel) => {
@@ -100,7 +100,7 @@ const alternate = (s) => {
 /**
  * render axis tick text content
  * @param {object} s Vega Lite specification
- * @param {*} channel encoding channel
+ * @param {'x'|'y'} channel encoding channel
  * @returns {function} tick text renderer
  */
 const tickText = (s, channel) => {
