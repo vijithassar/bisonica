@@ -7,7 +7,7 @@ import { transform } from './transform.js';
 /**
  * look up the field used for a visual encoding
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {string} encoding field
  */
 const encodingField = (s, channel) => {
@@ -20,7 +20,7 @@ const encodingField = (s, channel) => {
  * look up the data type used for an encoding in the s
  * (these are types of data sets, not JavaScript primitive types)
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
  */
 const encodingType = (s, channel) => {
@@ -31,7 +31,7 @@ const encodingType = (s, channel) => {
  * create a function which looks up the data value used for
  * a visual encoding
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding channel
+ * @param {string} channel encoding channel
  * @returns {function(object)}
  */
 const encodingValue = (s, channel) => {
