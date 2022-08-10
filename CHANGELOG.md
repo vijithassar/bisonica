@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/vijithassar/bisonica/compare/v0.1.1...v0.1.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **core:** flexible direction for tooltip values ([abefdf9](https://github.com/vijithassar/bisonica/commit/abefdf98675e4120497d7a54fe3bc8fe097e6a63))
+
 ### 0.1.1 (2022-07-27)
 
 
