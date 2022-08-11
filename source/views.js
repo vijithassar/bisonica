@@ -34,12 +34,13 @@ const emptyData = (data) => {
 };
 
 /**
- * compute a unified data domain across all layers
+ * compute a unified set of scale values across all layers
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {array} unified domain
+ * @param {'domain'|'range'} valueType value type
+ * @returns {array} unified set of scale values
  */
-const unionDomains = (s, channel) => {
+const unionScaleValues = (s, channel, valueType) => {
   const layers = s.layer;
   const layersWithData = layers
     .map((layer) => {
@@ -70,8 +71,8 @@ const unionDomains = (s, channel) => {
     })
     .filter((item) => !!item);
 
-  const domains = scales
-    .map((item) => (typeof item.domain === 'function' ? item.domain() : null))
+  const scaleValues = scales
+    .map((item) => (typeof item[valueType] === 'function' ? item[valueType]() : null))
     .flat();
 
   const getType = (s) => s.encoding?.[channel]?.type;
@@ -79,11 +80,27 @@ const unionDomains = (s, channel) => {
   const type = getType(s) || getType(s.layer.find(getType));
 
   if (type === 'quantitative' || type === 'temporal' || !type) {
-    return d3.extent(domains);
+    return d3.extent(scaleValues);
   } else if (type === 'nominal' || type === 'ordinal') {
-    return [...new Set(domains).values()];
+    return [...new Set(scaleValues).values()];
   }
 };
+
+/**
+ * compute a unified data domain across all layers
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ * @returns {array} unified domain
+ */
+const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain');
+
+/**
+ * compute a unified data range across all layers
+ * @param {object} s Vega Lite specification
+ * @param {string} channel visual encoding
+ * @returns {array} unified range
+ */
+const unionRanges = (s, channel) => unionScaleValues(s, channel, 'range');
 
 /**
  * test all layers with a predicate function
@@ -154,7 +171,12 @@ const layerPrimary = (s) => {
         if (!match.encoding.color.scale) {
           match.encoding.color.scale = {};
         }
-        match.encoding.color.scale = { domain: unionDomains(s, 'color') };
+        const domain = unionDomains(s, 'color');
+        const range = unionRanges(s, 'color');
+        match.encoding.color.scale = { domain }
+        if (range.length === domain.length) {
+          match.encoding.color.scale.range = range;
+        }
       }
       return match;
     }
