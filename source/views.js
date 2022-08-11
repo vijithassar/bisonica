@@ -171,7 +171,12 @@ const layerPrimary = (s) => {
         if (!match.encoding.color.scale) {
           match.encoding.color.scale = {};
         }
-        match.encoding.color.scale = { domain: unionDomains(s, 'color') };
+        const domain = unionDomains(s, 'color');
+        const range = unionRanges(s, 'color');
+        match.encoding.color.scale = { domain }
+        if (range.length === domain.length) {
+          match.encoding.color.scale.range = range;
+        }
       }
       return match;
     }
