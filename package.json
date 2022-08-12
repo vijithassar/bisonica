@@ -26,10 +26,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "d3": "^7.6.1",
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "qunit": "^2.19.1",
     "standard-version": "^9.5.0",
+    "string.prototype.matchall": "^4.0.7",
     "stylelint": "^14.9.1",
     "stylelint-config-standard": "^26.0.0",
     "testem": "^3.8.0",
