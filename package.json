@@ -11,7 +11,7 @@
     "url": "https://github.com/vijithassar/bisonica.git"
   },
   "scripts": {
-    "build": "esbuild --bundle --format=esm --outfile=build/bisonica.js source/chart.js",
+    "build": "esbuild --bundle --format=esm --external:d3 --external:string.prototype.matchall --outfile=build/bisonica.js source/chart.js",
     "postbuild": "yarn run archive",
     "archive": "zip -jr build/bisonica-$(npm view bisonica version).zip build/bisonica.js source/index.css",
     "lint-git": "commitlint -- --to=HEAD",
