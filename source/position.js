@@ -25,7 +25,7 @@ const marginCircular = () => {
 };
 
 /**
- * compute margin for a Cartesian chart
+ * compute margin for Cartesian chart axis ticks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
@@ -50,7 +50,7 @@ const tickMargin = (s, dimensions) => {
 };
 
 /**
- * compute margin for a Cartesian chart
+ * compute margin for Cartesian chart axis title
  * @param {object} s Vega Lite specification
  * @returns {object} D3 margin convention object
  */
@@ -62,7 +62,7 @@ const titleMargin = (s) => {
 };
 
 /**
- * compute margin for a Cartesian chart
+ * compute margin for Cartesian chart
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
