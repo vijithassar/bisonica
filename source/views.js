@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import { feature } from './feature.js';
 
 import { mark, noop, values } from './helpers.js';
-import { markSelector, marks } from './marks.js';
+import { markSelector, marks, barWidth } from './marks.js';
 import { parseScales } from './scales.js';
 
 /**
@@ -296,10 +296,16 @@ const layer = (s, dimensions) => {
   return (selection) => {
     s.layer.forEach((_, index) => {
       try {
+        const layer = layerSpecification(s, index);
+        const barLayer = layerSpecification(s, s.layer.findIndex((layer) => feature(layer).isBar()))
+        const offset = feature(s).isBar() &&
+        !feature(layer).isBar()
+        ? barWidth(barLayer, dimensions)
+        : 0;
         selection
           .append('g')
           .classed('layer', true)
-          .call(marks(layerSpecification(s, index), dimensions));
+          .call(marks(layer, { y: dimensions.y, x: dimensions.x - offset}));
       } catch (error) {
         const markName = mark(layerSpecification(s, index));
 
