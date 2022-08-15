@@ -197,7 +197,9 @@ const range = (s, dimensions, _channel) => {
 
       result = positions;
     } else {
-      result = [0, feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel]];
+      const start = 0;
+      const end = feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel];
+      result = [start, end];
     }
 
     if (channel === 'y' && encodingType(s, channel) === 'quantitative') {
