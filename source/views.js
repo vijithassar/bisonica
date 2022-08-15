@@ -2,8 +2,9 @@ import * as d3 from 'd3';
 import { feature } from './feature.js';
 
 import { mark, noop, values } from './helpers.js';
-import { markSelector, marks, barWidth } from './marks.js';
+import { markSelector, marks } from './marks.js';
 import { parseScales } from './scales.js';
+import { temporalBarDimensions } from './time.js';
 
 /**
  * determine whether encoding types can be shared
@@ -298,12 +299,11 @@ const layer = (s, dimensions) => {
       try {
         const layer = layerSpecification(s, index);
         const barLayer = layerSpecification(s, s.layer.findIndex((layer) => feature(layer).isBar()))
-        const change = feature(s).isTemporalBar() && !feature(layer).isTemporalBar()
-        const offset = change ? barWidth(barLayer, dimensions) : 0;
+        const changeDimensions = feature(s).isTemporalBar() && !feature(layer).isTemporalBar()
         selection
           .append('g')
           .classed('layer', true)
-          .call(marks(layer, { y: dimensions.y, x: dimensions.x - offset}));
+          .call(marks(layer, changeDimensions ? temporalBarDimensions(barLayer, dimensions) : dimensions));
       } catch (error) {
         const markName = mark(layerSpecification(s, index));
 

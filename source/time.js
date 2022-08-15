@@ -1,6 +1,9 @@
 import * as d3 from 'd3';
-import { encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingValue } from './encodings.js';
 import { memoize } from './memoize.js';
+import { feature } from './feature.js';
+import { barWidth } from './marks.js';
+
 import matchAll from 'string.prototype.matchall';
 
 const UTC = 'utc';
@@ -178,4 +181,20 @@ const _getTimeFormatter = (s, channel) => {
 };
 const getTimeFormatter = memoize(_getTimeFormatter);
 
-export { getTimeParser, parseTime, timePeriod, getTimeFormatter, timeMethod };
+/**
+ * alter dimensions object to subtract the bar width
+ * for a temporal bar chart
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} chart dimensions with bar width offset
+ */
+const temporalBarDimensions = (s, dimensions) => {
+  const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0;
+  const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s));
+  return {
+    ...dimensions,
+    [channel]: dimensions[channel] - offset
+  };
+};
+
+export { getTimeParser, parseTime, timePeriod, getTimeFormatter, timeMethod, temporalBarDimensions };
