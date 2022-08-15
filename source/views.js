@@ -298,10 +298,8 @@ const layer = (s, dimensions) => {
       try {
         const layer = layerSpecification(s, index);
         const barLayer = layerSpecification(s, s.layer.findIndex((layer) => feature(layer).isBar()))
-        const offset = feature(s).isBar() &&
-        !feature(layer).isBar()
-        ? barWidth(barLayer, dimensions)
-        : 0;
+        const change = feature(s).isTemporalBar() && !feature(layer).isTemporalBar()
+        const offset = change ? barWidth(barLayer, dimensions) : 0;
         selection
           .append('g')
           .classed('layer', true)

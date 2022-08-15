@@ -198,8 +198,7 @@ const range = (s, dimensions, _channel) => {
 
       result = positions;
     } else {
-      const temporalBar = feature(s).isBar() && encodingType(s, channel) === 'temporal';
-      const offset = temporalBar ? barWidth(s, dimensions) : 0;
+      const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0;
 
       result = [0, dimensions[channel] - offset];
     }

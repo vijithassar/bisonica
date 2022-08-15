@@ -56,6 +56,8 @@ const _feature = (s) => {
 
   tests.hasAxis = (s) => tests.hasEncodingX(s) || tests.hasEncodingY(s);
 
+  tests.isTemporalBar = (s) => tests.isBar(s) && isTemporal;
+
   const layerTests = {};
 
   Object.entries(tests).forEach(([key, test]) => {
