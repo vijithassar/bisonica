@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/vijithassar/bisonica/compare/v0.1.4...v0.1.5) (2022-08-15)
+
+
+### Bug Fixes
+
+* **core:** temporal bar dimensions helper ([c806e27](https://github.com/vijithassar/bisonica/commit/c806e27f32bd765c4203f7b44653a3d5b418664b))
+
 ### [0.1.4](https://github.com/vijithassar/bisonica/compare/v0.1.3...v0.1.4) (2022-08-15)
 
 
