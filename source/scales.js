@@ -1,12 +1,11 @@
 import * as d3 from 'd3';
-import { barWidth } from './marks.js';
 import { data, sumByCovariates } from './data.js';
 import { defaultColor } from './config.js';
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { identity, isDiscrete, values } from './helpers.js';
 import { memoize } from './memoize.js';
-import { parseTime } from './time.js';
+import { parseTime, temporalBarDimensions } from './time.js';
 import { sorter } from './sort.js';
 
 /**
@@ -198,10 +197,9 @@ const range = (s, dimensions, _channel) => {
 
       result = positions;
     } else {
-      const temporalBar = feature(s).isBar() && encodingType(s, channel) === 'temporal';
-      const offset = temporalBar ? barWidth(s, dimensions) : 0;
-
-      result = [0, dimensions[channel] - offset];
+      const start = 0;
+      const end = feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel];
+      result = [start, end];
     }
 
     if (channel === 'y' && encodingType(s, channel) === 'quantitative') {

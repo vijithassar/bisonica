@@ -4,6 +4,7 @@ import { feature } from './feature.js';
 import { mark, noop, values } from './helpers.js';
 import { markSelector, marks } from './marks.js';
 import { parseScales } from './scales.js';
+import { temporalBarDimensions } from './time.js';
 
 /**
  * determine whether encoding types can be shared
@@ -296,10 +297,13 @@ const layer = (s, dimensions) => {
   return (selection) => {
     s.layer.forEach((_, index) => {
       try {
+        const layer = layerSpecification(s, index);
+        const barLayer = layerSpecification(s, s.layer.findIndex((layer) => feature(layer).isBar()))
+        const changeDimensions = feature(s).isTemporalBar() && !feature(layer).isTemporalBar()
         selection
           .append('g')
           .classed('layer', true)
-          .call(marks(layerSpecification(s, index), dimensions));
+          .call(marks(layer, changeDimensions ? temporalBarDimensions(barLayer, dimensions) : dimensions));
       } catch (error) {
         const markName = mark(layerSpecification(s, index));
 
