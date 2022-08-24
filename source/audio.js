@@ -116,11 +116,11 @@ const audio = (specification) => {
     let values;
 
     if (feature(specification).isLine()) {
-      ({ values } = lineData(specification)[0]);
+      ({ values } = data(specification)[0]);
     } else if (feature(specification).isCircular()) {
-      values = circularData(specification);
+      values = data(specification);
     } else if (feature(specification).isBar()) {
-      values = stackedBarData(specification)[0].map((item) => {
+      values = data(specification)[0].map((item) => {
         return { value: item.data.undefined?.value };
       });
     }
