@@ -297,4 +297,38 @@ module('unit > scales', (hooks) => {
     };
     assert.throws(() => parseScales(s));
   });
+
+  test('generates symmetric log scales', (assert) => {
+    const spec = {
+      data: {
+        values: [
+          { value: 10000, label: '2020-01-01' },
+          { value: 200, label: '2020-01-02' },
+          { value: 300, label: '2020-01-03' },
+          { value: 400, label: '2020-01-04' },
+          { value: 500, label: '2020-01-05' },
+        ],
+      },
+      mark: 'line',
+      encoding: {
+        y: {
+          field: 'value',
+          type: 'quantitative',
+          scale: { type: 'symlog' },
+        },
+      },
+    };
+
+    assert.strictEqual(
+      parseScales(spec, dimensions).y(100).toFixed(4),
+      '50.5953',
+      'should generate symmetric log scales',
+    );
+    assert.strictEqual(
+      parseScales(spec, dimensions).y(0).toFixed(4),
+      '100.0000',
+      'symmetric log scales should handle zero',
+    );
+  });
+
 });

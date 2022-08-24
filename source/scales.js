@@ -46,7 +46,14 @@ const scaleType = (s, channel) => {
       quantitative: 'scaleLinear',
       ordinal: 'scaleOrdinal',
     }
-    method = methods[encodingType(s, channel)]
+    if(
+      s.encoding[channel].scale?.type === 'symlog' &&
+      encodingType(s, channel) === 'quantitative'
+    ) {
+      method = 'scaleSymlog';
+    } else {
+      method = methods[encodingType(s, channel)];
+    }
   }
   if (typeof d3[method] === 'function') {
     return method;
