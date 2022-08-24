@@ -33,32 +33,6 @@ module('unit > data', () => {
     );
   });
 
-  test('compiles single-series data using a placeholder encoding key when a series encoding is not present', (assert) => {
-    const barData = data(specificationFixture('categoricalBar'));
-
-    assert.ok(Array.isArray(barData), 'data function returns an array');
-    assert.equal(barData.length, 1, 'single series');
-    assert.equal(barData[0].key, '_', 'series key is an underscore');
-  });
-
-  test('compiles single-series data using the original encoding key when a series encoding is present', (assert) => {
-    const specification = specificationFixture('categoricalBar');
-    const field = 'a';
-    const value = 'b';
-    specification.data.values = specification.data.values.map((item) => {
-      item[field] = value;
-      return item;
-    })
-    specification.encoding.color = {
-      field,
-      type: 'nominal'
-    };
-    const barData = data(specification);
-    assert.ok(Array.isArray(barData), 'data function returns an array');
-    assert.equal(barData.length, 1, 'single series');
-    assert.equal(barData[0].key, value, 'series key is the encoding field');
-  });
-
   test('computes circular chart data', (assert) => {
     const segments = data(specificationFixture('circular'));
     const keys = segments.every((item) => typeof item.key === 'string');

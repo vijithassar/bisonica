@@ -225,28 +225,21 @@ const _stackData = (s) => {
   const summed = groupAndSumByProperties(values(s), encodingField(s, dimensions[0]), encodingField(s, 'color'), encodingField(s, dimensions[1]));
   const stacker = d3.stack().keys(stackKeys).value(stackValue);
   const stacked = stacker(summed);
-  const single = stacked.length === 1;
 
-  // this needs to test for the field instead of
-  // the encoding as with feature(s).hasColor()
-  // in order to account for value encodings
-  const seriesEncoding = encodingField(s, 'color');
+  // mutate instead of map in order to preserve
+  // hidden keys attached to the stack layout
+  stacked.forEach((series) => {
+    if (stacked.length === 1) {
+      series.key = missingSeries();
+      series.forEach((item) => {
+        if (item.data.undefined) {
+          item.data[missingSeries()] = item.data.undefined;
+          delete item.data.undefined;
+        }
+      });
+    }
+  });
 
-  const sanitize = single && !seriesEncoding;
-
-  if (sanitize) {
-    // mutate instead of map in order to preserve
-    // hidden keys attached to the stack layout
-    stacked.forEach((series) => {
-        series.key = missingSeries();
-        series.forEach((item) => {
-          if (item.data.undefined) {
-            item.data[missingSeries()] = item.data.undefined;
-            delete item.data.undefined;
-          }
-        });
-    });
-  }
   const sorted = sort(stacked);
 
   return transplantStackedBarMetadata(sorted, values(s), s);
