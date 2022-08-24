@@ -27,7 +27,7 @@ const colors = (count = 5) => {
  * generate for a given dimension of visual encoding
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {string} d3 scale type
+ * @returns {string|null} d3 scale type
  */
 const scaleType = (s, channel) => {
 
@@ -45,6 +45,9 @@ const scaleType = (s, channel) => {
       nominal: 'scaleOrdinal',
       quantitative: 'scaleLinear',
       ordinal: 'scaleOrdinal',
+    }
+    if (s.encoding[channel]?.scale === null) {
+      return null;
     }
     if(
       s.encoding[channel].scale?.type === 'symlog' &&
@@ -266,14 +269,20 @@ const coreScales = (s, dimensions) => {
     .filter(([channel]) => !isTextChannel(channel) && !scales[channel])
     .forEach(([channel]) => {
       try {
-        const method = scaleType(s, channelRoot(s, channel));
-        const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
+        if (scaleType(s, channel) === null) {
+          scales[channel] = identity;
+          scales[channel].domain = () => domain(s, channel);
+          scales[channel].range = () => domain(s, channel);
+        } else {
+          const method = scaleType(s, channelRoot(s, channel));
+          const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
 
-        if (method === 'scaleLinear') {
-          scale.nice();
+          if (method === 'scaleLinear') {
+            scale.nice();
+          }
+
+          scales[channel] = scale;
         }
-
-        scales[channel] = scale;
       } catch (error) {
         error.message = `could not generate ${channel} scale - ${error.message}`;
         throw error;
