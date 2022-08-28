@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/vijithassar/bisonica/compare/v0.1.5...v0.1.6) (2022-08-28)
+
+
+### Features
+
+* **core:** symmetric log scales ([4e30566](https://github.com/vijithassar/bisonica/commit/4e305666c633e175d592aa07bfee797595b1a879))
+
+
+### Bug Fixes
+
+* **core**: temporarily revert single series mapping ([70d3840](https://github.com/vijithassar/bisonica/commit/70d38408c7b9e8b599fb03942e0dcdc41597ff78))
+
+
 ### [0.1.5](https://github.com/vijithassar/bisonica/compare/v0.1.4...v0.1.5) (2022-08-15)
 
 
