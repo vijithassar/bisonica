@@ -31,6 +31,7 @@
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "qunit": "^2.19.1",
+    "esm": "^3.2.25",
     "standard-version": "^9.5.0",
     "string.prototype.matchall": "^4.0.7",
     "stylelint": "^14.9.1",
