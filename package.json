@@ -17,7 +17,7 @@
     "lint-git": "commitlint -- --to=HEAD",
     "lint-js": "eslint source tests/unit tests/integration",
     "lint-styles": "stylelint source/index.css",
-    "test": "qunit --require jsdom-global/register tests/**/*.js",
+    "test": "qunit --require jsdom-global/register --require ./tests/image-shim.cjs tests/**/*.js",
     "test-serve": "testem --file ./tests/testem.cjs",
     "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
