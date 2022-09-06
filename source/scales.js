@@ -117,7 +117,7 @@ const domainBaseValues = (s, channel) => {
   }
 
   if (type === 'temporal') {
-    const date = (d) => parseTime(encodingValue(s, channel)(d));
+    const date = (d) => parseTime(encodingValue(s, channel)(d)).getTime();
 
     return d3.extent(values(s), date);
   } else if (type === 'nominal' || type === 'ordinal') {
