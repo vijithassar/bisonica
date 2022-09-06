@@ -17,38 +17,8 @@
     <div id="qunit-fixture"></div>
     <script src="/testem.js"></script>
 
-    <script src="./unit/axes-test.js" type="module"></script>
-    <script src="./unit/data-test.js" type="module"></script>
-    <script src="./unit/encodings-test.js" type="module"></script>
-    <script src="./unit/feature-test.js" type="module"></script>
-    <script src="./unit/helpers-test.js" type="module"></script>
-    <script src="./unit/memoize-test.js" type="module"></script>
-    <script src="./unit/marks-test.js" type="module"></script>
-    <script src="./unit/mutation-test.js" type="module"></script>
-    <script src="./unit/position-test.js" type="module"></script>
-    <script src="./unit/scales-test.js" type="module"></script>
-    <script src="./unit/sort-test.js" type="module"></script>
-    <script src="./unit/timestamp-test.js" type="module"></script>
-    <script src="./unit/tooltip-test.js" type="module"></script>
-    <script src="./unit/transform-test.js" type="module"></script>
-    <script src="./unit/views-test.js" type="module"></script>
-
-    <script src="./integration/aria-test.js" type="module"></script>
-    <script src="./integration/axes-test.js" type="module"></script>
-    <script src="./integration/categorical-bar-test.js" type="module"></script>
-    <script src="./integration/circular-test.js" type="module"></script>
-    <script src="./integration/keyboard-test.js" type="module"></script>
-    <script src="./integration/legend-test.js" type="module"></script>
-    <script src="./integration/line-test.js" type="module"></script>
-    <script src="./integration/pivot-test.js" type="module"></script>
-    <script src="./integration/rules-test.js" type="module"></script>
-    <script src="./integration/single-bar-test.js" type="module"></script>
-    <script src="./integration/sort-test.js" type="module"></script>
-    <script src="./integration/stacked-area-test.js" type="module"></script>
-    <script src="./integration/stacked-bar-test.js" type="module"></script>
-    <script src="./integration/text-test.js" type="module"></script>
-    <script src="./integration/time-series-bar-test.js" type="module"></script>
-    <script src="./integration/tooltip-test.js" type="module"></script>
-    <script src="./integration/views-test.js" type="module"></script>
+    {{#serve_files}}
+      <script type="module" src="/{{{src}}}"></script>
+    {{/serve_files}}
 
 </body>

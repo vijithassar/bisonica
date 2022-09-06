@@ -9,5 +9,8 @@ module.exports = {
   src_files: [
     "source/**/*.js",
     "tests/**/*.js"
+  ],
+  serve_files: [
+    "tests/**/*.js"
   ]
 };
