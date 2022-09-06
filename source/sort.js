@@ -133,9 +133,12 @@ const valuesToSort = (s, channel) => {
       if (!exists) {
         map[key] = value;
       } else {
-        const operation = feature(s).isBar() ? sum : min;
-
-        map[key] = operation([value, map[key]]);
+        const values = [value, map[key]];
+        if (feature(s).isBar()) {
+          map[key] = sum(values);
+        } else {
+          map[key] = min(values);
+        }
       }
     });
 
