@@ -26,6 +26,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@types/d3": "^7.4.0",
     "d3": "^7.6.1",
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",

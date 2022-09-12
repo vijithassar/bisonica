@@ -238,7 +238,14 @@ const keyboard = (_s) => {
       const mark = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
 
       const state = createState();
-      const dispatcher = dispatchers.get(mark.node());
+
+      const node = mark.node();
+
+      if (!(node instanceof Element)) {
+        return;
+      }
+
+      const dispatcher = dispatchers.get(node);
 
       const first = mark.filter((d, i) => i === 0);
 
