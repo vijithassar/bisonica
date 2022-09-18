@@ -11,38 +11,37 @@ const { module, test } = qunit;
 module('integration > tooltips', function () {
 
   test('renders a chart with SVG title tooltips', (assert) => {
-    const spec = specificationFixture('stackedBar');
-
+    const spec = specificationFixture('line');
     spec.usermeta = { tooltipHandler: false };
 
     const element = render(spec);
 
-    assert.ok(element.querySelector(testSelector('mark-title')));
+    assert.ok(element.querySelectorAll(testSelector('mark-title').length > 0));
   });
 
   test('renders a chart without SVG title tooltips', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('line');
 
     spec.usermeta = { tooltipHandler: false };
 
     delete spec.mark.tooltip;
     const element = render(spec);
 
-    assert.notOk(element.querySelector(testSelector('mark-title')));
+    assert.notOk(element.querySelectorAll(testSelector('mark-title')).length > 0);
   });
 
   test('disables SVG title tooltips when a custom tooltip handler is indicated', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('line');
 
     spec.usermeta = { tooltipHandler: true };
 
     const element = render(spec);
 
-    assert.notOk(element.querySelector(testSelector('mark-title')));
+    assert.notOk(element.querySelectorAll(testSelector('mark-title')).length > 0);
   });
 
   test.skip('disables tooltips from the encoding hash', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('line');
 
     spec.encoding.tooltip = null;
     const element = render(spec); // eslint-disable-line
@@ -51,7 +50,7 @@ module('integration > tooltips', function () {
   });
 
   test('renders a chart with encoding values in the SVG title tooltip', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
 

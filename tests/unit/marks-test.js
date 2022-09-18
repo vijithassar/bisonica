@@ -10,7 +10,7 @@ module('unit > marks', () => {
     const dimensions = { x: 1000, y: 1000 };
 
     test('return value', (assert) => {
-      const specification = specificationFixture('stackedBar');
+      const specification = specificationFixture('categoricalBar');
 
       assert.equal(
         typeof barWidth(specification, dimensions),
@@ -20,7 +20,7 @@ module('unit > marks', () => {
     });
 
     test('temporal encoding', (assert) => {
-      const specification = specificationFixture('stackedBar');
+      const specification = specificationFixture('temporalBar');
       const dates = new Set(specification.data.values.map((item) => item.label)).size;
 
       assert.ok(
@@ -66,10 +66,10 @@ module('unit > marks', () => {
     });
 
     test('iterates through temporal periods for custom domains', (assert) => {
-      const standardSpec = specificationFixture('stackedBar');
-      const customSpec = specificationFixture('stackedBar');
+      const standardSpec = specificationFixture('temporalBar');
+      const customSpec = specificationFixture('temporalBar');
       const standardWidth = barWidth(standardSpec, dimensions);
-      customSpec.encoding.x.scale = {domain: ['2020-04-20', '2020-07-01']};
+      customSpec.encoding.x.scale = {domain: ['2010', '2020']};
       const customWidth = barWidth(customSpec, dimensions);
       assert.ok(standardWidth > customWidth);
     });

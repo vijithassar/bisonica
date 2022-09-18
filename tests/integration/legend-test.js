@@ -5,7 +5,7 @@ const { module, test } = qunit;
 
 module('integration > legend', function () {
   test('renders a chart with legend', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('line');
     const element = render(spec);
 
     assert.ok(element.querySelector(testSelector('legend')));

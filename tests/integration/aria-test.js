@@ -6,7 +6,7 @@ const { module, test } = qunit;
 module('integration > aria', function () {
 
   test('aria-label matches tooltip by default', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
 
@@ -21,7 +21,7 @@ module('integration > aria', function () {
   });
 
   test('aria-label matches tooltip when tooltip channel is specified', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
 
@@ -39,7 +39,7 @@ module('integration > aria', function () {
   });
 
   test('aria-label can be set with description field', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
     const element = render(spec);
 
     [...element.querySelectorAll(testSelector('mark'))].forEach(mark => {
@@ -49,7 +49,7 @@ module('integration > aria', function () {
   });
 
   test('aria-label can be set to a calculate transform field', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
 
     spec.transform = [{ calculate: "'START:' + datum.value + ':END'", as: 'test' }];
     spec.encoding.description = { field: 'test' };
@@ -60,7 +60,7 @@ module('integration > aria', function () {
   });
 
   test('aria-label can diverge from tooltip', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
 
@@ -82,7 +82,7 @@ module('integration > aria', function () {
   });
 
   test('every bar chart mark has an aria-label attribute by default', (assert) => {
-    const spec = specificationFixture('stackedBar');
+    const spec = specificationFixture('categoricalBar');
     const element = render(spec);
     element.querySelectorAll(testSelector('mark')).forEach((mark => {
       assert.ok(mark.getAttribute('aria-label'));

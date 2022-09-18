@@ -9,7 +9,7 @@ import {
 import { dimensions } from './support.js';
 import qunit from 'qunit';
 import { parseTime } from '../../source/time.js';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
@@ -20,8 +20,9 @@ module('unit > encoders', () => {
       y: (d) => d.value,
       color: (d) => d.group,
     };
-    const encoders = createEncoders(stackedBarChartSpec, dimensions, accessors);
-    const dataPoint = stackedBarChartSpec.data.values[0];
+    const specification = specificationFixture('line');
+    const encoders = createEncoders(specification, dimensions, accessors);
+    const dataPoint = specification.data.values[0];
 
     assert.equal(typeof encoders, 'object', 'encoders are methods on an object');
     Object.entries(encoders).forEach(([name, encoder]) => {
