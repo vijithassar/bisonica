@@ -10,7 +10,7 @@ const { module, test } = qunit;
 const approximate = (value) => Math.round(value * 100) / 100;
 
 module('integration > categorical-bar', function () {
-  test('renders a categorical bar chart', async function (assert) {
+  test('renders a categorical bar chart', (assert) => {
     const spec = specificationFixture('categoricalBar');
 
     const element = render(spec);
@@ -39,7 +39,7 @@ module('integration > categorical-bar', function () {
     });
   });
 
-  test('handles input data with all zero values', async function (assert) {
+  test('handles input data with all zero values', (assert) => {
     const spec = specificationFixture('categoricalBar');
 
     spec.data.values.forEach((item) => {

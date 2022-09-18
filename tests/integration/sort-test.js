@@ -6,7 +6,7 @@ import { specificationFixture } from '../test-helpers.js';
 const { module, test } = qunit;
 
 module('integration > sort', function () {
-  test('renders marks in ascending order', async function (assert) {
+  test('renders marks in ascending order', (assert) => {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = 'y';
@@ -21,7 +21,7 @@ module('integration > sort', function () {
 
     assert.deepEqual(values, sorted);
   });
-  test('renders marks in descending order', async function (assert) {
+  test('renders marks in descending order', (assert) => {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.sort = '-y';

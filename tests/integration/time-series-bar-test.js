@@ -11,7 +11,7 @@ const { module, test } = qunit;
 const approximate = (value) => Math.round(value * 100) / 100;
 
 module('integration > temporal-bar', function () {
-  test('renders a time series bar chart', async function (assert) {
+  test('renders a time series bar chart', (assert) => {
     const spec = specificationFixture('temporalBar');
 
     const element = render(spec);
@@ -40,7 +40,7 @@ module('integration > temporal-bar', function () {
     });
   });
 
-  test('handles input data with all zero values', async function (assert) {
+  test('handles input data with all zero values', (assert) => {
     const spec = specificationFixture('temporalBar');
 
     spec.data.values.forEach((item) => {

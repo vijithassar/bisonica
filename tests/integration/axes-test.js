@@ -4,7 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js';
 const { module, test } = qunit;
 
 module('integration > axes', function () {
-  test('renders a chart with axes', async function (assert) {
+  test('renders a chart with axes', (assert) => {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
 
@@ -15,7 +15,7 @@ module('integration > axes', function () {
     assert.ok(element.querySelector(testSelector('tick')));
   });
 
-  test('renders a chart with custom axis titles', async function (assert) {
+  test('renders a chart with custom axis titles', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.x.axis = { title: 'a' };
@@ -25,7 +25,7 @@ module('integration > axes', function () {
     assert.equal(element.querySelector(testSelector('axes-y-title')).textContent, spec.encoding.y.axis.title);
   });
 
-  test('renders a chart without y-axis tick labels', async function (assert) {
+  test('renders a chart without y-axis tick labels', (assert) => {
     let spec, element;
 
     spec = specificationFixture('stackedBar');
@@ -48,7 +48,7 @@ module('integration > axes', function () {
     assert.ok(!tickLabelTexts.some((el) => el.textContent.length));
   });
 
-  test('renders a chart with custom axis tick intervals', async function (assert) {
+  test('renders a chart with custom axis tick intervals', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     const dates = spec.data.values.map((item) => new Date(item.label));
@@ -73,7 +73,7 @@ module('integration > axes', function () {
     assert.ok(weekly.length < differenceDays);
   });
 
-  test('renders a chart with custom axis tick steps', async function (assert) {
+  test('renders a chart with custom axis tick steps', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     const dates = spec.data.values.map((item) => new Date(item.label));
@@ -89,7 +89,7 @@ module('integration > axes', function () {
     assert.ok(ticks.length < differenceDays);
   });
 
-  test('renders a chart without axes', async function (assert) {
+  test('renders a chart without axes', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.x.axis = { title: null };
@@ -101,7 +101,7 @@ module('integration > axes', function () {
     selectors.forEach((selector) => assert.notOk(element.querySelector(selector)));
   });
 
-  test('renders a chart with truncated axis labels', async function (assert) {
+  test('renders a chart with truncated axis labels', (assert) => {
     const max = 20;
     const spec = specificationFixture('categoricalBar');
 

@@ -5,7 +5,7 @@ import { specificationFixture } from '../test-helpers.js';
 const { module, test } = qunit;
 
 module('integration > stacked-bar', function () {
-  test('renders a vertical stacked bar chart', async function (assert) {
+  test('renders a vertical stacked bar chart', (assert) => {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
 
@@ -27,7 +27,7 @@ module('integration > stacked-bar', function () {
     assert.ok(!nodesHaveZeroHeights, 'some mark rects have nonzero height attributes');
   });
 
-  test('renders a horizontal stacked bar chart', async function (assert) {
+  test('renders a horizontal stacked bar chart', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     const { x, y } = spec.encoding;

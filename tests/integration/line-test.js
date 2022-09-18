@@ -7,7 +7,7 @@ const { module, test } = qunit;
 const pointSelector = testSelector('marks-mark-point');
 
 module('integration > line', function () {
-  test('renders a line chart', async function (assert) {
+  test('renders a line chart', (assert) => {
     const spec = specificationFixture('line');
     const element = render(spec);
 
@@ -26,13 +26,13 @@ module('integration > line', function () {
     });
   });
 
-  test('renders a line chart with points', async function (assert) {
+  test('renders a line chart with points', (assert) => {
     const spec = specificationFixture('line');
     const element = render(spec);
     assert.ok(element.querySelector(pointSelector));
   });
 
-  test('renders a line chart without points', async function (assert) {
+  test('renders a line chart without points', (assert) => {
     const spec = specificationFixture('line');
 
     delete spec.mark.point;
@@ -40,7 +40,7 @@ module('integration > line', function () {
     assert.notOk(element.querySelector(pointSelector));
   });
 
-  test('renders a line chart with arbitrary field names', async function (assert) {
+  test('renders a line chart with arbitrary field names', (assert) => {
     const spec = specificationFixture('line');
     const propertyMap = {
       label: '_',

@@ -4,14 +4,14 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js';
 const { module, test } = qunit;
 
 module('integration > views', function () {
-  test('renders a chart without layers', async function (assert) {
+  test('renders a chart without layers', (assert) => {
     const spec = specificationFixture('line');
     const element = render(spec);
 
     assert.notOk(element.querySelector(testSelector('layer')));
   });
 
-  test('renders a chart with one layer', async function (assert) {
+  test('renders a chart with one layer', (assert) => {
     const spec = { ...specificationFixture('line') };
     const lineLayer = {
       mark: spec.mark,
@@ -26,7 +26,7 @@ module('integration > views', function () {
     assert.ok(element.querySelector(testSelector('layer')));
   });
 
-  test('renders a chart with two layers', async function (assert) {
+  test('renders a chart with two layers', (assert) => {
     const spec = { ...specificationFixture('line') };
 
     const lineLayer = {
@@ -49,7 +49,7 @@ module('integration > views', function () {
     assert.equal(element.querySelectorAll(testSelector('layer')).length, 2);
   });
 
-  test('renders a chart with nested layer data', async function (assert) {
+  test('renders a chart with nested layer data', (assert) => {
     const lineChartSpec = specificationFixture('line');
     const layerSpec = JSON.parse(JSON.stringify(lineChartSpec));
     const lineLayer = {

@@ -73,7 +73,7 @@ const isPie = (marks) => {
 };
 
 module('integration > circular', function () {
-  test('renders a circular chart', async function (assert) {
+  test('renders a circular chart', (assert) => {
     const spec = specificationFixture('circular');
 
     const element = render(spec);
@@ -93,7 +93,7 @@ module('integration > circular', function () {
     assert.ok(mark.length === colors.size, 'every segment is a different color');
   });
 
-  test('renders a pie chart', async function (assert) {
+  test('renders a pie chart', (assert) => {
     const spec = specificationFixture('circular');
 
     spec.mark = 'arc';
@@ -110,7 +110,7 @@ module('integration > circular', function () {
     assert.ok(isPie(marks));
   });
 
-  test.skip('renders a donut chart', async function (assert) {
+  test.skip('renders a donut chart', (assert) => {
     const donutChartSpec = {
       ...specificationFixture('circular'),
       mark: { type: 'arc', innerRadius: 50 },

@@ -10,7 +10,7 @@ const { module, test } = qunit;
 
 module('integration > tooltips', function () {
 
-  test('renders a chart with SVG title tooltips', async function (assert) {
+  test('renders a chart with SVG title tooltips', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -20,7 +20,7 @@ module('integration > tooltips', function () {
     assert.ok(element.querySelector(testSelector('mark-title')));
   });
 
-  test('renders a chart without SVG title tooltips', async function (assert) {
+  test('renders a chart without SVG title tooltips', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -31,7 +31,7 @@ module('integration > tooltips', function () {
     assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
-  test('disables SVG title tooltips when a custom tooltip handler is indicated', async function (assert) {
+  test('disables SVG title tooltips when a custom tooltip handler is indicated', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: true };
@@ -41,7 +41,7 @@ module('integration > tooltips', function () {
     assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
-  test.skip('disables tooltips from the encoding hash', async function (assert) {
+  test.skip('disables tooltips from the encoding hash', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.tooltip = null;
@@ -50,7 +50,7 @@ module('integration > tooltips', function () {
     assert.dom(testSelector('mark-title')).doesNotExist();
   });
 
-  test('renders a chart with encoding values in the SVG title tooltip', async function (assert) {
+  test('renders a chart with encoding values in the SVG title tooltip', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -67,7 +67,7 @@ module('integration > tooltips', function () {
     });
   });
 
-  test('renders a stacked bar chart with SVG title tooltips', async function (assert) {
+  test('renders a stacked bar chart with SVG title tooltips', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -80,7 +80,7 @@ module('integration > tooltips', function () {
 
   });
 
-  test('renders a circular chart with SVG title tooltips', async function (assert) {
+  test('renders a circular chart with SVG title tooltips', (assert) => {
     const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
@@ -92,7 +92,7 @@ module('integration > tooltips', function () {
     assert.ok(!element.querySelector(testSelector('mark-title')).textContent.includes('undefined'));
   });
 
-  test('renders a line chart with SVG title tooltips', async function (assert) {
+  test('renders a line chart with SVG title tooltips', (assert) => {
     const spec = specificationFixture('line');
 
     spec.usermeta = { tooltipHandler: false };
@@ -104,7 +104,7 @@ module('integration > tooltips', function () {
     assert.ok(!element.querySelector(testSelector('point-title')).textContent.includes('undefined'));
   });
 
-  test('follows tooltip rendering instructions in charts with nested layers', async function (assert) {
+  test('follows tooltip rendering instructions in charts with nested layers', (assert) => {
     const graphic = specificationFixture('circular');
 
     graphic.mark.innerRadius = 50;
@@ -126,7 +126,7 @@ module('integration > tooltips', function () {
     assert.notOk(element.querySelector(testSelector('mark-title')));
   });
 
-  test('emits a CustomEvent with tooltip details in response to mouseover', async function (assert) {
+  test('emits a CustomEvent with tooltip details in response to mouseover', (assert) => {
     const element = render(specificationFixture('circular'));
 
     const event = new MouseEvent('mouseover', { bubbles: true });

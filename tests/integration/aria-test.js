@@ -5,7 +5,7 @@ const { module, test } = qunit;
 
 module('integration > aria', function () {
 
-  test('aria-label matches tooltip by default', async function (assert) {
+  test('aria-label matches tooltip by default', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -20,7 +20,7 @@ module('integration > aria', function () {
     assert.ok(match);
   });
 
-  test('aria-label matches tooltip when tooltip channel is specified', async function (assert) {
+  test('aria-label matches tooltip when tooltip channel is specified', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -38,7 +38,7 @@ module('integration > aria', function () {
     assert.ok(match);
   });
 
-  test('aria-label can be set with description field', async function (assert) {
+  test('aria-label can be set with description field', (assert) => {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
 
@@ -48,7 +48,7 @@ module('integration > aria', function () {
 
   });
 
-  test('aria-label can be set to a calculate transform field', async function (assert) {
+  test('aria-label can be set to a calculate transform field', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.transform = [{ calculate: "'START:' + datum.value + ':END'", as: 'test' }];
@@ -59,7 +59,7 @@ module('integration > aria', function () {
     assert.ok(element.querySelector(testSelector('mark')).getAttribute('aria-label').match(/^START.*END$/));
   });
 
-  test('aria-label can diverge from tooltip', async function (assert) {
+  test('aria-label can diverge from tooltip', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.usermeta = { tooltipHandler: false };
@@ -81,7 +81,7 @@ module('integration > aria', function () {
     assert.notOk(match);
   });
 
-  test('every bar chart mark has an aria-label attribute by default', async function (assert) {
+  test('every bar chart mark has an aria-label attribute by default', (assert) => {
     const spec = specificationFixture('stackedBar');
     const element = render(spec);
     element.querySelectorAll(testSelector('mark')).forEach((mark => {
@@ -89,7 +89,7 @@ module('integration > aria', function () {
     }));
   });
 
-  test('every circular chart mark has an aria-label attribute by default', async function (assert) {
+  test('every circular chart mark has an aria-label attribute by default', (assert) => {
     const spec = specificationFixture('circular');
     const element = render(spec);
     element.querySelectorAll(testSelector('mark')).forEach((mark) => {
@@ -97,7 +97,7 @@ module('integration > aria', function () {
     });
   });
 
-  test('every line chart point mark has an aria-label attribute by default', async function (assert) {
+  test('every line chart point mark has an aria-label attribute by default', (assert) => {
     const spec = specificationFixture('line');
     const element = render(spec);
     element.querySelectorAll(testSelector('mark')).forEach((mark) => {
