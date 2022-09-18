@@ -1,5 +1,6 @@
 import { WRAPPER_CLASS } from './config.js';
 import { feature } from './feature.js';
+import { extension } from './extensions.js';
 
 /**
  * prepare the DOM of a specified element for rendering a chart
@@ -43,7 +44,7 @@ const init = (s, dimensions) => {
       }
     }
 
-    const id = s.usermeta?.id;
+    const id = extension(s, 'id');
 
     if (id) {
       svg.attr('aria-labelledby', `title-${id}`);
