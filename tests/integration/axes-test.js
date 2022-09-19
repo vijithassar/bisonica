@@ -27,26 +27,16 @@ module('integration > axes', function () {
   });
 
   test('renders a chart without y-axis tick labels', (assert) => {
-    let spec, element;
 
-    spec = specificationFixture('line');
-
-    element = render(spec);
-
-    let tickLabelTexts;
-
-    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
-
-    assert.ok(tickLabelTexts.every((el) => el.textContent.length));
-
-    spec = specificationFixture('line');
+    const spec = specificationFixture('line');
 
     spec.encoding.y.axis = {labels: false};
 
-    element = render(spec);
-    tickLabelTexts = [...element.querySelectorAll(`${testSelector('axes-y')} .tick text`)];
+    const element = render(spec);
 
-    assert.ok(!tickLabelTexts.some((el) => el.textContent.length));
+    const tickLabelText = element.querySelector(`${testSelector('axes-y')} .axis`).textContent;
+
+    assert.equal(tickLabelText, '');
   });
 
   test('renders a chart with custom axis tick intervals', (assert) => {
