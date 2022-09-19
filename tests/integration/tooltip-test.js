@@ -16,7 +16,7 @@ module('integration > tooltips', function () {
 
     const element = render(spec);
 
-    assert.ok(element.querySelectorAll(testSelector('mark-title').length > 0));
+    assert.ok(element.querySelectorAll(testSelector('mark-title').length > 0), 'mark nodes contain title nodes');
   });
 
   test('renders a chart without SVG title tooltips', (assert) => {
@@ -27,7 +27,7 @@ module('integration > tooltips', function () {
     delete spec.mark.tooltip;
     const element = render(spec);
 
-    assert.notOk(element.querySelectorAll(testSelector('mark-title')).length > 0);
+    assert.equal(element.querySelectorAll(testSelector('mark-title')).length, 0, 'mark nodes do not contain title nodes');
   });
 
   test('disables SVG title tooltips when a custom tooltip handler is indicated', (assert) => {
@@ -37,7 +37,7 @@ module('integration > tooltips', function () {
 
     const element = render(spec);
 
-    assert.notOk(element.querySelectorAll(testSelector('mark-title')).length > 0);
+    assert.equal(element.querySelectorAll(testSelector('mark-title')).length, 0, 'mark nodes do not contain title nodes');
   });
 
   test.skip('disables tooltips from the encoding hash', (assert) => {
