@@ -6,7 +6,7 @@ const { module, test } = qunit;
 
 module('integration > text', function () {
 
-  test('renders text marks', async function (assert) {
+  test('renders text marks', (assert) => {
     const spec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       title: {
@@ -34,7 +34,7 @@ module('integration > text', function () {
 
   });
 
-  test('renders text marks with dynamic attributes', async function (assert) {
+  test('renders text marks with dynamic attributes', (assert) => {
     const spec = specificationFixture('scatterPlot');
 
     spec.mark = { type: 'text' };

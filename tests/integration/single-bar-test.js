@@ -5,7 +5,7 @@ import { specificationFixture } from '../test-helpers.js';
 const { module, test } = qunit;
 
 module('integration > single bar', function () {
-    test('renders a stacked single bar', async function (assert) {
+    test('renders a stacked single bar', (assert) => {
         const spec = specificationFixture('singleBar');
         const element = render(spec);
 

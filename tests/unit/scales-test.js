@@ -1,5 +1,4 @@
 import { dimensions } from './support.js';
-import { lineChartSpec } from '../../fixtures/line.js';
 import qunit from 'qunit';
 import { parseScales } from '../../source/scales.js';
 import { parseTime } from '../../source/time.js';
@@ -7,9 +6,10 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-const stackedBarChartSpec = specificationFixture('stackedBar');
-const ordinalSpec = specificationFixture('stackedBar');
+const lineChartSpec = specificationFixture('line');
+const categoricalBarChartSpec = specificationFixture('categoricalBar');
 
+const ordinalSpec = specificationFixture('line');
 ordinalSpec.encoding.color.type = 'ordinal';
 
 module('unit > scales', (hooks) => {
@@ -17,7 +17,7 @@ module('unit > scales', (hooks) => {
 
   hooks.beforeEach(() => {
     scales = {
-      ...parseScales(stackedBarChartSpec, dimensions),
+      ...parseScales(lineChartSpec, dimensions),
       colorOrdinal: parseScales(ordinalSpec, dimensions).color,
     };
   });
@@ -70,7 +70,7 @@ module('unit > scales', (hooks) => {
 
   test('extended scales', (assert) => {
     const core = parseScales(lineChartSpec, dimensions);
-    const extended = parseScales(stackedBarChartSpec, dimensions);
+    const extended = parseScales(categoricalBarChartSpec, dimensions);
 
     assert.ok(Object.keys(core).length < Object.keys(extended).length, 'creates additional scales');
     Object.entries(extended)

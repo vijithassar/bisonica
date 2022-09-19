@@ -2,7 +2,7 @@ import { chart } from '../../source/chart.js';
 import { init } from '../../source/init.js';
 import qunit from 'qunit';
 import { select } from 'd3';
-import { stackedBarChartSpec } from '../../fixtures/stacked-bar.js';
+import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
@@ -27,7 +27,7 @@ const freeze = (object) => {
 
 module('unit > mutation', () => {
   test('does not mutate specifications', (assert) => {
-    const s = freeze(JSON.parse(JSON.stringify(stackedBarChartSpec)));
+    const s = freeze(JSON.parse(JSON.stringify(specificationFixture('line'))));
     const dimensions = { x: 500, y: 500 };
 
     assert.equal(

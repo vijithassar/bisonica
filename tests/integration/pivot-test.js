@@ -14,7 +14,7 @@ module('integration > pivot urls', function () {
 
   const getUrl = (item) => d3.select(item).datum().url;
 
-  test('stacked bar chart pivot links', async function (assert) {
+  test('stacked bar chart pivot links', (assert) => {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.href = { field: 'url' };
@@ -29,7 +29,7 @@ module('integration > pivot urls', function () {
     assert.notEqual(urls[0], urls[1]);
   });
 
-  test('categorical bar chart pivot links', async function (assert) {
+  test('categorical bar chart pivot links', (assert) => {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.href = { field: 'url' };
@@ -44,7 +44,7 @@ module('integration > pivot urls', function () {
     assert.notEqual(urls[0], urls[1]);
   });
 
-  test('line chart pivot links', async function (assert) {
+  test('line chart pivot links', (assert) => {
     const spec = specificationFixture('line');
 
     spec.encoding.href = { field: 'url' };
@@ -71,7 +71,7 @@ module('integration > pivot urls', function () {
     assert.notEqual(urls[0], urls[1]);
   });
 
-  test('circular chart pivot links', async function (assert) {
+  test('circular chart pivot links', (assert) => {
     const spec = specificationFixture('circular');
 
     spec.data.values = [
