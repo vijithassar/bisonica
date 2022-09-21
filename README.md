@@ -54,7 +54,7 @@ When faced with an accessibility concern, bisonica typically just defaults to th
 
 ## Performance
 
-bisonica is often considerably faster than rendering the same chart using `vega-lite.js`. This will depend on the specific chart configuration and the input data, but as an example, pie charts have been clocked rendering in as little as 3 milliseconds.
+bisonica is often considerably faster than rendering the same chart using `vega-lite.js`. This will depend on the specific chart configuration and the input data, but as an example, pie charts have been clocked rendering in as little as 1.25 milliseconds.
 
 ## Customization
 
