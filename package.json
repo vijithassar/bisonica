@@ -22,7 +22,9 @@
     "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
     "release": "npx standard-version",
-    "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test"
+    "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test",
+    "audit": "yarn audit",
+    "prerelease": "yarn run audit"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
