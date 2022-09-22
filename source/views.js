@@ -334,4 +334,4 @@ const layerTestRecursive = (s, test) => {
   return test(s) || layerTest(s, test);
 };
 
-export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive };
+export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification };
