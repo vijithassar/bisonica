@@ -22,7 +22,10 @@
     "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
     "release": "npx standard-version",
-    "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test"
+    "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test",
+    "audit": "yarn audit",
+    "prerelease": "yarn run audit",
+    "benchmark": "node --require jsdom-global/register --require ./tests/image-shim.cjs benchmarks/benchmarks.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
@@ -46,5 +49,8 @@
   "peerDependencies": {
     "d3": "^6.7.0 || ^7.0.0",
     "string.prototype.matchall": "^4.0.7"
+  },
+  "dependencies": {
+    "nanobench": "^3.0.0"
   }
 }
