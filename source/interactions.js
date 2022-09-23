@@ -187,8 +187,7 @@ const interactions = (s) => {
         });
         click.on('click', function () {
           if (feature(s).hasLinks()) {
-            const url = getUrl(s, d3.select(this).datum());
-
+            const url = getUrl(s, d3.select(this).datum() || null);
             dispatcher.call('link', this, url);
           }
         });
