@@ -1,4 +1,4 @@
-import { encodingField, encodingValue } from './encodings.js';
+import { encodingValue } from './encodings.js';
 import { layerTestRecursive } from './views.js';
 import { mark, values } from './helpers.js';
 import { memoize } from './memoize.js';
@@ -36,7 +36,7 @@ const _feature = (s) => {
     isText: (s) => mark(s) === 'text',
     isAggregate: (s) => ['x', 'y'].some((channel) => s.encoding?.[channel]?.aggregate),
     hasColor: (s) => !!s.encoding?.color,
-    hasLinks: (s) => !!encodingField(s, 'href'),
+    hasLinks: (s) => !!s.encoding.href,
     hasData: (s) => !!s.data?.values.length,
     hasLegend: (s) => s.encoding?.color?.legend !== null,
     hasLegendTitle: (s) => isPresent(s.encoding?.color?.legend?.title),
