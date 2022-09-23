@@ -23,6 +23,18 @@ const colors = (count = 5) => {
 };
 
 /**
+ * make a normal function appear to be a scale function
+ * by adding domain and range methods
+ * @param {function} scale scale function
+ * @param {array} domain scale domain
+ * @param {array} range scale range
+ * @returns {function} scale function with mocked domain and range
+ */
+const syntheticScale = (scale, domain, range) => {
+  return Object.assign(scale, { domain: () => domain, range: () => range });
+};
+
+/**
  * determine the d3 method name of the scale function to
  * generate for a given dimension of visual encoding
  * @param {object} s Vega Lite specification
@@ -270,9 +282,7 @@ const coreScales = (s, dimensions) => {
     .forEach(([channel]) => {
       try {
         if (scaleType(s, channel) === null) {
-          scales[channel] = identity;
-          scales[channel].domain = () => domain(s, channel);
-          scales[channel].range = () => domain(s, channel);
+          scales[channel] = syntheticScale(identity, domain(s, channel), domain(s, channel));
         } else {
           const method = scaleType(s, channelRoot(s, channel));
           const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
