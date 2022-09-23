@@ -40,6 +40,7 @@ const _feature = (s) => {
     hasData: (s) => !!s.data?.values.length,
     hasLegend: (s) => s.encoding?.color?.legend !== null,
     hasLegendTitle: (s) => isPresent(s.encoding?.color?.legend?.title),
+    hasTooltip: (s) => s.mark.tooltip || s.encoding?.tooltip,
     hasTransforms: (s) => Array.isArray(s.transform),
     hasAxisLabelsY: (s) => s.encoding?.y?.axis?.labels !== false,
     hasAxisLabelsX: (s) => s.encoding?.x?.axis?.labels !== false,

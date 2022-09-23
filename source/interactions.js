@@ -174,7 +174,9 @@ const interactions = (s) => {
           tooltipEvent(s, this, event);
         });
         tooltip.on('mouseover.tooltip', function (event) {
-          dispatcher.call('tooltip', this, event);
+          if (feature(s).hasTooltip()) {
+            dispatcher.call('tooltip', this, event);
+          }
         });
 
         // pivot links
