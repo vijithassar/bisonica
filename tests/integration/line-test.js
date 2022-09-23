@@ -45,7 +45,7 @@ module('integration > line', function () {
     const propertyMap = {
       label: '_',
       group: '*',
-      value: '.',
+      value: '•',
     };
 
     spec.data.values = spec.data.values.map((item) => {
