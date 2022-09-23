@@ -140,6 +140,16 @@ const layerMatch = (s, test) => {
 };
 
 /**
+ * determine whether text is statically
+ * encoded in the mark object
+ * @param {object} s Vega Lite specification
+ * @returns {boolean}
+ */
+const staticTextMark = (s) => {
+  return s.mark?.text && !s.encoding?.text;
+};
+
+/**
  * select the layer that is likely to be the most important
  * for global functionality like axes and margins across the
  * entire chart
@@ -159,8 +169,11 @@ const layerPrimary = (s) => {
     (s) => s.encoding.x && s.encoding.y,
     // linear
     (s) => s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y,
-    // add a wrapper to require encoding
-  ].map((heuristic) => (s) => s.encoding && heuristic(s));
+  ]
+  // add a wrapper to require encoding
+  .map((heuristic) => (s) => s.encoding && heuristic(s))
+  // add a wrapper to prohibit static text marks
+  .map((heuristic) => (s) => !staticTextMark(s) && heuristic(s));
 
   for (const heuristic of heuristics) {
     let match = layerMatch(s, heuristic);
