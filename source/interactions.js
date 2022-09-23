@@ -118,9 +118,10 @@ const interactions = (s) => {
     const dispatcher = dispatchers.get(wrapper.node());
 
     const markMouseover = () => {
-      const mouseover = d3.select(layerNode(s, wrapper.node())).selectAll(markMouseoverSelector(s));
-      const click = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
-      const tooltip = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
+      const layer = layerNode(s, wrapper.node());
+      const mouseover = d3.select(layer).selectAll(markMouseoverSelector(s));
+      const click = d3.select(layer).selectAll(markInteractionSelector(s));
+      const tooltip = d3.select(layer).selectAll(markInteractionSelector(s));
 
       if (
         feature(s).isBar() ||
