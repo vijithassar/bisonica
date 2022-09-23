@@ -3,6 +3,7 @@ import { feature } from './feature.js';
 
 import { mark, noop, values } from './helpers.js';
 import { markSelector, marks } from './marks.js';
+import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
 import { temporalBarDimensions } from './time.js';
 
@@ -156,7 +157,7 @@ const staticTextMark = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {object} layer specification
  */
-const layerPrimary = (s) => {
+const _layerPrimary = (s) => {
   if (!s.layer) {
     return s;
   }
@@ -196,6 +197,7 @@ const layerPrimary = (s) => {
     }
   }
 };
+const layerPrimary = memoize(_layerPrimary);
 
 /**
  * find the DOM element corresponding to a layer
