@@ -665,7 +665,8 @@ const textMarks = (s, dimensions) => {
     const dy = text.node().getBoundingClientRect().height * 0.25;
 
     text.attr('transform', `translate(0,${dy})`);
-    text.classed('link', s.encoding && encodingValue(s, 'href'));
+    const hasLink = !!(s.encoding && encodingValue(s, 'href'));
+    text.classed('link', hasLink);
 
   };
 };
