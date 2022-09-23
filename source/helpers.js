@@ -43,6 +43,20 @@ const datum = (s, d) => {
 };
 
 /**
+ * look up a value from an object using dot notation
+ * @param {object} d datum
+ * @param {string} key multiple dot-delimited lookup keys
+ */
+const nestedValue = (d, key) => {
+  let value = d;
+  let keys = key.split('.').reverse();
+  while (keys.length) {
+    value = value[keys.pop()];
+  }
+  return value;
+};
+
+/**
  * get the string used when there's no appropriate name for a series
  * @returns {string} series name
  */
@@ -173,6 +187,7 @@ export {
   fieldsMatch,
   values,
   datum,
+  nestedValue,
   missingSeries,
   getUrl,
   noop,

@@ -6,6 +6,7 @@ import {
   encodingType,
   encodingValue,
 } from '../../source/encodings.js';
+import { data } from '../../source/data.js';
 import { dimensions } from './support.js';
 import qunit from 'qunit';
 import { parseTime } from '../../source/time.js';
@@ -50,6 +51,87 @@ module('unit > encoders', () => {
 
     assert.equal(encodingField(s, 'x'), 'a');
     assert.equal(encodingField(s, 'y'), 'b');
+  });
+
+  test('accesses nested fields with encoding value lookup', (assert) => {
+    const datum = {
+      a: {
+        b: 2
+      }
+    };
+    const s = {
+      data: {
+        values: [
+          datum
+        ]
+      },
+      mark: {
+        type: 'point'
+      },
+      encoding: {
+        x: {
+          type: 'quantitative',
+          field: 'a.b'
+        }
+      }
+    };
+    assert.equal(encodingField(s, 'x'), 'a.b', 'looks up nested field as a string');
+    assert.equal(encodingValue(s, 'x')(datum), 2, 'looks up value based on nested field');
+
+  });
+
+  test('accesses nested fields with data preprocessing for circular charts', (assert) => {
+    const nest = (datum) => {
+      datum.a = {
+        b: {
+          c: datum.value
+        }
+      }
+      delete datum.value;
+      return datum;
+    };
+    const flat = data(specificationFixture('circular'));
+    const s = specificationFixture('circular');
+    s.data.values = s.data.values.map(nest);
+    s.encoding.theta.field = 'a.b.c';
+    const nested = data(s);
+    assert.deepEqual(flat, nested);
+  });
+
+  test('accesses nested fields with data preprocessing for bar charts', (assert) => {
+    const nest = (datum) => {
+      datum.a = {
+        b: {
+          c: datum.value
+        }
+      }
+      delete datum.value;
+      return datum;
+    };
+    const flat = data(specificationFixture('categoricalBar'));
+    const s = specificationFixture('categoricalBar');
+    s.data.values = s.data.values.map(nest);
+    s.encoding.y.field = 'a.b.c';
+    const nested = data(s);
+    assert.deepEqual(flat, nested);
+  });
+
+  test('accesses nested fields with data preprocessing for multidimensional charts', (assert) => {
+    const nest = (datum) => {
+      datum.a = {
+        b: {
+          c: datum.value
+        }
+      }
+      delete datum.value;
+      return datum;
+    };
+    const flat = data(specificationFixture('line'));
+    const s = specificationFixture('line');
+    s.data.values = s.data.values.map(nest);
+    s.encoding.y.field = 'a.b.c';
+    const nested = data(s);
+    assert.deepEqual(flat, nested);
   });
 
   test('identifies covariate encoding channels', (assert) => {
