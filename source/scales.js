@@ -41,7 +41,7 @@ const syntheticScale = (scale, domain, range) => {
  * @param {string} channel encoding parameter
  * @returns {string|null} d3 scale type
  */
-const scaleType = (s, channel) => {
+const scaleMethod = (s, channel) => {
 
   let method;
 
@@ -211,7 +211,7 @@ const range = (s, dimensions, _channel) => {
   const cartesian = () => {
     let result;
 
-    if (isDiscrete(s, channel) && !['scaleBand', 'scalePoint'].includes(scaleType(s, channel))) {
+    if (isDiscrete(s, channel) && !['scaleBand', 'scalePoint'].includes(scaleMethod(s, channel))) {
       const count = domain(s, channel).length;
       const interval = dimensions[channel] / count;
 
@@ -281,10 +281,10 @@ const coreScales = (s, dimensions) => {
     .filter(([channel]) => !isTextChannel(channel) && !scales[channel])
     .forEach(([channel]) => {
       try {
-        if (scaleType(s, channel) === null) {
+        if (scaleMethod(s, channel) === null) {
           scales[channel] = syntheticScale(identity, domain(s, channel), domain(s, channel));
         } else {
-          const method = scaleType(s, channelRoot(s, channel));
+          const method = scaleMethod(s, channelRoot(s, channel));
           const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
 
           if (method === 'scaleLinear') {
