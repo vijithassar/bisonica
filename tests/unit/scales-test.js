@@ -272,6 +272,34 @@ module('unit > scales', (hooks) => {
     });
   });
 
+  test('null disables scales and passes values directly', (assert) => {
+    const s = {
+      data: {
+        values: [
+          { group: 'red', value: 0 },
+          { group: 'blue', value: 10 },
+          { group: 'green', value: 100 },
+        ],
+      },
+      mark: {
+        type: 'arc'
+      },
+      encoding: {
+        theta: {
+          type: 'quantitative',
+          field: 'value',
+        },
+        color: {
+          type: 'nominal',
+          field: 'group',
+          scale: null
+        }
+      },
+    };
+    assert.equal(parseScales(s).color('red'), 'red');
+
+  })
+
   test('throws errors for unknown encoding types', (assert) => {
     const s = {
       data: {
