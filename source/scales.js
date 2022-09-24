@@ -35,6 +35,24 @@ const syntheticScale = (scale, domain, range) => {
 };
 
 /**
+ * parse scale types which have been explicitly specified
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding parameter
+ * @returns {'scaleSymlog'|null}
+ */
+const explicitScale = (s, channel) => {
+  if (s.encoding[channel]?.scale === null) {
+    return null;
+  }
+  if (
+    s.encoding[channel]?.scale?.type === 'symlog' &&
+    encodingType(s, channel) === 'quantitative'
+  ) {
+    return 'scaleSymlog';
+  }
+};
+
+/**
  * determine the d3 method name of the scale function to
  * generate for a given dimension of visual encoding
  * @param {object} s Vega Lite specification
@@ -42,6 +60,15 @@ const syntheticScale = (scale, domain, range) => {
  * @returns {string|null} d3 scale type
  */
 const scaleMethod = (s, channel) => {
+  if (s.encoding[channel]?.scale?.type || s.encoding[channel]?.scale === null) {
+    return explicitScale(s, channel);
+  }
+  let methods = {
+    temporal: 'scaleUtc',
+    nominal: 'scaleOrdinal',
+    quantitative: 'scaleLinear',
+    ordinal: 'scaleOrdinal',
+  }
 
   let method;
 
@@ -52,23 +79,7 @@ const scaleMethod = (s, channel) => {
       method = 'scalePoint'
     }
   } else {
-    let methods = {
-      temporal: 'scaleUtc',
-      nominal: 'scaleOrdinal',
-      quantitative: 'scaleLinear',
-      ordinal: 'scaleOrdinal',
-    }
-    if (s.encoding[channel]?.scale === null) {
-      return null;
-    }
-    if(
-      s.encoding[channel].scale?.type === 'symlog' &&
-      encodingType(s, channel) === 'quantitative'
-    ) {
-      method = 'scaleSymlog';
-    } else {
-      method = methods[encodingType(s, channel)];
-    }
+    method = methods[encodingType(s, channel)];
   }
   if (typeof d3[method] === 'function') {
     return method;
