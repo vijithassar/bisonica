@@ -76,7 +76,8 @@ function tooltipEvent(s, node, interaction) {
 
     node.dispatchEvent(customEvent);
   } catch (error) {
-    throw new Error(`could not emit tooltip event - ${error.message}`);
+    error.message = `could not emit tooltip event - ${error.message}`;
+    throw error;
   }
 }
 
