@@ -58,6 +58,11 @@ const includedChannels = memoize(_includedChannels);
 function tooltipEvent(s, node, interaction) {
   try {
     const datum = d3.select(node).datum();
+
+    if (!datum) {
+      return;
+    }
+
     const detail = { datum, node, interaction, content: tooltipContentData(s)(datum) };
 
     if (feature(s).isMulticolor()) {
