@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/vijithassar/bisonica/compare/v0.1.6...v0.1.7) (2022-09-28)
+
+
+### Features
+
+* **core:** disable scales with null ([c2ca00e](https://github.com/vijithassar/bisonica/commit/c2ca00e0ae4540cd05baec728a509b4861d35c30))
+* **core:** layer interactions ([7e40ee8](https://github.com/vijithassar/bisonica/commit/7e40ee88cb20fea6699bd390bf5a97283fc7ef7f))
+* **tooling:** add benchmarks ([2ab1f9e](https://github.com/vijithassar/bisonica/commit/2ab1f9eb6bd67a4db72bd8422565438778fcd41c))
+* **tooling:** check code coverage ([468fbc6](https://github.com/vijithassar/bisonica/commit/468fbc60582d0c526c3f9f3565162785d4a35afd))
+* **tooling:** run tests in ci ([3003f6d](https://github.com/vijithassar/bisonica/commit/3003f6d71d7ecef5eb81cb1f8df25677567f0cac))
+
+
+### Bug Fixes
+
+* **core:** allow encodings in text layers ([5719898](https://github.com/vijithassar/bisonica/commit/571989856f60feab53fabc40f9fdf7af0d118378))
+* **core:** check marks for tooltips ([4858d70](https://github.com/vijithassar/bisonica/commit/4858d70376f318ae83c9d9b451c4f6da01d62335))
+* **core:** extension helper ([b5d2dde](https://github.com/vijithassar/bisonica/commit/b5d2dde3b2502eab291d87253ebb93a251c0178f))
+* **core:** handle datum encodings in url lookup ([d065f41](https://github.com/vijithassar/bisonica/commit/d065f41d6d93c30adae05ae6c4a12a4303d6f473))
+* **core:** looser check for href encodings ([53b33d4](https://github.com/vijithassar/bisonica/commit/53b33d4f3d9563b069a676a93ea59e7ca4855300))
+* **core:** more accurate check for links when rendering text layers ([cc7f1d6](https://github.com/vijithassar/bisonica/commit/cc7f1d651f82c33d8367ffe9a659dc764a49449f))
+* **core:** prohibit static marks in primary layers ([abcfb49](https://github.com/vijithassar/bisonica/commit/abcfb495107e1c5cece74f1ffc7f3899873481b3))
+* **core:** radial feature test method ([56c9355](https://github.com/vijithassar/bisonica/commit/56c9355bf344db2a0797070bde37516dc8b1d930))
+* **core:** retain original stack trace for tooltip errors ([867a5d5](https://github.com/vijithassar/bisonica/commit/867a5d5e486b90cd5ea4270fd7bfe6af4658cdda))
+* **core:** synthetic scale helper for tracking domain and range ([0ef6d61](https://github.com/vijithassar/bisonica/commit/0ef6d6138752cce5028f71f12c119560229f70fd))
+* **tooling:** mock image APIs ([f0ff179](https://github.com/vijithassar/bisonica/commit/f0ff17919efdbe518e68b1b49e769b3ee424cee6))
+* **tooling:** use faster specification objects in tests ([34bd171](https://github.com/vijithassar/bisonica/commit/34bd171f535194db158f691a83856c35d51dc752))
+
 ### [0.1.6](https://github.com/vijithassar/bisonica/compare/v0.1.5...v0.1.6) (2022-08-28)
 
 
