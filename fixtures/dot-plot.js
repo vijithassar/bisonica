@@ -18,7 +18,6 @@ const dotPlotSpec = {
   encoding: {
     y: { field: 'label', type: 'nominal', title: null },
     x: { field: 'value', type: 'quantitative', title: null },
-    color: { value: `var(--${getGraphColors(1).pop().swatchName})` },
   },
   mark: { type: 'point', tooltip: true, filled: true },
 };
