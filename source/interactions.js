@@ -170,12 +170,14 @@ const interactions = (s) => {
           });
 
         // tooltips
-        dispatcher.on('tooltip', function (event) {
-          tooltipEvent(s, this, event);
+        dispatcher.on('tooltip', function (event, s) {
+          if (s) {
+            tooltipEvent(s, this, event);
+          }
         });
         tooltip.on('mouseover.tooltip', function (event) {
           if (feature(s).hasTooltip()) {
-            dispatcher.call('tooltip', this, event);
+            dispatcher.call('tooltip', this, event, s);
           }
         });
 
