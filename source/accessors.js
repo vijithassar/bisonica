@@ -1,5 +1,5 @@
 import { layoutDirection } from './marks.js';
-import { encodingChannelQuantitative, encodingField, encodingValue } from './encodings.js';
+import { encodingChannelQuantitative, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { mark } from './helpers.js';
 import { memoize } from './memoize.js';
@@ -23,7 +23,10 @@ const _createAccessors = (s, type = null) => {
   // helper to quickly create standard accessors based solely on channel names
   const standard = (...channels) => {
     channels.forEach((channel) => {
-      if (encodingField(s, channel)) {
+      // this needs to check encoding hash directly instead of using
+      // the encodingField() helper in order to account for datum and
+      // value encodings
+      if (s.encoding?.[channel]) {
         accessors[channel] = accessor(channel);
       }
     });
