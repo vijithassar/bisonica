@@ -138,6 +138,8 @@ module('integration > tooltips', function () {
     element.querySelectorAll(testSelector('mark'))[0].dispatchEvent(event);
 
     assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
+    assert.equal(typeof tooltipEvent.detail.content, 'object', 'custom event detail has content');
+    assert.equal(tooltipEvent.detail.content.length, 2, 'custom event detail has two fields');
     assert.equal(
       typeof tooltipEvent.detail.interaction.bubbles,
       'boolean',
@@ -238,6 +240,8 @@ module('integration > tooltips', function () {
     element.querySelectorAll(testSelector('mark'))[0].dispatchEvent(event);
 
     assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
+    assert.equal(typeof tooltipEvent.detail.content, 'object', 'custom event detail has content');
+    assert.equal(tooltipEvent.detail.content.length, 2, 'custom event detail has two fields');
     assert.equal(
       typeof tooltipEvent.detail.interaction.bubbles,
       'boolean',
