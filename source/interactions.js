@@ -4,7 +4,7 @@ import { category, markInteractionSelector, markSelector } from './marks.js';
 import { customLinkHandler } from './config.js';
 import { feature } from './feature.js';
 import { getUrl, key, noop } from './helpers.js';
-import { layerMatch, layerNode } from './views.js';
+import { layerSpecification, layerNode } from './views.js';
 import { tooltipEvent } from './tooltips.js';
 
 const dispatchers = d3.local();
@@ -104,18 +104,11 @@ const handleUrl = (url, node) => {
 };
 
 /**
- * attach event listeners for specific events based on
- * the chart type
- * @param {object} _s Vega Lite specification
+ * attach event listeners to a layer
+ * @param {object} s Vega Lite specification
  * @returns {function} user interactions
  */
-const interactions = (_s) => {
-  const interactionTest = (s) => {
-    const datumEncoding = Object.values(s.encoding).some((definition) => definition.datum);
-
-    return s.mark && (!datumEncoding || !feature(s).isText());
-  };
-  const s = layerMatch(_s, interactionTest);
+const interactions = (s) => {
 
   const fn = (wrapper) => {
     if (!s) {
@@ -125,14 +118,16 @@ const interactions = (_s) => {
     const dispatcher = dispatchers.get(wrapper.node());
 
     const markMouseover = () => {
-      const mouseover = d3.select(layerNode(s, wrapper.node())).selectAll(markMouseoverSelector(s));
-      const click = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
-      const tooltip = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s));
+      const layer = layerNode(s, wrapper.node());
+      const mouseover = d3.select(layer).selectAll(markMouseoverSelector(s));
+      const click = d3.select(layer).selectAll(markInteractionSelector(s));
+      const tooltip = d3.select(layer).selectAll(markInteractionSelector(s));
 
       if (
         feature(s).isBar() ||
         feature(s).isLine() ||
         feature(s).isCircular() ||
+        feature(s).isText() ||
         (!feature(s).isLine() && feature(s).hasPoints())
       ) {
         dispatcher.on('addMarkHighlight', function () {
@@ -175,11 +170,15 @@ const interactions = (_s) => {
           });
 
         // tooltips
-        dispatcher.on('tooltip', function (event) {
-          tooltipEvent(s, this, event);
+        dispatcher.on('tooltip', function (event, s) {
+          if (s) {
+            tooltipEvent(s, this, event);
+          }
         });
         tooltip.on('mouseover.tooltip', function (event) {
-          dispatcher.call('tooltip', this, event);
+          if (feature(s).hasTooltip()) {
+            dispatcher.call('tooltip', this, event, s);
+          }
         });
 
         // pivot links
@@ -190,8 +189,7 @@ const interactions = (_s) => {
         });
         click.on('click', function () {
           if (feature(s).hasLinks()) {
-            const url = getUrl(s, d3.select(this).datum());
-
+            const url = getUrl(s, d3.select(this).datum() || null);
             dispatcher.call('link', this, url);
           }
         });
@@ -232,4 +230,21 @@ const interactions = (_s) => {
   return fn;
 };
 
-export { dispatchers, initializeInteractions, interactions };
+/**
+ * attach event listeners for user interactions across multiple layers
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} event listener registration function
+ */
+const interactionsLayered = (s) => {
+  const layers = s.layer ? s.layer.map((_, index) => layerSpecification(s, index)) : [s];
+  if (!layers.length) {
+    throw new Error('could not determine layers for interactions');
+  }
+  return (selection) => {
+    layers.forEach((layer) => {
+      selection.call(interactions(layer));
+    });
+  };
+}
+
+export { dispatchers, initializeInteractions, interactionsLayered as interactions };

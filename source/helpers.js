@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-import { encodingField, encodingType } from './encodings.js';
+import { encodingField, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 
 /**
@@ -55,9 +55,11 @@ const missingSeries = () => '_';
  * @returns {string} url
  */
 const getUrl = (s, d) => {
+  if (!d) {
+    return s.encoding.href.value;
+  }
   const field = encodingField(s, 'href');
-
-  return d.data?.[missingSeries()]?.[field] || d.data?.[field] || d[field];
+  return d?.data?.[missingSeries()]?.[field] || d?.data?.[field] || encodingValue(s, 'href')(d);
 };
 
 /**

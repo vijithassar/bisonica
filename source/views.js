@@ -3,6 +3,7 @@ import { feature } from './feature.js';
 
 import { mark, noop, values } from './helpers.js';
 import { markSelector, marks } from './marks.js';
+import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
 import { temporalBarDimensions } from './time.js';
 
@@ -146,7 +147,7 @@ const layerMatch = (s, test) => {
  * @param {object} s Vega Lite specification
  * @returns {object} layer specification
  */
-const layerPrimary = (s) => {
+const _layerPrimary = (s) => {
   if (!s.layer) {
     return s;
   }
@@ -159,8 +160,11 @@ const layerPrimary = (s) => {
     (s) => s.encoding.x && s.encoding.y,
     // linear
     (s) => s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y,
-    // add a wrapper to require encoding
-  ].map((heuristic) => (s) => s.encoding && heuristic(s));
+  ]
+  // add a wrapper to require encoding
+  .map((heuristic) => (s) => s.encoding && heuristic(s))
+  // add a wrapper to prohibit static text marks
+  .map((heuristic) => (s) => !feature(s).hasStaticText() && heuristic(s));
 
   for (const heuristic of heuristics) {
     let match = layerMatch(s, heuristic);
@@ -183,6 +187,7 @@ const layerPrimary = (s) => {
     }
   }
 };
+const layerPrimary = memoize(_layerPrimary);
 
 /**
  * find the DOM element corresponding to a layer
@@ -233,15 +238,9 @@ const layerSpecification = (s, index) => {
     ...layer,
   };
 
-  // clean up empty properties in layers with text content defined by the mark object
+  // clean up layers with text content defined by the mark object
   if (layerSpecification.mark.type === 'text' && layerSpecification.mark.text) {
-    const properties = ['data', 'encoding'];
-
-    properties.forEach((property) => {
-      if (Object.prototype.hasOwnProperty.call(layerSpecification, property)) {
-        delete layerSpecification[property];
-      }
-    });
+    delete layerSpecification.data;
   }
 
   Object.entries(layerSpecification.encoding || {}).forEach(([channel, definition]) => {
@@ -325,4 +324,4 @@ const layerTestRecursive = (s, test) => {
   return test(s) || layerTest(s, test);
 };
 
-export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive };
+export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification };

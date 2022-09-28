@@ -116,7 +116,7 @@ const barWidth = memoize(_barWidth);
 /**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'line')} tagName to use in DOM for mark
+ * @returns {('rect'|'path'|'circle'|'line'|'text')} tagName to use in DOM for mark
  */
 const markSelector = (s) => {
   if (feature(s).isBar()) {
@@ -127,6 +127,8 @@ const markSelector = (s) => {
     return 'circle';
   } else if (feature(s).isRule()) {
     return 'line';
+  } else if (feature(s).isText()) {
+    return 'text';
   }
 };
 
@@ -665,7 +667,8 @@ const textMarks = (s, dimensions) => {
     const dy = text.node().getBoundingClientRect().height * 0.25;
 
     text.attr('transform', `translate(0,${dy})`);
-    text.classed('link', s.encoding && encodingValue(s, 'href'));
+    const hasLink = !!(s.encoding && encodingValue(s, 'href'));
+    text.classed('link', hasLink);
 
   };
 };

@@ -138,6 +138,8 @@ module('integration > tooltips', function () {
     element.querySelectorAll(testSelector('mark'))[0].dispatchEvent(event);
 
     assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
+    assert.equal(typeof tooltipEvent.detail.content, 'object', 'custom event detail has content');
+    assert.equal(tooltipEvent.detail.content.length, 2, 'custom event detail has two fields');
     assert.equal(
       typeof tooltipEvent.detail.interaction.bubbles,
       'boolean',
@@ -149,6 +151,109 @@ module('integration > tooltips', function () {
       'custom event detail has node',
     );
   });
+
+  test('emits a CustomEvent with tooltip details in response to mouseover on layered charts', (assert) => {
+    const s = {
+      "title": {
+        "text": "donut chart with layered event interactions"
+      },
+      "data": {
+        "values": [
+          {
+            "value": 10,
+            "group": "a",
+            "url": "https://www.example.com/a/"
+          },
+          {
+            "value": 20,
+            "group": "b",
+            "url": "https://www.example.com/b/"
+          },
+          {
+            "value": 30,
+            "group": "c",
+            "url": "https://www.example.com/c/"
+          }
+        ]
+      },
+      "usermeta": { "tooltipHandler": true },
+      "layer": [
+        {
+          "mark": {
+            "type": "arc",
+            "innerRadius": 50,
+            "tooltip": true
+          },
+          "encoding": {
+            "href": {
+              "field": "url",
+              "type": "nominal"
+            },
+            "color": {
+              "field": "group",
+              "type": "nominal"
+            },
+            "theta": {
+              "field": "value",
+              "type": "quantitative"
+            }
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "a": "https://www.google.com",
+                "b": "9999"
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "tooltip": true
+          },
+          "encoding": {
+            "href": {
+              "field": "a"
+            },
+            "text": {
+              "field": "b"
+            },
+            "tooltip": {
+              "field": "href",
+              "type": "nominal"
+            }
+          }
+        }
+      ]
+    };
+
+    const element = render(s);
+
+    const event = new MouseEvent('mouseover', { bubbles: true });
+    let tooltipEvent = null;
+
+    element.querySelector('.chart').addEventListener('tooltip', (event) => {
+      tooltipEvent = event;
+    });
+
+    element.querySelectorAll(testSelector('mark'))[0].dispatchEvent(event);
+
+    assert.equal(typeof tooltipEvent.detail.datum, 'object', 'custom event detail has datum');
+    assert.equal(typeof tooltipEvent.detail.content, 'object', 'custom event detail has content');
+    assert.equal(tooltipEvent.detail.content.length, 2, 'custom event detail has two fields');
+    assert.equal(
+      typeof tooltipEvent.detail.interaction.bubbles,
+      'boolean',
+      'custom event detail has original interaction event',
+    );
+    assert.equal(
+      typeof tooltipEvent.detail.node.querySelector,
+      'function',
+      'custom event detail has node',
+    );
+  });
+
 
   test.skip('displays a custom tooltip', async function (assert) {
     const spec = specificationFixture('circular'); // eslint-disable-line

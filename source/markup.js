@@ -6,7 +6,9 @@ const selectors = [
   '.layer',
   '.marks',
   '.mark',
-  '.marks .mark.point', // more specific, needs to come after the more general .mark above
+  // marks types are more specific and need to come after the more general .mark above
+  '.marks .mark.point',
+  '.marks .mark.text',
   '.axes',
   '.axes .x',
   '.axes .x .title',
