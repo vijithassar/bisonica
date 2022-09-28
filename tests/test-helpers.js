@@ -1,6 +1,7 @@
 import { stackedAreaChartSpec } from '../fixtures/stacked-area.js'
 import { categoricalBarChartSpec } from '../fixtures/categorical-bar.js';
 import { circularChartSpec } from '../fixtures/circular.js';
+import { dotPlotSpec } from '../fixtures/dot-plot.js';
 import { groupedBarChartSpec } from '../fixtures/grouped-bar.js';
 import { lineChartSpec } from '../fixtures/line.js';
 import { rulesSpec } from '../fixtures/rules.js';
@@ -71,6 +72,8 @@ export function specificationFixture(type) {
     spec = groupedBarChartSpec;
   } else if (type === 'temporalBar') {
     spec = temporalBarChartSpec;
+  } else if (type === 'dotPlot') {
+    spec = dotPlotSpec;
   } else if (type === 'rules') {
     spec = rulesSpec;
   } else if (type === 'scatterPlot') {
