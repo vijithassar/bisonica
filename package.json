@@ -20,7 +20,7 @@
     "test": "qunit --require jsdom-global/register --require ./tests/image-shim.cjs tests/**/*.js",
     "test-serve": "testem --file ./tests/testem.cjs",
     "test-ci": "testem --file ./tests/testem.cjs ci",
-    "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
+    "types": "tsc --noEmit --allowJs --checkJs --strictNullChecks --moduleResolution node --target ES2022 ./source/chart.js",
     "release": "npx standard-version",
     "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test",
     "audit": "yarn audit",
