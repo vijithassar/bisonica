@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { encodingChannelQuantitative, encodingValue } from './encodings.js';
+import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js';
 import { memoize } from './memoize.js';
 import { feature } from './feature.js';
 import { barWidth } from './marks.js';
@@ -190,7 +190,7 @@ const getTimeFormatter = memoize(_getTimeFormatter);
  */
 const temporalBarDimensions = (s, dimensions) => {
   const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0;
-  const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s));
+  const channel = encodingChannelCovariateCartesian(s);
   return {
     ...dimensions,
     [channel]: dimensions[channel] - offset
