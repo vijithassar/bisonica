@@ -1,10 +1,12 @@
 import {
+  layerCall,
   layerMatch,
   layerNode,
   layerPrimary
 } from '../../source/views.js';
 import qunit from 'qunit';
 import { parseScales } from '../../source/scales.js';
+import * as d3 from 'd3';
 
 const { module, test } = qunit;
 
@@ -704,6 +706,67 @@ module('unit > views', () => {
         };
         assert.equal(layerPrimary(specification).mark.type, 'bar', 'selects layers with explicit axis configuration from charts with multiple graphical layers');
       });
+    });
+
+
+    test('calls a function for multiple layers', (assert) => {
+      const s = {
+        title: {
+          text: 'layerCall() test specification'
+        },
+        data: {
+          values: [
+            { a: 1, b: 10 },
+            { a: 2, b: 11 },
+            { a: 3, b: 12 },
+          ]
+        },
+        layer: [
+          {
+            mark: {
+              type: 'point'
+            },
+            encoding: {
+              x: {
+                field: 'a',
+                type: 'quantitative'
+              },
+              y: {
+                field: 'b',
+                type: 'quantitative'
+              }
+            }
+          },
+          {
+            mark: {
+              type: 'text'
+            },
+            encoding: {
+              x: {
+                field: 'a',
+                type: 'quantitative'
+              },
+              y: {
+                field: 'b',
+                type: 'quantitative'
+              },
+              text: {
+                field: 'b'
+              }
+            }
+          }
+        ]
+      }
+      const results = {};
+      const track = (s) => {
+        return () => {
+          results[s.mark.type] = true;
+        };
+      };
+      const element = document.createElement('div');
+      d3.select(element).call(layerCall(s, track));
+      assert.ok(results.point);
+      assert.ok(results.text);
     });
   });
 });
