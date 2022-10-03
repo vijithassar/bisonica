@@ -324,4 +324,26 @@ const layerTestRecursive = (s, test) => {
   return test(s) || layerTest(s, test);
 };
 
-export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification };
+/**
+ * run a function with selection.call() across multiple layers
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)}
+ */
+const layerCall = (s, fn) => {
+  const layers = s.layer ? s.layer.map((_, index) => layerSpecification(s, index)) : [s];
+  if (!layers.length) {
+    throw new Error(`could not determine layers for calling function ${fn.name}`);
+  }
+  return (selection) => {
+    layers.forEach((layer, index) => {
+      try {
+        selection.call(fn(layer));
+      } catch (error) {
+        error.message = `function ${fn.name} does not return a function for layer ${index}`;
+        throw new Error(error);
+      }
+    });
+  };
+}
+
+export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification, layerCall };

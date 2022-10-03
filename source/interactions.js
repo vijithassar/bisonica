@@ -4,7 +4,7 @@ import { category, markInteractionSelector, markSelector } from './marks.js';
 import { customLinkHandler } from './config.js';
 import { feature } from './feature.js';
 import { getUrl, key, noop } from './helpers.js';
-import { layerSpecification, layerNode } from './views.js';
+import { layerCall, layerNode } from './views.js';
 import { tooltipEvent } from './tooltips.js';
 
 const dispatchers = d3.local();
@@ -108,7 +108,7 @@ const handleUrl = (url, node) => {
  * @param {object} s Vega Lite specification
  * @returns {function} user interactions
  */
-const interactions = (s) => {
+const _interactions = (s) => {
 
   const fn = (wrapper) => {
     if (!s) {
@@ -230,21 +230,6 @@ const interactions = (s) => {
   return fn;
 };
 
-/**
- * attach event listeners for user interactions across multiple layers
- * @param {object} s Vega Lite specification
- * @returns {function(object)} event listener registration function
- */
-const interactionsLayered = (s) => {
-  const layers = s.layer ? s.layer.map((_, index) => layerSpecification(s, index)) : [s];
-  if (!layers.length) {
-    throw new Error('could not determine layers for interactions');
-  }
-  return (selection) => {
-    layers.forEach((layer) => {
-      selection.call(interactions(layer));
-    });
-  };
-}
+const interactions = (s) => layerCall(s, _interactions);
 
-export { dispatchers, initializeInteractions, interactionsLayered as interactions };
+export { dispatchers, initializeInteractions, interactions };
