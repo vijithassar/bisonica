@@ -7,7 +7,7 @@ bisonica is a minimalist and accessibility-first alternative renderer for the [V
 The `chart()` function takes a Vega Lite JSON specification object and uses it to create a chart rendering function which can be run using [`d3-selection`](https://github.com/d3/d3-selection).
 
 ```javascript
-import select from 'd3';
+import { select } from 'd3';
 import { chart } from 'bisonica';
 
 const dimensions = {
