@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { layoutDirection } from './marks.js';
 import {
   encodingChannelCovariate,
-  encodingChannelQuantitative,
+  encodingChannelCovariateCartesian,
   encodingField,
   encodingType,
   encodingValue,
@@ -137,7 +137,7 @@ const sort = (data) => {
 const transplantStackedBarMetadata = (aggregated, raw, s) => {
   const createMatcher = (key) => {
     const matcher = (aggregatedItem, raw) => {
-      const laneChannel = ['x', 'y'].find((channel) => channel !== encodingChannelQuantitative(s));
+      const laneChannel = encodingChannelCovariateCartesian(s);
       const keys = {
         lane: encodingField(s, laneChannel),
         series: encodingField(s, 'color'),

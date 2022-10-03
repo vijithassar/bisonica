@@ -119,6 +119,22 @@ const encodingChannelCovariate = (s) => {
 };
 
 /**
+ * determine which channel of a Cartesian specification object
+ * is secondary to the quantitative channel
+ * @param {object} s Vega Lite specification
+ * @returns {string} visual encoding chanel
+ */
+const encodingChannelCovariateCartesian = (s) => {
+    const channel = ['x', 'y'].find((channel => channel !== encodingChannelQuantitative(s)));
+    if (channel) {
+      return channel;
+    } else {
+      const message = feature(s).isCartesian() ? 'could not determine Cartesian covariate encoding' : 'specification is not Cartesian';
+      throw new Error(message);
+    }
+};
+
+/**
  * generate a set of complex encoders
  * @param {object} s Vega Lite specification
  * @param {object} dimensions desired dimensions of the chart
@@ -182,6 +198,7 @@ export {
   encodingType,
   encodingChannelQuantitative,
   encodingChannelCovariate,
+  encodingChannelCovariateCartesian,
   createEncoders,
   encodingValueQuantitative,
 };
