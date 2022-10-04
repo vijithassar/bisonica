@@ -1,5 +1,5 @@
 import { layoutDirection } from './marks.js';
-import { encodingChannelQuantitative, encodingValue } from './encodings.js';
+import { encodingChannelCovariateCartesian, encodingChannelQuantitative, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { mark } from './helpers.js';
 import { memoize } from './memoize.js';
@@ -73,8 +73,11 @@ const _createAccessors = (s, type = null) => {
   }
 
   if (key === 'line') {
-    standard('y');
-    accessors.x = feature(s).isTemporal() ? (d) => parseTime(d.period) : accessor('x');
+    const quantitative = encodingChannelQuantitative(s);
+    const covariate = encodingChannelCovariateCartesian(s);
+
+    standard(quantitative);
+    accessors[covariate] = feature(s).isTemporal() ? (d) => parseTime(d.period) : accessor(covariate);
     accessors.color = (d) => (feature(s).hasColor() ? encodingValue(s, 'color')(d) : null);
   }
 
