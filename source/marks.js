@@ -8,7 +8,6 @@ import {
   encodingChannelQuantitative,
   encodingType,
   encodingValue,
-  encodingValueQuantitative,
 } from './encodings.js';
 import { data, pointData } from './data.js';
 import { datum, isDiscrete, key, missingSeries, values } from './helpers.js';
@@ -504,7 +503,8 @@ const circularMarks = (s, dimensions) => {
   const innerRadius = outerRadius * innerRadiusRatio;
   const { color } = parseScales(s);
   const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group);
-  const layout = d3.pie().value(encodingValueQuantitative(s)).sort(sort);
+  const value = (d) => d.value;
+  const layout = d3.pie().value(value).sort(sort);
   const encoders = createEncoders(s, dimensions, createAccessors(s));
   const renderer = (selection) => {
     const marks = selection.append('g').attr('class', 'marks');
