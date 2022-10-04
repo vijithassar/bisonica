@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 
 import { layoutDirection } from './marks.js';
 import {
+  encodingChannelQuantitative,
   encodingChannelCovariate,
   encodingChannelCovariateCartesian,
   encodingField,
@@ -306,21 +307,21 @@ const _circularData = (s) => {
 const circularData = memoize(_circularData);
 
 const _lineData = (s) => {
-  const summed = groupAndSumByProperties(
-    values(s),
-    encodingField(s, 'x') || missingSeries(),
-    encodingField(s, 'color'),
-    encodingField(s, 'y'),
-  );
+
+  const quantitative = encodingField(s, encodingChannelQuantitative(s));
+  const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries();
+  const color = encodingField(s, 'color');
+
+  const summed = groupAndSumByProperties(values(s), covariate, color, quantitative);
   const channels = ['href', 'description', 'tooltip'];
   const results = stackKeys(summed).map((key) => {
     const values = summed
       .filter((item) => !!item[key])
       .map((item) => {
-        const bucket = feature(s).isTemporal() ? 'period' : encodingField(s, 'x');
+        const bucket = feature(s).isTemporal() ? 'period' : encodingField(s, encodingChannelCovariate(s));
         const result = {
           [bucket]: item.key,
-          [encodingField(s, 'y')]: item[key].value,
+          [encodingField(s, encodingChannelQuantitative(s))]: item[key].value,
         };
 
         channels.forEach((channel) => {
