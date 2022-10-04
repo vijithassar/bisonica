@@ -288,7 +288,7 @@ const layerSpecification = (s, index) => {
  * @param {object} dimensions chart dimensions
  * @returns {function} layer renderer
  */
-const layer = (s, dimensions) => {
+const layerMarks = (s, dimensions) => {
   if (!s.layer.length) {
     return noop;
   }
@@ -346,4 +346,4 @@ const layerCall = (s, fn) => {
   };
 }
 
-export { layer, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification, layerCall };
+export { layerMarks, layerMatch, layerPrimary, layerNode, layerTestRecursive, layerSpecification, layerCall };

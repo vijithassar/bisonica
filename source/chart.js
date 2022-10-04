@@ -3,7 +3,7 @@ import { axes } from './axes.js';
 import { init } from './init.js';
 import { initializeInteractions, interactions } from './interactions.js';
 import { keyboard } from './keyboard.js';
-import { layer } from './views.js';
+import { layerMarks } from './views.js';
 import { legend } from './legend.js';
 import { margin, position } from './position.js';
 import { marks } from './marks.js';
@@ -52,7 +52,7 @@ const chart = (s, panelDimensions) => {
 
       wrapper
         .call(axes(s, dimensions))
-        .call((s.layer ? layer : marks)(s, dimensions))
+        .call((s.layer ? layerMarks : marks)(s, dimensions))
         .call(keyboard(s))
         .call(interactions(s));
       selection.call(testAttributes);
