@@ -169,8 +169,7 @@ const layoutDirection = (s) => {
 const stackEncoders = (s, dimensions) => {
   const encoders = createEncoders(s, dimensions, createAccessors(s));
   const vertical = layoutDirection(s) === 'vertical';
-  const laneChannel = vertical ? 'x' : 'y';
-  const lane = encoders[laneChannel];
+  const lane = encoders[encodingChannelCovariateCartesian(s)];
   const start = encoders.start;
   const length = encoders.length;
   const width = () => barWidth(s, dimensions);
