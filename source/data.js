@@ -1,12 +1,10 @@
 import * as d3 from 'd3';
 
-import { layoutDirection } from './marks.js';
 import {
   encodingChannelQuantitative,
   encodingChannelCovariate,
   encodingChannelCovariateCartesian,
   encodingField,
-  encodingType,
   encodingValue,
 } from './encodings.js';
 import { feature } from './feature.js';
@@ -91,16 +89,11 @@ const stackKeys = (data) => {
  * @returns {array} values summed across time period
  */
 const sumByCovariates = (s) => {
-  const x = encodingField(s, 'x');
-  const y = encodingField(s, 'y');
-  const color = encodingField(s, 'color');
+  const quantitative = encodingField(s, encodingChannelQuantitative(s));
+  const covariate = encodingField(s, encodingChannelCovariateCartesian(s));
+  const group = encodingField(s, 'color');
 
-  // determine relevance of x and y to the arguments based on encoding
-  const vertical = encodingType(s, 'y') === 'quantitative';
-  const independent = vertical ? x : y;
-  const covariate = vertical ? y : x;
-
-  const summedByGroup = groupAndSumByProperties(values(s), independent, color, covariate);
+  const summedByGroup = groupAndSumByProperties(values(s), covariate, group, quantitative);
   const keys = stackKeys(summedByGroup);
   const summedByPeriod = summedByGroup.map((item) => {
     return d3.sum(keys.map((key) => item[key]?.value || 0));
@@ -217,13 +210,12 @@ const transplantStackedBarMetadata = (aggregated, raw, s) => {
 const stackValue = (d, key) => d[key]?.value || 0;
 
 const _stackData = (s) => {
-  const dimensions = ['x', 'y'];
 
-  if (layoutDirection(s) === 'horizontal') {
-    dimensions.reverse();
-  }
+  const covariate = encodingField(s, encodingChannelCovariateCartesian(s));
+  const quantitative = encodingField(s, encodingChannelQuantitative(s));
+  const group = encodingField(s, 'color');
 
-  const summed = groupAndSumByProperties(values(s), encodingField(s, dimensions[0]), encodingField(s, 'color'), encodingField(s, dimensions[1]));
+  const summed = groupAndSumByProperties(values(s), covariate, group, quantitative);
   const stacker = d3.stack().keys(stackKeys).value(stackValue);
   const stacked = stacker(summed);
 
