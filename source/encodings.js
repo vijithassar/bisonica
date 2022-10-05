@@ -36,9 +36,9 @@ const encodingType = (s, channel) => {
  * @returns {function(object)}
  */
 const encodingValue = (s, channel) => {
+  const key = encodingField(s, channel);
+  const nested = key && key.includes('.');
   return (d) => {
-    const key = encodingField(s, channel);
-    const nested = key && key.includes('.');
     if (!nested && typeof d[key] !== 'undefined') {
       return d[key];
     } else if (nested) {
