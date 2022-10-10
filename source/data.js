@@ -320,7 +320,7 @@ const _lineData = (s) => {
         const bucket = feature(s).isTemporal() ? 'period' : encodingField(s, encodingChannelCovariate(s));
         const result = {
           [bucket]: item.key,
-          [encodingField(s, encodingChannelQuantitative(s))]: item[key].value,
+          value: item[key].value,
         };
 
         channels.forEach((channel) => {
