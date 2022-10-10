@@ -47,13 +47,27 @@ const datum = (s, d) => {
  * @param {object} d datum
  * @param {string} key multiple dot-delimited lookup keys
  */
-const nestedValue = (d, key) => {
-  let value = d;
+const nested = function(d, key, newValue) {
+
   let keys = key.split('.').reverse();
-  while (keys.length) {
-    value = value[keys.pop()];
+
+  // get
+  if (arguments.length === 2) {
+    let value = d;
+    while (keys.length) {
+      value = value[keys.pop()];
+    }
+    return value;
   }
-  return value;
+
+  // set
+  if (arguments.length === 3) {
+    let value = newValue;
+    while (keys.length) {
+      value = {[keys.pop()]: value};
+    }
+    return value;
+  }
 };
 
 /**
@@ -187,7 +201,7 @@ export {
   fieldsMatch,
   values,
   datum,
-  nestedValue,
+  nested,
   missingSeries,
   getUrl,
   noop,

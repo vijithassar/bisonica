@@ -3,7 +3,7 @@ import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
 import { parseTime } from './time.js';
 import { transform } from './transform.js';
-import { nestedValue } from './helpers.js';
+import { nested } from './helpers.js';
 
 /**
  * look up the field used for a visual encoding
@@ -37,12 +37,12 @@ const encodingType = (s, channel) => {
  */
 const encodingValue = (s, channel) => {
   const key = encodingField(s, channel);
-  const nested = key && key.includes('.');
+  const nesting = key && key.includes('.');
   return (d) => {
-    if (!nested && typeof d[key] !== 'undefined') {
+    if (!nesting && typeof d[key] !== 'undefined') {
       return d[key];
-    } else if (nested) {
-      return nestedValue(d, key);
+    } else if (nesting) {
+      return nested(d, key);
     }
 
     if (s.transform) {
