@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/vijithassar/bisonica/compare/v0.1.7...v0.1.8) (2022-10-12)
+
+
+### Bug Fixes
+
+* **core:** add Cartesian covariate helper ([1fcff04](https://github.com/vijithassar/bisonica/commit/1fcff041361b43159c32686e64508ac9d9ed7acb))
+* **core:** generic layer function call utility ([201a510](https://github.com/vijithassar/bisonica/commit/201a5100f7ea6a6e346b2387f0320f2c1f24fa6a))
+* **core:** preserve single series properties based on encoding ([a7b8af0](https://github.com/vijithassar/bisonica/commit/a7b8af07357418f54212a88504536c7f9fc7d591)), closes [#54](https://github.com/vijithassar/bisonica/issues/54) [#58](https://github.com/vijithassar/bisonica/issues/58)
+
 ### [0.1.7](https://github.com/vijithassar/bisonica/compare/v0.1.6...v0.1.7) (2022-09-28)
 
 
