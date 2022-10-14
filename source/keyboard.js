@@ -258,7 +258,7 @@ const keyboard = (_s) => {
           navigator[RIGHT](mark, state);
         }
 
-        dispatcher.call('tooltip', this, event);
+        dispatcher.call('tooltip', this, event, s);
       });
 
       mark.on('keydown', (event) => {
@@ -281,7 +281,7 @@ const keyboard = (_s) => {
 
         if (typeof move === 'function') {
           move(mark, state);
-          dispatcher.call('tooltip', mark.nodes()[state.index()], event);
+          dispatcher.call('tooltip', mark.nodes()[state.index()], event, s);
         }
       });
     };
