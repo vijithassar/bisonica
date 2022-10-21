@@ -118,10 +118,10 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
  * @param {string} text text to truncate
- * @param {array} [styles] styles to incorporate when measuring text width
+ * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} truncated string
  */
-const _truncate = (s, channel, text, styles = []) => {
+const _truncate = (s, channel, text, styles = {}) => {
   const max = 180;
 
   let limit = d3.min([s.encoding[channel].axis?.labelLimit, max]);
@@ -147,7 +147,7 @@ const truncate = memoize(_truncate);
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel axis dimension
  * @param {string} textContent text to process
- * @param {array} [styles] styles to incorporate when measuring text width
+ * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} text processing function
  */
 const _axisTickLabelTextContent = (s, channel, textContent, styles) => {
