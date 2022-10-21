@@ -12,10 +12,11 @@ const context = canvas.getContext('2d');
 /**
  * measure the width of a text string
  * @param {string} text text string
- * @param {object} [styles] styles
+ * @param {object} [_styles] styles
  * @returns {number} string width
  */
-const _measureText = (text, styles = {}) => {
+const _measureText = (text, _styles) => {
+  const styles = _styles || defaultStyles;
   // set styles
   Object.entries(styles).forEach(([key, value]) => {
     context[key] = value;
@@ -121,7 +122,7 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} truncated string
  */
-const _truncate = (s, channel, text, styles = {}) => {
+const _truncate = (s, channel, text, styles) => {
   const max = 180;
 
   let limit = d3.min([s.encoding[channel].axis?.labelLimit, max]);
@@ -163,6 +164,7 @@ const _axisTickLabelTextContent = (s, channel, textContent, styles) => {
 };
 const axisTickLabelTextContent = memoize(_axisTickLabelTextContent);
 
+const defaultStyles = {};
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
@@ -175,7 +177,7 @@ const longestAxisTickLabelTextWidth = (s, dimensions) => {
   const channels = ['x', 'y'];
   const tickLabels = channels.map((channel) => {
     const type = encodingType(s, channel);
-    const processText = (tick) => axisTickLabelTextContent(s, channel, tick, []);
+    const processText = (tick) => axisTickLabelTextContent(s, channel, tick, defaultStyles);
 
     if (['quantitative', 'temporal'].includes(type)) {
       return scales[channel].ticks(ticks(s, channel)).map(processText);
