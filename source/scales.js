@@ -164,7 +164,8 @@ const domainBaseValues = (s, channel) => {
         .map((item) => item.values)
         .flat();
       const nonzero = s.encoding.y.scale?.zero === false;
-      const periodMin = d3.min(byPeriod, encodingValue(s, channel));
+      const accessor = (d) => d.value;
+      const periodMin = d3.min(byPeriod, accessor);
       const positive = typeof periodMin === 'number' && periodMin > 0;
 
       if (nonzero && positive) {
@@ -175,7 +176,7 @@ const domainBaseValues = (s, channel) => {
         min = 0;
       }
 
-      max = d3.max(byPeriod, encodingValue(s, channel));
+      max = d3.max(byPeriod, accessor);
     } else {
       min = 0;
       max = d3.max(values(s), encodingValue(s, channel));

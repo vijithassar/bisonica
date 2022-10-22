@@ -76,7 +76,7 @@ const _createAccessors = (s, type = null) => {
     const quantitative = encodingChannelQuantitative(s);
     const covariate = encodingChannelCovariateCartesian(s);
 
-    standard(quantitative);
+    accessors[quantitative] = (d) => d.value;
     accessors[covariate] = feature(s).isTemporal() ? (d) => parseTime(d.period) : accessor(covariate);
     accessors.color = (d) => (feature(s).hasColor() ? encodingValue(s, 'color')(d) : null);
   }
