@@ -177,6 +177,13 @@ const _interactions = (s) => {
             tooltipEvent(s, this, event);
           }
         });
+
+        // focus
+        dispatcher.on('focus', function (event, s) {
+          dispatcher.call('tooltip', null, event, s);
+          dispatcher.call('addMarkHighlight', null);
+        });
+
         tooltip.on('mouseover.tooltip', function (event) {
           if (feature(s).hasTooltip()) {
             dispatcher.call('tooltip', this, event, s);
