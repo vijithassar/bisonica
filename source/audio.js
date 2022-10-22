@@ -105,13 +105,15 @@ const audio = (s) => {
   }
 
   return (wrapper) => {
-    const hasSingleCategory =
-      new Set(s.data.values.map((item) => item[s.encoding.color?.field]))
-        .size === 1;
+    const single = data(s)?.length === 1;
     const playable =
-      (hasSingleCategory && feature(s).isLine()) ||
-      (hasSingleCategory && feature(s).isBar()) ||
+      (feature(s).isLine() && single) ||
+      (feature(s).isBar() && single) ||
       feature(s).isCircular();
+
+    if (!playable) {
+      return;
+    }
 
     let values;
 
@@ -125,7 +127,7 @@ const audio = (s) => {
       });
     }
 
-    if (!playable || !values) {
+    if (!values) {
       return;
     }
 
