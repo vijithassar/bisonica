@@ -8,7 +8,7 @@ import {
   encodingValue,
 } from './encodings.js';
 import { feature } from './feature.js';
-import { identity, isDiscrete, missingSeries, values } from './helpers.js';
+import { identity, isDiscrete, missingSeries, nested, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 
@@ -40,7 +40,9 @@ const sumByProperty = (datum, property, valueKey) => {
       result[key] = { value: 0 };
     }
 
-    result[key].value += item[valueKey];
+    const value = valueKey && valueKey.includes('.') ? nested(item, valueKey) : item[valueKey];
+
+    result[key].value += value;
 
     // this should be refactored
     const field = ['url', 'description', 'tooltip'];
