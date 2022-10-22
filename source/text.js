@@ -9,13 +9,15 @@ import { ticks } from './axes.js';
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 
+const defaultStyles = {};
+
 /**
  * measure the width of a text string
  * @param {string} text text string
  * @param {object} [styles] styles
  * @returns {number} string width
  */
-const _measureText = (text, styles = {}) => {
+const _measureText = (text, styles = defaultStyles) => {
   // set styles
   Object.entries(styles).forEach(([key, value]) => {
     context[key] = value;
@@ -118,10 +120,10 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
  * @param {string} text text to truncate
- * @param {array} [styles] styles to incorporate when measuring text width
+ * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} truncated string
  */
-const _truncate = (s, channel, text, styles = []) => {
+const _truncate = (s, channel, text, styles = defaultStyles) => {
   const max = 180;
 
   let limit = d3.min([s.encoding[channel].axis?.labelLimit, max]);
@@ -147,10 +149,10 @@ const truncate = memoize(_truncate);
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel axis dimension
  * @param {string} textContent text to process
- * @param {array} [styles] styles to incorporate when measuring text width
+ * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} text processing function
  */
-const _axisTickLabelTextContent = (s, channel, textContent, styles) => {
+const _axisTickLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
   let text = textContent;
 
   text = format(s, channel)(text);
@@ -175,7 +177,7 @@ const longestAxisTickLabelTextWidth = (s, dimensions) => {
   const channels = ['x', 'y'];
   const tickLabels = channels.map((channel) => {
     const type = encodingType(s, channel);
-    const processText = (tick) => axisTickLabelTextContent(s, channel, tick, []);
+    const processText = (tick) => axisTickLabelTextContent(s, channel, tick);
 
     if (['quantitative', 'temporal'].includes(type)) {
       return scales[channel].ticks(ticks(s, channel)).map(processText);
