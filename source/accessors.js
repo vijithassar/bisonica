@@ -60,7 +60,7 @@ const _createAccessors = (s, type = null) => {
   }
 
   if (key === 'arc') {
-    accessors.theta = (d) => encodingValue(s, encodingChannelQuantitative(s))(d);
+    accessors.theta = (d) => d.data.value;
     accessors.color = (d) => d.data.key;
   }
 
