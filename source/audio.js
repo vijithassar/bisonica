@@ -83,7 +83,7 @@ const repeatExponential = (min, max) => {
     .flat();
 };
 
-const notes = (values, dispatcher) => {
+const notes = (values, dispatcher, s) => {
   const extent = d3.extent(values, (d) => d.value);
   const domain = repeatLinear(...extent);
   const range = repeatExponential(root, root * 2 ** octaves);
@@ -94,7 +94,7 @@ const notes = (values, dispatcher) => {
   pitches.forEach((pitch, index) => {
     note(pitch, index * duration);
     setTimeout(() => {
-      dispatcher.call('focus', null, index);
+      dispatcher.call('focus', null, index, s);
     }, (index + 1) * duration * 1000);
   });
 };
@@ -131,8 +131,8 @@ const audio = (s) => {
 
     const dispatcher = dispatchers.get(wrapper.node());
 
-    dispatcher.on('play', (values) => {
-      notes(values, dispatcher);
+    dispatcher.on('play', (values, s) => {
+      notes(values, dispatcher, s);
     });
 
     dispatcher.on('focus', (index) => {
@@ -148,7 +148,7 @@ const audio = (s) => {
 
     play.on('click', () => {
       if (!playing) {
-        dispatcher.call('play', null, values);
+        dispatcher.call('play', null, values, s);
         playing = true;
       }
     });
