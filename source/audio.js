@@ -99,28 +99,28 @@ const notes = (values, dispatcher) => {
   });
 };
 
-const audio = (specification) => {
-  if (specification.layer) {
+const audio = (s) => {
+  if (s.layer) {
     return noop;
   }
 
   return (wrapper) => {
     const hasSingleCategory =
-      new Set(specification.data.values.map((item) => item[specification.encoding.color?.field]))
+      new Set(s.data.values.map((item) => item[s.encoding.color?.field]))
         .size === 1;
     const playable =
-      (hasSingleCategory && feature(specification).isLine()) ||
-      (hasSingleCategory && feature(specification).isBar()) ||
-      feature(specification).isCircular();
+      (hasSingleCategory && feature(s).isLine()) ||
+      (hasSingleCategory && feature(s).isBar()) ||
+      feature(s).isCircular();
 
     let values;
 
-    if (feature(specification).isLine()) {
-      ({ values } = data(specification)[0]);
-    } else if (feature(specification).isCircular()) {
-      values = data(specification);
-    } else if (feature(specification).isBar()) {
-      values = data(specification)[0].map((item) => {
+    if (feature(s).isLine()) {
+      ({ values } = data(s)[0]);
+    } else if (feature(s).isCircular()) {
+      values = data(s);
+    } else if (feature(s).isBar()) {
+      values = data(s)[0].map((item) => {
         return { value: item.data.undefined?.value };
       });
     }
@@ -136,7 +136,7 @@ const audio = (specification) => {
     });
 
     dispatcher.on('focus', (index) => {
-      wrapper.selectAll(markInteractionSelector(specification)).nodes()[index].focus();
+      wrapper.selectAll(markInteractionSelector(s)).nodes()[index].focus();
 
       if (index === values.length - 1) {
         playing = false;
