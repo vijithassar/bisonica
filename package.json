@@ -17,7 +17,7 @@
     "lint-git": "commitlint --to=HEAD --from=11cd541",
     "lint-js": "eslint source tests/unit tests/integration",
     "lint-styles": "stylelint source/index.css",
-    "test": "qunit --require jsdom-global/register --require ./tests/image-shim.cjs tests/**/*.js",
+    "test": "qunit --require jsdom-global/register --require ./tests/browser-shim.cjs tests/**/*.js",
     "test-serve": "testem --file ./tests/testem.cjs",
     "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
@@ -25,7 +25,7 @@
     "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test",
     "audit": "yarn audit",
     "prerelease": "yarn run audit",
-    "benchmark": "node --require jsdom-global/register --require ./tests/image-shim.cjs benchmarks/benchmarks.js"
+    "benchmark": "node --require jsdom-global/register --require ./tests/browser-shim.cjs benchmarks/benchmarks.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",

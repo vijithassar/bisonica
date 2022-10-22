@@ -1,3 +1,8 @@
+class AudioContext {
+    createOscillator = () => null;
+    createGain =  () => null;
+}
+
 const getBBox = () => {
     if (!window.SVGElement.prototype.getBBox) {
         window.SVGElement.prototype.getBBox = () => {
@@ -25,5 +30,12 @@ const canvas = () => {
     context();
 };
 
+const audio = () => {
+    if (!window.AudioContext) {
+        window.AudioContext = AudioContext;
+    }
+};
+
 svg();
 canvas();
+audio();

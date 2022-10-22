@@ -5,7 +5,7 @@ import { feature } from './feature.js';
 import { markInteractionSelector } from './marks.js';
 import { noop } from './helpers.js';
 
-const context = new AudioContext();
+const context = new window.AudioContext();
 
 const tuning = 440;
 const root = tuning / 2;
