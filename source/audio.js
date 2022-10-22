@@ -3,7 +3,7 @@ import { data } from './data.js';
 import { dispatchers } from './interactions.js';
 import { feature } from './feature.js';
 import { markInteractionSelector } from './marks.js';
-import { noop } from './helpers.js';
+import { missingSeries, noop } from './helpers.js';
 
 const context = new window.AudioContext();
 
@@ -121,7 +121,7 @@ const audio = (s) => {
       values = data(s);
     } else if (feature(s).isBar()) {
       values = data(s)[0].map((item) => {
-        return { value: item.data.undefined?.value };
+        return { value: item.data[missingSeries()].value };
       });
     }
 
