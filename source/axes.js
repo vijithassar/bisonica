@@ -123,6 +123,9 @@ const tickText = (s, channel) => {
  * @returns {function} x axis renderer
  */
 const x = (s, dimensions) => {
+  if (!feature(s).hasAxisX()) {
+    return noop;
+  }
   return (selection) => {
     const scales = parseScales(s, dimensions);
     const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0;
@@ -216,6 +219,9 @@ const x = (s, dimensions) => {
  * @returns {function} y axis renderer
  */
 const y = (s, dimensions) => {
+  if (!feature(s).hasAxisY()) {
+    return noop;
+  }
   return (selection) => {
     const scales = parseScales(s, dimensions);
     const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0;
