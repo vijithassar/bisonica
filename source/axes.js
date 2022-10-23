@@ -76,7 +76,7 @@ const title = (s, channel) => {
 /**
  * alternate ticks
  * @param {object} s Vega Lite specification
- * @returns {function} alternatassdfe
+ * @returns {function} alternation function
  */
 const alternate = (s) => {
   return (selection) => {
