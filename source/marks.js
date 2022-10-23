@@ -385,8 +385,9 @@ const pointMarks = (s, dimensions) => {
 
     points
       .each(function (d) {
-        if (d.group) {
-          category.set(this, d.group);
+        const categoryValue = encodingValue(s, 'color')(d);
+        if (categoryValue) {
+          category.set(this, categoryValue);
         }
       })
       .attr('aria-label', (d) => {
