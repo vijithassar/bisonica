@@ -88,7 +88,7 @@ const alternate = (s) => {
       const axisSelector = `.${channel}`;
       const ticks = selection.select(axisSelector).selectAll('.tick');
 
-      if (encodingType(s, channel) !== 'nominal') {
+      if (!isDiscrete(s, channel)) {
         if (overlap([...ticks.nodes()])) {
           selection.select(axisSelector).classed('alternate-ticks', true);
         }
