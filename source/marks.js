@@ -10,13 +10,14 @@ import {
   encodingValue,
 } from './encodings.js';
 import { data, pointData } from './data.js';
+import { markDescription } from './descriptions.js';
 import { datum, isDiscrete, key, missingSeries, values } from './helpers.js';
 import { feature } from './feature.js';
 import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
 import { parseTime, timePeriod } from './time.js';
 import { sortMarkData } from './sort.js';
-import { tooltipContent, tooltips } from './tooltips.js';
+import { tooltips } from './tooltips.js';
 
 /**
  * aggregate and sort mark data
@@ -52,24 +53,6 @@ const category = {
 };
 
 const stroke = 3;
-
-/**
- * compute the text string to describe a mark
- * @param {object} s Vega Lite specification
- * @returns {function} mark description computation function
- */
-const _markDescription = (s) => {
-  return (d) => {
-    if (s.mark.aria === false) {
-      return;
-    } else if (s.encoding.description) {
-      return encodingValue(s, 'description')(datum(s, d));
-    } else {
-      return tooltipContent(s)(d);
-    }
-  };
-};
-const markDescription = memoize(_markDescription);
 
 /**
  * bar chart bar width
