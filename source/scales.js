@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { data, sumByCovariates } from './data.js';
-import { colors, defaultColor } from './color.js';
+import { colors } from './color.js';
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { identity, isDiscrete, values } from './helpers.js';
@@ -298,7 +298,7 @@ const coreScales = (s, dimensions) => {
     });
 
   if (!scales.color && !feature(s).isMulticolor()) {
-    scales.color = () => defaultColor;
+    scales.color = () => colors(1).pop();
   }
 
   return scales;

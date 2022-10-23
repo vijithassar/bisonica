@@ -19,4 +19,4 @@ const colors = (count) => {
     return swatch;
 };
 
-export { colors, defaultColor }
+export { colors }
