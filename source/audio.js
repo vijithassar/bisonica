@@ -84,8 +84,8 @@ const repeatExponential = (min, max) => {
 };
 
 const notes = (values, dispatcher, s) => {
-  const extent = d3.extent(values, (d) => d.value);
-  const domain = repeatLinear(...extent);
+  const [min, max] = d3.extent(values, (d) => d.value);
+  const domain = repeatLinear(feature(s).isBar() ? 0 : min, max);
   const range = repeatExponential(root, root * 2 ** octaves);
   const scale = d3.scaleThreshold().domain(domain).range(range);
 
