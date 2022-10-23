@@ -8,8 +8,6 @@ const MINIMUM_TICK_COUNT = 3;
 
 const RENDER_FREQUENCY = 32;
 
-const defaultColor = '--graph-1';
-
 /**
  * custom behavior for opening links when mark nodes are
  * clicked
@@ -28,6 +26,5 @@ export {
   MINIMUM_TICK_COUNT,
   BAR_WIDTH_MINIMUM,
   RENDER_FREQUENCY,
-  defaultColor,
   customLinkHandler,
 };

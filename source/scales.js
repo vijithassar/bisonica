@@ -1,26 +1,12 @@
 import * as d3 from 'd3';
 import { data, sumByCovariates } from './data.js';
-import { defaultColor } from './config.js';
+import { colors, defaultColor } from './color.js';
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js';
 import { feature } from './feature.js';
 import { identity, isDiscrete, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime, temporalBarDimensions } from './time.js';
 import { sorter } from './sort.js';
-
-/**
- * create a color palette from the available hue range
- * for use as a categorical scale
- * @param {number} count number of colors
- * @returns {array} color palette
- */
-const colors = (count = 5) => {
-  const swatch = d3.range(count).map((item, index) => {
-    return `hsl(${(360 / count) * index}, 90%, 70%)`;
-  });
-
-  return swatch;
-};
 
 /**
  * make a normal function appear to be a scale function
