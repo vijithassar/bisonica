@@ -5,6 +5,7 @@ import { getTimeFormatter } from './time.js';
 import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
 import { ticks } from './axes.js';
+import { isContinuous, isDiscrete } from './helpers.js';
 
 const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
@@ -171,17 +172,16 @@ const axisTickLabelTextContent = memoize(_axisTickLabelTextContent);
  * @param {object} dimensions chart dimensions
  * @returns {object} longest axis tick label text length in pixels
  */
-const longestAxisTickLabelTextWidth = (s, dimensions) => {
+const _longestAxisTickLabelTextWidth = (s, dimensions) => {
   const scales = parseScales(s, dimensions);
 
   const channels = ['x', 'y'];
   const tickLabels = channels.map((channel) => {
-    const type = encodingType(s, channel);
     const processText = (tick) => axisTickLabelTextContent(s, channel, tick);
 
-    if (['quantitative', 'temporal'].includes(type)) {
+    if (isContinuous(s, channel)) {
       return scales[channel].ticks(ticks(s, channel)).map(processText);
-    } else if (['nominal', 'ordinal'].includes(type)) {
+    } else if (isDiscrete(s, channel)) {
       return scales[channel].domain().map(processText);
     } else {
       return [''];
@@ -201,6 +201,7 @@ const longestAxisTickLabelTextWidth = (s, dimensions) => {
 
   return result;
 };
+const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth);
 
 /**
  * render axis tick text
