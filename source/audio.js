@@ -4,6 +4,7 @@ import { dispatchers } from './interactions.js';
 import { feature } from './feature.js';
 import { markInteractionSelector } from './marks.js';
 import { missingSeries, noop } from './helpers.js';
+import { extension } from './extensions.js';
 
 const context = new window.AudioContext();
 
@@ -110,8 +111,9 @@ const audio = (s) => {
       (feature(s).isLine() && single) ||
       (feature(s).isBar() && single) ||
       feature(s).isCircular();
+    const disabled = extension(s, 'audio') === null;
 
-    if (!playable) {
+    if (!playable || disabled) {
       return;
     }
 
