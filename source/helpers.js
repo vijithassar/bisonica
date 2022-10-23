@@ -165,7 +165,7 @@ const isContinuous = (s, channel) => {
  * @returns {boolean}
  */
 const isDiscrete = (s, channel) => {
-  return !isContinuous(s, channel);
+  return ['nominal', 'ordinal'].includes(encodingType(s, channel));
 };
 
 /**
