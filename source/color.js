@@ -9,6 +9,9 @@ const defaultColor = 'steelblue';
  * @returns {array} color palette
  */
 const colors = (count) => {
+    if (!count || count === 1) {
+        return [defaultColor];
+    }
     const swatch = d3.range(count).map((item, index) => {
         return `hsl(${(360 / count) * index}, 90%, 70%)`;
     });
