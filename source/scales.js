@@ -8,6 +8,8 @@ import { memoize } from './memoize.js';
 import { parseTime, temporalBarDimensions } from './time.js';
 import { sorter } from './sort.js';
 
+const defaultDimensions = { x: 0, y: 0 };
+
 /**
  * make a normal function appear to be a scale function
  * by adding domain and range methods
@@ -368,7 +370,7 @@ const extendScales = (s, dimensions, scales) => {
   return extendedScales;
 };
 
-const _parseScales = (s, dimensions = { x: 0, y: 0 }) => {
+const _parseScales = (s, dimensions = defaultDimensions) => {
   const core = coreScales(s, dimensions);
   const extended = extendScales(s, dimensions, core);
 
