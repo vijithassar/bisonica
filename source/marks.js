@@ -450,9 +450,10 @@ const lineMarks = (s, dimensions) => {
       .classed('series', true);
 
     series.each((d) => {
-      category.set(d, encodingValue(s, 'color')(d));
+      const categoryValue = encodingValue(s, 'color')(d);
+      category.set(d, categoryValue);
       d.values.forEach((item) => {
-        category.set(item, d.group);
+        category.set(item, categoryValue);
       });
     });
 
