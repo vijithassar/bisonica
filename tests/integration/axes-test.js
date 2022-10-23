@@ -104,4 +104,12 @@ module('integration > axes', function () {
       assert.ok(node.getBoundingClientRect().width <= max);
     });
   });
+  test('disables axes', (assert) => {
+    const spec = specificationFixture('temporalBar');
+    spec.encoding.x.axis = null;
+    spec.encoding.y.axis = null;
+    const element = render(spec);
+    assert.notOk(element.querySelector('axes-x'));
+    assert.notOk(element.querySelector('axes-y'));
+  });
 });
