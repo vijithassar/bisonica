@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 
-const defaultColor = '--graph-1';
+const defaultColor = 'steelblue';
 
 /**
  * create a color palette from the available hue range
