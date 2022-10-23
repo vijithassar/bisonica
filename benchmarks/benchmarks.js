@@ -14,12 +14,12 @@ const fixtures = [
 const count = 100;
 
 fixtures.forEach(fixture => {
-const specification = specificationFixture(fixture);
+    const specification = specificationFixture(fixture);
     bench(`${fixture} × ${count}`, (b) => {
         b.start();
         for (let i = 0; i < count; i++) {
-                render(specification)
-                }
+            render(specification)
+        }
         b.end();
     });
 });
