@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { axisTickLabelText, rotation } from './text.js';
 import { barWidth } from './marks.js';
 import { degrees, isDiscrete, noop, overlap } from './helpers.js';
-import { encodingChannelQuantitative, encodingType } from './encodings.js';
+import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js';
 import { feature } from './feature.js';
 import { layerMatch } from './views.js';
 import { parseScales } from './scales.js';
@@ -129,6 +129,7 @@ const x = (s, dimensions) => {
   return (selection) => {
     const scales = parseScales(s, dimensions);
     const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0;
+    const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0;
 
     const axis = d3.axisBottom(scales.x);
 
@@ -168,7 +169,7 @@ const x = (s, dimensions) => {
         .text(title(s, 'x'));
     }
 
-    const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal';
+    const shift = feature(s).isBar() && encodingType(s, encodingChannelCovariate(s)) === 'temporal';
 
     x.attr('transform', () => {
       const xOffset = shift ? barOffset * 0.5 : 0;
@@ -179,6 +180,7 @@ const x = (s, dimensions) => {
           isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal'
             ? scales.y.range().pop()
             : scales.y.range()[0];
+        yOffset += temporalBarOffsetY;
       } else {
         if (feature(s).isBar() && !feature(s).hasEncodingY()) {
           yOffset = barWidth(s, dimensions)
@@ -225,6 +227,7 @@ const y = (s, dimensions) => {
   return (selection) => {
     const scales = parseScales(s, dimensions);
     const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0;
+    const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0;
 
     const axis = d3.axisLeft(scales.y);
 
@@ -241,7 +244,7 @@ const y = (s, dimensions) => {
     if (typeof angle !== 'undefined') {
       yAxis.selectAll('.tick text').attr('transform', function () {
         const textHeight = d3.select(this).node().getBBox().height;
-        const position = [textHeight * 0.5 * -1, 0];
+        const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5];
 
         return `translate(${position.join(', ')}) rotate(${angle})`;
       });
