@@ -83,7 +83,7 @@ const missingSeries = () => '_';
  * @returns {string} url
  */
 const getUrl = (s, d) => {
-  if (!d) {
+  if (s.encoding.href.value) {
     return s.encoding.href.value;
   }
   const field = encodingField(s, 'href');
