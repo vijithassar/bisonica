@@ -282,7 +282,7 @@ const coreScales = (s, dimensions) => {
     .forEach(([channel]) => {
       try {
         if (scaleMethod(s, channel) === null) {
-          scales[channel] = syntheticScale(identity, domain(s, channel), domain(s, channel));
+          scales[channel] = syntheticScale(identity, domain(s, channel), range(s, dimensions, channel));
         } else {
           const method = scaleMethod(s, channelRoot(s, channel));
           const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
