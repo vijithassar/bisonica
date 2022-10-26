@@ -7,6 +7,8 @@ const config = {
         'footer-max-line-length': [0],
         'references-empty': [0],
         'signed-off-by': [0],
+        'scope-case': [2, 'always', 'lower-case'],
+        'type-enum': [2, 'always', ['chore', 'fix', 'feat']]
     },
 };
 
