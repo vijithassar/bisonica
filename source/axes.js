@@ -199,17 +199,15 @@ const x = (s, dimensions) => {
     const angle = degrees(rotation(s, 'x'));
 
     if (typeof angle !== 'undefined') {
-      x.selectAll('.tick text')
-        .attr('transform', function () {
-          const textHeight = d3.select(this).node().getBBox().height;
-          const position = [textHeight * 0.5 * -1, 0];
-
-          return `translate(${position.join(', ')}) rotate(${angle})`;
-        })
+      const ticks = xAxis.select('.tick text');
+      const textHeight = ticks.node().getBBox().height;
+      const position = [textHeight * 0.5 * -1, 0];
+      const degrees = angle % 360;
+      const below = degrees > 0 && degrees < 180;
+      const transform = `translate(${position.join(', ')}) rotate(${angle})`;
+      ticks
+        .attr('transform', transform)
         .attr('text-anchor', () => {
-          const degrees = angle % 360;
-          const below = degrees > 0 && degrees < 180;
-
           return below ? 'start' : 'end';
         });
     }
@@ -246,12 +244,11 @@ const y = (s, dimensions) => {
     const angle = degrees(rotation(s, 'y'));
 
     if (typeof angle !== 'undefined') {
-      yAxis.selectAll('.tick text').attr('transform', function () {
-        const textHeight = d3.select(this).node().getBBox().height;
-        const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5];
-
-        return `translate(${position.join(', ')}) rotate(${angle})`;
-      });
+      const ticks = yAxis.selectAll('.tick text');
+      const textHeight = ticks.node().getBBox().height;
+      const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5];
+      const transform = `translate(${position.join(', ')}) rotate(${angle})`;
+      ticks.attr('transform', transform);
     }
 
     if (feature(s).hasAxisTitleY()) {
