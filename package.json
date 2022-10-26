@@ -14,7 +14,7 @@
     "build": "esbuild --bundle --format=esm --external:d3 --external:string.prototype.matchall --outfile=build/bisonica.js source/chart.js",
     "postbuild": "yarn run archive",
     "archive": "zip -jr build/bisonica-$(npm view bisonica version).zip build/bisonica.js source/index.css",
-    "lint-git": "commitlint -- --to=HEAD",
+    "lint-git": "commitlint --to=HEAD --from=11cd541",
     "lint-js": "eslint source tests/unit tests/integration",
     "lint-styles": "stylelint source/index.css",
     "test": "qunit --require jsdom-global/register --require ./tests/image-shim.cjs tests/**/*.js",
