@@ -169,11 +169,10 @@ const axisTickLabelTextContent = memoize(_axisTickLabelTextContent);
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {object} longest axis tick label text length in pixels
  */
-const _longestAxisTickLabelTextWidth = (s, dimensions) => {
-  const scales = parseScales(s, dimensions);
+const _longestAxisTickLabelTextWidth = (s) => {
+  const scales = parseScales(s);
 
   const channels = ['x', 'y'];
   const tickLabels = channels.map((channel) => {

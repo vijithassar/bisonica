@@ -27,11 +27,10 @@ const marginCircular = () => {
 /**
  * compute margin for Cartesian chart axis ticks
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
  */
-const tickMargin = (s, dimensions) => {
-  const textLabels = longestAxisTickLabelTextWidth(s, dimensions);
+const tickMargin = (s) => {
+  const textLabels = longestAxisTickLabelTextWidth(s);
   const result = {};
 
   Object.entries(axes).forEach(([channel, position]) => {
@@ -64,10 +63,9 @@ const titleMargin = (s) => {
 /**
  * compute margin for Cartesian chart
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
  */
-const marginCartesian = (s, dimensions) => {
+const marginCartesian = (s) => {
   const defaultMargin = {
     top: GRID * 2,
     right: GRID * 2,
@@ -79,7 +77,7 @@ const marginCartesian = (s, dimensions) => {
 
   Object.values(axes).forEach((position) => {
     dynamicMargin[position] =
-      tickMargin(s, dimensions)?.[position] + titleMargin(s)?.[position] + GRID;
+      tickMargin(s)?.[position] + titleMargin(s)?.[position] + GRID;
   });
 
   return {
@@ -90,18 +88,17 @@ const marginCartesian = (s, dimensions) => {
   };
 };
 
-const _margin = (s, dimensions) => {
+const _margin = (s) => {
   if (feature(s).isCircular()) {
     return marginCircular();
   } else {
-    return marginCartesian(layerPrimary(s), dimensions);
+    return marginCartesian(layerPrimary(s));
   }
 };
 
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {object} D3 margin convention object
  */
 const margin = memoize(_margin);
