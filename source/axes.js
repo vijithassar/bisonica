@@ -207,9 +207,7 @@ const x = (s, dimensions) => {
       const transform = `translate(${position.join(', ')}) rotate(${angle})`;
       ticks
         .attr('transform', transform)
-        .attr('text-anchor', () => {
-          return below ? 'start' : 'end';
-        });
+        .attr('text-anchor', below ? 'start' : 'end');
     }
 
     return axis;
@@ -270,15 +268,12 @@ const y = (s, dimensions) => {
 
     // extend y axis ticks across the whole chart
     if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y') {
+      const tickEnd = feature(s).hasEncodingX() ? scales.x.range()[1] + barOffset : null;
       selection
         .select('.y .axis')
         .selectAll('.tick')
         .select('line')
-        .attr('x1', () => {
-          if (feature(s).hasEncodingX()) {
-            return scales.x.range()[1] + barOffset;
-          }
-        });
+        .attr('x1', tickEnd);
     }
   };
 };
