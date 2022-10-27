@@ -19,10 +19,9 @@ const defaultStyles = {};
  * @returns {number} string width
  */
 const _measureText = (text, styles = defaultStyles) => {
+
   // set styles
-  Object.entries(styles).forEach(([key, value]) => {
-    context[key] = value;
-  });
+  Object.assign(context, styles);
 
   const value = context.measureText(text).width;
 
