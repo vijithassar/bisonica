@@ -113,26 +113,26 @@ const margin = memoize(_margin);
  * @returns {function} positioning function
  */
 const position = (s, dimensions) => {
+  const yOffsetCircular =
+    dimensions.x > dimensions.y ? (dimensions.y - radius(dimensions) * 2) * 0.5 : 0;
+  const middle = {
+    x: dimensions.x * 0.5,
+    y: dimensions.y * 0.5 + yOffsetCircular,
+  };
+
+  let margins;
+
+  const { left, top } = margin(s, dimensions);
+
+  margins = {
+    x: left,
+    y: top,
+  };
+
+  const transform = feature(s).isCircular() ? middle : margins;
+  const transformString = `translate(${transform.x},${transform.y})`;
+
   const setPosition = (selection) => {
-    const yOffsetCircular =
-      dimensions.x > dimensions.y ? (dimensions.y - radius(dimensions) * 2) * 0.5 : 0;
-    const middle = {
-      x: dimensions.x * 0.5,
-      y: dimensions.y * 0.5 + yOffsetCircular,
-    };
-
-    let margins;
-
-    const { left, top } = margin(s, dimensions);
-
-    margins = {
-      x: left,
-      y: top,
-    };
-
-    const transform = feature(s).isCircular() ? middle : margins;
-    const transformString = `translate(${transform.x},${transform.y})`;
-
     selection.select(`g.${WRAPPER_CLASS}`).attr('transform', transformString);
   };
 
