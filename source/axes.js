@@ -165,7 +165,7 @@ const x = (s, dimensions) => {
         .attr('x', dimensions.x * 0.5 - barOffset * 0.5)
         .attr('y', () => {
           const axisHeight = xAxis.node().getBBox().height * 2;
-          const tickHeight = tickMargin(s, dimensions).bottom;
+          const tickHeight = tickMargin(s).bottom;
           const yPosition = axisHeight + tickHeight;
 
           return yPosition;
