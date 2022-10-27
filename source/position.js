@@ -132,11 +132,10 @@ const position = (s, dimensions) => {
   const transform = feature(s).isCircular() ? middle : margins;
   const transformString = `translate(${transform.x},${transform.y})`;
 
-  const setPosition = (selection) => {
+  return (selection) => {
     selection.select(`g.${WRAPPER_CLASS}`).attr('transform', transformString);
   };
 
-  return setPosition;
 };
 
 export { margin, tickMargin, position };
