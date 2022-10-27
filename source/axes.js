@@ -207,9 +207,7 @@ const x = (s, dimensions) => {
       const transform = `translate(${position.join(', ')}) rotate(${angle})`;
       ticks
         .attr('transform', transform)
-        .attr('text-anchor', () => {
-          return below ? 'start' : 'end';
-        });
+        .attr('text-anchor', below ? 'start' : 'end');
     }
 
     return axis;
