@@ -13,28 +13,19 @@ const context = canvas.getContext('2d');
 const defaultStyles = {};
 
 /**
- * measure the width of a text string
- * @param {string} text text string
+ * create a function to measure the width of a text string
  * @param {object} [styles] styles
- * @returns {number} string width
+ * @returns {function} string measurement function
  */
-const _measureText = (text, styles = defaultStyles) => {
-  // set styles
-  Object.entries(styles).forEach(([key, value]) => {
-    context[key] = value;
-  });
-
-  const value = context.measureText(text).width;
-
+const textMeasurer = memoize((styles = defaultStyles) => {
   // reset styles on shared global <canvas> DOM node
   Object.entries(styles).forEach(([key]) => {
     context[key] = null;
   });
-
-  return value;
-};
-
-const measureText = memoize(_measureText);
+  // set styles
+  Object.assign(context, styles);
+  return memoize((text) => context.measureText(text).width);
+});
 
 /**
  * extract font styles relevant to string width
@@ -135,7 +126,7 @@ const _truncate = (s, channel, text, styles = defaultStyles) => {
 
   let substring = text;
 
-  while (measureText(`${substring}…`, styles) > limit && substring.length > 0) {
+  while (textMeasurer(styles)(`${substring}…`) > limit && substring.length > 0) {
     substring = substring.slice(0, -1);
   }
 
@@ -188,7 +179,7 @@ const _longestAxisTickLabelTextWidth = (s) => {
   });
 
   const longest = tickLabels.map((ticks) => {
-    return d3.max(ticks, (d) => measureText(d));
+    return d3.max(ticks, (d) => textMeasurer()(d));
   });
 
   const result = longest.reduce((previous, current, index) => {
