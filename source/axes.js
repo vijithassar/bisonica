@@ -199,7 +199,7 @@ const x = (s, dimensions) => {
     const angle = degrees(rotation(s, 'x'));
 
     if (typeof angle !== 'undefined') {
-      const ticks = xAxis.select('.tick text');
+      const ticks = xAxis.selectAll('.tick text');
       const textHeight = ticks.node().getBBox().height;
       const position = [textHeight * 0.5 * -1, 0];
       const degrees = angle % 360;
