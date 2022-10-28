@@ -198,7 +198,7 @@ const x = (s, dimensions) => {
 
     const angle = degrees(rotation(s, 'x'));
 
-    if (typeof angle !== 'undefined') {
+    if (angle) {
       const ticks = xAxis.selectAll('.tick text');
       const textHeight = ticks.node().getBBox().height;
       const position = [textHeight * 0.5 * -1, 0];
@@ -241,7 +241,7 @@ const y = (s, dimensions) => {
 
     const angle = degrees(rotation(s, 'y'));
 
-    if (typeof angle !== 'undefined') {
+    if (angle) {
       const ticks = yAxis.selectAll('.tick text');
       const textHeight = ticks.node().getBBox().height;
       const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5];
