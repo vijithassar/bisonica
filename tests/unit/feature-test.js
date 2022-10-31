@@ -18,4 +18,10 @@ module('unit > feature', () => {
     assert.ok(feature(y).isAggregate(), 'detects y axis aggregates');
     assert.notOk(feature(neither).isAggregate(), 'identifies the absence of aggregates');
   });
+
+  test('always creates feature test methods', (assert) => {
+    const s = {};
+    const tests = feature(s);
+    assert.equal(typeof tests.hasData, 'function', 'successfully creates feature tests for an empty input object');
+  });
 });
