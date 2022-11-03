@@ -163,9 +163,8 @@ const _stackData = (s) => {
         });
     });
   }
-  const sorted = sort(stacked);
 
-  return metadata(sorted, values(s), s);
+  return metadata(sort(stacked), values(s), s);
 
 };
 
@@ -178,7 +177,6 @@ const _stackData = (s) => {
 const stackData = memoize(_stackData);
 
 const _circularData = (s) => {
-  let results;
 
   const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
     ([key, values]) => ({ key, values }),
@@ -188,9 +186,7 @@ const _circularData = (s) => {
     return { key, value: d3.sum(values, encodingValue(s, 'theta')) };
   });
 
-  results = summed;
-
-  return metadata(results, values(s), s);
+  return metadata(summed, values(s), s);
 
 };
 
