@@ -32,12 +32,11 @@ const transplantFields = (aggregated, raw, matcher, key) => {
 
 /**
  * transfer metadata from raw data points to aggregated stack layout
- * @param {object[]} aggregated aggregated data for data join
- * @param {object[]} raw raw data with metadata
  * @param {object} s Vega Lite specification
+ * @param {object[]} aggregated aggregated data for data join
  * @returns {object[]} aggregated data with metadata
  */
-const transplantStackMetadata = (aggregated, raw, s) => {
+const transplantStackMetadata = (s, aggregated) => {
     const createMatcher = (key) => {
         const matcher = (aggregatedItem, raw) => {
             const laneChannel = encodingChannelCovariateCartesian(s);
@@ -112,12 +111,11 @@ const transplantStackMetadata = (aggregated, raw, s) => {
 
 /**
  * transfer metadata from raw data points to aggregated circular layout
- * @param {object[]} aggregated aggregated data for data join
- * @param {object[]} raw raw data with metadata
  * @param {object} s Vega Lite specification
+ * @param {object[]} aggregated aggregated data for data join
  * @returns {object[]} aggregated data with metadata
  */
-const transplantCircularMetadata = (aggregated, raw, s) => {
+const transplantCircularMetadata = (s, aggregated) => {
     const createMatcher = (channel) => {
         return (aggregatedItem, raw) => {
             return raw
@@ -149,18 +147,17 @@ const transplantCircularMetadata = (aggregated, raw, s) => {
 
 /**
  * transfer metadata from raw data points to aggregated data
- * @param {object[]} aggregated aggregated data for data join
- * @param {object[]} raw raw data with metadata
  * @param {object} s Vega Lite specification
+ * @param {object[]} data aggregated data for data join
  * @returns {object[]} aggregated data with metadata
  */
-const metadata = (aggregated, raw, s) => {
+const metadata = (s, data) => {
     if (mark(s) === 'bar' || mark(s) === 'area') {
-        return transplantStackMetadata(aggregated, raw, s);
+        return transplantStackMetadata(s, data);
     } else if (mark(s) === 'arc') {
-        return transplantCircularMetadata(aggregated, raw, s);
+        return transplantCircularMetadata(s, data);
     } else {
-        return aggregated;
+        return data;
     }
 };
 

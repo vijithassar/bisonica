@@ -164,7 +164,7 @@ const _stackData = (s) => {
     });
   }
 
-  return metadata(sort(stacked), values(s), s);
+  return metadata(s, sort(stacked));
 
 };
 
@@ -186,7 +186,7 @@ const _circularData = (s) => {
     return { key, value: d3.sum(values, encodingValue(s, 'theta')) };
   });
 
-  return metadata(summed, values(s), s);
+  return metadata(s, summed);
 
 };
 
