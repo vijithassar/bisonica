@@ -18,8 +18,8 @@ module('integration > pivot urls', function () {
     const spec = specificationFixture('stackedBar');
 
     spec.encoding.href = { field: 'url' };
-    spec.data.values[0].url = 'https://www.crowdstrike.com/a';
-    spec.data.values[1].url = 'https://www.crowdstrike.com/b';
+    spec.data.values[0].url = 'https://www.example.com/a';
+    spec.data.values[1].url = 'https://www.example.com/b';
 
     const element = render(spec);
     assert.equal(marksWithUrls(element).length, 2);
@@ -33,8 +33,8 @@ module('integration > pivot urls', function () {
     const spec = specificationFixture('categoricalBar');
 
     spec.encoding.href = { field: 'url' };
-    spec.data.values[0].url = 'https://www.crowdstrike.com/a';
-    spec.data.values[1].url = 'https://www.crowdstrike.com/b';
+    spec.data.values[0].url = 'https://www.example.com/a';
+    spec.data.values[1].url = 'https://www.example.com/b';
 
     const element = render(spec);
     assert.equal(marksWithUrls(element).length, 2);
@@ -48,8 +48,8 @@ module('integration > pivot urls', function () {
     const spec = specificationFixture('line');
 
     spec.encoding.href = { field: 'url' };
-    spec.data.values[0].url = 'https://www.crowdstrike.com/a';
-    spec.data.values[1].url = 'https://www.crowdstrike.com/b';
+    spec.data.values[0].url = 'https://www.example.com/a';
+    spec.data.values[1].url = 'https://www.example.com/b';
 
     const element = render(spec);
 
@@ -75,12 +75,12 @@ module('integration > pivot urls', function () {
     const spec = specificationFixture('circular');
 
     spec.data.values = [
-      { group: 'a', value: 1, url: 'https://www.crowdstrike.com/a' },
-      { group: 'a', value: 2, url: 'https://www.crowdstrike.com/a' },
-      { group: 'b', value: 3, url: 'https://www.crowdstrike.com/b' },
-      { group: 'b', value: 4, url: 'https://www.crowdstrike.com/b' },
-      { group: 'c', value: 5, url: 'https://www.crowdstrike.com/c' },
-      { group: 'c', value: 6, url: 'https://www.crowdstrike.com/c' },
+      { group: 'a', value: 1, url: 'https://www.example.com/a' },
+      { group: 'a', value: 2, url: 'https://www.example.com/a' },
+      { group: 'b', value: 3, url: 'https://www.example.com/b' },
+      { group: 'b', value: 4, url: 'https://www.example.com/b' },
+      { group: 'c', value: 5, url: 'https://www.example.com/c' },
+      { group: 'c', value: 6, url: 'https://www.example.com/c' },
     ];
 
     spec.encoding.href = { field: 'url' };

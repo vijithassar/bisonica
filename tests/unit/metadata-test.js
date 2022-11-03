@@ -8,13 +8,13 @@ const { module, test } = qunit;
 module('unit > metadata', () => {
 
     const urlData = [
-        { value: 1, group: 'a', label: '2020-01-01', url: 'https://crowdstrike.com/a' },
-        { value: 1, group: 'a', label: '2020-01-02', url: 'https://crowdstrike.com/a' },
-        { value: 2, group: 'b', label: '2020-01-03', url: 'https://crowdstrike.com/b' },
-        { value: 2, group: 'b', label: '2020-01-04', url: 'https://crowdstrike.com/b' },
-        { value: 2, group: 'b', label: '2020-01-05', url: 'https://crowdstrike.com/b' },
-        { value: 3, group: 'c', label: '2020-01-06', url: 'https://crowdstrike.com/c' },
-        { value: 3, group: 'c', label: '2020-01-07', url: 'https://crowdstrike.com/c' },
+        { value: 1, group: 'a', label: '2020-01-01', url: 'https://example.com/a' },
+        { value: 1, group: 'a', label: '2020-01-02', url: 'https://example.com/a' },
+        { value: 2, group: 'b', label: '2020-01-03', url: 'https://example.com/b' },
+        { value: 2, group: 'b', label: '2020-01-04', url: 'https://example.com/b' },
+        { value: 2, group: 'b', label: '2020-01-05', url: 'https://example.com/b' },
+        { value: 3, group: 'c', label: '2020-01-06', url: 'https://example.com/c' },
+        { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' },
     ];
 
     test('transfers urls to aggregated circular chart segments', (assert) => {
@@ -34,7 +34,7 @@ module('unit > metadata', () => {
 
         const layout = data(s);
 
-        assert.ok(layout.every((item) => item.url.startsWith('https://crowdstrike.com/')));
+        assert.ok(layout.every((item) => item.url.startsWith('https://example.com/')));
     });
 
     test('transfers urls to aggregated stacked bar chart segments', (assert) => {
@@ -60,7 +60,7 @@ module('unit > metadata', () => {
                 if (difference) {
                     const url = item[encodingField(s, 'href')];
 
-                    assert.ok(url.startsWith('https://crowdstrike.com/'));
+                    assert.ok(url.startsWith('https://example.com/'));
                 }
             });
         });
@@ -70,13 +70,13 @@ module('unit > metadata', () => {
         const key = 'url';
         const aggregated = [{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }];
         const raw = [
-            { type: 'a', url: 'https://www.crowdstrike.com/1' },
-            { type: 'a', url: 'https://www.crowdstrike.com/1' },
-            { type: 'a', url: 'https://www.crowdstrike.com/1' },
-            { type: 'b', url: 'https://www.crowdstrike.com/2' },
-            { type: 'c', url: 'https://www.crowdstrike.com/3' },
-            { type: 'd', url: 'https://www.crowdstrike.com/4' },
-            { type: 'd', url: 'https://www.crowdstrike.com/5' },
+            { type: 'a', url: 'https://www.example.com/1' },
+            { type: 'a', url: 'https://www.example.com/1' },
+            { type: 'a', url: 'https://www.example.com/1' },
+            { type: 'b', url: 'https://www.example.com/2' },
+            { type: 'c', url: 'https://www.example.com/3' },
+            { type: 'd', url: 'https://www.example.com/4' },
+            { type: 'd', url: 'https://www.example.com/5' },
         ];
         const matcher = (item, raw) => raw.filter((x) => x.type === item.key).map((item) => item.url);
         const badMatcher = (item, raw) => raw.filter((item) => typeof item === 'number');
