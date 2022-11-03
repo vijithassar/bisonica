@@ -17,18 +17,6 @@ import { isDiscrete } from './helpers.js';
  * @returns {array} aggregated data points with transplanted field attached
  */
 const transplantFields = (aggregated, raw, matcher, key) => {
-    if (!Array.isArray(aggregated)) {
-        throw new Error(`cannot transplant ${key} field, aggregated data is not an array`);
-    }
-
-    if (!Array.isArray(raw)) {
-        throw new Error(`cannot transplant ${key} field, raw data is not an array`);
-    }
-
-    if (typeof matcher !== 'function') {
-        throw new Error(`cannot transplant ${key} field, matcher is not a function`);
-    }
-
     return aggregated.map((item) => {
         const matches = matcher(item, raw);
         const result = { ...item };
