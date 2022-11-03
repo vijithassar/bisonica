@@ -8,9 +8,9 @@ import qunit from 'qunit';
 const { module, test } = qunit;
 
 const expressions = {
-  naive: "'https://www.crowdstrike.com' + '/' + 'test'",
-  interpolate: "'https://www.crowdstrike.com' + '/' + datum.a",
-  multiple: "'https://www.crowdstrike.com' + '/' + datum.a + datum.b",
+  naive: "'https://www.example.com' + '/' + 'test'",
+  interpolate: "'https://www.example.com' + '/' + datum.a",
+  multiple: "'https://www.example.com' + '/' + datum.a + datum.b",
 };
 
 module('unit > transform', () => {
@@ -23,7 +23,7 @@ module('unit > transform', () => {
     test('adds derived fields to a data point', (assert) => {
       const s = { transform: [{ calculate: expressions.naive, as: 'a' }] };
 
-      assert.equal(transform(s)({}).a, 'https://www.crowdstrike.com/test');
+      assert.equal(transform(s)({}).a, 'https://www.example.com/test');
     });
     test('runs multiple transforms', (assert) => {
       const datum = {
@@ -38,9 +38,9 @@ module('unit > transform', () => {
         ],
       };
 
-      assert.equal(transform(s)(datum).c, 'https://www.crowdstrike.com/test');
-      assert.equal(transform(s)(datum).d, 'https://www.crowdstrike.com/1');
-      assert.equal(transform(s)(datum).e, 'https://www.crowdstrike.com/12');
+      assert.equal(transform(s)(datum).c, 'https://www.example.com/test');
+      assert.equal(transform(s)(datum).d, 'https://www.example.com/1');
+      assert.equal(transform(s)(datum).e, 'https://www.example.com/12');
     });
     test('falls back to transform lookups', (assert) => {
       const s = {
@@ -65,24 +65,24 @@ module('unit > transform', () => {
       assert.throws(() => calculate({}));
     });
     test('returns a string', (assert) => {
-      assert.equal(calculate(expressions.naive)({}), 'https://www.crowdstrike.com/test');
+      assert.equal(calculate(expressions.naive)({}), 'https://www.example.com/test');
     });
     test('interpolates properties', (assert) => {
       assert.equal(
         calculate(expressions.interpolate)({ a: 'test' }),
-        'https://www.crowdstrike.com/test',
+        'https://www.example.com/test',
       );
     });
     test('interpolates multiple properties', (assert) => {
       assert.equal(
         calculate(expressions.multiple)({ a: '1', b: '2' }),
-        'https://www.crowdstrike.com/12',
+        'https://www.example.com/12',
       );
     });
     test('omits malformed string interpolations', (assert) => {
       assert.equal(
-        calculate("'https://www.crowdstrike.com' + '/' + datum.a + '/test")({ a: '1' }),
-        'https://www.crowdstrike.com/1',
+        calculate("'https://www.example.com' + '/' + datum.a + '/test")({ a: '1' }),
+        'https://www.example.com/1',
       );
     });
   });
