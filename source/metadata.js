@@ -156,8 +156,6 @@ const metadata = (s, data) => {
         return transplantStackMetadata(s, data);
     } else if (mark(s) === 'arc') {
         return transplantCircularMetadata(s, data);
-    } else {
-        return data;
     }
 };
 
