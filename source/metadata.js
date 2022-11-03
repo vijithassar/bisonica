@@ -37,7 +37,7 @@ const transplantFields = (aggregated, raw, matcher, key) => {
  * @param {object} s Vega Lite specification
  * @returns {object[]} aggregated data with metadata
  */
-const transplantStackedBarMetadata = (aggregated, raw, s) => {
+const transplantStackMetadata = (aggregated, raw, s) => {
     const createMatcher = (key) => {
         const matcher = (aggregatedItem, raw) => {
             const laneChannel = encodingChannelCovariateCartesian(s);
@@ -156,7 +156,7 @@ const transplantCircularMetadata = (aggregated, raw, s) => {
  */
 const metadata = (aggregated, raw, s) => {
     if (mark(s) === 'bar' || mark(s) === 'area') {
-        return transplantStackedBarMetadata(aggregated, raw, s);
+        return transplantStackMetadata(aggregated, raw, s);
     } else if (mark(s) === 'arc') {
         return transplantCircularMetadata(aggregated, raw, s);
     } else {
