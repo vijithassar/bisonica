@@ -119,12 +119,9 @@ module('unit > metadata', () => {
 
         const layout = data(s);
 
-        console.log(s, layout);
-
         layout.forEach((series) => {
             series.forEach((item) => {
                 const difference = Math.abs(item[1] - item[0]) !== 0;
-                console.log(item);
 
                 if (difference) {
                     const url = item[encodingField(s, 'href')];
