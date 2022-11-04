@@ -7,20 +7,22 @@ const { module, test } = qunit;
 
 module('unit > metadata', () => {
 
-    const urlData = [
-        { value: 1, group: 'a', label: '2020-01-01', url: 'https://example.com/a' },
-        { value: 1, group: 'a', label: '2020-01-02', url: 'https://example.com/a' },
-        { value: 2, group: 'b', label: '2020-01-03', url: 'https://example.com/b' },
-        { value: 2, group: 'b', label: '2020-01-04', url: 'https://example.com/b' },
-        { value: 2, group: 'b', label: '2020-01-05', url: 'https://example.com/b' },
-        { value: 3, group: 'c', label: '2020-01-06', url: 'https://example.com/c' },
-        { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' },
-    ];
+    const urlData = () => {
+        return [
+            { value: 1, group: 'a', label: '2020-01-01', url: 'https://example.com/a' },
+            { value: 1, group: 'a', label: '2020-01-02', url: 'https://example.com/a' },
+            { value: 2, group: 'b', label: '2020-01-03', url: 'https://example.com/b' },
+            { value: 2, group: 'b', label: '2020-01-04', url: 'https://example.com/b' },
+            { value: 2, group: 'b', label: '2020-01-05', url: 'https://example.com/b' },
+            { value: 3, group: 'c', label: '2020-01-06', url: 'https://example.com/c' },
+            { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' },
+        ];
+    };
 
     test('transfers urls to aggregated circular chart segments', (assert) => {
         const s = {
             data: {
-                values: urlData,
+                values: urlData(),
             },
             mark: {
                 type: 'arc',
@@ -40,7 +42,7 @@ module('unit > metadata', () => {
     test('transfers urls to aggregated stacked bar chart segments', (assert) => {
         const s = {
             data: {
-                values: urlData,
+                values: urlData(),
             },
             mark: { type: 'bar' },
             encoding: {
