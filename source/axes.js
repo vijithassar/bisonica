@@ -146,13 +146,11 @@ const x = (s, dimensions) => {
     }
 
     const x = selection.select('g.x').attr('class', 'x');
+    const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''].join(' ');
+
     const xAxis = x
       .append('g')
-      .attr('class', () => {
-        const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''];
-
-        return classes.join(' ');
-      })
+      .attr('class', classes)
       .classed(encodingType(s, 'x'), true);
 
     xAxis.call(axis);
