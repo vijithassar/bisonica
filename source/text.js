@@ -219,9 +219,7 @@ const axisTickLabelText = (s, channel) => {
       styles[channel] = fontStyles(node);
     }
 
-    selection.each(function (label) {
-      d3.select(this).text(axisTickLabelTextContent(s, channel, label, styles[channel]));
-    });
+    selection.text((label) => axisTickLabelTextContent(s, channel, label, styles[channel]));
   };
 };
 
