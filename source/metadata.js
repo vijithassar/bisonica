@@ -5,6 +5,22 @@ import { values } from './helpers.js';
 const metadataChannels = ['description', 'tooltip', 'href'];
 
 /**
+ * compare field values on two objects
+ * @param {object} a object to compare
+ * @param {object} b object to compare
+ * @param {string[]} fields list of fields to compare
+ * @returns {boolean} whether all fields match
+ */
+const compareFields = (a, b, fields) => {
+    for (let i = 0; i < fields.length; i++) {
+        if (a[fields[i]] !== b[fields[i]]) {
+            return false;
+        }
+    }
+    return true;
+};
+
+/**
  * create a function for looking up core encoding channels
  * and returning them as a string key suitable for indexing
  * @param {object} s Vega Lite specification
