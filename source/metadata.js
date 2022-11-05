@@ -38,8 +38,9 @@ const transplantFields = (s, aggregated, raw) => {
  * @returns {object[]} aggregated data with metadata
  */
 const metadata = (s, data) => {
-    if (feature(s).isBar() || feature(s).isArea() || feature(s).isCircular()) {
-        return transplantFields(s, data);
+    const layout = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular();
+    if (layout) {
+        return transplantFields(s, data, values(s));
     }
 };
 
