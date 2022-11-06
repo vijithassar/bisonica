@@ -166,6 +166,16 @@ const transplantFields = (s, aggregated, raw) => {
         });
     }
 
+    if (feature(s).isBar()) {
+        const covariate = encodingField(s, encodingChannelCovariateCartesian(s));
+        aggregated.forEach(series => {
+            series.forEach(item => {
+                const key = createKey(lookupStack(s, series.key, covariate, item));
+                Object.assign(item, counter[key]?.fields);
+            });
+        });
+    }
+
     return aggregated;
 };
 
