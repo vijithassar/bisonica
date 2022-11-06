@@ -93,13 +93,14 @@ const getTimeParser = memoize(_getTimeParser);
  * @param {(string|number)} date date representation
  * @returns {Date} date object
  */
-const parseTime = (date) => {
+const _parseTime = (date) => {
   const parser = getTimeParser(date);
 
   if (typeof parser === 'function') {
     return parser(date);
   }
 };
+const parseTime = memoize(_parseTime);
 
 const findTimePeriod = new RegExp(`(?:${TIME}|${UTC})(\\w+)`, 'gi');
 /**
