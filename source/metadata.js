@@ -3,7 +3,6 @@ import { feature } from './feature.js';
 import { values } from './helpers.js';
 
 const metadataChannels = ['description', 'tooltip', 'href'];
-const encodingChannels = ['x', 'y', 'color'];
 
 /**
  * create a function for looking up core encoding channels
@@ -13,14 +12,7 @@ const encodingChannels = ['x', 'y', 'color'];
  */
 const createKeyBuilder = (s) => {
     const delimiter = ' + ';
-    let channels = [];
-    if (feature(s).hasColor()) {
-        channels.push('color');
-    }
-    if (feature(s).isCartesian()) {
-        channels.push(encodingChannelCovariateCartesian(s));
-    }
-    const fields = channels.map(channel => encodingField(s, channel))
+    const fields = coreEncodingChannels(s).map(channel => encodingField(s, channel))
     const getters = fields.map((field) => (item) => item[field]);
     const getter = (item) => getters.map(getter => getter(item)).join(delimiter);
     return getter;
@@ -48,6 +40,23 @@ const createPicker = (s) => {
 };
 
 /**
+ * determine which core encoding channels are
+ * represented in a Vega Lite specification
+ * @param {object} s Vega Lite specification
+ * @returns {string[]} encoding channels
+ */
+ const coreEncodingChannels = (s) => {
+    let channels = [];
+    if (feature(s).hasColor()) {
+        channels.push('color');
+    }
+    if (feature(s).isCartesian()) {
+        channels.push(encodingChannelCovariateCartesian(s));
+    }
+    return channels;
+};
+
+/**
  * restructure a data point to make it easier to
  * find the data fields of interest for comparison
  * @param {object} s Vega Lite specification
@@ -56,9 +65,7 @@ const createPicker = (s) => {
  */
 const lookup = (s, item) => {
     let result = {};
-    let channels = encodingChannels
-        .filter((channel) => s.encoding[channel])
-    const fields = channels
+    const fields = coreEncodingChannels(s)
         .map(channel => encodingField(s, channel))
     if (feature(s).isCircular()) {
         return {
