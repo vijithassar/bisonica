@@ -6,6 +6,27 @@ const metadataChannels = ['description', 'tooltip', 'href'];
 const encodingChannels = ['x', 'y', 'color'];
 
 /**
+ * create a function for looking up core encoding channels
+ * and returning them as a string key suitable for indexing
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} convert datum to string key
+ */
+const createKeyBuilder = (s) => {
+    const delimiter = ' + ';
+    let channels = [];
+    if (feature(s).hasColor()) {
+        channels.push('color');
+    }
+    if (feature(s).isCartesian()) {
+        channels.push(encodingChannelCovariateCartesian(s));
+    }
+    const fields = channels.map(channel => encodingField(s, channel))
+    const getters = fields.map((field) => (item) => item[field]);
+    const getter = (item) => getters.map(getter => getter(item)).join(delimiter);
+    return getter;
+};
+
+/**
  * move properties from an array of source
  * values to an aggregate
  * @param {object} s Vega Lite specification
