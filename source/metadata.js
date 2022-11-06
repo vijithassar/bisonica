@@ -27,6 +27,27 @@ const createKeyBuilder = (s) => {
 };
 
 /**
+ * create a function which extracts the necessary
+ * metadata fields from an input object
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} extract metadata fields
+ */
+const createPicker = (s) => {
+    return (item) => {
+        let result = {};
+        let fields = metadataChannels
+            .map((channel) => encodingField(s, channel))
+            .filter(Boolean);
+        fields.forEach(field => {
+            if (item[field]) {
+                result[field] = item[field];
+            }
+        })
+        return result;
+    }
+};
+
+/**
  * move properties from an array of source
  * values to an aggregate
  * @param {object} s Vega Lite specification
@@ -37,14 +58,14 @@ const createKeyBuilder = (s) => {
 const transplantFields = (s, aggregated, raw) => {
     const counter = {};
     const createKey = createKeyBuilder(s);
-    const pluck = createPlucker(s);
+    const pick = createPicker(s);
     raw.forEach((item) => {
         const key = createKey(item);
         if (!counter[key]) {
             counter[key] = {count: 0};
         }
         counter[key].count++;
-        counter[key].fields = pluck(item);
+        counter[key].fields = pick(item);
     });
     aggregated.forEach(item => {
         const key = createKey(lookup(s, item));
