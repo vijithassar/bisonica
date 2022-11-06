@@ -1,6 +1,6 @@
 import { encodingChannelCovariateCartesian, encodingField } from './encodings.js';
 import { feature } from './feature.js';
-import { values } from './helpers.js';
+import { missingSeries, values } from './helpers.js';
 
 const metadataChannels = ['description', 'tooltip', 'href'];
 
@@ -119,6 +119,31 @@ const lookupCircular = (s, item) => {
             [fields[0]]: item.key
         };
     }
+    return result;
+};
+
+/**
+ * restructure a data point from a stack layout
+ * to make it easier to find the data fields of
+ * interest for comparison
+ *
+ * due to a performance bottleneck, fields are
+ * looked up once externally and then passed into
+ * this restructuring function as arguments instead
+ * of being kept entirely inside this scope
+ * @param {object} s Vega Lite specification
+ * @param {string} series series key
+ * @param {object} item datum
+ * @returns {object} object with lookup fields at the top level
+ */
+const lookupStack = (s, series, covariate, item) => {
+    let result = {};
+    if (series !== missingSeries()) {
+        result[encodingField(s, 'color')] = series;
+    }
+    // this is equivalent to using accessor functions
+    // but is hard coded here for performance reasons
+    result[covariate] = item.data.key;
     return result;
 };
 
