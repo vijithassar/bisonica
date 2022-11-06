@@ -32,7 +32,7 @@ const matchingFields = (a, b, fields) => {
  */
 const createKeyBuilder = (s) => {
     const delimiter = ' + ';
-    const fields = coreEncodingChannels(s).map(channel => encodingField(s, channel))
+    const fields = coreEncodingFields(s);
     const getters = fields.map((field) => (item) => item[field]);
     const getter = (item) => getters.map(getter => getter(item)).join(delimiter);
     return getter;
@@ -81,6 +81,16 @@ const pick = (object, fields) => {
     return channels;
  };
 
+ /**
+  * fields used to represent core
+  * encoding channels
+  * @param {object} s Vega Lite specification
+  * @returns {string[]} encoding fields
+  */
+const coreEncodingFields = (s) => {
+    return coreEncodingChannels(s).map(channel => encodingField(s, channel)).filter(Boolean);
+};
+
 /**
  * count the metadata fields in a data set and look for conflicts
  * @param {object} s Vega Lite specification
@@ -119,8 +129,7 @@ const countFields = (s, data, createKey) => {
  */
 const lookupCircular = (s, item) => {
     let result = {};
-    const fields = coreEncodingChannels(s)
-        .map(channel => encodingField(s, channel))
+    const fields = coreEncodingFields(s);
     if (feature(s).isCircular()) {
         return {
             // this is equivalent to using accessor functions
