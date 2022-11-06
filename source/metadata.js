@@ -214,4 +214,4 @@ const metadata = (s, data) => {
     }
 };
 
-export { metadata, transplantFields };
+export { metadata };
