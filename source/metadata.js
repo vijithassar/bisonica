@@ -5,6 +5,15 @@ import { missingSeries, values } from './helpers.js';
 const metadataChannels = ['description', 'tooltip', 'href'];
 
 /**
+ * test whether a specification has metadata
+ * @param {object} s Vega Lite specification
+ * @returns {boolean}
+ */
+const hasMetadata = (s) => {
+    return Object.keys(s.encoding).some((key) => metadataChannels.includes(key));
+};
+
+/**
  * determine which field values match between two objects
  * @param {object} a object to compare
  * @param {object} b object to compare
@@ -186,6 +195,9 @@ const transplantFields = (s, aggregated, raw) => {
  * @returns {object[]} aggregated data with metadata
  */
 const metadata = (s, data) => {
+    if (!hasMetadata(s)) {
+        return data;
+    }
     const layout = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular();
     if (layout) {
         return transplantFields(s, data, values(s));
