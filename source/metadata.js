@@ -48,6 +48,27 @@ const createPicker = (s) => {
 };
 
 /**
+ * restructure a data point to make it easier to
+ * find the data fields of interest for comparison
+ * @param {object} s Vega Lite specification
+ * @param {object} item datum
+ * @returns {object} object with lookup fields at the top level
+ */
+const lookup = (s, item) => {
+    let result = {};
+    let channels = encodingChannels
+        .filter((channel) => s.encoding[channel])
+    const fields = channels
+        .map(channel => encodingField(s, channel))
+    if (feature(s).isCircular()) {
+        return {
+            [fields[0]]: item.key
+        };
+    }
+    return result;
+};
+
+/**
  * move properties from an array of source
  * values to an aggregate
  * @param {object} s Vega Lite specification
