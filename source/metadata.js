@@ -132,7 +132,8 @@ const transplantFields = (s, aggregated, raw) => {
     const counter = countFields(s, raw, createKey);
     aggregated.forEach(item => {
         const key = createKey(lookup(s, item));
-    })
+        Object.assign(item, counter[key]?.fields);
+    });
     return aggregated;
 };
 
