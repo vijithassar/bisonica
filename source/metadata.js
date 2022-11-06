@@ -70,6 +70,37 @@ const createPicker = (s) => {
         channels.push(encodingChannelCovariateCartesian(s));
     }
     return channels;
+ };
+
+/**
+ * count the metadata fields in a data set and look for conflicts
+ * @param {object} s Vega Lite specification
+ * @param {object[]} data data set to count fields in
+ * @param {function} createKey function to create a unique key per datum
+ * @returns {object} metadata fields indexed by core field values
+ */
+const countFields = (s, data, createKey) => {
+    const counter = {};
+    const pluck = createPlucker(s);
+    data.forEach((item) => {
+        const key = createKey(item);
+        if (!counter[key]) {
+            counter[key] = {count: 0};
+        }
+        const count = counter[key].count++;
+        if (count === 1) {
+            counter[key].fields = pluck(item);
+        } else if (count > 1) {
+            const channels = metadataChannels.map((channel) => encodingField(s, channel)).filter(Boolean);
+            const match = !compareFields(counter[key].fields, pluck(item), channels);
+            if (match) {
+                counter[key].count++
+            } else {
+                counter[key].fields = {};
+            }
+        }
+    });
+    return counter;
 };
 
 /**
@@ -100,17 +131,8 @@ const lookup = (s, item) => {
  * @returns {object[]} aggregated data points with transplanted field attached
  */
 const transplantFields = (s, aggregated, raw) => {
-    const counter = {};
     const createKey = createKeyBuilder(s);
-    const pick = createPicker(s);
-    raw.forEach((item) => {
-        const key = createKey(item);
-        if (!counter[key]) {
-            counter[key] = {count: 0};
-        }
-        counter[key].count++;
-        counter[key].fields = pick(item);
-    });
+    const counter = countFields(s, raw, createKey);
     aggregated.forEach(item => {
         const key = createKey(lookup(s, item));
     })
