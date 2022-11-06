@@ -100,6 +100,7 @@ const coreEncodingFields = (s) => {
  */
 const countFields = (s, data, createKey) => {
     const counter = {};
+    const fields = metadataFields(s);
     data.forEach((item) => {
         const key = createKey(item);
         if (!counter[key]) {
@@ -108,9 +109,8 @@ const countFields = (s, data, createKey) => {
         counter[key].count++;
         const count = counter[key].count;
         if (count === 1) {
-            counter[key].fields = pick(item, metadataFields(s));
+            counter[key].fields = pick(item, fields);
         } else if (count > 1) {
-            const fields = metadataFields(s);
             const matches = matchingFields(counter[key].fields, pick(item, fields), fields);
             if (matches.length !== fields.length) {
                 counter[key].fields = pick(item, matches);
