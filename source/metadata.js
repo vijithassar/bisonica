@@ -105,7 +105,8 @@ const countFields = (s, data, createKey) => {
         if (!counter[key]) {
             counter[key] = {count: 0};
         }
-        const count = counter[key].count++;
+        counter[key].count++;
+        const count = counter[key].count;
         if (count === 1) {
             counter[key].fields = pick(item, metadataFields(s));
         } else if (count > 1) {
