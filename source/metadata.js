@@ -152,9 +152,9 @@ const transplantCircularMetadata = (s, aggregated) => {
  * @returns {object[]} aggregated data with metadata
  */
 const metadata = (s, data) => {
-    if (mark(s) === 'bar' || mark(s) === 'area') {
+    if (feature(s).isBar() || feature(s).isArea()) {
         return transplantStackMetadata(s, data);
-    } else if (mark(s) === 'arc') {
+    } else if (feature(s).isCircular()) {
         return transplantCircularMetadata(s, data);
     }
 };
