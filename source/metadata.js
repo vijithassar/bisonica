@@ -92,10 +92,8 @@ const countFields = (s, data, createKey) => {
         } else if (count > 1) {
             const channels = metadataChannels.map((channel) => encodingField(s, channel)).filter(Boolean);
             const matches = matchingFields(counter[key].fields, pick(item, metadataFields(s)), channels);
-            if (matches.length === channels.length) {
-                counter[key].count++
-            } else {
-                counter[key].fields = {};
+            if (matches.length !== channels.length) {
+                counter[key].fields = pick(item, matches);
             }
         }
     });
