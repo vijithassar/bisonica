@@ -101,18 +101,21 @@ const countFields = (s, data, createKey) => {
 };
 
 /**
- * restructure a data point to make it easier to
- * find the data fields of interest for comparison
+ * restructure a data point from a circular layout
+ * to make it easier to find the data fields of
+ * interest for comparison
  * @param {object} s Vega Lite specification
  * @param {object} item datum
  * @returns {object} object with lookup fields at the top level
  */
-const lookup = (s, item) => {
+const lookupCircular = (s, item) => {
     let result = {};
     const fields = coreEncodingChannels(s)
         .map(channel => encodingField(s, channel))
     if (feature(s).isCircular()) {
         return {
+            // this is equivalent to using accessor functions
+            // but is hard coded here for performance reasons
             [fields[0]]: item.key
         };
     }
@@ -130,10 +133,14 @@ const lookup = (s, item) => {
 const transplantFields = (s, aggregated, raw) => {
     const createKey = createKeyBuilder(s);
     const counter = countFields(s, raw, createKey);
-    aggregated.forEach(item => {
-        const key = createKey(lookup(s, item));
-        Object.assign(item, counter[key]?.fields);
-    });
+
+    if (feature(s).isCircular()) {
+        aggregated.forEach(item => {
+            const key = createKey(lookupCircular(s, item));
+            Object.assign(item, counter[key]?.fields);
+        });
+    }
+
     return aggregated;
 };
 
