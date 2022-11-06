@@ -30,24 +30,29 @@ const createKeyBuilder = (s) => {
 };
 
 /**
- * create a function which extracts the necessary
- * metadata fields from an input object
+ * determine which fields contain metadata
  * @param {object} s Vega Lite specification
- * @returns {function(object)} extract metadata fields
  */
-const createPicker = (s) => {
-    return (item) => {
-        let result = {};
-        let fields = metadataChannels
-            .map((channel) => encodingField(s, channel))
-            .filter(Boolean);
-        fields.forEach(field => {
-            if (item[field]) {
-                result[field] = item[field];
-            }
-        })
-        return result;
-    }
+const metadataFields = (s) => {
+    return metadataChannels
+        .map((channel) => encodingField(s, channel))
+        .filter(Boolean);
+};
+
+/**
+ * copy desired properties to a sanitized object
+ * @param {object} object object with properties
+ * @param {string[]} fields desired properties
+ * @returns {object} object with only the desired properties
+ */
+const pick = (object, fields) => {
+    let result = {};
+    fields.forEach(field => {
+        if (object[field]) {
+            result[field] = object[field];
+        }
+    });
+    return result;
 };
 
 /**
@@ -76,7 +81,6 @@ const createPicker = (s) => {
  */
 const countFields = (s, data, createKey) => {
     const counter = {};
-    const pluck = createPlucker(s);
     data.forEach((item) => {
         const key = createKey(item);
         if (!counter[key]) {
@@ -84,10 +88,10 @@ const countFields = (s, data, createKey) => {
         }
         const count = counter[key].count++;
         if (count === 1) {
-            counter[key].fields = pluck(item);
+            counter[key].fields = pick(item, metadataFields(s));
         } else if (count > 1) {
             const channels = metadataChannels.map((channel) => encodingField(s, channel)).filter(Boolean);
-            const matches = matchingFields(counter[key].fields, pluck(item), channels);
+            const matches = matchingFields(counter[key].fields, pick(item, metadataFields(s)), channels);
             if (matches.length === channels.length) {
                 counter[key].count++
             } else {
