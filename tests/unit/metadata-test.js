@@ -1,5 +1,6 @@
 import { data } from '../../source/data.js';
 import { encodingField } from '../../source/encodings.js';
+import { specificationFixture } from '../test-helpers.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;
@@ -134,4 +135,22 @@ module('unit > metadata', () => {
             });
         });
     });
+
+    test('copies multiple metadata fields', (assert) => {
+        const s = specificationFixture('circular');
+        s.data.values = [
+            {a: '•', b: '-', c: 'https://www.example.com/a', group: 'a', value: 95},
+            {a: '+', b: '_', c: 'https://www.example.com/b', group: 'b', value: 3},
+            {a: '@', b: '|', c: 'https://www.example.com/c', group: 'c', value: 2},
+        ];
+        s.encoding.tooltip = { field: 'a' };
+        s.encoding.description = { field: 'b' };
+        s.encoding.href = { field: 'c' };
+        data(s).forEach(item => {
+            assert.equal(typeof item.a, 'string');
+            assert.equal(typeof item.b, 'string');
+            assert.equal(typeof item.c, 'string');
+        });
+    });
+
 });
