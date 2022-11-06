@@ -5,19 +5,14 @@ import { values } from './helpers.js';
 const metadataChannels = ['description', 'tooltip', 'href'];
 
 /**
- * compare field values on two objects
+ * determine which field values match between two objects
  * @param {object} a object to compare
  * @param {object} b object to compare
  * @param {string[]} fields list of fields to compare
- * @returns {boolean} whether all fields match
+ * @returns {string[]} matching fields
  */
-const compareFields = (a, b, fields) => {
-    for (let i = 0; i < fields.length; i++) {
-        if (a[fields[i]] !== b[fields[i]]) {
-            return false;
-        }
-    }
-    return true;
+const matchingFields = (a, b, fields) => {
+    return fields.filter((field) => a[field] === b[field]);
 };
 
 /**
@@ -92,8 +87,8 @@ const countFields = (s, data, createKey) => {
             counter[key].fields = pluck(item);
         } else if (count > 1) {
             const channels = metadataChannels.map((channel) => encodingField(s, channel)).filter(Boolean);
-            const match = !compareFields(counter[key].fields, pluck(item), channels);
-            if (match) {
+            const matches = matchingFields(counter[key].fields, pluck(item), channels);
+            if (matches.length === channels.length) {
                 counter[key].count++
             } else {
                 counter[key].fields = {};
