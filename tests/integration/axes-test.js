@@ -80,7 +80,7 @@ module('integration > axes', function () {
     assert.ok(ticks.length < differenceDays);
   });
 
-  test('renders a chart without axes', (assert) => {
+  test('renders a chart without axis titles', (assert) => {
     const spec = specificationFixture('line');
 
     spec.encoding.x.axis = { title: null };
