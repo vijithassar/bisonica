@@ -121,9 +121,9 @@ const countFields = (s, data, createKey) => {
 };
 
 /**
- * restructure a data point from a circular layout
- * to make it easier to find the data fields of
- * interest for comparison
+ * restructure a data point from aggregate data
+ * for a circular chart to make it easier to find
+ * the data fields of interest for comparison
  * @param {object} s Vega Lite specification
  * @param {object} item datum
  * @returns {object} object with lookup fields at the top level
@@ -142,9 +142,9 @@ const lookupCircular = (s, item) => {
 };
 
 /**
- * restructure a data point from a stack layout
- * to make it easier to find the data fields of
- * interest for comparison
+ * restructure a data point from aggregated data for
+ * a stack-based chart to make it easier to find the
+ * data fields of interest for comparison
  *
  * due to a performance bottleneck, fields are
  * looked up once externally and then passed into
@@ -208,8 +208,8 @@ const metadata = (s, data) => {
     if (!hasMetadata(s)) {
         return data;
     }
-    const layout = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular();
-    if (layout) {
+    const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular();
+    if (aggregate) {
         return transplantFields(s, data, values(s));
     }
 };

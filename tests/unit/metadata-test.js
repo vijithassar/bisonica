@@ -40,9 +40,7 @@ module('unit > metadata', () => {
             },
         };
 
-        const layout = data(s);
-
-        assert.ok(layout.every((item) => item.url.startsWith('https://example.com/')));
+        assert.ok(data(s).every((item) => item.url.startsWith('https://example.com/')));
     });
 
     test('avoids transplanting mismatched data in aggregated circular chart segments', (assert) => {
@@ -60,9 +58,7 @@ module('unit > metadata', () => {
             },
         };
 
-        const layout = data(s);
-
-        layout.forEach((item) => {
+        data(s).forEach((item) => {
             const url = item[encodingField(s, 'href')];
             const check = url?.startsWith('https://example.com/');
             if (item.key === 'c') {
@@ -88,9 +84,7 @@ module('unit > metadata', () => {
             },
         };
 
-        const layout = data(s);
-
-        layout.forEach((series) => {
+        data(s).forEach((series) => {
             series.forEach((item) => {
                 const difference = Math.abs(item[1] - item[0]) !== 0;
 
@@ -117,9 +111,7 @@ module('unit > metadata', () => {
             },
         };
 
-        const layout = data(s);
-
-        layout.forEach((series) => {
+        data(s).forEach((series) => {
             series.forEach((item) => {
                 const difference = Math.abs(item[1] - item[0]) !== 0;
 
