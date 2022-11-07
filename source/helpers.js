@@ -105,22 +105,6 @@ const mark = (s) => {
 };
 
 /**
- * check whether all fields match in a data set
- * @param {array} items array of objects
- * @param {string} field string key to check in all objects
- * @returns {boolean}
- */
-const fieldsMatch = (items, field) => {
-  if (items.length) {
-    const sample = items[0][field];
-
-    return items.every((item) => item[field] === sample);
-  } else {
-    return false;
-  }
-};
-
-/**
  * does not do anything; occasionally useful to ensure a function is
  * returned consistently from a factory or composition
  * @returns {function}
@@ -198,7 +182,6 @@ const polarToCartesian = (radius, angle) => {
 export {
   abbreviateNumbers,
   mark,
-  fieldsMatch,
   values,
   datum,
   nested,
