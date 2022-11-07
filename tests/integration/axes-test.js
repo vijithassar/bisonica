@@ -6,7 +6,7 @@ const { module, test } = qunit;
 
 module('integration > axes', function () {
   test('renders a chart with axes', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('categoricalBar');
     const element = render(spec);
 
     const single = [testSelector('axes'), testSelector('axes-x'), testSelector('axes-y')];
@@ -17,7 +17,7 @@ module('integration > axes', function () {
   });
 
   test('renders a chart with custom axis titles', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.axis = { title: 'a' };
     spec.encoding.y.axis = { title: 'b' };
@@ -28,7 +28,7 @@ module('integration > axes', function () {
 
   test('renders a chart without y-axis tick labels', (assert) => {
 
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('categoricalBar');
 
     spec.encoding.y.axis = {labels: false};
 
@@ -81,7 +81,7 @@ module('integration > axes', function () {
   });
 
   test('renders a chart without axis titles', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('categoricalBar');
 
     spec.encoding.x.axis = { title: null };
     spec.encoding.y.axis = { title: null };
@@ -105,7 +105,7 @@ module('integration > axes', function () {
     });
   });
   test('disables axes', (assert) => {
-    const spec = specificationFixture('temporalBar');
+    const spec = specificationFixture('categoricalBar');
     spec.encoding.x.axis = null;
     spec.encoding.y.axis = null;
     const element = render(spec);
