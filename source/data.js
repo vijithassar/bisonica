@@ -205,7 +205,6 @@ const _lineData = (s) => {
   const color = encodingField(s, 'color');
 
   const summed = groupAndSumByProperties(values(s), covariate, color, quantitative);
-  const channels = ['href', 'description', 'tooltip'];
   const results = stackKeys(summed).map((key) => {
     const values = summed
       .filter((item) => !!item[key])
@@ -215,15 +214,6 @@ const _lineData = (s) => {
           [bucket]: item.key,
           value: item[key].value,
         };
-
-        channels.forEach((channel) => {
-          const value = item[key]?.[encodingField(s, channel)];
-
-          if (value) {
-            result[encodingField(s, channel)] = value;
-          }
-        });
-
         return result;
       })
       .sort((a, b) => Number(parseTime(a.period)) - Number(parseTime(b.period)));
@@ -234,7 +224,7 @@ const _lineData = (s) => {
     };
   });
 
-  return results;
+  return metadata(s, results);
 };
 
 /**

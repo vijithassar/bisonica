@@ -168,6 +168,31 @@ const lookupStack = (s, series, covariate, item) => {
 };
 
 /**
+ * restructure a data point from aggregated data for
+ * a line chart to make it easier to find the
+ * data fields of interest for comparison
+ *
+ * due to a performance bottleneck, fields are
+ * looked up once externally and then passed into
+ * this restructuring function as arguments instead
+ * of being kept entirely inside this scope
+ * @param {object} s Vega Lite specification
+ * @param {string} series series key
+ * @param {string} covariate covariate
+ * @param {object} item datum
+ * @returns {object} object with lookup fields at the top level
+ */
+const lookupLine = (s, series, covariate, item) => {
+    let result = [];
+    if (series !== missingSeries()) {
+        const category = encodingField(s, 'color');
+        result[category] = series[category];
+    }
+    result[covariate] = item.period || item.bucket;
+    return result;
+};
+
+/**
  * move properties from an array of source
  * values to an aggregate
  * @param {object} s Vega Lite specification
@@ -196,6 +221,16 @@ const transplantFields = (s, aggregated, raw) => {
         });
     }
 
+    if (feature(s).isLine()) {
+        aggregated.forEach(series => {
+            const covariate = encodingField(s, encodingChannelCovariateCartesian(s));
+            series.values.forEach(item => {
+                const key = createKey(lookupLine(s, series, covariate, item));
+                Object.assign(item, counter[key]?.fields);
+            });
+        });
+    }
+
     return aggregated;
 };
 
@@ -209,7 +244,7 @@ const metadata = (s, data) => {
     if (!hasMetadata(s)) {
         return data;
     }
-    const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular();
+    const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular() || feature(s).isLine();
     if (aggregate) {
         return transplantFields(s, data, values(s));
     }
