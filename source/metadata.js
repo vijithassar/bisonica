@@ -152,6 +152,7 @@ const lookupCircular = (s, item) => {
  * of being kept entirely inside this scope
  * @param {object} s Vega Lite specification
  * @param {string} series series key
+ * @param {string} covariate covariate
  * @param {object} item datum
  * @returns {object} object with lookup fields at the top level
  */
