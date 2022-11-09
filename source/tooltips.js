@@ -230,10 +230,9 @@ const tooltipContentData = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {function} tooltip content renderer
  */
-const tooltipContent = (s) => {
-  return (d) => {
-    return formatTooltipContent(tooltipContentData(s)(d));
-  };
+const _tooltipContent = (s) => {
+  return memoize((d) => formatTooltipContent(tooltipContentData(s)(d)));
 };
+const tooltipContent = memoize(_tooltipContent);
 
 export { tooltips, tooltipEvent, tooltipContent, getTooltipField };
