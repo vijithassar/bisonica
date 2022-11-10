@@ -4,6 +4,7 @@ import {
   testSelector,
   tooltipContentUpdate,
 } from '../test-helpers.js';
+import { chart } from '../../source/chart.js';
 import qunit from 'qunit';
 
 const { module, test } = qunit;
@@ -254,6 +255,13 @@ module('integration > tooltips', function () {
     );
   });
 
+  test('custom tooltip handler function', (assert) => {
+    const fn = () => null;
+    const renderer = chart(specificationFixture('circular'));
+    renderer.tooltip(fn);
+    assert.equal(renderer.tooltip(), fn, 'attaches custom tooltip handler functions');
+    assert.throws(() => renderer.tooltip(null), 'rejects invalid tooltip handler functions');
+  });
 
   test.skip('displays a custom tooltip', async function (assert) {
     const spec = specificationFixture('circular'); // eslint-disable-line
