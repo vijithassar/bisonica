@@ -217,7 +217,7 @@ const layerNode = (s, wrapper) => {
  * @returns {object} Vega Lite specification for a single layer
  */
 const layerSpecification = (s, index) => {
-  if (typeof index === 'undefined') {
+  if (index === undefined) {
     throw new Error(`layer ${index} in specification is undefined`);
   }
 

@@ -85,7 +85,7 @@ const title = (s, channel) => {
 const alternate = (s) => {
   return (selection) => {
     ['x', 'y'].forEach((channel) => {
-      if (typeof s.encoding[channel] === 'undefined') {
+      if (s.encoding[channel] === undefined) {
         return;
       }
 

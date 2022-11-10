@@ -67,7 +67,7 @@ const key = (s, direction) => {
       return false;
     };
 
-    if (typeof state.index() === 'undefined') {
+    if (state.index() === undefined) {
       state.init();
       dispatcher.call('addMarkHighlight', current());
       dispatcher.call('addLegendHighlight', null, category.get(current()));
@@ -165,12 +165,12 @@ const createState = () => {
 
   return {
     init() {
-      if (typeof index === 'undefined') {
+      if (index === undefined) {
         index = 0;
       }
     },
     index(n) {
-      return typeof n === 'undefined' ? index : ((index = n), true);
+      return n === undefined ? index : ((index = n), true);
     },
   };
 };
@@ -254,7 +254,7 @@ const keyboard = (_s) => {
       // fire navigation initialization behaviors on first focus
 
       mark.on('focus', function (event) {
-        if (typeof state.index() === 'undefined') {
+        if (state.index() === undefined) {
           navigator[RIGHT](mark, state);
         }
 

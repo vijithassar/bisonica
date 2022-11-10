@@ -61,7 +61,7 @@ const chart = (s, panelDimensions) => {
   };
 
   renderer.tooltip = (h) => {
-    if (typeof h === 'undefined') {
+    if (h === undefined) {
       return tooltipHandler;
     } else {
       if (typeof h === 'function') {
