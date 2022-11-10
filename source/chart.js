@@ -8,6 +8,7 @@ import { legend } from './legend.js';
 import { margin, position } from './position.js';
 import { marks } from './marks.js';
 import { testAttributes } from './markup.js';
+import { usermeta } from './extensions.js';
 
 /**
  * generate chart rendering function based on
@@ -65,6 +66,7 @@ const chart = (s, panelDimensions) => {
     } else {
       if (typeof h === 'function') {
         tooltipHandler = h;
+        usermeta(s);
         s.usermeta.tooltipHandler = true;
       } else {
         throw new Error(`tooltip handler must be a function, but input was of type ${typeof h}`);

@@ -9,4 +9,15 @@ const extension = (s, key) => {
     }
 };
 
-export { extension };
+/**
+ * initialize usermeta object if it doesn't
+ * already exist
+ * @param {object} s Vega Lite specification
+ */
+const usermeta = (s) => {
+    if (typeof s.usermeta !== 'object') {
+        s.usermeta = {};
+    }
+}
+
+export { extension, usermeta };
