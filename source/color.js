@@ -13,7 +13,7 @@ const colors = (count) => {
         return [defaultColor];
     }
     const swatch = d3.range(count).map((item, index) => {
-        return `hsl(${(360 / count) * index}, 90%, 70%)`;
+        return `hsl(${(360 / count) * index}, 100%, 50%)`;
     });
 
     return swatch;
