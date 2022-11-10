@@ -137,7 +137,7 @@ const _getTooltipField = (s, type) => {
 
     value = getValue(d);
 
-    if (channel === 'color' && typeof value === 'undefined') {
+    if (channel === 'color' && value === undefined) {
       value = category.get(d);
     }
 

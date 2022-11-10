@@ -39,7 +39,7 @@ const encodingValue = (s, channel) => {
   const key = encodingField(s, channel);
   const nesting = key && key.includes('.');
   return (d) => {
-    if (!nesting && typeof d[key] !== 'undefined') {
+    if (!nesting && d[key] !== undefined) {
       return d[key];
     } else if (nesting) {
       return nested(d, key);
@@ -160,11 +160,11 @@ const createEncoders = (s, dimensions, accessors) => {
 
       const value = encodingType(s, channel) === 'temporal' ? parseTime(accessor(d)) : accessor(d);
 
-      if (accessor && typeof scale === 'undefined') {
+      if (accessor && scale === undefined) {
         throw new Error(`accessor function ${channel}() is missing corresponding scale function`);
       }
 
-      if (typeof d === 'undefined' && value !== null) {
+      if (d === undefined && value !== null) {
         throw new Error(`datum for ${channel} is undefined`);
       }
 
@@ -172,13 +172,13 @@ const createEncoders = (s, dimensions, accessors) => {
         throw new Error(`scale function for ${channel} is not available`);
       }
 
-      if (typeof value === 'undefined' && feature(s).isMulticolor()) {
+      if (value === undefined && feature(s).isMulticolor()) {
         throw new Error(`data value for ${channel} is undefined`);
       }
 
       const encoded = scale(value);
 
-      if (typeof encoded === 'undefined') {
+      if (encoded === undefined) {
         throw new Error(`encoded value for ${channel} is undefined`);
       }
 
