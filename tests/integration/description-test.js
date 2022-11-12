@@ -3,7 +3,7 @@ import { specificationFixture, testSelector, render } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-module('unit > description', () => {
+module('integration > description', () => {
     const charts = ['line', 'temporalBar', 'categoricalBar', 'circular', 'stackedBar'];
     charts.forEach((chart) => {
         test(`detects extent for ${chart} chart`, (assert) => {
