@@ -50,5 +50,44 @@ module('unit > description', () => {
         assert.equal(labels.filter((item) => item.includes('minimum value')).length, 2, 'detects multiple minimum values');
         assert.equal(labels.filter((item) => item.includes('maximum value')).length, 2, 'detects multiple maximum values');
     });
+    test(`detects minimum and maximum values in multiple channels`, (assert) => {
+        const s = {
+            title: {
+                text: 'multiple channel extent demos'
+            },
+            mark: {
+                type: 'point'
+            },
+            data: {
+                values: [
+                    {a: 1, b: 1},
+                    {a: 2, b: 1},
+                    {a: 3, b: 3},
+                    {a: 4, b: 5},
+                    {a: 5, b: 5},
+                ]
+            },
+            encoding: {
+                x: {
+                    field: 'a',
+                    type: 'quantitative'
+                },  
+                y: {
+                    field: 'b',
+                    type: 'quantitative'
+                }
+            }
+        };
+
+        const element = render(s);
+
+        const labels = [
+            ...element.querySelectorAll(testSelector('marks-mark-point')),
+        ].map((node) => node.getAttribute('aria-label'));
+        assert.equal(labels.filter((item) => item.includes('minimum value of a')).length, 1, 'detects single minimum value in field a');
+        assert.equal(labels.filter((item) => item.includes('maximum value of a')).length, 1, 'detects single maximum value in field a');
+        assert.equal(labels.filter((item) => item.includes('minimum value of b')).length, 2, 'detects multiple minimum values in field b');
+        assert.equal(labels.filter((item) => item.includes('maximum value of b')).length, 2, 'detects multiple maximum values in field b');
+    });
 
 });

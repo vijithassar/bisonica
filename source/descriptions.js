@@ -1,10 +1,12 @@
 import * as d3 from 'd3';
 import { datum } from './helpers.js';
-import { encodingValue, encodingChannelQuantitative } from './encodings.js';
+import { encodingValue } from './encodings.js';
 import { memoize } from './memoize.js';
 import { getTooltipField, tooltipContent } from './tooltips.js';
 import { data } from './data.js';
 import { feature } from './feature.js';
+
+const delimiter = '; ';
 
 const quantitativeChannels = (s) => {
     const result = Object.entries(s.encoding)
@@ -23,26 +25,26 @@ const quantitativeChannels = (s) => {
  */
 const calculateExtents = (s) => {
     const quantitative = quantitativeChannels(s);
-
     let result = {};
 
-    let values;
-    let value;
-    if (feature(s).isCircular()) {
-        values = data(s);
-        value = (d) => d.value;
-    } else if (feature(s).isLine()) {
-        values = data(s).map((series) => series.values).flat();
-        value = (d) => d.value;
-    } else if (feature(s).isBar()) {
-        values = data(s).flat();
-        value = (d) => d[1] - d[0];
-    } else {
-        values = data(s);
-        value = (d) => d;
-    }
-
     quantitative.forEach((channel) => {
+
+        let values;
+        let value;
+        if (feature(s).isCircular()) {
+            values = data(s);
+            value = (d) => d.value;
+        } else if (feature(s).isLine()) {
+            values = data(s).map((series) => series.values).flat();
+            value = (d) => d.value;
+        } else if (feature(s).isBar()) {
+            values = data(s).flat();
+            value = (d) => d[1] - d[0];
+        } else {
+            values = data(s);
+            value = (d) => encodingValue(s, channel)(d);
+        }
+
         result[channel] = new Map();
         const [min, max] = d3.extent(values, value);
         result[channel].set(min, {type: 'minimum' });
@@ -70,17 +72,17 @@ const extentDescription = (s) => {
         return empty;
     }
     const extents = calculateExtents(s);
-    if (Object.keys(extents).length !== 1) {
-        return empty;
-    }
-    const channel = encodingChannelQuantitative(s);
-    const value = (d) => getTooltipField(s, channel)(d).value;
     return (d) => {
-        const endpoint = extents[channel].get(value(d));
-        if (!endpoint) {
-            return '';
-        } else {
-            return `; ${endpoint.type} value of ${s.encoding[channel].field} field`;
+        const endpoints = quantitativeChannels(s).map((channel) => {
+            const value = (d) => getTooltipField(s, channel)(d).value;
+            const endpoint = extents[channel].get(value(d));
+            if (!endpoint) {
+                return '';
+            }
+            return `${endpoint.type} value of ${s.encoding[channel].field} field`;
+        }).filter(Boolean);
+        if (endpoints.length) {
+            return delimiter + endpoints.join(delimiter);
         }
     };
 };
