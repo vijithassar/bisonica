@@ -235,4 +235,4 @@ const tooltipContent = (s) => {
   };
 };
 
-export { tooltips, tooltipEvent, tooltipContent, tooltipContentData };
+export { tooltips, tooltipEvent, tooltipContent, getTooltipField };

@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import { datum } from './helpers.js';
-import { encodingValue } from './encodings.js';
+import { encodingValue, encodingChannelQuantitative } from './encodings.js';
 import { memoize } from './memoize.js';
-import { tooltipContent } from './tooltips.js';
+import { getTooltipField, tooltipContent } from './tooltips.js';
 import { data } from './data.js';
 import { feature } from './feature.js';
 
@@ -52,14 +52,36 @@ const calculateExtents = (s) => {
     return result;
 };
 
+/**
+ * return an empty string as a default value
+ * @returns {string} empty string
+ */
+const empty = () => ''
+
+/**
+ * render descriptive text highlighting the minimum
+ * and maximum values in the data set
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} extent description
+ */
 const extentDescription = (s) => {
     const disabled = s.usermeta?.description?.extent === false;
-    if (disabled) {
-        return () => '';
+    if (disabled || s.layer) {
+        return empty;
     }
     const extents = calculateExtents(s);
-    return () => {
-        return '';
+    if (Object.keys(extents).length !== 1) {
+        return empty;
+    }
+    const channel = encodingChannelQuantitative(s);
+    const value = (d) => getTooltipField(s, channel)(d).value;
+    return (d) => {
+        const endpoint = extents[channel].get(value(d));
+        if (!endpoint) {
+            return '';
+        } else {
+            return `; ${endpoint.type} value of ${s.encoding[channel].field} field`;
+        }
     };
 };
 
