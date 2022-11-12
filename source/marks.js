@@ -371,7 +371,7 @@ const pointMarks = (s, dimensions) => {
       return classes.join(' ');
     });
 
-    const getPointData = feature(s).isLine() ? (d) => d.values : pointData(values(s));
+    const getPointData = feature(s).isLine() ? (d) => d.values : pointData(s);
 
     const points = marks
       .selectAll('circle')
