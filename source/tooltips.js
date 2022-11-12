@@ -196,7 +196,7 @@ const tooltipContentAll = memoize(_tooltipContentAll);
  */
 const tooltipContentData = (s) => {
   return (d) => {
-    if (!Object.keys(d).length || !s.mark.tooltip) {
+    if (!Object.keys(d).length) {
       return;
     }
 
@@ -235,4 +235,4 @@ const tooltipContent = (s) => {
   };
 };
 
-export { tooltips, tooltipEvent, tooltipContent, tooltipContentData };
+export { tooltips, tooltipEvent, tooltipContent, getTooltipField };

@@ -5,7 +5,7 @@ const { module, test } = qunit;
 
 module('integration > aria', function () {
 
-  test('aria-label matches tooltip by default', (assert) => {
+  test('aria-label includes tooltip by default', (assert) => {
     const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
@@ -15,12 +15,12 @@ module('integration > aria', function () {
     const marks = [...element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
     const titles = marks.map((mark) => mark.querySelector(testSelector('mark-title')));
-    const match = labels.every((label, index) => label === titles[index].textContent);
+    const match = labels.every((label, index) => label.includes(titles[index].textContent));
 
     assert.ok(match);
   });
 
-  test('aria-label matches tooltip when tooltip channel is specified', (assert) => {
+  test('aria-label includes tooltip when tooltip channel is specified', (assert) => {
     const spec = specificationFixture('circular');
 
     spec.usermeta = { tooltipHandler: false };
@@ -33,7 +33,7 @@ module('integration > aria', function () {
     const marks = [...element.querySelectorAll(testSelector('mark'))];
     const labels = marks.map((mark) => mark.getAttribute('aria-label'));
     const titles = marks.map((mark) => mark.querySelector(testSelector('mark-title')).textContent);
-    const match = labels.every((label, index) => label === titles[index]);
+    const match = labels.every((label, index) => label.includes(titles[index]));
 
     assert.ok(match);
   });
