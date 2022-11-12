@@ -71,7 +71,7 @@ const empty = () => ''
  * @param {object} s Vega Lite specification
  * @returns {function(object)} extent description
  */
-const extentDescription = (s) => {
+const _extentDescription = (s) => {
     const disabled = s.usermeta?.description?.extent === false;
     if (disabled || s.layer) {
         return empty;
@@ -91,6 +91,7 @@ const extentDescription = (s) => {
         }
     };
 };
+const extentDescription = memoize(_extentDescription);
 
 /**
  * compute the text string to describe a mark
