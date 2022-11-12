@@ -6,10 +6,19 @@ import { feature } from './feature.js';
 import { getUrl, mark, noop } from './helpers.js';
 import { layerMatch, layerNode } from './views.js';
 
-const UP = 'up';
-const RIGHT = 'right';
-const DOWN = 'down';
-const LEFT = 'left';
+/**
+ * create an object matching data dimensions to keys
+ * @param {object} s Vega Lite specification
+ * @returns {object} key mapping
+ */
+const directions = (s) => {
+  return {
+    UP: 'up',
+    RIGHT: 'right',
+    DOWN: 'down',
+    LEFT: 'left',
+  };
+};
 
 const series = {
   match(node, mark, state) {
@@ -81,7 +90,10 @@ const key = (s, direction) => {
     let step;
     let cycle;
 
+    const { UP, RIGHT, DOWN, LEFT } = directions(s);
+
     if (feature(s).isCartesian()) {
+
       if (direction === RIGHT) {
         step = (node, index) => {
           return series.match(node, mark, state) && index > state.index() && !isEmpty(node);
@@ -191,6 +203,7 @@ const stopScroll = (event) => {
  * @returns {('up'|'right'|'down'|'left')} shorter key name
  */
 const keyMap = (key) => {
+  const { UP, RIGHT, DOWN, LEFT } = directions(s);
   const map = {
     ArrowUp: UP,
     ArrowRight: RIGHT,
@@ -225,6 +238,9 @@ const keyboard = (_s) => {
     }
 
     const navigation = (wrapper) => {
+
+      const { UP, RIGHT, DOWN, LEFT } = directions(s);
+
       let navigator = {};
 
       navigator[LEFT] = key(s, LEFT);
