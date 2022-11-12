@@ -9,7 +9,7 @@ import {
 } from './encodings.js';
 import { metadata } from './metadata.js';
 import { feature } from './feature.js';
-import { identity, missingSeries, nested, values } from './helpers.js';
+import { missingSeries, nested, values } from './helpers.js';
 import { memoize } from './memoize.js';
 import { parseTime } from './time.js';
 
@@ -236,15 +236,18 @@ const _lineData = (s) => {
 const lineData = memoize(_lineData);
 
 /**
- * retrieve data points used for text marks
+ * retrieve data points used for point marks
  * @param {object} s Vega Lite specification
- * @returns {array} data points for text marks
+ * @returns {array} data points for point marks
  */
-const textData = (s) => {
-  return s.data.values;
-};
+const pointData = values;
 
-const pointData = identity;
+/**
+ * retrieve data points used for generic marks
+ * @param {object} s Vega Lite specification
+ * @returns {array} data points for generic marks
+ */
+const genericData = values;
 
 /**
  * wrapper function around data preprocessing functionality
@@ -258,10 +261,8 @@ const data = (s) => {
     return lineData(s);
   } else if (feature(s).isCircular()) {
     return circularData(s);
-  } else if (feature(s).isText(s)) {
-    return textData(s);
-  } else if (feature(s).hasPoints() && !feature(s).isLine()) {
-    return pointData(s);
+  } else {
+    return genericData(s);
   }
 };
 
