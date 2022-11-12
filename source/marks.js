@@ -385,6 +385,8 @@ const pointMarks = (s, dimensions) => {
     if (!feature(s).isLine()) {
       points.style('stroke', encoders.color);
 
+      points.attr('aria-label', (d) => markDescription(s)(d));
+
       if (s.mark?.filled) {
         points.style('fill', encoders.color);
       } else {
