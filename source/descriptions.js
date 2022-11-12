@@ -88,19 +88,31 @@ const extentDescription = (s) => {
 /**
  * compute the text string to describe a mark
  * @param {object} s Vega Lite specification
- * @returns {function} mark description computation function
+ * @returns {function} description computation function
  */
-const _markDescription = (s) => {
+const _description = (s) => {
     return (d) => {
-        if (s.mark.aria === false) {
-            return;
-        } else if (s.encoding.description) {
+        if (s.encoding.description) {
             return encodingValue(s, 'description')(datum(s, d));
         } else {
             return `${tooltipContent(s)(d)}${extentDescription(s)(d)}`;
         }
     };
 };
-const markDescription = memoize(_markDescription);
+const description = memoize(_description);
+
+/**
+ * render a description into the DOM
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} mark description renderer
+ */
+const markDescription = (s) => {
+    return (d) => {
+        if (s.mark.tooltip === false || s.mark.aria === false) {
+            return;
+        }
+        return description(s)(d);
+    };
+};
 
 export { markDescription }
