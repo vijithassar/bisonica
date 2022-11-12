@@ -27,21 +27,26 @@ const calculateExtents = (s) => {
     const quantitative = quantitativeChannels(s);
     let result = {};
 
-    quantitative.forEach((channel) => {
+    let values;
+    let value;
+    if (feature(s).isCircular()) {
+        values = data(s);
+        value = (d) => d.value;
+    } else if (feature(s).isLine()) {
+        values = data(s).map((series) => series.values).flat();
+        value = (d) => d.value;
+    } else if (feature(s).isBar()) {
+        values = data(s).flat();
+        value = (d) => d[1] - d[0];
+    } else {
+        values = data(s);
+    }
 
-        let values;
-        let value;
-        if (feature(s).isCircular()) {
-            values = data(s);
-            value = (d) => d.value;
-        } else if (feature(s).isLine()) {
-            values = data(s).map((series) => series.values).flat();
-            value = (d) => d.value;
-        } else if (feature(s).isBar()) {
-            values = data(s).flat();
-            value = (d) => d[1] - d[0];
-        } else {
-            values = data(s);
+    quantitative.forEach((channel) => {
+        // if the value function can't be determined before
+        // this point, there may be multiple quantitative
+        // encodings
+        if (!value) {
             value = (d) => encodingValue(s, channel)(d);
         }
 
