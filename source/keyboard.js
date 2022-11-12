@@ -33,7 +33,7 @@ const series = {
   },
 };
 
-const x = {
+const lane = {
   position(node) {
     return Math.round(node.getBoundingClientRect().left);
   },
@@ -106,14 +106,14 @@ const key = (s, direction) => {
 
       if (direction === UP) {
         step = (node) =>
-          series.later(node, mark, state) && x.match(node, mark, state) && !isEmpty(node);
+          series.later(node, mark, state) && lane.match(node, mark, state) && !isEmpty(node);
         cycle = (node) =>
-          series.earlier(node, mark, state) && x.match(node, mark, state) && !isEmpty(node);
+          series.earlier(node, mark, state) && lane.match(node, mark, state) && !isEmpty(node);
       }
 
       if (direction === DOWN) {
         const column = [...mark.nodes()].filter((node) => {
-          return x.match(node, mark, state) && !isEmpty(node);
+          return lane.match(node, mark, state) && !isEmpty(node);
         });
 
         step = (node) => node === column[column.indexOf(current()) - 1];
