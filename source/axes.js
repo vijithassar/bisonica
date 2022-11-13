@@ -224,7 +224,6 @@ const y = (s, dimensions) => {
   }
   return (selection) => {
     const scales = parseScales(s, dimensions);
-    const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0;
     const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0;
 
     const axis = d3.axisLeft(scales.y);
@@ -265,8 +264,9 @@ const y = (s, dimensions) => {
     }
 
     // extend y axis ticks across the whole chart
-    if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y') {
-      const tickEnd = feature(s).hasEncodingX() ? scales.x.range()[1] + barOffset : null;
+    if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y' && feature(s).hasEncodingX()) {
+      const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0;
+      const tickEnd = scales.x.range()[1] + offset;
       selection
         .select('.y .axis')
         .selectAll('.tick')
