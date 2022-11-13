@@ -24,11 +24,13 @@ const init = (s, dimensions) => {
     svg.attr('width', dimensions.x);
     svg.attr('role', 'document');
 
-    try {
-      svg.attr('aria-label', s.title.text);
-    } catch {
+    if (!s.title.text) {
       throw new Error('specification title is required');
     }
+
+    const label = [s.title.text, s.title.subtitle].filter(Boolean).join(' - ');
+
+    svg.attr('aria-label', label);
 
     if (feature(s).hasAxis()) {
       const axes = wrapper.append('g').classed('axes', true);
