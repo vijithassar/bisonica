@@ -5,6 +5,7 @@ import { memoize } from './memoize.js';
 import { getTooltipField, tooltipContent } from './tooltips.js';
 import { data } from './data.js';
 import { feature } from './feature.js';
+import { extension } from './extensions.js';
 
 const delimiter = '; ';
 
@@ -72,7 +73,7 @@ const empty = () => ''
  * @returns {function(object)} extent description
  */
 const _extentDescription = (s) => {
-    const disabled = s.usermeta?.description?.extent === false;
+    const disabled = extension(s, 'description')?.extent === false;
     if (disabled || s.layer) {
         return empty;
     }
