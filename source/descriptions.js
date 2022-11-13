@@ -88,6 +88,8 @@ const _extentDescription = (s) => {
         }).filter(Boolean);
         if (endpoints.length) {
             return delimiter + endpoints.join(delimiter);
+        } else {
+            return '';
         }
     };
 };
