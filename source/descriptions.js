@@ -74,7 +74,7 @@ const empty = () => ''
  */
 const _extentDescription = (s) => {
     const disabled = extension(s, 'description')?.extent === false;
-    if (disabled || s.layer) {
+    if (disabled || feature(s).hasLayers()) {
         return empty;
     }
     const extents = calculateExtents(s);

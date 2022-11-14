@@ -284,7 +284,7 @@ const y = (s, dimensions) => {
  */
 const axes = (_s, dimensions) => {
   const test = (s) => {
-    if (!_s.layer) {
+    if (feature(_s).hasLayers()) {
       return s;
     } else {
       return s.encoding?.x?.type && s.encoding?.y?.type;
