@@ -133,7 +133,7 @@ const color = (_s) => {
  * @returns {function} renderer
  */
 const legend = (s) => {
-  if ((feature(s).hasLegend() && feature(s).isMulticolor()) || feature(s).isCircular()) {
+  if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
     return color(s);
   } else {
     return noop;

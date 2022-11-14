@@ -5,7 +5,7 @@ const { module, test } = qunit;
 
 module('integration > legend', function () {
   test('renders a chart with legend', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('circular');
     const element = render(spec);
 
     assert.ok(element.querySelector(testSelector('legend')));
@@ -18,7 +18,7 @@ module('integration > legend', function () {
   });
 
   test('renders a chart with legend explicitly omitted', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('circular');
 
     spec.encoding.color.legend = null;
     const element = render(spec);
@@ -27,7 +27,7 @@ module('integration > legend', function () {
   });
 
   test('renders a legend with all categories', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('circular');
     const categories = [...new Set(spec.data.values.map((item) => item.group))];
 
     const element = render(spec);
@@ -36,13 +36,13 @@ module('integration > legend', function () {
   });
 
   test.skip('partitions legend into popup when content overflows', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('circular');
     const element = render(spec);
     assert.ok(element.querySelector(testSelector('legend-items-more')));
   });
 
   test('renders legend in full when content does not overflow', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('circular');
 
     const ids = new Map();
 
