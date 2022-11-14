@@ -45,7 +45,7 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
  * @returns {function} renderer
  */
 const color = (_s) => {
-  let s = _s.layer ? layerPrimary(_s) : _s;
+  let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s;
 
   const renderer = (selection) => {
     try {
