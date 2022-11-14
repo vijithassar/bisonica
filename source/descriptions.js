@@ -129,10 +129,12 @@ const markDescription = (s) => {
 /**
  * chart description
  * @param {object} s Vega Lite specification
- * @returns {string} chart type
+ * @returns {string|null} chart type
  */
 const chartDescription = (s) => {
-    if (feature(s).isBar()) {
+    if (feature(s).hasLayers()) {
+        return 'chart';
+    } else if (feature(s).isBar()) {
         return 'bar chart';
     } else if (feature(s).isCircular()) {
         if (s.mark && s.mark.innerRadius) {
@@ -147,6 +149,7 @@ const chartDescription = (s) => {
     } else if (feature(s).hasPoints && !feature(s).isLine() && feature(s).hasEncodingX() && feature(s).hasEncodingY()) {
         return 'scatterplot';
     }
+    return null;
 };
 
 /**
