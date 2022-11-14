@@ -1,4 +1,4 @@
-const lineChartSpec = {
+const multilineChartSpec = {
   $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
   title: { text: 'Line Chart Example' },
   mark: {
@@ -716,4 +716,4 @@ const lineChartSpec = {
   },
 };
 
-export { lineChartSpec };
+export { multilineChartSpec };
