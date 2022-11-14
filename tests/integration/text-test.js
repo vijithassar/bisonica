@@ -54,7 +54,7 @@ module('integration > text', function () {
       assert.equal(
         matchingValues.length,
         matchingContent.length,
-        `group ${section} has ${matchingValues.length} data values and ${matchingContent.length} mark nodes`,
+        `data category ${section} has ${matchingValues.length} values and ${matchingContent.length} mark nodes`,
       );
     });
 
