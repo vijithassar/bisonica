@@ -3,11 +3,11 @@ const categoricalBarChartSpec = {
   title: { text: 'Categorical Bar Chart' },
   data: {
     values: [
-      { label: 'team-bear', value: 31 },
-      { label: 'rebel-jackal', value: 25 },
-      { label: 'berserk-bear', value: 25 },
-      { label: 'viking-jackal', value: 25 },
-      { label: 'stalker-panda', value: 24 },
+      { label: 'rabbit', value: 31 },
+      { label: 'cow', value: 25 },
+      { label: 'snake', value: 25 },
+      { label: 'elephant', value: 25 },
+      { label: 'mouse', value: 24 },
     ],
   },
   mark: { type: 'bar', tooltip: true },

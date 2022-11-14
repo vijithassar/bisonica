@@ -33,11 +33,11 @@ module('integration > keyboard', function () {
     `);
 
     const steps = [
-      { key: RIGHT, content: 'value 167\ngroup Custom Intelligence' },
-      { key: RIGHT, content: 'value 29\ngroup falcon-intel' },
-      { key: RIGHT, content: 'value 20\ngroup defense-evasion' },
-      { key: LEFT, content: 'value 29\ngroup falcon-intel' },
-      { key: RIGHT, content: 'value 20\ngroup defense-evasion' },
+      { key: RIGHT, content: 'value 167\ngroup A' },
+      { key: RIGHT, content: 'value 29\ngroup B' },
+      { key: RIGHT, content: 'value 20\ngroup I' },
+      { key: LEFT, content: 'value 29\ngroup B' },
+      { key: RIGHT, content: 'value 20\ngroup I' },
     ];
 
     const assertions = steps.length;
