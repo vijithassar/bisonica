@@ -126,4 +126,46 @@ const markDescription = (s) => {
     };
 };
 
-export { markDescription }
+/**
+ * chart description
+ * @param {object} s Vega Lite specification
+ * @returns {string|null} chart type
+ */
+const chartDescription = (s) => {
+    if (feature(s).hasLayers()) {
+        return 'chart';
+    } else if (feature(s).isBar()) {
+        return 'bar chart';
+    } else if (feature(s).isCircular()) {
+        if (s.mark && s.mark.innerRadius) {
+            return 'donut chart';
+        } else {
+            return 'pie chart';
+        }
+    } else if (feature(s).isLine()) {
+        return 'line chart';
+    } else if (feature(s).isArea()) {
+        return 'area chart';
+    } else if (feature(s).hasPoints && !feature(s).isLine() && feature(s).hasEncodingX() && feature(s).hasEncodingY()) {
+        return 'scatterplot';
+    }
+    return null;
+};
+
+/**
+ * chart name which includes title and subtitle
+ * @param {object} s Vega Lite specification
+ * @returns {string} chart title
+ */
+const chartName = (s) => {
+    if (!s.title.text) {
+      throw new Error('specification title is required');
+    }
+    if (s.description) {
+        return s.description;
+    } else {
+        return [s.title.text, s.title.subtitle].filter(Boolean).join(' - ');
+    }
+};
+
+export { markDescription, chartName, chartDescription }
