@@ -24,7 +24,7 @@ const init = (s, dimensions) => {
     svg.attr('width', dimensions.x);
     svg.attr('role', 'document');
 
-    if (!s.title.text) {
+    if (!s.title?.text) {
       throw new Error('specification title is required');
     }
 
