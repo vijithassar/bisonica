@@ -4,6 +4,7 @@ import { circularChartSpec } from '../fixtures/circular.js';
 import { dotPlotSpec } from '../fixtures/dot-plot.js';
 import { groupedBarChartSpec } from '../fixtures/grouped-bar.js';
 import { lineChartSpec } from '../fixtures/line.js';
+import { multilineChartSpec } from '../fixtures/multiline.js';
 import { rulesSpec } from '../fixtures/rules.js';
 import { scatterPlotSpec } from '../fixtures/scatter-plot.js';
 import { stackedBarChartSpec } from '../fixtures/stacked-bar.js';
@@ -66,6 +67,8 @@ export function specificationFixture(type) {
     spec = circularChartSpec;
   } else if (type === 'line') {
     spec = lineChartSpec;
+  } else if (type === 'multiline') {
+    spec = multilineChartSpec;
   } else if (type === 'categoricalBar') {
     spec = categoricalBarChartSpec;
   } else if (type === 'groupedBar') {

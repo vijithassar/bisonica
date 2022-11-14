@@ -6,10 +6,10 @@ import { specificationFixture } from '../test-helpers.js';
 
 const { module, test } = qunit;
 
-const lineChartSpec = specificationFixture('line');
+const lineChartSpec = specificationFixture('multiline');
 const categoricalBarChartSpec = specificationFixture('categoricalBar');
 
-const ordinalSpec = specificationFixture('line');
+const ordinalSpec = specificationFixture('multiline');
 ordinalSpec.encoding.color.type = 'ordinal';
 
 module('unit > scales', (hooks) => {

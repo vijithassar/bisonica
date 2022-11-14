@@ -68,7 +68,7 @@ module('unit > data', () => {
   });
 
   test('compiles line chart data', (assert) => {
-    const spec = specificationFixture('line');
+    const spec = specificationFixture('multiline');
     const dailyTotals = data(spec, encodingField(spec, 'x'));
     const groupNames = dailyTotals.every(
       (item) => typeof item[encodingField(spec, 'color')] === 'string',
