@@ -39,7 +39,7 @@
     "jsdom": "^20.0.0",
     "jsdom-global": "^3.0.2",
     "nanobench": "^3.0.0",
-    "qunit": "^2.19.1",
+    "qunit": "^2.19.3",
     "standard-version": "^9.5.0",
     "string.prototype.matchall": "^4.0.7",
     "stylelint": "^14.9.1",
