@@ -1,6 +1,7 @@
 import { WRAPPER_CLASS } from './config.js';
 import { feature } from './feature.js';
 import { extension } from './extensions.js';
+import { chartName, chartDescription } from './descriptions.js';
 
 /**
  * prepare the DOM of a specified element for rendering a chart
@@ -28,9 +29,8 @@ const init = (s, dimensions) => {
       throw new Error('specification title is required');
     }
 
-    const label = [s.title.text, s.title.subtitle].filter(Boolean).join(' - ');
-
-    svg.attr('aria-label', label);
+    svg.attr('aria-label', chartName(s));
+    svg.attr('aria-description', chartDescription(s));
 
     if (feature(s).hasAxis()) {
       const axes = wrapper.append('g').classed('axes', true);
