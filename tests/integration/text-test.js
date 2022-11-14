@@ -38,23 +38,23 @@ module('integration > text', function () {
     const spec = specificationFixture('scatterPlot');
 
     spec.mark = { type: 'text' };
-    spec.encoding.color = { field: 'group', type: 'nominal' };
-    spec.encoding.text = { field: 'group', type: 'nominal' };
+    spec.encoding.color = { field: 'section', type: 'nominal' };
+    spec.encoding.text = { field: 'section', type: 'nominal' };
 
     const element = render(spec);
 
     const marks = [...element.querySelectorAll(testSelector('mark'))];
 
-    const groups = [...new Set(spec.data.values.map((item) => item.group)).values()];
+    const sections = [...new Set(spec.data.values.map((item) => item.section)).values()];
 
-    groups.forEach((group) => {
-      const matchingValues = spec.data.values.filter((item) => item.group === group);
-      const matchingContent = marks.filter((mark) => mark.textContent === group);
+    sections.forEach((section) => {
+      const matchingValues = spec.data.values.filter((item) => item.section === section);
+      const matchingContent = marks.filter((mark) => mark.textContent === section);
 
       assert.equal(
         matchingValues.length,
         matchingContent.length,
-        `group ${group} has ${matchingValues.length} data values and ${matchingContent.length} mark nodes`,
+        `group ${section} has ${matchingValues.length} data values and ${matchingContent.length} mark nodes`,
       );
     });
 
