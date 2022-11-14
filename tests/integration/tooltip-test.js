@@ -283,8 +283,8 @@ module('integration > tooltips', function () {
 
     assert.ok(tooltipContent.includes('group'), 'tooltip content includes key "group"');
     assert.ok(
-      tooltipContent.includes('Custom Intelligence'),
-      'tooltip content includes value "Custom Intelligence"',
+      tooltipContent.includes('A'),
+      'tooltip content includes value "A"',
     );
     assert.ok(tooltipContent.includes('value'), 'tooltip content includes key "label"');
     assert.ok(tooltipContent.includes('167'), 'tooltip content includes value "167"');
