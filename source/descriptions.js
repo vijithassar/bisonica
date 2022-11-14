@@ -158,7 +158,11 @@ const chartName = (s) => {
     if (!s.title.text) {
       throw new Error('specification title is required');
     }
-    return [s.title.text, s.title.subtitle].filter(Boolean).join(' - ');
+    if (s.description) {
+        return s.description;
+    } else {
+        return [s.title.text, s.title.subtitle].filter(Boolean).join(' - ');
+    }
 };
 
 export { markDescription, chartName, chartDescription }
