@@ -1,3 +1,4 @@
+import * as d3 from 'd3';
 import * as helpers from '../../source/helpers.js';
 import qunit from 'qunit';
 
@@ -23,5 +24,14 @@ module('unit > helpers', () => {
     assert.equal(left.x, radius * -1);
     assert.equal(down.y, radius * -1);
     assert.equal(loop.x, right.x);
+  });
+  test('renders to a detached node', (assert) => {
+    const renderer = (selection) => {
+      selection.append('g').classed('test', true).append('circle').attr('r', 10);
+    };
+    const selection = d3.create('svg');
+    selection.call(helpers.detach(renderer));
+    assert.ok(selection.select('g.test').size(), 1);
+    assert.ok(selection.select('circle').size(), 1);
   });
 });

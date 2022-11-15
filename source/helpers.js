@@ -180,6 +180,25 @@ const polarToCartesian = (radius, angle) => {
   return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) };
 };
 
+/**
+ * run a rendering function using a detached node
+ * and then transfer the results to the original
+ * selection
+ *
+ * this will not work properly if the rendering function
+ * depends on accurate DOM measurements or reflow, such as
+ * by using scrollTop or .getBoundingClientRect()
+ *
+ * @returns {function(object)} rendering function which uses detached node
+ */
+const detach = (fn, ...rest) => {
+  return (selection) => {
+    const detached = d3.create(`svg:${selection.node().tagName}`);
+    detached.call(fn, ...rest);
+    selection.append(() => detached.node());
+  };
+};
+
 export {
   abbreviateNumbers,
   mark,
@@ -196,4 +215,5 @@ export {
   isDiscrete,
   overlap,
   polarToCartesian,
+  detach
 };
