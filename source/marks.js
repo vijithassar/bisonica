@@ -380,9 +380,7 @@ const pointMarks = (s, dimensions) => {
           category.set(this, categoryValue);
         }
       })
-      .attr('aria-label', (d) => {
-        return markDescription(s)(d);
-      })
+      .attr('aria-label', markDescription(s))
       .attr('cx', encoders.x)
       .attr('cy', encoders.y)
       .attr('r', radius)
@@ -392,7 +390,7 @@ const pointMarks = (s, dimensions) => {
     if (!feature(s).isLine()) {
       points.style('stroke', encoders.color);
 
-      points.attr('aria-label', (d) => markDescription(s)(d));
+      points.attr('aria-label', markDescription(s));
 
       if (s.mark?.filled) {
         points.style('fill', encoders.color);
@@ -516,9 +514,7 @@ const circularMarks = (s, dimensions) => {
 
     mark
       .attr('d', arc)
-      .attr('aria-label', (d) => {
-        return markDescription(s)(d);
-      })
+      .attr('aria-label', markDescription(s))
       .style('fill', encoders.color)
       .classed('link', (d) => {
         return encodingValue(s, 'href')(datum(s, d))
@@ -598,9 +594,7 @@ const ruleMarks = (s, dimensions) => {
       .attr('class', 'mark rule')
       .attr('role', 'region')
       .attr('aria-roledescription', 'data point')
-      .attr('aria-label', (d) => {
-        return markDescription(s)(d);
-      })
+      .attr('aria-label', markDescription(s))
       .style('fill', encoders.color);
   };
 
