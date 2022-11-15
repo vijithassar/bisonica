@@ -11,7 +11,7 @@ import {
 } from './encodings.js';
 import { data, pointData } from './data.js';
 import { markDescription } from './descriptions.js';
-import { datum, isDiscrete, key, missingSeries, values } from './helpers.js';
+import { detach, datum, isDiscrete, key, missingSeries, values } from './helpers.js';
 import { feature } from './feature.js';
 import { memoize } from './memoize.js';
 import { parseScales } from './scales.js';
@@ -667,7 +667,7 @@ const textMarks = (s, dimensions) => {
  * @param {object} dimensions chart dimensions
  * @returns {function} mark renderer
  */
-const marks = (s, dimensions) => {
+const _marks = (s, dimensions) => {
   try {
     if (feature(s).isBar()) {
       return barMarks(s, dimensions);
@@ -689,5 +689,6 @@ const marks = (s, dimensions) => {
     throw error;
   }
 };
+const marks = (s, dimensions) => detach(_marks(s, dimensions));
 
 export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category };
