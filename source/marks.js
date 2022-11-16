@@ -73,11 +73,14 @@ const _barWidth = (s, dimensions) => {
   if (customDomain && !temporal) {
     count = customDomain.length;
   } else if (temporal) {
+    let endpoints;
     // this check is logically the same as parseScales()[channel].domain()
     // but writing it that way would be circular
-    const domain = customDomain?.map(parseTime);
-    const extent = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
-    const endpoints = domain || extent;
+    if (customDomain) {
+      endpoints = customDomain?.map(parseTime);
+    } else {
+      endpoints = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
+    }
     const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1]);
     count = periods;
   } else {
