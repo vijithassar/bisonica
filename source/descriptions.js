@@ -97,12 +97,15 @@ const _extentDescription = (s) => {
 const extentDescription = memoize(_extentDescription);
 
 /**
- * compute the text string to describe a mark
+ * render a description into the DOM
  * @param {object} s Vega Lite specification
- * @returns {function} description computation function
+ * @returns {function(object)} mark description renderer
  */
-const _description = (s) => {
+const _markDescription = (s) => {
     return (d) => {
+        if (s.mark.aria === false) {
+            return;
+        }
         if (s.encoding.description) {
             return encodingValue(s, 'description')(datum(s, d));
         } else {
@@ -110,21 +113,7 @@ const _description = (s) => {
         }
     };
 };
-const description = memoize(_description);
-
-/**
- * render a description into the DOM
- * @param {object} s Vega Lite specification
- * @returns {function(object)} mark description renderer
- */
-const markDescription = (s) => {
-    return (d) => {
-        if (s.mark.tooltip === false || s.mark.aria === false) {
-            return;
-        }
-        return description(s)(d);
-    };
-};
+const markDescription = memoize(_markDescription);
 
 /**
  * chart description
