@@ -119,7 +119,7 @@ const description = memoize(_description);
  */
 const markDescription = (s) => {
     return (d) => {
-        if (s.mark.tooltip === false || s.mark.aria === false) {
+        if (s.mark.aria === false) {
             return;
         }
         return description(s)(d);
