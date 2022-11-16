@@ -175,7 +175,13 @@ const stackEncoders = (s, dimensions) => {
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const { x, y, height, width } = stackEncoders(s, dimensions);
+  const encoders = stackEncoders(s, dimensions);
+
+  const y = feature(s).hasEncodingY() ? encoders.y : 0;
+  const x = feature(s).hasEncodingX() ? encoders.x : 0;
+  const description = markDescription(s);
+  const hasLink = encodingValue(s, 'href');
+  const tooltipFn = tooltips(s);
 
   const markRenderer = (selection) => {
     const rect = selection.append(markSelector(s));
@@ -185,15 +191,13 @@ const barMark = (s, dimensions) => {
       .attr('aria-roledescription', 'data point')
       .attr('tabindex', -1)
       .attr('class', 'block mark')
-      .attr('y', feature(s).hasEncodingY() ? y : 0)
-      .attr('x', feature(s).hasEncodingX() ? x : 0)
-      .attr('aria-label', (d) => {
-        return markDescription(s)(d);
-      })
-      .attr('height', height)
-      .attr('width', width)
-      .classed('link', encodingValue(s, 'href'))
-      .call(tooltips(s));
+      .attr('y', y)
+      .attr('x', x)
+      .attr('aria-label', description)
+      .attr('height', encoders.height)
+      .attr('width', encoders.width)
+      .classed('link', hasLink)
+      .call(tooltipFn);
   };
 
   return markRenderer;
