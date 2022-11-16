@@ -99,11 +99,12 @@ const tooltip = (selection, s) => {
  * @returns {function} tooltip rendering function
  */
 const tooltips = (s) => {
+  if (s.usermeta?.tooltipHandler) {
+    return noop;
+  }
   return (selection) => {
     selection.each(function () {
-      if (!s.usermeta?.tooltipHandler) {
-        tooltip(d3.select(this), s);
-      }
+      tooltip(d3.select(this), s);
     });
   };
 };
