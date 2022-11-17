@@ -16,6 +16,22 @@ const stops = {
 }
 
 /**
+ * generate a palette of accessible colors for use
+ * as a categorical scale
+ * @param {number} count number of colors
+ * @param {string} variant palette variant
+ * @returns {string[]} color palette
+ */
+const accessibleColors = (count, variant) => {
+	const interpolator = d3.piecewise(d3.interpolateRgb.gamma(2.2), stops[variant])
+	const step = 1 / count
+	const values = Array.from({ length: count }).map((_, index) => {
+		return interpolator(index * step)
+	})
+	return values
+}
+
+/**
  * create a color palette from the available hue range
  * for use as a categorical scale
  * @param {number} count number of colors
