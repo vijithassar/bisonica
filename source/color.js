@@ -61,6 +61,23 @@ const standardColors = count => {
 }
 
 /**
+ * alternate colors
+ * @param {string[]} colors color palette
+ * @returns {string[]} alternating color palette
+ */
+const alternate = colors => {
+	if (colors.length === 1) {
+		return colors
+	}
+	const count = colors.length
+	const midpoint = Math.floor(count * 0.5)
+	const a = colors.slice(0, midpoint)
+	const b = colors.slice(midpoint)
+	const ordered = d3.zip(a, b).flat()
+	return ordered
+}
+
+/**
  * generate a categorical color scale
  * @param {object} s Vega Lite specification
  * @param {number} count number of colors
@@ -68,9 +85,9 @@ const standardColors = count => {
 const colors = (s, count) => {
 	const variant = extension(s, 'color')?.variant
 	if (variant) {
-		return accessibleColors(count, variant)
+		return alternate(accessibleColors(count, variant))
 	} else {
-		return standardColors(count)
+		return alternate(standardColors(count))
 	}
 }
 
