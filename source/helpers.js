@@ -158,11 +158,12 @@ const isDiscrete = (s, channel) => {
  * @returns {boolean} overlap
  */
 const overlap = (nodes) => {
-  const pairs = d3.cross(nodes, nodes).filter(([a, b]) => a !== b);
-
-  return pairs.some(([aNode, bNode]) => {
-    const a = aNode.getBoundingClientRect();
-    const b = bNode.getBoundingClientRect();
+  return [...nodes].some((node, index) => {
+    if (index === nodes.length - 1) {
+      return false;
+    }
+    const a = node.getBoundingClientRect();
+    const b = nodes[index + 1]?.getBoundingClientRect();
     const overlap = !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
 
     return overlap;
