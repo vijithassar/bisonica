@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { extension } from './extensions.js'
 
 const defaultColor = 'steelblue'
 
@@ -23,6 +24,9 @@ const stops = {
  * @returns {string[]} color palette
  */
 const accessibleColors = (count, variant) => {
+	if (!stops[variant]) {
+		throw new Error(`unknown color palette "${variant}"`)
+	}
 	const interpolator = d3.piecewise(d3.interpolateRgb.gamma(2.2), stops[variant])
 	const step = 1 / count
 	const values = Array.from({ length: count }).map((_, index) => {
@@ -32,12 +36,12 @@ const accessibleColors = (count, variant) => {
 }
 
 /**
- * create a color palette from the available hue range
- * for use as a categorical scale
+ * create a standard color palette from the entire
+ * available hue range for use as a categorical scale
  * @param {number} count number of colors
  * @returns {array} color palette
  */
-const colors = count => {
+const standardColors = count => {
 	if (!count || count === 1) {
 		return [defaultColor]
 	}
@@ -54,6 +58,20 @@ const colors = count => {
 	const b = swatch.slice(midpoint)
 	const ordered = d3.zip(a, b).flat()
 	return ordered
+}
+
+/**
+ * generate a categorical color scale
+ * @param {object} s Vega Lite specification
+ * @param {number} count number of colors
+ */
+const colors = (s, count) => {
+	const variant = extension(s, 'color')?.variant
+	if (variant) {
+		return accessibleColors(count, variant)
+	} else {
+		return standardColors(count)
+	}
 }
 
 export { colors }

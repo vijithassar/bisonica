@@ -18,4 +18,13 @@ module('unit > color', () => {
 		const { color } = parseScales(s)
 		assert.equal(color(), newColor)
 	})
+	test('generates accessible color palettes', assert => {
+		const range = s => parseScales(s).color.range().join(' ')
+		const standard = range(specificationFixture('circular'));
+		['tritanopia', 'deuteranopia', 'protanopia'].forEach(variant => {
+			const s = specificationFixture('circular')
+			s.usermeta = { color: { variant } }
+			assert.notEqual(range(s), standard, variant)
+		})
+	})
 })
