@@ -9,6 +9,12 @@ const defaultColor = 'steelblue'
  */
 const alternateLuminance = (color, index) => color[index % 2 ? 'brighter' : 'darker']()
 
+const stops = {
+	deuteranopia: ['#e1daae', '#ff934f', '#cc2d35', '#058ed9', '#2d3142'],
+	protanopia: ['#e8f086', '#6fde6e', '#ff4242', '#a691ae', '#235fa4'],
+	tritanopia: ['#dd4444', '#f48080', '#ffdcdc', '#2d676f', '#194b4f']
+}
+
 /**
  * create a color palette from the available hue range
  * for use as a categorical scale
