@@ -5,6 +5,7 @@ const fixtures = [
         'categoricalBar',
         'circular',
         'line',
+        'multiline',
         'scatterPlot',
         'stackedArea',
         'stackedBar',
