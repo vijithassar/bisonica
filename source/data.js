@@ -113,7 +113,9 @@ const sumByCovariates = (s) => {
 const sort = (data) => {
   const keys = stackKeys(data);
   const sortedDate = data.map((item) => {
-    return item.sort((a, b) => d3.descending(a.data.key, b.data.key));
+    return item.sort((a, b) => {
+      return Number(new Date(a.data.key)) - Number(new Date(b.data.key));
+    });
   });
   const sortedSeries = sortedDate.sort((a, b) => {
     return keys.indexOf(a.key) - keys.indexOf(b.key);
