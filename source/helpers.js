@@ -193,7 +193,9 @@ const polarToCartesian = (radius, angle) => {
  */
 const detach = (fn, ...rest) => {
   return (selection) => {
-    const detached = d3.create(`svg:${selection.node().tagName}`);
+    const tag = selection.node().tagName;
+    const namespace = tag === 'g' ? 'svg' : 'html';
+    const detached = d3.create(`${namespace}:${tag}`);
     detached.call(fn, ...rest);
     selection.append(() => detached.node());
   };
