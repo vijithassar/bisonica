@@ -168,3 +168,17 @@ path.mark {
 .axes .axis.nominal.angled .tick text {
   text-anchor: end;
 }
+
+.play {
+  background-color: var(--dark-grey);
+  font-size: x-small;
+  padding: 0.1em 0.3em;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.play:hover {
+  color: var(--highlight);
+}
