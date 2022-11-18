@@ -281,10 +281,10 @@ const coreScales = (s, dimensions) => {
     .filter(([channel]) => !isTextChannel(channel) && !scales[channel])
     .forEach(([channel]) => {
       try {
-        if (scaleMethod(s, channel) === null) {
+        const method = scaleMethod(s, channelRoot(s, channel));
+        if (method === null) {
           scales[channel] = syntheticScale(identity, domain(s, channel), range(s, dimensions, channel));
         } else {
-          const method = scaleMethod(s, channelRoot(s, channel));
           const scale = d3[method]().domain(domain(s, channel)).range(range(s, dimensions, channel));
 
           if (method === 'scaleLinear') {
