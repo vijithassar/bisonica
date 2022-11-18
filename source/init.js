@@ -2,6 +2,7 @@ import { WRAPPER_CLASS } from './config.js';
 import { feature } from './feature.js';
 import { extension } from './extensions.js';
 import { chartName, chartDescription } from './descriptions.js';
+import { detach } from './helpers.js';
 
 /**
  * prepare the DOM of a specified element for rendering a chart
@@ -53,7 +54,7 @@ const init = (s, dimensions) => {
     }
   };
 
-  return initializer;
+  return detach(initializer);
 };
 
 export { init };
