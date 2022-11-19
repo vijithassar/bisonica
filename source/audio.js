@@ -15,10 +15,21 @@ const tempo = 160;
 const duration = 60 / tempo / 2;
 const temperament = Math.pow(2, 1 / 12);
 
+/**
+ * gneerate frequencies for a chromatic scale
+ * @param {number} root root frequency
+ * @returns {number[]} chromatic audio scale
+ */
 const chromatic = (root) => {
   return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index));
 };
 
+/**
+ * linear division of a data range into a minor scale
+ * @param {number} min minimum value
+ * @param {number} max maximum value
+ * @returns {number[]} minor scale in linear data space
+ */
 const minorLinear = (min, max) => {
   const h = (max - min) / 12;
   const w = h * 2;
@@ -29,12 +40,22 @@ const minorLinear = (min, max) => {
   });
 };
 
+/**
+ * minor scale
+ * @param {number} root root frequency
+ * @returns {number[]} minor audio scale
+ */
 const minorExponential = (root) => {
   const semitones = [0, 2, 3, 5, 7, 8, 10, 12];
 
   return chromatic(root).filter((_, index) => semitones.includes(index));
 };
 
+/**
+ * play a note
+ * @param {number} frequency
+ * @param {number} start start time
+ */
 const note = (frequency, start) => {
   const oscillator = context.createOscillator();
   const gainNode = context.createGain();
@@ -55,6 +76,12 @@ const note = (frequency, start) => {
   oscillator.stop(end);
 };
 
+/**
+ * repeat a scale across octaves in linear data space
+ * @param {number} min minimum value
+ * @param {number} max maximum value
+ * @returns {number[]} multiple octave data scale
+ */
 const repeatLinear = (min, max) => {
   const spread = max - min;
   const slice = spread / octaves;
@@ -70,6 +97,12 @@ const repeatLinear = (min, max) => {
     .flat();
 };
 
+/**
+ * repeat a scale across octaves in audio space
+ * @param {number} min minimum value
+ * @param {number} max maximum value
+ * @returns {number[]} multiple octave audio scale
+ */
 const repeatExponential = (min, max) => {
   if (max % min !== 0) {
     console.error('endpoints supplied for exponential scale repetition are not octaves');
@@ -84,6 +117,12 @@ const repeatExponential = (min, max) => {
     .flat();
 };
 
+/**
+ * handle playback of musical notes
+ * @param {object[]} values data values
+ * @param {object} dispatcher interaction dispatcher
+ * @param {object} s Vega Lite specification
+ */
 const notes = (values, dispatcher, s) => {
   const [min, max] = d3.extent(values, (d) => d.value);
   const domain = repeatLinear(feature(s).isBar() ? 0 : min, max);
@@ -100,6 +139,11 @@ const notes = (values, dispatcher, s) => {
   });
 };
 
+/**
+ * audio sonification
+ * @param {object} s Vega Lite specification
+ * @returns {function} audio sonification function
+ */
 const audio = (s) => {
   if (s.layer) {
     return noop;
