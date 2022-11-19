@@ -50,7 +50,7 @@ import "bisonica/styles.css";
 
 ## Accessibility
 
-When faced with an accessibility concern, bisonica typically just defaults to the most accessible option, whereas `vega-lite.js` might require more elaborate JSON in the specification object in order to achieve the same result. Some accessibility features such as the built in keyboard navigation may not be possible to replicate with the standard `vega-lite.js` renderer at all.
+When faced with an accessibility concern, bisonica typically just defaults to the most accessible option, whereas `vega-lite.js` might require more elaborate JSON in the specification object in order to achieve the same result. Some accessibility features such as the keyboard navigation may not be possible to replicate with the standard `vega-lite.js` renderer at all.
 
 ## Performance
 
