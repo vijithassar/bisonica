@@ -116,11 +116,11 @@ const _markDescription = (s) => {
 const markDescription = memoize(_markDescription);
 
 /**
- * chart description
+ * chart type
  * @param {object} s Vega Lite specification
  * @returns {string|null} chart type
  */
-const chartDescription = (s) => {
+const chartType = (s) => {
     if (feature(s).hasLayers()) {
         return 'chart';
     } else if (feature(s).isBar()) {
@@ -139,6 +139,15 @@ const chartDescription = (s) => {
         return 'scatterplot';
     }
     return null;
+};
+
+/**
+ * chart description
+ * @param {object} s Vega Lite specification
+ * @returns {string} chart description
+ */
+const chartDescription = (s) => {
+    return chartType(s);
 };
 
 /**
