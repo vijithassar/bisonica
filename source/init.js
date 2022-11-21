@@ -21,6 +21,8 @@ const init = (s, dimensions) => {
 
     const svg = graphic.append('svg');
 
+    svg.attr('tabindex', 0);
+
     const wrapper = svg.append('g').classed(WRAPPER_CLASS, true);
 
     svg.attr('width', dimensions.x);
