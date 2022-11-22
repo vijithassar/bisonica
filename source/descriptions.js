@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { datum } from './helpers.js';
-import { encodingValue } from './encodings.js';
+import { encodingField, encodingValue, encodingChannelQuantitative, encodingChannelCovariateCartesian } from './encodings.js';
 import { memoize } from './memoize.js';
 import { getTooltipField, tooltipContent } from './tooltips.js';
 import { data } from './data.js';
@@ -97,6 +97,36 @@ const _extentDescription = (s) => {
 const extentDescription = memoize(_extentDescription);
 
 /**
+ * written description of the encodings of a chart
+ * @param {object} s Vega Lite specification
+ * @returns {string} encoding description
+ */
+const encodingDescription = (s) => {
+    let segments = [];
+    if (feature(s).isCircular()) {
+        segments.push(`${encodingField(s, encodingChannelQuantitative(s))}`);
+    } else if (feature(s).isCartesian()) {
+        const quantitative = quantitativeChannels(s).length;
+        if (quantitative === 1) {
+            segments.push(`${encodingField(s, encodingChannelQuantitative(s))}`);
+            if (feature(s).isTemporal()) {
+                segments.push('over time');
+            } else {
+                segments.push(`by ${encodingField(s, encodingChannelCovariateCartesian(s))}`);
+            }
+        } else if (quantitative === 2) {
+            segments.push(`${encodingField(s, 'x')} by ${encodingField(s, 'y')}`);
+        }
+    }
+    if (feature(s).hasColor()) {
+        segments.push(`split by ${encodingField(s, 'color')}`);
+    }
+    if (segments.length) {
+        return `of ${segments.join(' ')}`;
+    }
+};
+
+/**
  * render a description into the DOM
  * @param {object} s Vega Lite specification
  * @returns {function(object)} mark description renderer
@@ -116,11 +146,11 @@ const _markDescription = (s) => {
 const markDescription = memoize(_markDescription);
 
 /**
- * chart description
+ * chart type
  * @param {object} s Vega Lite specification
  * @returns {string|null} chart type
  */
-const chartDescription = (s) => {
+const chartType = (s) => {
     if (feature(s).hasLayers()) {
         return 'chart';
     } else if (feature(s).isBar()) {
@@ -139,6 +169,15 @@ const chartDescription = (s) => {
         return 'scatterplot';
     }
     return null;
+};
+
+/**
+ * chart description
+ * @param {object} s Vega Lite specification
+ * @returns {string} chart description
+ */
+const chartDescription = (s) => {
+    return [chartType(s), s.encoding && encodingDescription(s)].filter(Boolean).join(' ');
 };
 
 /**
