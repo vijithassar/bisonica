@@ -22,6 +22,9 @@ const chart = (s, panelDimensions) => {
   let tooltipHandler;
 
   const renderer = (selection) => {
+
+    selection.html('');
+
     selection.call(init(s, panelDimensions));
 
     initializeInteractions(selection.node(), s);
