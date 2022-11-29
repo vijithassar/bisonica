@@ -22,10 +22,8 @@ const argumentKey = (arg) => {
   } else {
     if (type === 'string') {
       return arg;
-    } else if (type === 'undefined' || arg === null) {
-      return `${arg}`;
     } else {
-      return arg.toString();
+      return `${arg}`;
     }
   }
 };
