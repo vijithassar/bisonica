@@ -7,7 +7,9 @@ const argumentKey = (arg) => {
   const type = typeof arg;
   const primitive = type !== 'object' && type !== 'function';
 
-  if (!primitive) {
+  if (primitive) {
+    return `${arg}`;
+  } else {
     if (references.map.has(arg)) {
       return `${type}-${references.map.get(arg)}`;
     } else {
@@ -17,8 +19,6 @@ const argumentKey = (arg) => {
 
       return `${type}-${id}`;
     }
-  } else {
-    return `${arg}`;
   }
 };
 
