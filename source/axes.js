@@ -171,7 +171,7 @@ const x = (s, dimensions) => {
         .text(title(s, 'x'));
     }
 
-    const shift = feature(s).isBar() && encodingType(s, encodingChannelCovariate(s)) === 'temporal';
+    const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal';
 
     x.attr('transform', () => {
       const xOffset = shift ? barOffset * 0.5 : 0;
