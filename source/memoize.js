@@ -7,17 +7,15 @@ const argumentKey = (arg) => {
   const type = typeof arg;
   const primitive = type !== 'object' && type !== 'function';
 
-  let key;
   if (!primitive) {
-    key = type;
     if (references.map.has(arg)) {
-      return `${key}-${references.map.get(arg)}`;
+      return `${type}-${references.map.get(arg)}`;
     } else {
       const id = `${references.count++}`;
 
       references.map.set(arg, id);
 
-      return `${key}-${id}`;
+      return `${type}-${id}`;
     }
   } else {
     if (type === 'string') {
