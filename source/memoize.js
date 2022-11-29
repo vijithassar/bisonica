@@ -4,25 +4,16 @@ const references = {
 };
 
 const argumentKey = (arg) => {
-  let key;
-
   const type = typeof arg;
-
-  if (type === 'object') {
-    key = 'object';
-  } else if (type === 'string') {
-    key = arg;
-  } else if (type === 'function') {
-    key = 'function';
-  } else if (type === 'undefined' || arg === null) {
-    key = `${arg}`;
-  } else {
-    key = arg.toString();
-  }
-
   const primitive = type !== 'object' && type !== 'function';
 
+  let key;
   if (!primitive) {
+    if (type === 'object') {
+      key = 'object';
+    } else if (type === 'function') {
+      key = 'function';
+    }
     if (references.map.has(arg)) {
       return `${key}-${references.map.get(arg)}`;
     } else {
@@ -33,7 +24,13 @@ const argumentKey = (arg) => {
       return `${key}-${id}`;
     }
   } else {
-    return key;
+    if (type === 'string') {
+      return arg;
+    } else if (type === 'undefined' || arg === null) {
+      return `${arg}`;
+    } else {
+      return arg.toString();
+    }
   }
 };
 
