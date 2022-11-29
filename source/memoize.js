@@ -9,11 +9,7 @@ const argumentKey = (arg) => {
 
   let key;
   if (!primitive) {
-    if (type === 'object') {
-      key = 'object';
-    } else if (type === 'function') {
-      key = 'function';
-    }
+    key = type;
     if (references.map.has(arg)) {
       return `${key}-${references.map.get(arg)}`;
     } else {
