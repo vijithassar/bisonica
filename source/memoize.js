@@ -18,11 +18,7 @@ const argumentKey = (arg) => {
       return `${type}-${id}`;
     }
   } else {
-    if (type === 'string') {
-      return arg;
-    } else {
-      return `${arg}`;
-    }
+    return `${arg}`;
   }
 };
 
