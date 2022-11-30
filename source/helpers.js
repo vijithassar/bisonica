@@ -107,7 +107,6 @@ const mark = (s) => {
 /**
  * does not do anything; occasionally useful to ensure a function is
  * returned consistently from a factory or composition
- * @returns {function}
  */
 const noop = () => {
   return;
