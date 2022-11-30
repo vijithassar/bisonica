@@ -25,24 +25,24 @@ module('unit > views', () => {
 				}
 			]
 		}
-		const ruleTest = (s) => s.mark.type === 'rule'
-		const barTest = (s) => s.mark.type === 'bar'
+		const ruleTest = s => s.mark.type === 'rule'
+		const barTest = s => s.mark.type === 'bar'
 
-		test('resolves missing domains', (assert) => {
-			const s = layerMatch(specifications, (s) => s.mark.type === 'rule')
+		test('resolves missing domains', assert => {
+			const s = layerMatch(specifications, s => s.mark.type === 'rule')
 
 			assert.deepEqual(s.encoding.y.scale.domain, specifications.layer[1].encoding.y.scale.domain)
 		})
-		test('resolves missing encoding types', (assert) => {
-			const s = layerMatch(specifications, (s) => s.mark.type === 'rule')
+		test('resolves missing encoding types', assert => {
+			const s = layerMatch(specifications, s => s.mark.type === 'rule')
 
 			assert.equal(s.encoding.y.type, 'quantitative')
 		})
-		test('appends data to layer specifications', (assert) => {
+		test('appends data to layer specifications', assert => {
 			assert.equal(typeof layerMatch(specifications, barTest).data.values.length, 'number')
 		})
 
-		test('appends encoding to layer specifications', (assert) => {
+		test('appends encoding to layer specifications', assert => {
 			const encodingResolveTestSpecification = {
 				data: { values: [{}] },
 				encoding: {
@@ -57,19 +57,19 @@ module('unit > views', () => {
 				},
 				layer: [{ mark: { type: 'point' } }, { mark: { type: 'text' } }]
 			}
-			const pointTest = (s) => s.mark.type === 'point'
+			const pointTest = s => s.mark.type === 'point'
 			const layer = layerMatch(encodingResolveTestSpecification, pointTest)
 
 			assert.equal(layer.encoding.x.field, 'a')
 			assert.equal(layer.encoding.y.field, 'b')
 		})
 
-		test('matches nested layers', (assert) => {
+		test('matches nested layers', assert => {
 			assert.equal(typeof layerMatch(specifications, ruleTest).encoding.y.datum, 'number')
 			assert.equal(layerMatch(specifications, barTest).encoding.y.type, 'quantitative')
 		})
 
-		test('finds layer nodes', (assert) => {
+		test('finds layer nodes', assert => {
 			const markup = `
         <svg>
           <g class="layer" data-test-selector="a">
@@ -88,8 +88,8 @@ module('unit > views', () => {
 
 			wrapper.innerHTML = markup
 
-			const ruleTest = (s) => s.mark.type === 'rule'
-			const barTest = (s) => s.mark.type === 'bar'
+			const ruleTest = s => s.mark.type === 'rule'
+			const barTest = s => s.mark.type === 'bar'
 
 			const ruleSpec = layerMatch(specifications, ruleTest)
 			const barSpec = layerMatch(specifications, barTest)
@@ -98,7 +98,7 @@ module('unit > views', () => {
 			assert.equal(layerNode(barSpec, wrapper).getAttribute('data-test-selector'), 'b')
 		})
 		module('primary', () => {
-			test('circular', (assert) => {
+			test('circular', assert => {
 				const specification = {
 					data: { values: [
 						{ group: 'a', value: 1 },
@@ -132,7 +132,7 @@ module('unit > views', () => {
 				}
 				assert.equal(layerPrimary(specification).mark.type, 'arc', 'selects arcs from donut chart with text layer')
 			})
-			test('cartesian', (assert) => {
+			test('cartesian', assert => {
 				const specification = {
 					data: {
 						values: [
@@ -177,7 +177,7 @@ module('unit > views', () => {
 				}
 				assert.equal(layerPrimary(specification).mark.type, 'line', 'selects line from line chart with rule layer')
 			})
-			test('linear', (assert) => {
+			test('linear', assert => {
 				const specification = {
 					data: {
 						values: [
@@ -223,7 +223,7 @@ module('unit > views', () => {
 				}
 				assert.equal(layerPrimary(specification).mark.type, 'point', 'selects points from linear chart with text layer')
 			})
-			test('unions color domain', (assert) => {
+			test('unions color domain', assert => {
 				const specification = {
 					'title': { 'text': 'layer color legend test specification' },
 					'data': {
@@ -422,16 +422,16 @@ module('unit > views', () => {
 				assert.equal(domain.length, 5)
 
 				const layers = [0, 1]
-				const fields = layers.map((index) => specification.layer[index].encoding.color.field)
-				const values = fields.map((field) => specification.data.values.map((item) => item[field])).flat()
+				const fields = layers.map(index => specification.layer[index].encoding.color.field)
+				const values = fields.map(field => specification.data.values.map(item => item[field])).flat()
 				const unique = [...new Set(values)]
 
-				unique.forEach((value) => {
+				unique.forEach(value => {
 					assert.ok(domain.includes(value))
 				})
 			})
 
-			test('unions color range', (assert) => {
+			test('unions color range', assert => {
 				const specification = {
 					'title': { 'text': 'layer color legend test specification' },
 					'data': {
@@ -643,14 +643,14 @@ module('unit > views', () => {
 				assert.equal(range.length, 5)
 
 				const layers = [0, 1]
-				const values = layers.map((index) => specification.layer[index].encoding.color.scale.range).flat()
+				const values = layers.map(index => specification.layer[index].encoding.color.scale.range).flat()
 
-				values.forEach((value) => {
+				values.forEach(value => {
 					assert.ok(range.includes(value))
 				})
 			})
 
-			test('multiple graphical layers', (assert) => {
+			test('multiple graphical layers', assert => {
 				const specification = {
 					data: {
 						values: [
@@ -708,7 +708,7 @@ module('unit > views', () => {
 			})
 		})
 
-		test('calls a function for multiple layers', (assert) => {
+		test('calls a function for multiple layers', assert => {
 			const s = {
 				title: {
 					text: 'layerCall() test specification'
@@ -757,7 +757,7 @@ module('unit > views', () => {
 				]
 			}
 			const results = {}
-			const track = (s) => {
+			const track = s => {
 				return () => {
 					results[s.mark.type] = true
 				}

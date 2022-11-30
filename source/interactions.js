@@ -15,7 +15,7 @@ const charts = d3.local()
  * @param {object} s Vega Lite specification
  * @returns {array} list of event names
  */
-const events = (s) => {
+const events = s => {
 	if (
 		feature(s).isBar() ||
     feature(s).isArea() ||
@@ -67,7 +67,7 @@ const interactionTargets = (s, wrapper, node) => {
 	if (feature(s).isCircular() || (!feature(s).isLine() && feature(s).hasPoints())) {
 		parent = mark.node()
 	} else if (feature(s).isBar()) {
-		parent = series.filter((d) => key(d.key) === key(category.get(node))).node()
+		parent = series.filter(d => key(d.key) === key(category.get(node))).node()
 	}
 
 	return { target, parent }
@@ -78,7 +78,7 @@ const interactionTargets = (s, wrapper, node) => {
  * @param {object} s Vega Lite specification
  * @returns {string} selector
  */
-const markMouseoverSelector = (s) => {
+const markMouseoverSelector = s => {
 	return feature(s).isLine()
 		? `${markSelector(s)},${markInteractionSelector(s)}`
 		: markInteractionSelector(s)
@@ -110,8 +110,8 @@ const handleUrl = (url, node) => {
  * @param {object} s Vega Lite specification
  * @returns {function} user interactions
  */
-const _interactions = (s) => {
-	const fn = (wrapper) => {
+const _interactions = s => {
+	const fn = wrapper => {
 		if (!s) {
 			return noop
 		}
@@ -238,6 +238,6 @@ const _interactions = (s) => {
 	return fn
 }
 
-const interactions = (s) => layerCall(s, _interactions)
+const interactions = s => layerCall(s, _interactions)
 
 export { dispatchers, initializeInteractions, interactions }

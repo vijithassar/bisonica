@@ -9,7 +9,7 @@ import { extension } from './extensions.js'
 
 const delimiter = '; '
 
-const quantitativeChannels = (s) => {
+const quantitativeChannels = s => {
 	const result = Object.entries(s.encoding)
 		.filter(([_, definition]) => {
 			return definition.type === 'quantitative'
@@ -24,7 +24,7 @@ const quantitativeChannels = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {object} extents
  */
-const calculateExtents = (s) => {
+const calculateExtents = s => {
 	const quantitative = quantitativeChannels(s)
 	let result = {}
 
@@ -32,23 +32,23 @@ const calculateExtents = (s) => {
 	let value
 	if (feature(s).isCircular()) {
 		values = data(s)
-		value = (d) => d.value
+		value = d => d.value
 	} else if (feature(s).isLine()) {
-		values = data(s).map((series) => series.values).flat()
-		value = (d) => d.value
+		values = data(s).map(series => series.values).flat()
+		value = d => d.value
 	} else if (feature(s).isBar()) {
 		values = data(s).flat()
-		value = (d) => d[1] - d[0]
+		value = d => d[1] - d[0]
 	} else {
 		values = data(s)
 	}
 
-	quantitative.forEach((channel) => {
+	quantitative.forEach(channel => {
 		// if the value function can't be determined before
 		// this point, there may be multiple quantitative
 		// encodings
 		if (!value) {
-			value = (d) => encodingValue(s, channel)(d)
+			value = d => encodingValue(s, channel)(d)
 		}
 
 		result[channel] = new Map()
@@ -72,15 +72,15 @@ const empty = () => ''
  * @param {object} s Vega Lite specification
  * @returns {function(object)} extent description
  */
-const _extentDescription = (s) => {
+const _extentDescription = s => {
 	const disabled = extension(s, 'description')?.extent === false
 	if (disabled || feature(s).hasLayers()) {
 		return empty
 	}
 	const extents = calculateExtents(s)
-	return (d) => {
-		const endpoints = quantitativeChannels(s).map((channel) => {
-			const value = (d) => getTooltipField(s, channel)(d).value
+	return d => {
+		const endpoints = quantitativeChannels(s).map(channel => {
+			const value = d => getTooltipField(s, channel)(d).value
 			const endpoint = extents[channel].get(value(d))
 			if (!endpoint) {
 				return ''
@@ -101,7 +101,7 @@ const extentDescription = memoize(_extentDescription)
  * @param {object} s Vega Lite specification
  * @returns {string} encoding description
  */
-const encodingDescription = (s) => {
+const encodingDescription = s => {
 	let segments = []
 	if (feature(s).isCircular()) {
 		segments.push(`${encodingField(s, encodingChannelQuantitative(s))}`)
@@ -131,8 +131,8 @@ const encodingDescription = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {function(object)} mark description renderer
  */
-const _markDescription = (s) => {
-	return (d) => {
+const _markDescription = s => {
+	return d => {
 		if (s.mark.aria === false) {
 			return
 		}
@@ -150,7 +150,7 @@ const markDescription = memoize(_markDescription)
  * @param {object} s Vega Lite specification
  * @returns {string|null} chart type
  */
-const chartType = (s) => {
+const chartType = s => {
 	if (feature(s).hasLayers()) {
 		return 'chart'
 	} else if (feature(s).isBar()) {
@@ -176,7 +176,7 @@ const chartType = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {string} chart description
  */
-const chartDescription = (s) => {
+const chartDescription = s => {
 	return [chartType(s), s.encoding && encodingDescription(s)].filter(Boolean).join(' ')
 }
 
@@ -185,7 +185,7 @@ const chartDescription = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {string} chart title
  */
-const chartName = (s) => {
+const chartName = s => {
 	if (!s.title.text) {
 		throw new Error('specification title is required')
 	}

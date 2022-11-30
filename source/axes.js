@@ -82,9 +82,9 @@ const title = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {function} alternation function
  */
-const alternate = (s) => {
-	return (selection) => {
-		['x', 'y'].forEach((channel) => {
+const alternate = s => {
+	return selection => {
+		['x', 'y'].forEach(channel => {
 			if (s.encoding[channel] === undefined) {
 				return
 			}
@@ -108,7 +108,7 @@ const alternate = (s) => {
  * @returns {function} tick text renderer
  */
 const tickText = (s, channel) => {
-	return (selection) => {
+	return selection => {
 		const hasLabels = feature(s)[`hasAxisLabels${channel.toUpperCase()}`]()
 		const ticks = selection.selectAll('.tick').select('text')
 
@@ -130,7 +130,7 @@ const x = (s, dimensions) => {
 	if (!feature(s).hasAxisX()) {
 		return noop
 	}
-	return (selection) => {
+	return selection => {
 		const scales = parseScales(s, dimensions)
 		const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0
 		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
@@ -219,7 +219,7 @@ const y = (s, dimensions) => {
 	if (!feature(s).hasAxisY()) {
 		return noop
 	}
-	return (selection) => {
+	return selection => {
 		const scales = parseScales(s, dimensions)
 		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
 
@@ -280,7 +280,7 @@ const y = (s, dimensions) => {
  * @returns {function} renderer
  */
 const axes = (_s, dimensions) => {
-	const test = (s) => {
+	const test = s => {
 		if (feature(_s).hasLayers()) {
 			return s
 		} else {
@@ -293,7 +293,7 @@ const axes = (_s, dimensions) => {
 		return noop
 	}
 
-	const renderer = (selection) => {
+	const renderer = selection => {
 		if (typeof s.encoding !== 'object') {
 			return noop
 		}

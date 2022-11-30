@@ -15,11 +15,11 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('unit > encoders', () => {
-	test('creates encoders', (assert) => {
+	test('creates encoders', assert => {
 		const accessors = {
-			x: (d) => parseTime(d.label),
-			y: (d) => d.value,
-			color: (d) => d.group
+			x: d => parseTime(d.label),
+			y: d => d.value,
+			color: d => d.group
 		}
 		const specification = specificationFixture('line')
 		const encoders = createEncoders(specification, dimensions, accessors)
@@ -46,14 +46,14 @@ module('unit > encoders', () => {
 		)
 	})
 
-	test('identifies encoding field names', (assert) => {
+	test('identifies encoding field names', assert => {
 		const s = { encoding: { x: { field: 'a' }, y: { field: 'b' } } }
 
 		assert.equal(encodingField(s, 'x'), 'a')
 		assert.equal(encodingField(s, 'y'), 'b')
 	})
 
-	test('accesses nested fields with encoding value lookup', (assert) => {
+	test('accesses nested fields with encoding value lookup', assert => {
 		const datum = {
 			a: {
 				b: 2
@@ -79,8 +79,8 @@ module('unit > encoders', () => {
 		assert.equal(encodingValue(s, 'x')(datum), 2, 'looks up value based on nested field')
 	})
 
-	test('accesses nested fields with data preprocessing for circular charts', (assert) => {
-		const nest = (datum) => {
+	test('accesses nested fields with data preprocessing for circular charts', assert => {
+		const nest = datum => {
 			datum.a = {
 				b: {
 					c: datum.value
@@ -97,8 +97,8 @@ module('unit > encoders', () => {
 		assert.deepEqual(flat, nested)
 	})
 
-	test('accesses nested fields with data preprocessing for bar charts', (assert) => {
-		const nest = (datum) => {
+	test('accesses nested fields with data preprocessing for bar charts', assert => {
+		const nest = datum => {
 			datum.a = {
 				b: {
 					c: datum.value
@@ -115,8 +115,8 @@ module('unit > encoders', () => {
 		assert.deepEqual(flat, nested)
 	})
 
-	test('accesses nested fields with data preprocessing for multidimensional charts', (assert) => {
-		const nest = (datum) => {
+	test('accesses nested fields with data preprocessing for multidimensional charts', assert => {
+		const nest = datum => {
 			datum.a = {
 				b: {
 					c: datum.value
@@ -133,7 +133,7 @@ module('unit > encoders', () => {
 		assert.deepEqual(flat, nested)
 	})
 
-	test('identifies covariate encoding channels', (assert) => {
+	test('identifies covariate encoding channels', assert => {
 		const ordinal = { encoding: { x: { type: 'ordinal' }, y: { type: 'quantitative' } } }
 		const nominal = { encoding: { x: { type: 'nominal' }, y: { type: 'quantitative' } } }
 		const temporal = { encoding: { x: { type: 'temporal' }, y: { type: 'quantitative' } } }
@@ -149,19 +149,19 @@ module('unit > encoders', () => {
 		assert.throws(() => encodingChannelCovariate(doubleQuantitative))
 	})
 
-	test('identifies quantitative encoding channels', (assert) => {
+	test('identifies quantitative encoding channels', assert => {
 		const s = { encoding: { x: { type: 'nominal' }, y: { type: 'quantitative' } } }
 
 		assert.equal(encodingChannelQuantitative(s), 'y')
 	})
 
-	test('detects encoding types', (assert) => {
+	test('detects encoding types', assert => {
 		const s = { encoding: { x: { type: 'nominal' } } }
 
 		assert.ok(encodingType(s, 'x'), 'nominal')
 	})
 
-	test('generates simple value accessor functions', (assert) => {
+	test('generates simple value accessor functions', assert => {
 		const s = { encoding: { x: { field: 'a' } } }
 		const target = { a: 1 }
 		const getValue = encodingValue(s, 'x')

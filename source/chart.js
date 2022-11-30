@@ -21,7 +21,7 @@ import { usermeta } from './extensions.js'
 const chart = (s, panelDimensions) => {
 	let tooltipHandler
 
-	const renderer = (selection) => {
+	const renderer = selection => {
 		selection.html('')
 
 		selection.call(init(s, panelDimensions))
@@ -68,7 +68,7 @@ const chart = (s, panelDimensions) => {
 		}
 	}
 
-	renderer.tooltip = (h) => {
+	renderer.tooltip = h => {
 		if (h === undefined) {
 			return tooltipHandler
 		} else {

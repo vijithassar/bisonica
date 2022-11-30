@@ -101,7 +101,7 @@ const customDomain = (s, channel) => {
  * @param {string} channel encoding parameter
  * @returns {boolean} whether the field is text based
  */
-const isTextChannel = (channel) => {
+const isTextChannel = channel => {
 	return ['href', 'text', 'tooltip', 'description'].includes(channel)
 }
 
@@ -131,11 +131,11 @@ const domainBaseValues = (s, channel) => {
 	}
 
 	if (type === 'temporal') {
-		const date = (d) => parseTime(encodingValue(s, channel)(d)).getTime()
+		const date = d => parseTime(encodingValue(s, channel)(d)).getTime()
 
 		return d3.extent(values(s), date)
 	} else if (type === 'nominal' || type === 'ordinal') {
-		return [...new Set(values(s).map((item) => encodingValue(s, channel)(item)))]
+		return [...new Set(values(s).map(item => encodingValue(s, channel)(item)))]
 	} else if (type === 'quantitative') {
 		if (channel === 'theta') {
 			return [0, 360]
@@ -149,10 +149,10 @@ const domainBaseValues = (s, channel) => {
 			max = d3.max(sumByCovariates(s))
 		} else if (feature(s).isLine()) {
 			const byPeriod = data(s)
-				.map((item) => item.values)
+				.map(item => item.values)
 				.flat()
 			const nonzero = s.encoding.y.scale?.zero === false
-			const accessor = (d) => d.value
+			const accessor = d => d.value
 			const periodMin = d3.min(byPeriod, accessor)
 			const positive = typeof periodMin === 'number' && periodMin > 0
 
@@ -172,7 +172,7 @@ const domainBaseValues = (s, channel) => {
 
 		return [min, max]
 	} else {
-		return d3.extent(values(s), (item) => encodingValue(s, channel)(item))
+		return d3.extent(values(s), item => encodingValue(s, channel)(item))
 	}
 }
 
@@ -187,7 +187,7 @@ const domainSort = (s, channel) => {
 		return identity
 	}
 
-	return (domain) => domain.slice().sort(sorter(s, channel))
+	return domain => domain.slice().sort(sorter(s, channel))
 }
 
 /**
@@ -313,7 +313,7 @@ const coreScales = (s, dimensions) => {
  * @param {object} s Vega Lite specification
  * @returns {string[]} additional scale functions required
  */
-const detectScaleExtensions = (s) => {
+const detectScaleExtensions = s => {
 	const extensions = []
 
 	if (feature(s).isBar() || feature(s).isArea()) {
@@ -342,8 +342,8 @@ const extendScales = (s, dimensions, scales) => {
 	if (extensions.includes('length')) {
 		const channel = encodingChannelQuantitative(s)
 
-		extendedScales.length = (d) => {
-			if (extendedScales[channel].domain().every((endpoint) => endpoint === 0)) {
+		extendedScales.length = d => {
+			if (extendedScales[channel].domain().every(endpoint => endpoint === 0)) {
 				return 0
 			}
 
@@ -354,7 +354,7 @@ const extendScales = (s, dimensions, scales) => {
 			}
 		}
 
-		extendedScales.start = (d) => {
+		extendedScales.start = d => {
 			if (channel === 'y') {
 				return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0])
 			} else if (channel === 'x') {
@@ -364,7 +364,7 @@ const extendScales = (s, dimensions, scales) => {
 	}
 
 	if (extensions.includes('text')) {
-		extendedScales.text = (d) => `${d}`
+		extendedScales.text = d => `${d}`
 	}
 
 	return extendedScales

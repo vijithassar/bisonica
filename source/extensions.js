@@ -14,7 +14,7 @@ const extension = (s, key) => {
  * already exist
  * @param {object} s Vega Lite specification
  */
-const usermeta = (s) => {
+const usermeta = s => {
 	if (typeof s.usermeta !== 'object') {
 		s.usermeta = {}
 	}

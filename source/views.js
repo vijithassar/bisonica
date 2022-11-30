@@ -15,7 +15,7 @@ import { temporalBarDimensions } from './time.js'
  * @returns {string} encoding type
  */
 const unionEncodingTypes = (s, channel) => {
-	const types = s.layer.map((layer) => layer.encoding?.[channel]?.type).filter((type) => !!type)
+	const types = s.layer.map(layer => layer.encoding?.[channel]?.type).filter(type => !!type)
 
 	if (new Set(types).size === 1) {
 		return types.pop()
@@ -27,12 +27,12 @@ const unionEncodingTypes = (s, channel) => {
  * @param {object} data data set
  * @returns {boolean} empty
  */
-const emptyData = (data) => {
+const emptyData = data => {
 	if (!data) {
 		return true
 	}
 
-	return data.some((item) => Object.keys(item).length) === false
+	return data.some(item => Object.keys(item).length) === false
 }
 
 /**
@@ -45,14 +45,14 @@ const emptyData = (data) => {
 const unionScaleValues = (s, channel, valueType) => {
 	const layers = s.layer
 	const layersWithData = layers
-		.map((layer) => {
+		.map(layer => {
 			const data = !layer.data || emptyData(values(layer)) ? s.data : layer.data
 
 			return { ...layer, data }
 		})
-		.filter((layer) => layer.data)
+		.filter(layer => layer.data)
 	const scales = layersWithData
-		.map((layer) => {
+		.map(layer => {
 			const encoding = layer.encoding?.[channel]
 
 			if (!encoding) {
@@ -71,13 +71,13 @@ const unionScaleValues = (s, channel, valueType) => {
 
 			return parseScales(layer)[channel]
 		})
-		.filter((item) => !!item)
+		.filter(item => !!item)
 
 	const scaleValues = scales
-		.map((item) => (typeof item[valueType] === 'function' ? item[valueType]() : null))
+		.map(item => (typeof item[valueType] === 'function' ? item[valueType]() : null))
 		.flat()
 
-	const getType = (s) => s.encoding?.[channel]?.type
+	const getType = s => s.encoding?.[channel]?.type
 
 	const type = getType(s) || getType(s.layer.find(getType))
 
@@ -147,24 +147,24 @@ const layerMatch = (s, test) => {
  * @param {object} s Vega Lite specification
  * @returns {object} layer specification
  */
-const _layerPrimary = (s) => {
+const _layerPrimary = s => {
 	if (!s.layer) {
 		return s
 	}
 	const heuristics = [
 		// explicit axis configuration
-		(s) => s.encoding.x?.axis || s.encoding.y?.axis,
+		s => s.encoding.x?.axis || s.encoding.y?.axis,
 		// radial
-		(s) => s.encoding.theta && s.encoding.color,
+		s => s.encoding.theta && s.encoding.color,
 		// cartesian
-		(s) => s.encoding.x && s.encoding.y,
+		s => s.encoding.x && s.encoding.y,
 		// linear
-		(s) => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y)
+		s => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y)
 	]
 	// add a wrapper to require encoding
-		.map((heuristic) => (s) => s.encoding && heuristic(s))
+		.map(heuristic => s => s.encoding && heuristic(s))
 	// add a wrapper to prohibit static text marks
-		.map((heuristic) => (s) => !feature(s).hasStaticText() && heuristic(s))
+		.map(heuristic => s => !feature(s).hasStaticText() && heuristic(s))
 
 	for (const heuristic of heuristics) {
 		let match = layerMatch(s, heuristic)
@@ -275,7 +275,7 @@ const layerSpecification = (s, index) => {
 
 	const prohibited = ['layer', '$schema', 'title', 'description']
 
-	prohibited.forEach((key) => {
+	prohibited.forEach(key => {
 		delete layerSpecification[key]
 	})
 
@@ -293,11 +293,11 @@ const layerMarks = (s, dimensions) => {
 		return noop
 	}
 
-	return (selection) => {
+	return selection => {
 		s.layer.forEach((_, index) => {
 			try {
 				const layer = layerSpecification(s, index)
-				const barLayer = layerSpecification(s, s.layer.findIndex((layer) => feature(layer).isBar()))
+				const barLayer = layerSpecification(s, s.layer.findIndex(layer => feature(layer).isBar()))
 				const changeDimensions = feature(s).isTemporalBar() && !feature(layer).isTemporalBar()
 				selection
 					.append('g')
@@ -334,7 +334,7 @@ const layerCall = (s, fn) => {
 	if (!layers.length) {
 		throw new Error(`could not determine layers for calling function ${fn.name}`)
 	}
-	return (selection) => {
+	return selection => {
 		layers.forEach((layer, index) => {
 			try {
 				selection.call(fn(layer))

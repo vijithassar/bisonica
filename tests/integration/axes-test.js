@@ -5,18 +5,18 @@ import * as d3 from 'd3'
 const { module, test } = qunit
 
 module('integration > axes', function () {
-	test('renders a chart with axes', (assert) => {
+	test('renders a chart with axes', assert => {
 		const spec = specificationFixture('categoricalBar')
 		const element = render(spec)
 
 		const single = [testSelector('axes'), testSelector('axes-x'), testSelector('axes-y')]
 
-		single.forEach((selector) => assert.equal(element.querySelectorAll(selector).length, 1))
+		single.forEach(selector => assert.equal(element.querySelectorAll(selector).length, 1))
 
 		assert.ok(element.querySelector(testSelector('tick')))
 	})
 
-	test('renders a chart with custom axis titles', (assert) => {
+	test('renders a chart with custom axis titles', assert => {
 		const spec = specificationFixture('categoricalBar')
 
 		spec.encoding.x.axis = { title: 'a' }
@@ -26,7 +26,7 @@ module('integration > axes', function () {
 		assert.equal(element.querySelector(testSelector('axes-y-title')).textContent, spec.encoding.y.axis.title)
 	})
 
-	test('renders a chart without y-axis tick labels', (assert) => {
+	test('renders a chart without y-axis tick labels', assert => {
 		const spec = specificationFixture('categoricalBar')
 
 		spec.encoding.y.axis = { labels: false }
@@ -38,11 +38,11 @@ module('integration > axes', function () {
 		assert.equal(tickLabelText, '')
 	})
 
-	test('renders a chart with custom axis tick intervals', (assert) => {
+	test('renders a chart with custom axis tick intervals', assert => {
 		const monthly = specificationFixture('temporalBar')
 		const biannual = specificationFixture('temporalBar')
 
-		const endpoints = d3.extent(monthly.data.values, (d) => +d.date)
+		const endpoints = d3.extent(monthly.data.values, d => +d.date)
 		const years = endpoints[1] - endpoints[0]
 
 		monthly.encoding.x.axis = { tickCount: { interval: 'utcmonth' } }
@@ -63,10 +63,10 @@ module('integration > axes', function () {
 		assert.ok(biannualTicks.length < years)
 	})
 
-	test('renders a chart with custom axis tick steps', (assert) => {
+	test('renders a chart with custom axis tick steps', assert => {
 		const spec = specificationFixture('line')
 
-		const dates = spec.data.values.map((item) => new Date(item.label))
+		const dates = spec.data.values.map(item => new Date(item.label))
 		const differenceMilliseconds = Math.abs(Math.min(...dates) - Math.max(...dates))
 		const differenceDays = Math.floor(differenceMilliseconds / (24 * 60 * 60 * 1000))
 
@@ -79,7 +79,7 @@ module('integration > axes', function () {
 		assert.ok(ticks.length < differenceDays)
 	})
 
-	test('renders a chart without axis titles', (assert) => {
+	test('renders a chart without axis titles', assert => {
 		const spec = specificationFixture('categoricalBar')
 
 		spec.encoding.x.axis = { title: null }
@@ -88,10 +88,10 @@ module('integration > axes', function () {
 
 		const selectors = [testSelector('axes-x-title'), testSelector('axes-y-title')]
 
-		selectors.forEach((selector) => assert.notOk(element.querySelector(selector)))
+		selectors.forEach(selector => assert.notOk(element.querySelector(selector)))
 	})
 
-	test('renders a chart with truncated axis labels', (assert) => {
+	test('renders a chart with truncated axis labels', assert => {
 		const max = 20
 		const spec = specificationFixture('categoricalBar')
 
@@ -99,11 +99,11 @@ module('integration > axes', function () {
 
 		const element = render(spec);
 
-		[...element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach((node) => {
+		[...element.querySelectorAll(`${testSelector('axes-x')} .tick text`)].forEach(node => {
 			assert.ok(node.getBoundingClientRect().width <= max)
 		})
 	})
-	test('disables axes', (assert) => {
+	test('disables axes', assert => {
 		const spec = specificationFixture('categoricalBar')
 		spec.encoding.x.axis = null
 		spec.encoding.y.axis = null

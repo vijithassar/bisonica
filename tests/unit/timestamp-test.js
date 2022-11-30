@@ -16,8 +16,8 @@ module('unit > timestamps', () => {
 		1596057847949
 	]
 
-	test('converts time period specifiers to d3 time interval method names', (assert) => {
-		['utcday', 'utcweek', 'day', 'week'].forEach((timeSpecifier) => {
+	test('converts time period specifiers to d3 time interval method names', assert => {
+		['utcday', 'utcweek', 'day', 'week'].forEach(timeSpecifier => {
 			assert.equal(
 				typeof d3[timeMethod(timeSpecifier)],
 				'function',
@@ -26,15 +26,15 @@ module('unit > timestamps', () => {
 		})
 	})
 
-	test('retrieves a timestamp parsing function', (assert) => {
-		timestamps.forEach((timestamp) => {
+	test('retrieves a timestamp parsing function', assert => {
+		timestamps.forEach(timestamp => {
 			const parser = getTimeParser(timestamp)
 
 			assert.equal(typeof parser, 'function')
 		})
 	})
-	test('retrieved function accurately parses timestamp strings', (assert) => {
-		timestamps.forEach((timestamp) => {
+	test('retrieved function accurately parses timestamp strings', assert => {
+		timestamps.forEach(timestamp => {
 			const parser = getTimeParser(timestamp)
 			const parsed = parser(timestamp)
 
@@ -42,15 +42,15 @@ module('unit > timestamps', () => {
 			assert.equal(typeof parsed.getFullYear(), 'number')
 		})
 	})
-	test('determines correct timestamp parser', (assert) => {
+	test('determines correct timestamp parser', assert => {
 		const dates = timestamps.map(parseTime)
 
-		dates.forEach((date) => {
+		dates.forEach(date => {
 			assert.equal(typeof date.getFullYear, 'function')
 			assert.equal(typeof date.getFullYear(), 'number')
 		})
 	})
-	test('refuses to parse invalid dates', (assert) => {
+	test('refuses to parse invalid dates', assert => {
 		const invalidDate = new Date('this is not a valid date format')
 		const parser = getTimeParser(invalidDate)
 

@@ -44,10 +44,10 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
  * @param {object} _s Vega Lite specification
  * @returns {function} renderer
  */
-const color = (_s) => {
+const color = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
 
-	const renderer = (selection) => {
+	const renderer = selection => {
 		try {
 			const { color } = parseScales(s)
 			const dispatcher = dispatchers.get(selection.node())
@@ -101,7 +101,7 @@ const color = (_s) => {
 
 			// respond to mouseover events
 
-			const addLegendHighlight = (group) => {
+			const addLegendHighlight = group => {
 				selection
 					.selectAll('.pair')
 					.filter(function () {
@@ -132,7 +132,7 @@ const color = (_s) => {
  * @param {object} s Vega Lite specification
  * @returns {function} renderer
  */
-const legend = (s) => {
+const legend = s => {
 	if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
 		return color(s)
 	} else {

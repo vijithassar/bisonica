@@ -5,7 +5,7 @@ import { data } from '../../source/data.js'
 const { module, test } = qunit
 
 module('unit > tooltips', () => {
-	test('it is a function factory', (assert) => {
+	test('it is a function factory', assert => {
 		assert.equal(typeof tooltipContent({}), 'function')
 	})
 
@@ -16,7 +16,7 @@ module('unit > tooltips', () => {
 
 	const encoding = { x: { field: 'a' }, y: { field: 'b' }, color: { field: 'group' } }
 
-	test('includes encoding fields by default', (assert) => {
+	test('includes encoding fields by default', assert => {
 		const s = {
 			data: { values },
 			mark: { tooltip: true },
@@ -28,7 +28,7 @@ module('unit > tooltips', () => {
 		assert.ok(text.includes('b: 2'))
 		assert.ok(text.includes('group: a'))
 	})
-	test('does not include unused fields by default', (assert) => {
+	test('does not include unused fields by default', assert => {
 		const s = {
 			data: { values },
 			mark: { tooltip: true },
@@ -38,7 +38,7 @@ module('unit > tooltips', () => {
 
 		assert.ok(!text.includes('c:'))
 	})
-	test('can include all data fields', (assert) => {
+	test('can include all data fields', assert => {
 		const s = {
 			data: { values },
 			mark: { tooltip: { content: 'data' } },
@@ -51,7 +51,7 @@ module('unit > tooltips', () => {
 		assert.ok(text.includes('c: 3'))
 		assert.ok(text.includes('group: a'))
 	})
-	test('can specify a data field', (assert) => {
+	test('can specify a data field', assert => {
 		const s = {
 			data: { values },
 			mark: { type: null, tooltip: true },
@@ -64,7 +64,7 @@ module('unit > tooltips', () => {
 
 		assert.equal(text, '1')
 	})
-	test('can specify multiple data fields', (assert) => {
+	test('can specify multiple data fields', assert => {
 		const s = {
 			data: { values },
 			mark: { type: null, tooltip: true },
@@ -80,7 +80,7 @@ module('unit > tooltips', () => {
 
 		assert.equal(text, 'a: 1; b: 2')
 	})
-	test('can specify labels', (assert) => {
+	test('can specify labels', assert => {
 		const s = {
 			data: { values },
 			mark: { type: null, tooltip: true },
@@ -96,7 +96,7 @@ module('unit > tooltips', () => {
 
 		assert.equal(text, 'VALUE OF A: 1; VALUE OF B: 2')
 	})
-	test('can specify a calculate transform field', (assert) => {
+	test('can specify a calculate transform field', assert => {
 		const datum = { a: '1' }
 		const transformField = {
 			mark: { type: null, tooltip: true },
@@ -110,7 +110,7 @@ module('unit > tooltips', () => {
 
 		assert.equal(text, 'tooltip value is: 1')
 	})
-	test('handles bidirectional cartesian encodings', (assert) => {
+	test('handles bidirectional cartesian encodings', assert => {
 		const length = { field: 'a', type: 'quantitative' }
 		const category = { field: 'b', type: 'nominal' }
 		const values = [
@@ -136,8 +136,8 @@ module('unit > tooltips', () => {
 			}
 		}
 
-		const datum = (s) => data(s)[0][2]
-		const text = (s) => tooltipContent(s)(datum(s))
+		const datum = s => data(s)[0][2]
+		const text = s => tooltipContent(s)(datum(s))
 
 		assert.equal(text(horizontal), 'a: 30; b: +')
 		assert.equal(text(vertical), 'a: 30; b: +')

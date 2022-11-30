@@ -10,13 +10,13 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('unit > axes', () => {
-	test('retrieves x axis text rotation', (assert) => {
+	test('retrieves x axis text rotation', assert => {
 		const s = specificationFixture('stackedBar')
 
 		s.encoding.x.axis = { labelAngle: 90 }
 		assert.equal(rotation(s, 'x'), Math.PI / 2)
 	})
-	test('abbreviates axis tick label text', (assert) => {
+	test('abbreviates axis tick label text', assert => {
 		const s = {
 			data: { values: [{ value: 0 }, { value: 10000 }, { value: 100000 }] },
 			encoding: {
@@ -30,7 +30,7 @@ module('unit > axes', () => {
 
 		assert.ok(text.endsWith('K'))
 	})
-	test('formats axis tick label text', (assert) => {
+	test('formats axis tick label text', assert => {
 		const s = {
 			encoding: {
 				x: {
@@ -51,7 +51,7 @@ module('unit > axes', () => {
 
 		assert.equal(format(s, 'y')(value), '1', 'casts numbers to strings')
 	})
-	test('truncates axis tick label text', (assert) => {
+	test('truncates axis tick label text', assert => {
 		const s = {
 			encoding: {
 				x: {

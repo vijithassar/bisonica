@@ -28,7 +28,7 @@ const selectors = [
  * @param {string} selector DOM selector string
  * @returns {string} sanitized
  */
-const stripDots = (selector) => {
+const stripDots = selector => {
 	const leading = selector.slice(0, 1) === '.'
 	let result
 
@@ -42,7 +42,7 @@ const stripDots = (selector) => {
  * @param {string} segment DOM selector string
  * @returns {boolean} string match
  */
-const isAllowedSegment = (segment) => {
+const isAllowedSegment = segment => {
 	return segment !== '>'
 }
 
@@ -51,15 +51,15 @@ const isAllowedSegment = (segment) => {
  * @param {string} selector DOM selector string
  * @returns {string} attribute
  */
-const convertToTestSelector = (selector) => {
+const convertToTestSelector = selector => {
 	return selector.split(' ').map(stripDots).filter(isAllowedSegment).join('-')
 }
 
 /**
  * add test selector attributes
  */
-const testAttributes = (selection) => {
-	selectors.forEach((selector) => {
+const testAttributes = selection => {
+	selectors.forEach(selector => {
 		selection.selectAll(selector).attr('data-test-selector', convertToTestSelector(selector))
 	})
 }

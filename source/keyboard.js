@@ -56,7 +56,7 @@ const key = (s, direction) => {
 		let max = mark.nodes().length - 1
 		const current = () => mark.nodes()[state.index()]
 
-		const isEmpty = (node) => {
+		const isEmpty = node => {
 			if (feature(s).isBar()) {
 				return (
 					isNaN(d3.select(node).datum()[1]) ||
@@ -87,38 +87,38 @@ const key = (s, direction) => {
 					return series.match(node, mark, state) && index > state.index() && !isEmpty(node)
 				}
 
-				cycle = (node) => series.match(node, mark, state) && !isEmpty(node)
+				cycle = node => series.match(node, mark, state) && !isEmpty(node)
 			}
 
 			if (direction === LEFT) {
 				const row = [...mark.nodes()].filter(
-					(node) => series.match(node, mark, state) && !isEmpty(node)
+					node => series.match(node, mark, state) && !isEmpty(node)
 				)
 
-				step = (node) => {
+				step = node => {
 					return node === row[row.indexOf(current()) - 1]
 				}
 
-				cycle = (node) => {
+				cycle = node => {
 					return node === row[row.length - 1]
 				}
 			}
 
 			if (direction === UP) {
-				step = (node) =>
+				step = node =>
 					series.later(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
-				cycle = (node) =>
+				cycle = node =>
 					series.earlier(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
 			}
 
 			if (direction === DOWN) {
-				const column = [...mark.nodes()].filter((node) => {
+				const column = [...mark.nodes()].filter(node => {
 					return x.match(node, mark, state) && !isEmpty(node)
 				})
 
-				step = (node) => node === column[column.indexOf(current()) - 1]
+				step = node => node === column[column.indexOf(current()) - 1]
 
-				cycle = (node) => node === column[column.length - 1]
+				cycle = node => node === column[column.length - 1]
 			}
 		}
 
@@ -179,7 +179,7 @@ const createState = () => {
  * prevent page from scrolling
  * @returns {object} key event
  */
-const stopScroll = (event) => {
+const stopScroll = event => {
 	if (event.key !== 'Tab') {
 		event.preventDefault()
 	}
@@ -190,7 +190,7 @@ const stopScroll = (event) => {
  * @param {string} key key name from the event
  * @returns {('up'|'right'|'down'|'left')} shorter key name
  */
-const keyMap = (key) => {
+const keyMap = key => {
 	const map = {
 		ArrowUp: UP,
 		ArrowRight: RIGHT,
@@ -206,9 +206,9 @@ const keyMap = (key) => {
  * @param {object} _s Vega Lite specification
  * @returns {function}
  */
-const keyboard = (_s) => {
+const keyboard = _s => {
 	try {
-		const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText()
+		const keyboardTest = s => !feature(s).isRule() && !feature(s).isText()
 		const s = layerMatch(_s, keyboardTest)
 
 		const exit =
@@ -223,7 +223,7 @@ const keyboard = (_s) => {
 			return noop
 		}
 
-		const navigation = (wrapper) => {
+		const navigation = wrapper => {
 			let navigator = {}
 
 			navigator[LEFT] = key(s, LEFT)
@@ -260,7 +260,7 @@ const keyboard = (_s) => {
 				dispatcher.call('tooltip', this, event, s)
 			})
 
-			mark.on('keydown', (event) => {
+			mark.on('keydown', event => {
 				stopScroll(event)
 
 				if (event.key === 'Enter') {
@@ -274,7 +274,7 @@ const keyboard = (_s) => {
 					}
 				}
 			})
-			mark.on('keyup', (event) => {
+			mark.on('keyup', event => {
 				stopScroll(event)
 
 				const move = navigator[keyMap(event.key)]

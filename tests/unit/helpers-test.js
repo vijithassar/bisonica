@@ -5,13 +5,13 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('unit > helpers', () => {
-	test('extracts values from s', (assert) => {
+	test('extracts values from s', assert => {
 		const value = {}
 		const s = { data: { values: [value] } }
 
 		assert.equal(helpers.values(s).pop(), value)
 	})
-	test('converts polar coordinates to cartesian coordinates', (assert) => {
+	test('converts polar coordinates to cartesian coordinates', assert => {
 		const radius = 10
 		const right = helpers.polarToCartesian(radius, 0)
 		const up = helpers.polarToCartesian(radius, Math.PI * 0.5)
@@ -25,8 +25,8 @@ module('unit > helpers', () => {
 		assert.equal(down.y, radius * -1)
 		assert.equal(loop.x, right.x)
 	})
-	test('renders to a detached node', (assert) => {
-		const renderer = (selection) => {
+	test('renders to a detached node', assert => {
+		const renderer = selection => {
 			selection.append('g').classed('test', true).append('circle').attr('r', 10)
 		}
 		const selection = d3.create('svg')

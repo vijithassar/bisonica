@@ -5,20 +5,20 @@ const { module, test } = qunit
 
 module('integration > description', () => {
 	const charts = ['line', 'temporalBar', 'categoricalBar', 'circular', 'stackedBar']
-	charts.forEach((chart) => {
-		test(`detects extent for ${chart} chart`, (assert) => {
+	charts.forEach(chart => {
+		test(`detects extent for ${chart} chart`, assert => {
 			const s = specificationFixture(chart)
 			const element = render(s)
 			const labels = [
 				...element.querySelectorAll(testSelector('mark')),
 				...element.querySelectorAll(testSelector('marks-mark-point'))
-			].map((node) => node.getAttribute('aria-label'))
-			assert.ok(labels.some((item) => item.includes('minimum value')), 'detects minimum value')
-			assert.ok(labels.some((item) => item.includes('maximum value')), 'detects maximum value')
-			assert.ok(labels.some((item) => !item.includes('minimum') && !item.includes('maximum')), 'some marks do not match extent')
+			].map(node => node.getAttribute('aria-label'))
+			assert.ok(labels.some(item => item.includes('minimum value')), 'detects minimum value')
+			assert.ok(labels.some(item => item.includes('maximum value')), 'detects maximum value')
+			assert.ok(labels.some(item => !item.includes('minimum') && !item.includes('maximum')), 'some marks do not match extent')
 		})
 	})
-	test('detects single minimum and maximum value', (assert) => {
+	test('detects single minimum and maximum value', assert => {
 		let s = specificationFixture('circular')
 		s.data.values = [
 			{ group: 'a', value: 1 },
@@ -30,11 +30,11 @@ module('integration > description', () => {
 		const element = render(s)
 		const labels = [
 			...element.querySelectorAll(testSelector('mark'))
-		].map((node) => node.getAttribute('aria-label'))
-		assert.equal(labels.filter((item) => item.includes('minimum value')).length, 1, 'detects single minimum value')
-		assert.equal(labels.filter((item) => item.includes('maximum value')).length, 1, 'detects single maximum value')
+		].map(node => node.getAttribute('aria-label'))
+		assert.equal(labels.filter(item => item.includes('minimum value')).length, 1, 'detects single minimum value')
+		assert.equal(labels.filter(item => item.includes('maximum value')).length, 1, 'detects single maximum value')
 	})
-	test('detects multiple minimum and maximum values', (assert) => {
+	test('detects multiple minimum and maximum values', assert => {
 		let s = specificationFixture('circular')
 		s.data.values = [
 			{ group: 'a', value: 1 },
@@ -46,11 +46,11 @@ module('integration > description', () => {
 		const element = render(s)
 		const labels = [
 			...element.querySelectorAll(testSelector('mark'))
-		].map((node) => node.getAttribute('aria-label'))
-		assert.equal(labels.filter((item) => item.includes('minimum value')).length, 2, 'detects multiple minimum values')
-		assert.equal(labels.filter((item) => item.includes('maximum value')).length, 2, 'detects multiple maximum values')
+		].map(node => node.getAttribute('aria-label'))
+		assert.equal(labels.filter(item => item.includes('minimum value')).length, 2, 'detects multiple minimum values')
+		assert.equal(labels.filter(item => item.includes('maximum value')).length, 2, 'detects multiple maximum values')
 	})
-	test('detects minimum and maximum values in multiple channels', (assert) => {
+	test('detects minimum and maximum values in multiple channels', assert => {
 		const s = {
 			title: {
 				text: 'multiple channel extent demos'
@@ -83,10 +83,10 @@ module('integration > description', () => {
 
 		const labels = [
 			...element.querySelectorAll(testSelector('marks-mark-point'))
-		].map((node) => node.getAttribute('aria-label'))
-		assert.equal(labels.filter((item) => item.includes('minimum value of a')).length, 1, 'detects single minimum value in field a')
-		assert.equal(labels.filter((item) => item.includes('maximum value of a')).length, 1, 'detects single maximum value in field a')
-		assert.equal(labels.filter((item) => item.includes('minimum value of b')).length, 2, 'detects multiple minimum values in field b')
-		assert.equal(labels.filter((item) => item.includes('maximum value of b')).length, 2, 'detects multiple maximum values in field b')
+		].map(node => node.getAttribute('aria-label'))
+		assert.equal(labels.filter(item => item.includes('minimum value of a')).length, 1, 'detects single minimum value in field a')
+		assert.equal(labels.filter(item => item.includes('maximum value of a')).length, 1, 'detects single maximum value in field a')
+		assert.equal(labels.filter(item => item.includes('minimum value of b')).length, 2, 'detects multiple minimum values in field b')
+		assert.equal(labels.filter(item => item.includes('maximum value of b')).length, 2, 'detects multiple maximum values in field b')
 	})
 })

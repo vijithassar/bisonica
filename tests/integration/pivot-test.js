@@ -11,9 +11,9 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('integration > pivot urls', function () {
-	const getUrl = (item) => d3.select(item).datum().url
+	const getUrl = item => d3.select(item).datum().url
 
-	test('stacked bar chart pivot links', (assert) => {
+	test('stacked bar chart pivot links', assert => {
 		const spec = specificationFixture('stackedBar')
 
 		spec.encoding.href = { field: 'url' }
@@ -28,7 +28,7 @@ module('integration > pivot urls', function () {
 		assert.notEqual(urls[0], urls[1])
 	})
 
-	test('categorical bar chart pivot links', (assert) => {
+	test('categorical bar chart pivot links', assert => {
 		const spec = specificationFixture('categoricalBar')
 
 		spec.encoding.href = { field: 'url' }
@@ -43,7 +43,7 @@ module('integration > pivot urls', function () {
 		assert.notEqual(urls[0], urls[1])
 	})
 
-	test('line chart pivot links', (assert) => {
+	test('line chart pivot links', assert => {
 		const spec = specificationFixture('line')
 
 		spec.encoding.href = { field: 'url' }
@@ -58,19 +58,19 @@ module('integration > pivot urls', function () {
 		// already been retrieved during that flat map
 		const data = [...element
 			.querySelectorAll(testSelector('mark'))]
-			.map((mark) => d3.select(mark).datum().values)
+			.map(mark => d3.select(mark).datum().values)
 			.flat()
 
-		const marksWithUrls = data.filter((item) => item.url)
+		const marksWithUrls = data.filter(item => item.url)
 
 		assert.equal(marksWithUrls.length, 2)
 
-		const urls = marksWithUrls.map((item) => item.url)
+		const urls = marksWithUrls.map(item => item.url)
 
 		assert.notEqual(urls[0], urls[1])
 	})
 
-	test('circular chart pivot links', (assert) => {
+	test('circular chart pivot links', assert => {
 		const spec = specificationFixture('circular')
 
 		spec.data.values = [
@@ -86,7 +86,7 @@ module('integration > pivot urls', function () {
 
 		const element = render(spec)
 
-		const getUrl = (mark) => d3.select(mark).datum().data[encodingField(spec, 'href')]
+		const getUrl = mark => d3.select(mark).datum().data[encodingField(spec, 'href')]
 		const marks = [...element.querySelectorAll(testSelector('mark'))]
 		const links = marks.filter(getUrl).map(getUrl)
 

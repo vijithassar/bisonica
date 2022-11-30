@@ -40,12 +40,12 @@ const measureText = memoize(_measureText)
  * @param {object} node DOM node
  * @returns {object} hashmap of styles
  */
-const fontStyles = (node) => {
+const fontStyles = node => {
 	const fontStyleProperties = ['letter-spacing', 'font-size', 'font', 'font-weight']
 	const computedStyles = getComputedStyle(node)
 	let fontStyles = {}
 
-	fontStyleProperties.forEach((property) => {
+	fontStyleProperties.forEach(property => {
 		const value = computedStyles[property]
 
 		if (value) {
@@ -64,7 +64,7 @@ const fontStyles = (node) => {
  * @returns {function} abbreviation function
  */
 const _abbreviate = (s, dimensions, channel) => {
-	return (tick) => {
+	return tick => {
 		if (encodingType(s, channel) !== 'quantitative') {
 			return tick
 		}
@@ -73,7 +73,7 @@ const _abbreviate = (s, dimensions, channel) => {
 
 		const hasLargeValues = scales[channel]
 			.ticks()
-			.some((tick) => typeof tick === 'number' && tick >= 1000)
+			.some(tick => typeof tick === 'number' && tick >= 1000)
 
 		if (!hasLargeValues) {
 			return tick
@@ -93,9 +93,9 @@ const abbreviate = memoize(_abbreviate)
  * @returns {function} formatting function
  */
 const format = (s, channel) => {
-	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : (label) => label.toString()
+	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : label => label.toString()
 
-	return (text) => formatter(text)
+	return text => formatter(text)
 }
 
 /**
@@ -166,12 +166,12 @@ const axisTickLabelTextContent = memoize(_axisTickLabelTextContent)
  * @param {object} s Vega Lite specification
  * @returns {object} longest axis tick label text length in pixels
  */
-const _longestAxisTickLabelTextWidth = (s) => {
+const _longestAxisTickLabelTextWidth = s => {
 	const scales = parseScales(s)
 
 	const channels = ['x', 'y']
-	const tickLabels = channels.map((channel) => {
-		const processText = (tick) => axisTickLabelTextContent(s, channel, tick)
+	const tickLabels = channels.map(channel => {
+		const processText = tick => axisTickLabelTextContent(s, channel, tick)
 
 		if (isContinuous(s, channel)) {
 			return scales[channel].ticks(ticks(s, channel)).map(processText)
@@ -182,8 +182,8 @@ const _longestAxisTickLabelTextWidth = (s) => {
 		}
 	})
 
-	const longest = tickLabels.map((ticks) => {
-		return d3.max(ticks, (d) => measureText(d))
+	const longest = tickLabels.map(ticks => {
+		return d3.max(ticks, d => measureText(d))
 	})
 
 	const result = longest.reduce((previous, current, index) => {
@@ -206,7 +206,7 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
 const axisTickLabelText = (s, channel) => {
 	let styles = {}
 
-	return (selection) => {
+	return selection => {
 		// only retrieve rendered font styles once per axis instead of separately
 		// for each tick to avoid performance issues
 		const node = selection.node()
@@ -215,7 +215,7 @@ const axisTickLabelText = (s, channel) => {
 			styles[channel] = fontStyles(node)
 		}
 
-		selection.text((label) => axisTickLabelTextContent(s, channel, label, styles[channel]))
+		selection.text(label => axisTickLabelTextContent(s, channel, label, styles[channel]))
 	}
 }
 

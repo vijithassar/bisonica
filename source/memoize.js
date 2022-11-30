@@ -3,7 +3,7 @@ const references = {
 	map: new WeakMap()
 }
 
-const argumentKey = (arg) => {
+const argumentKey = arg => {
 	const type = typeof arg
 	const primitive = type !== 'object' && type !== 'function'
 
@@ -23,7 +23,7 @@ const argumentKey = (arg) => {
 	}
 }
 
-const memoizeKey = (args) => {
+const memoizeKey = args => {
 	return args.map(argumentKey).join(' ')
 }
 
@@ -32,7 +32,7 @@ const memoizeKey = (args) => {
  * @param {function} fn pure function to be cached
  * @returns {function} memoized function which caches return values
  */
-const memoize = (fn) => {
+const memoize = fn => {
 	const cache = new Map()
 
 	return function (...args) {

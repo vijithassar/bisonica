@@ -8,7 +8,7 @@ const defaultColor = 'steelblue'
  * @param {number} count number of colors
  * @returns {array} color palette
  */
-const colors = (count) => {
+const colors = count => {
 	if (!count || count === 1) {
 		return [defaultColor]
 	}

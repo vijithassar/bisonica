@@ -24,11 +24,11 @@ import { tooltips } from './tooltips.js'
  * @param {object} s Vega Lite specification
  * @returns {array} aggregated and sorted data for data join
  */
-const markData = (s) => {
+const markData = s => {
 	const series = Array.isArray(data(s)) && data(s).every(Array.isArray)
 
 	if (series) {
-		return data(s).map((item) => item.sort(sortMarkData(s)))
+		return data(s).map(item => item.sort(sortMarkData(s)))
 	} else {
 		return data(s).sort((a, b) => sortMarkData(s)(a, b))
 	}
@@ -79,12 +79,12 @@ const _barWidth = (s, dimensions) => {
 		if (customDomain) {
 			endpoints = customDomain?.map(parseTime)
 		} else {
-			endpoints = d3.extent(stacked.flat(), (d) => parseTime(d.data.key))
+			endpoints = d3.extent(stacked.flat(), d => parseTime(d.data.key))
 		}
 		const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1])
 		count = periods
 	} else {
-		count = d3.max(stacked, (d) => d.length)
+		count = d3.max(stacked, d => d.length)
 	}
 
 	const dynamic = (dimensions[channel] / count) * 0.5
@@ -104,7 +104,7 @@ const barWidth = memoize(_barWidth)
  * @param {object} s Vega Lite specification
  * @returns {('rect'|'path'|'circle'|'line'|'text')} tagName to use in DOM for mark
  */
-const markSelector = (s) => {
+const markSelector = s => {
 	if (feature(s).isBar()) {
 		return 'rect'
 	} else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
@@ -123,8 +123,8 @@ const markSelector = (s) => {
  * @param {object} _s Vega Lite specification
  * @returns {string} DOM selector string
  */
-const markInteractionSelector = (_s) => {
-	const s = !feature(_s).hasLayers() ? _s : _s.layer.find((layer) => !feature(layer).isRule())
+const markInteractionSelector = _s => {
+	const s = !feature(_s).hasLayers() ? _s : _s.layer.find(layer => !feature(layer).isRule())
 
 	if (feature(s).isLine()) {
 		return '.marks circle.point.mark'
@@ -137,7 +137,7 @@ const markInteractionSelector = (_s) => {
  * determine which way marks are oriented
  * @param {object} s Vega Lite specification
  */
-const layoutDirection = (s) => {
+const layoutDirection = s => {
 	if (s.encoding.x?.type === 'quantitative') {
 		return 'horizontal'
 	} else if (s.encoding.y?.type === 'quantitative') {
@@ -183,7 +183,7 @@ const barMark = (s, dimensions) => {
 	const hasLink = encodingValue(s, 'href')
 	const tooltipFn = tooltips(s)
 
-	const markRenderer = (selection) => {
+	const markRenderer = selection => {
 		const rect = selection.append(markSelector(s))
 
 		rect
@@ -238,7 +238,7 @@ const barMarksTransform = (s, dimensions) => {
  */
 const barMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'))
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const marks = selection
 			.append('g')
 			.attr('class', 'marks')
@@ -251,22 +251,22 @@ const barMarks = (s, dimensions) => {
 			.append('g')
 			.each(function (d) {
 				category.set(this, d.key)
-				d.forEach((item) => {
+				d.forEach(item => {
 					category.set(item, d.key)
 				})
 			})
-			.attr('class', (d) => {
+			.attr('class', d => {
 				return ['series', key(category.get(d))].join(' ')
 			})
 			.attr('role', 'region')
-			.attr('aria-label', (d) => `${d.key}`)
+			.attr('aria-label', d => `${d.key}`)
 			.style('fill', encoders.color)
 
 		series.order()
 
 		series
 			.selectAll(markSelector(s))
-			.data((d) => d)
+			.data(d => d)
 			.enter()
 			.call(barMark(s, dimensions))
 	}
@@ -285,7 +285,7 @@ const areaEncoders = (s, dimensions) => {
 	let base = {
 		y0: y,
 		x0: x,
-		x1: (d) => x(d) + width(d)
+		x1: d => x(d) + width(d)
 	}
 	if (encodingChannelQuantitative(s) === 'x') {
 		return {
@@ -295,7 +295,7 @@ const areaEncoders = (s, dimensions) => {
 		return {
 			x0: x,
 			y0: y,
-			y1: (d) => y(d) + height(d)
+			y1: d => y(d) + height(d)
 		}
 	}
 }
@@ -309,14 +309,14 @@ const areaEncoders = (s, dimensions) => {
 const areaMarks = (s, dimensions) => {
 	const encoders = areaEncoders(s, dimensions)
 	const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'))
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const marks = selection
 			.append('g')
 			.attr('class', 'marks')
 
 		const area = d3.area();
 
-		['x0', 'x1', 'y0', 'y1'].forEach((point) => {
+		['x0', 'x1', 'y0', 'y1'].forEach(point => {
 			area[point](encoders[point])
 		})
 
@@ -333,7 +333,7 @@ const areaMarks = (s, dimensions) => {
 			.attr('tabindex', -1)
 			.attr('fill', color)
 			.attr('class', 'area mark')
-			.attr('aria-label', (d) => d.key)
+			.attr('aria-label', d => d.key)
 	}
 	return renderer
 }
@@ -347,7 +347,7 @@ const areaMarks = (s, dimensions) => {
 const pointMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
 
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const radius = stroke * 1.2
 
 		const marks = selection.append('g').attr('class', () => {
@@ -360,7 +360,7 @@ const pointMarks = (s, dimensions) => {
 			return classes.join(' ')
 		})
 
-		const getPointData = feature(s).isLine() ? (d) => d.values : pointData(s)
+		const getPointData = feature(s).isLine() ? d => d.values : pointData(s)
 
 		const points = marks
 			.selectAll('circle')
@@ -412,9 +412,9 @@ const lineMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const line = d3.line().x(encoders.x).y(encoders.y)
 
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
-		const markTransforms = ['x', 'y'].map((channel) => {
+		const markTransforms = ['x', 'y'].map(channel => {
 			const offset = ['nominal', 'ordinal'].includes(s.encoding[channel].type)
 
 			if (offset) {
@@ -427,7 +427,7 @@ const lineMarks = (s, dimensions) => {
 			return 0
 		})
 
-		if (markTransforms.some((item) => !!item)) {
+		if (markTransforms.some(item => !!item)) {
 			marks.attr('transform', `translate(${markTransforms.join(',')})`)
 		}
 
@@ -438,10 +438,10 @@ const lineMarks = (s, dimensions) => {
 			.append('g')
 			.classed('series', true)
 
-		series.each((d) => {
+		series.each(d => {
 			const categoryValue = encodingValue(s, 'color')(d)
 			category.set(d, categoryValue)
-			d.values.forEach((item) => {
+			d.values.forEach(item => {
 				category.set(item, categoryValue)
 			})
 		})
@@ -456,8 +456,8 @@ const lineMarks = (s, dimensions) => {
 			.classed('mark', true)
 
 		path
-			.attr('d', (d) => line(d.values))
-			.attr('aria-label', (d) => {
+			.attr('d', d => line(d.values))
+			.attr('aria-label', d => {
 				const series = category.get(d)
 
 				return typeof series === 'string' && series !== missingSeries() ? series : 'line'
@@ -479,7 +479,7 @@ const lineMarks = (s, dimensions) => {
  * @param {object} dimensions chart dimensions
  * @returns {number} radius
  */
-const radius = (dimensions) => Math.min(dimensions.x, dimensions.y) * 0.5
+const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
 
 /**
  * render arc marks for a circular pie or donut chart
@@ -493,10 +493,10 @@ const circularMarks = (s, dimensions) => {
 	const innerRadius = outerRadius * innerRadiusRatio
 	const { color } = parseScales(s)
 	const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group)
-	const value = (d) => d.value
+	const value = d => d.value
 	const layout = d3.pie().value(value).sort(sort)
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const mark = marks
 			.selectAll('path')
@@ -515,7 +515,7 @@ const circularMarks = (s, dimensions) => {
 			.attr('d', arc)
 			.attr('aria-label', markDescription(s))
 			.style('fill', encoders.color)
-			.classed('link', (d) => {
+			.classed('link', d => {
 				return encodingValue(s, 'href')(datum(s, d))
 			})
 			.call(tooltips(s))
@@ -529,7 +529,7 @@ const circularMarks = (s, dimensions) => {
  * @param {object} s Vega Lite specification
  * @returns {('diagonal'|'horizontal'|'vertical')} rule orientation
  */
-const ruleDirection = (s) => {
+const ruleDirection = s => {
 	if (s.encoding.x && s.encoding.x2 && s.encoding.y && s.encoding.y2) {
 		return 'diagonal'
 	}
@@ -560,13 +560,13 @@ const ruleDirection = (s) => {
  * @returns {function} rule renderer
  */
 const ruleMarks = (s, dimensions) => {
-	const renderer = (selection) => {
+	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const encoders = createEncoders(s, dimensions, createAccessors(s))
 
 		const rule = {}
 
-		rule.vertical = (selection) => {
+		rule.vertical = selection => {
 			selection
 				.attr('x1', encoders.x)
 				.attr('x2', encoders.x)
@@ -574,7 +574,7 @@ const ruleMarks = (s, dimensions) => {
 				.attr('y2', encoders.y2 || dimensions.y)
 		}
 
-		rule.horizontal = (selection) => {
+		rule.horizontal = selection => {
 			selection
 				.attr('x1', encoders.x || 0)
 				.attr('x2', encoders.x2 || dimensions.x)
@@ -601,7 +601,7 @@ const ruleMarks = (s, dimensions) => {
 }
 
 const textMarks = (s, dimensions) => {
-	return (selection) => {
+	return selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const encoders = createEncoders(s, dimensions, createAccessors(s))
 
@@ -616,7 +616,7 @@ const textMarks = (s, dimensions) => {
 		}
 
 		// encoded attributes
-		['x', 'y'].forEach((channel) => {
+		['x', 'y'].forEach(channel => {
 			if (typeof encoders[channel] === 'function') {
 				text.attr(channel, encoders[channel])
 			}
@@ -628,7 +628,7 @@ const textMarks = (s, dimensions) => {
 		}
 
 		// static attributes
-		['dx', 'dy'].forEach((attribute) => {
+		['dx', 'dy'].forEach(attribute => {
 			if (s.mark[attribute]) {
 				text.attr(attribute, s.mark[attribute])
 			}

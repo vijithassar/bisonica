@@ -4,8 +4,8 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('unit > memoize', () => {
-	test('memoizes functions', (assert) => {
-		const fn = (input) => {
+	test('memoizes functions', assert => {
+		const fn = input => {
 			return Math.random() + input
 		}
 		const memoized = memoize(fn)
@@ -15,7 +15,7 @@ module('unit > memoize', () => {
 		assert.equal(memoized(2), memoized(2))
 	})
 
-	test('memoizes functions with multiple arguments', (assert) => {
+	test('memoizes functions with multiple arguments', assert => {
 		const fn = (...inputs) => {
 			return inputs.reduce((accumulator, current) => {
 				return accumulator + current + Math.random()
@@ -29,7 +29,7 @@ module('unit > memoize', () => {
 		assert.equal(memoized(2, 3), memoized(2, 3))
 	})
 
-	test('memoizes functions with enclosing scopes', (assert) => {
+	test('memoizes functions with enclosing scopes', assert => {
 		let a, b, c;
 
 		// create scopes with anonymous functions
@@ -49,7 +49,7 @@ module('unit > memoize', () => {
 			c = () => value
 		})()
 
-		const _eat = (fn) => {
+		const _eat = fn => {
 			return `delicious ${fn()}`
 		}
 

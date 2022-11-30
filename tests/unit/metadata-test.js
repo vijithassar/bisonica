@@ -19,12 +19,12 @@ module('unit > metadata', () => {
 		]
 	}
 
-	const mismatch = (data) => {
+	const mismatch = data => {
 		data[data.length - 1].url = 'https://example.com/d'
 		return data
 	}
 
-	test('transfers urls to aggregated circular chart segments', (assert) => {
+	test('transfers urls to aggregated circular chart segments', assert => {
 		const s = {
 			data: {
 				values: urlData()
@@ -39,10 +39,10 @@ module('unit > metadata', () => {
 			}
 		}
 
-		assert.ok(data(s).every((item) => item.url.startsWith('https://example.com/')))
+		assert.ok(data(s).every(item => item.url.startsWith('https://example.com/')))
 	})
 
-	test('avoids transplanting mismatched data in aggregated circular chart segments', (assert) => {
+	test('avoids transplanting mismatched data in aggregated circular chart segments', assert => {
 		const s = {
 			data: {
 				values: mismatch(urlData())
@@ -57,7 +57,7 @@ module('unit > metadata', () => {
 			}
 		}
 
-		data(s).forEach((item) => {
+		data(s).forEach(item => {
 			const url = item[encodingField(s, 'href')]
 			const check = url?.startsWith('https://example.com/')
 			if (item.key === 'c') {
@@ -68,7 +68,7 @@ module('unit > metadata', () => {
 		})
 	})
 
-	test('transfers urls to aggregated stacked bar chart segments', (assert) => {
+	test('transfers urls to aggregated stacked bar chart segments', assert => {
 		const s = {
 			data: {
 				values: urlData()
@@ -82,8 +82,8 @@ module('unit > metadata', () => {
 			}
 		}
 
-		data(s).forEach((series) => {
-			series.forEach((item) => {
+		data(s).forEach(series => {
+			series.forEach(item => {
 				const difference = Math.abs(item[1] - item[0]) !== 0
 
 				if (difference) {
@@ -95,7 +95,7 @@ module('unit > metadata', () => {
 		})
 	})
 
-	test('avoids transplanting mismatched data in aggregated stacked bar chart segments', (assert) => {
+	test('avoids transplanting mismatched data in aggregated stacked bar chart segments', assert => {
 		const s = {
 			data: {
 				values: mismatch(urlData())
@@ -109,8 +109,8 @@ module('unit > metadata', () => {
 			}
 		}
 
-		data(s).forEach((series) => {
-			series.forEach((item) => {
+		data(s).forEach(series => {
+			series.forEach(item => {
 				const difference = Math.abs(item[1] - item[0]) !== 0
 
 				if (difference) {
@@ -126,7 +126,7 @@ module('unit > metadata', () => {
 		})
 	})
 
-	test('copies multiple metadata fields', (assert) => {
+	test('copies multiple metadata fields', assert => {
 		const s = specificationFixture('circular')
 		s.data.values = [
 			{ a: '•', b: '-', c: 'https://www.example.com/a', group: 'a', value: 95 },

@@ -12,7 +12,7 @@ const orders = ['ascending', 'descending']
  * @param {string} sort field
  * @returns {boolean}
  */
-const isInverted = (sort) => {
+const isInverted = sort => {
 	return sort[0] === '-'
 }
 
@@ -83,7 +83,7 @@ const sortOrder = memoize(_sortOrder)
  * @returns {string} visual encoding channel used for sorting
  */
 const _sortChannel = (s, channel) => {
-	return Object.entries(s.encoding).find((item) => item[1].field === sortField(s, channel))[0]
+	return Object.entries(s.encoding).find(item => item[1].field === sortField(s, channel))[0]
 }
 const sortChannel = memoize(_sortChannel)
 
@@ -125,7 +125,7 @@ const valuesToSort = (s, channel) => {
 		// track the values to be used for domains
 		const map = {}
 
-		values(s).forEach((d) => {
+		values(s).forEach(d => {
 			const key = getValue(d)
 			const value = encodingValue(s, sortChannel(s, channel))(d)
 			const exists = Object.prototype.hasOwnProperty.call(map, key)
@@ -154,7 +154,7 @@ const valuesToSort = (s, channel) => {
 		}
 
 		// replace raw values with values from the map
-		const result = values(s).map((item) => {
+		const result = values(s).map(item => {
 			const key = getValue(item)
 
 			return { ...item, [encodingField(s, sortChannel(s, channel))]: map[key] }
@@ -169,7 +169,7 @@ const valuesToSort = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {function} sort comparator function
  */
-const _sortMarkData = (s) => {
+const _sortMarkData = s => {
 	// just select the first matching encoding because
 	// multidimensional sort doesn't work at the mark level
 	const channel = Object.entries(s.encoding).find(([, channel]) => channel.sort)?.[0]

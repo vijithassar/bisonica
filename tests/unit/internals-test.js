@@ -24,10 +24,10 @@ const charts = [
 ]
 
 module('unit > internals', () => {
-	test('feature()', (assert) => {
+	test('feature()', assert => {
 		charts.forEach(chart => assert.equal(typeof feature(specificationFixture(chart)), 'object', chart))
 	})
-	test('data()', (assert) => {
+	test('data()', assert => {
 		charts.forEach(chart => assert.ok(Array.isArray(data(specificationFixture(chart))), chart))
 	})
 	test('createAccessors()', assert => {

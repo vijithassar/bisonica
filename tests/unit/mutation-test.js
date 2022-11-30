@@ -11,7 +11,7 @@ const { module, test } = qunit
  * @param {object} object object to be frozen
  * @returns {object} frozen object
  */
-const freeze = (object) => {
+const freeze = object => {
 	const propNames = Object.getOwnPropertyNames(object)
 
 	for (const name of propNames) {
@@ -26,7 +26,7 @@ const freeze = (object) => {
 }
 
 module('unit > mutation', () => {
-	test('does not mutate specifications', (assert) => {
+	test('does not mutate specifications', assert => {
 		const s = freeze(JSON.parse(JSON.stringify(specificationFixture('line'))))
 		const dimensions = { x: 500, y: 500 }
 

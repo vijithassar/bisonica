@@ -8,7 +8,7 @@ module('unit > marks', () => {
 	module('bar width', () => {
 		const dimensions = { x: 1000, y: 1000 }
 
-		test('return value', (assert) => {
+		test('return value', assert => {
 			const specification = specificationFixture('categoricalBar')
 
 			assert.equal(
@@ -18,9 +18,9 @@ module('unit > marks', () => {
 			)
 		})
 
-		test('temporal encoding', (assert) => {
+		test('temporal encoding', assert => {
 			const specification = specificationFixture('temporalBar')
-			const dates = new Set(specification.data.values.map((item) => item.label)).size
+			const dates = new Set(specification.data.values.map(item => item.label)).size
 
 			assert.ok(
 				barWidth(specification, dimensions) <= dimensions.x / dates,
@@ -28,9 +28,9 @@ module('unit > marks', () => {
 			)
 		})
 
-		test('nominal encoding', (assert) => {
+		test('nominal encoding', assert => {
 			const specification = specificationFixture('categoricalBar')
-			const categories = specification.data.values.map((item) => item.label).length
+			const categories = specification.data.values.map(item => item.label).length
 
 			assert.ok(
 				barWidth(specification, dimensions) <= dimensions.x / categories,
@@ -38,7 +38,7 @@ module('unit > marks', () => {
 			)
 		})
 
-		test('temporal gap', (assert) => {
+		test('temporal gap', assert => {
 			const specification = specificationFixture('stackedBar')
 			specification.data.values = [
 				{ label: '2020-01-01', value: 10, group: 'a' },
@@ -52,7 +52,7 @@ module('unit > marks', () => {
 			)
 		})
 
-		test('nominal gap', (assert) => {
+		test('nominal gap', assert => {
 			const specification = specificationFixture('categoricalBar')
 			specification.data.values = [
 				{ group: 'a', value: 10 },
@@ -64,7 +64,7 @@ module('unit > marks', () => {
 			)
 		})
 
-		test('iterates through temporal periods for custom domains', (assert) => {
+		test('iterates through temporal periods for custom domains', assert => {
 			const standardSpec = specificationFixture('temporalBar')
 			const customSpec = specificationFixture('temporalBar')
 			const standardWidth = barWidth(standardSpec, dimensions)

@@ -5,7 +5,7 @@ const { module, test } = qunit
 
 const JITTER_RATIO = 0.01
 
-const isCircular = (marks) => {
+const isCircular = marks => {
 	const jitter = 10
 	const dimensions = marks.getBBox()
 
@@ -23,7 +23,7 @@ const outsideBoundaries = (node, point) => {
 	)
 }
 
-const nodeCenter = (node) => {
+const nodeCenter = node => {
 	const dimensions = node.getBoundingClientRect()
 
 	return {
@@ -52,27 +52,27 @@ const jitter = (point, node) => {
 
 // tests whether the bounds overlap the center so this
 // only works if every segment is smaller than 25%
-const isDonut = (marks) => {
+const isDonut = marks => {
 	const center = nodeCenter(marks)
 	const mark = [...marks.querySelectorAll(testSelector('mark'))]
 
-	return mark.every((mark) => outsideBoundaries(mark, center)) && isCircular(marks)
+	return mark.every(mark => outsideBoundaries(mark, center)) && isCircular(marks)
 }
 
-const isPie = (marks) => {
+const isPie = marks => {
 	const mark = [...marks.querySelectorAll(testSelector('mark'))]
 	const points = Array.from({ length: 10 })
 		.fill(nodeCenter(marks))
-		.map((point) => jitter(point, marks))
-	const contained = points.every((point) => {
-		return mark.some((node) => outsideBoundaries(node, point) === false)
+		.map(point => jitter(point, marks))
+	const contained = points.every(point => {
+		return mark.some(node => outsideBoundaries(node, point) === false)
 	})
 
 	return isCircular(marks) && contained
 }
 
 module('integration > circular', function () {
-	test('renders a circular chart', (assert) => {
+	test('renders a circular chart', assert => {
 		const spec = specificationFixture('circular')
 
 		const element = render(spec)
@@ -87,19 +87,19 @@ module('integration > circular', function () {
 		assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
 
 		const mark = [...marks.querySelectorAll(markSelector)]
-		const colors = new Set(mark.map((item) => item.style.fill))
+		const colors = new Set(mark.map(item => item.style.fill))
 
 		assert.ok(mark.length === colors.size, 'every segment is a different color')
 	})
 
-	test('renders a circular chart with arbitrary field names', (assert) => {
+	test('renders a circular chart with arbitrary field names', assert => {
 		const spec = specificationFixture('circular')
 		const keys = {
 			group: '•',
 			label: '-',
 			value: '+'
 		}
-		spec.data.values = spec.data.values.map((item) => {
+		spec.data.values = spec.data.values.map(item => {
 			Object.entries(keys).forEach(([original, altered]) => {
 				item[altered] = item[original]
 				delete item[original]
@@ -124,12 +124,12 @@ module('integration > circular', function () {
 		assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
 
 		const mark = [...marks.querySelectorAll(markSelector)]
-		const colors = new Set(mark.map((item) => item.style.fill))
+		const colors = new Set(mark.map(item => item.style.fill))
 
 		assert.ok(mark.length === colors.size, 'every segment is a different color')
 	})
 
-	test('renders a pie chart', (assert) => {
+	test('renders a pie chart', assert => {
 		const spec = specificationFixture('circular')
 
 		spec.mark = 'arc'
@@ -146,7 +146,7 @@ module('integration > circular', function () {
 		assert.ok(isPie(marks))
 	})
 
-	test.skip('renders a donut chart', (assert) => {
+	test.skip('renders a donut chart', assert => {
 		const donutChartSpec = {
 			...specificationFixture('circular'),
 			mark: { type: 'arc', innerRadius: 50 },
