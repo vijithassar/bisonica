@@ -18,11 +18,11 @@ const _createAccessors = (s, type = null) => {
 	const accessors = {}
 
 	// create an accessor function with standard property lookup behavior
-	const accessor = (channel) => (d) => encodingValue(s, channel)(d)
+	const accessor = channel => d => encodingValue(s, channel)(d)
 
 	// helper to quickly create standard accessors based solely on channel names
 	const standard = (...channels) => {
-		channels.forEach((channel) => {
+		channels.forEach(channel => {
 			// this needs to check encoding hash directly instead of using
 			// the encodingField() helper in order to account for datum and
 			// value encodings
@@ -33,12 +33,12 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (key === 'series') {
-		accessors.color = (d) => d.key
+		accessors.color = d => d.key
 	}
 
 	if (['bar', 'area'].includes(key)) {
-		const start = (d) => d[0]
-		const lane = (d) => d.data.key
+		const start = d => d[0]
+		const lane = d => d.data.key
 
 		if (layoutDirection(s) === 'horizontal') {
 			accessors.x = start
@@ -52,16 +52,16 @@ const _createAccessors = (s, type = null) => {
 			}
 		}
 
-		accessors.start = (d) => (d[1] ? d : [d[0], d[0]])
+		accessors.start = d => (d[1] ? d : [d[0], d[0]])
 
-		accessors.length = (d) => {
+		accessors.length = d => {
 			return isNaN(d[1]) ? 0 : d[1] - d[0]
 		}
 	}
 
 	if (key === 'arc') {
-		accessors.theta = (d) => d.data.value
-		accessors.color = (d) => d.data.key
+		accessors.theta = d => d.data.value
+		accessors.color = d => d.data.key
 	}
 
 	if (key === 'rule') {
@@ -76,9 +76,9 @@ const _createAccessors = (s, type = null) => {
 		const quantitative = encodingChannelQuantitative(s)
 		const covariate = encodingChannelCovariateCartesian(s)
 
-		accessors[quantitative] = (d) => d.value
-		accessors[covariate] = feature(s).isTemporal() ? (d) => parseTime(d.period) : accessor(covariate)
-		accessors.color = (d) => (feature(s).hasColor() ? encodingValue(s, 'color')(d) : null)
+		accessors[quantitative] = d => d.value
+		accessors[covariate] = feature(s).isTemporal() ? d => parseTime(d.period) : accessor(covariate)
+		accessors.color = d => (feature(s).hasColor() ? encodingValue(s, 'color')(d) : null)
 	}
 
 	if (key === 'text') {
@@ -99,7 +99,7 @@ const _createAccessors = (s, type = null) => {
 		if (encoding?.type === 'temporal') {
 			const originalAccessor = accessors[channel]
 
-			accessors[channel] = (d) => parseTime(originalAccessor(d))
+			accessors[channel] = d => parseTime(originalAccessor(d))
 		}
 	})
 

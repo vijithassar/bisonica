@@ -15,7 +15,7 @@ import { transform } from './transform.js'
  * @param {object} field key and value pair
  * @returns {string} field description
  */
-const formatField = (field) => {
+const formatField = field => {
 	return `${field.key}: ${field.value}`
 }
 
@@ -24,7 +24,7 @@ const formatField = (field) => {
  * @param {array} content data fields to format
  * @returns {string} datum description
  */
-const formatTooltipContent = (content) => {
+const formatTooltipContent = content => {
 	if (Array.isArray(content)) {
 		return content.map(formatField).join('; ')
 	} else {
@@ -32,14 +32,14 @@ const formatTooltipContent = (content) => {
 	}
 }
 
-const _includedChannels = (s) => {
+const _includedChannels = s => {
 	const excluded = ['tooltip', 'href', 'text', 'description']
 
 	if (!feature(s).isMulticolor()) {
 		excluded.push('color')
 	}
 
-	return Object.keys(s.encoding).filter((channel) => excluded.includes(channel) === false)
+	return Object.keys(s.encoding).filter(channel => excluded.includes(channel) === false)
 }
 
 /**
@@ -98,11 +98,11 @@ const tooltip = (selection, s) => {
  * @param {object} s Vega Lite specification
  * @returns {function} tooltip rendering function
  */
-const tooltips = (s) => {
+const tooltips = s => {
 	if (s.usermeta?.tooltipHandler) {
 		return noop
 	}
-	return (selection) => {
+	return selection => {
 		selection.each(function () {
 			tooltip(d3.select(this), s)
 		})
@@ -133,7 +133,7 @@ const _getTooltipField = (s, type) => {
 
 	const getValue = accessors?.[channel] ? accessors[channel] : encodingValue(s, channel)
 
-	return (d) => {
+	return d => {
 		let value
 
 		value = getValue(d)
@@ -156,9 +156,9 @@ const _getTooltipField = (s, type) => {
 }
 const getTooltipField = memoize(_getTooltipField)
 
-const _tooltipContentDefault = (s) => {
-	return (d) => {
-		return includedChannels(s).map((channel) => getTooltipField(s, channel)(d))
+const _tooltipContentDefault = s => {
+	return d => {
+		return includedChannels(s).map(channel => getTooltipField(s, channel)(d))
 	}
 }
 /**
@@ -169,13 +169,13 @@ const _tooltipContentDefault = (s) => {
  */
 const tooltipContentDefault = memoize(_tooltipContentDefault)
 
-const _tooltipContentAll = (s) => {
-	return (d) => {
+const _tooltipContentAll = s => {
+	return d => {
 		const encodings = tooltipContentDefault(s)(d)
-		const encodingFields = new Set(encodings.map((item) => item.key))
+		const encodingFields = new Set(encodings.map(item => item.key))
 		const properties = Object.keys(d)
-		const metadataProperties = properties.filter((property) => !encodingFields.has(property))
-		const metadata = metadataProperties.map((property) => {
+		const metadataProperties = properties.filter(property => !encodingFields.has(property))
+		const metadata = metadataProperties.map(property => {
 			return { key: property, value: d[property] }
 		})
 
@@ -195,8 +195,8 @@ const tooltipContentAll = memoize(_tooltipContentAll)
  * @param {object} s Vega Lite specification
  * @returns {function} tooltip field data lookup function
  */
-const tooltipContentData = (s) => {
-	return (d) => {
+const tooltipContentData = s => {
+	return d => {
 		if (!Object.keys(d).length) {
 			return
 		}
@@ -210,7 +210,7 @@ const tooltipContentData = (s) => {
 		} else if (single) {
 			return getTooltipField(s, 'tooltip')(d).value
 		} else if (multiple) {
-			return s.encoding.tooltip.map((fieldDefinition) => {
+			return s.encoding.tooltip.map(fieldDefinition => {
 				const field = getTooltipField(s, fieldDefinition.field)(d)
 
 				if (fieldDefinition.label) {
@@ -230,8 +230,8 @@ const tooltipContentData = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {function} tooltip content renderer
  */
-const _tooltipContent = (s) => {
-	return memoize((d) => formatTooltipContent(tooltipContentData(s)(d)))
+const _tooltipContent = s => {
+	return memoize(d => formatTooltipContent(tooltipContentData(s)(d)))
 }
 const tooltipContent = memoize(_tooltipContent)
 

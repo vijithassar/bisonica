@@ -12,7 +12,7 @@ const categoricalBarChartSpec = specificationFixture('categoricalBar')
 const ordinalSpec = specificationFixture('multiline')
 ordinalSpec.encoding.color.type = 'ordinal'
 
-module('unit > scales', (hooks) => {
+module('unit > scales', hooks => {
 	let scales
 
 	hooks.beforeEach(() => {
@@ -68,7 +68,7 @@ module('unit > scales', (hooks) => {
 		})
 	})
 
-	test('extended scales', (assert) => {
+	test('extended scales', assert => {
 		const core = parseScales(lineChartSpec, dimensions)
 		const extended = parseScales(categoricalBarChartSpec, dimensions)
 
@@ -80,7 +80,7 @@ module('unit > scales', (hooks) => {
 			})
 	})
 
-	test('explicit color ranges', (assert) => {
+	test('explicit color ranges', assert => {
 		const range = ['black', 'white']
 		const s = {
 			data: {
@@ -94,7 +94,7 @@ module('unit > scales', (hooks) => {
 		assert.equal(scales.color.range()[1], range[1])
 	})
 
-	test('line chart y axis scale zero baselines', (assert) => {
+	test('line chart y axis scale zero baselines', assert => {
 		const spec = () => {
 			return {
 				data: {
@@ -120,7 +120,7 @@ module('unit > scales', (hooks) => {
 		}
 
 		const startAtZero = spec()
-		const values = startAtZero.data.values.map((d) => d.value)
+		const values = startAtZero.data.values.map(d => d.value)
 		const min = Math.min.apply(null, values)
 
 		const defaultBehavior = parseScales(startAtZero, dimensions).y
@@ -152,7 +152,7 @@ module('unit > scales', (hooks) => {
 		assert.equal(negativeScales.domain()[0], -100, 'overridden by negative numbers')
 	})
 
-	test('uses custom domains', (assert) => {
+	test('uses custom domains', assert => {
 		const s = {
 			data: {
 				values: [
@@ -190,7 +190,7 @@ module('unit > scales', (hooks) => {
 		})
 	})
 
-	test('generates color ranges to match custom domains', (assert) => {
+	test('generates color ranges to match custom domains', assert => {
 		const domain = ['a', 'b', 'c', 'd']
 		const s = {
 			data: {
@@ -209,7 +209,7 @@ module('unit > scales', (hooks) => {
 		assert.equal(color.range().length, domain.length)
 	})
 
-	test('generates scales for static value encodings', (assert) => {
+	test('generates scales for static value encodings', assert => {
 		const s = {
 			encoding: {
 				size: {
@@ -223,7 +223,7 @@ module('unit > scales', (hooks) => {
 		assert.equal(size(), s.encoding.size.value)
 	})
 
-	test('parses dates as temporal scales', (assert) => {
+	test('parses dates as temporal scales', assert => {
 		const s = {
 			data: {
 				values: [
@@ -242,13 +242,13 @@ module('unit > scales', (hooks) => {
 		const { x } = parseScales(s)
 
 		assert.equal(typeof x, 'function')
-		x.domain().forEach((date) => {
+		x.domain().forEach(date => {
 			assert.equal(typeof date, 'object')
 			assert.equal(typeof date.getTime, 'function')
 		})
 	})
 
-	test('parses dates as categorical scales', (assert) => {
+	test('parses dates as categorical scales', assert => {
 		const s = {
 			data: {
 				values: [
@@ -267,12 +267,12 @@ module('unit > scales', (hooks) => {
 		const { x } = parseScales(s)
 
 		assert.equal(typeof x, 'function')
-		x.domain().forEach((date) => {
+		x.domain().forEach(date => {
 			assert.equal(typeof date, 'string')
 		})
 	})
 
-	test('null disables scales and passes values directly', (assert) => {
+	test('null disables scales and passes values directly', assert => {
 		const s = {
 			data: {
 				values: [
@@ -299,7 +299,7 @@ module('unit > scales', (hooks) => {
 		assert.equal(parseScales(s).color('red'), 'red')
 	})
 
-	test('throws errors for unknown encoding types', (assert) => {
+	test('throws errors for unknown encoding types', assert => {
 		const s = {
 			data: {
 				values: [
@@ -325,7 +325,7 @@ module('unit > scales', (hooks) => {
 		assert.throws(() => parseScales(s))
 	})
 
-	test('generates symmetric log scales', (assert) => {
+	test('generates symmetric log scales', assert => {
 		const spec = {
 			data: {
 				values: [

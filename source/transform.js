@@ -6,11 +6,11 @@ import { memoize } from './memoize.js'
  * @param {string} expression a calculate expression describing string interpolation
  * @returns {function} string interpolation function
  */
-const calculate = (expression) => {
+const calculate = expression => {
 	const segments = expression
 		.split('+')
-		.map((item) => item.trim())
-		.map((item) => {
+		.map(item => item.trim())
+		.map(item => {
 			const interpolate = typeof item === 'string' && item.startsWith('datum.')
 			const literal = item.startsWith("'") && item.endsWith("'")
 
@@ -20,11 +20,11 @@ const calculate = (expression) => {
 				return item
 			}
 		})
-		.filter((item) => !!item)
+		.filter(item => !!item)
 
-	return (d) =>
+	return d =>
 		segments
-			.map((segment) => {
+			.map(segment => {
 				if (segment.startsWith('datum.')) {
 					const key = segment.slice(6)
 
@@ -36,8 +36,8 @@ const calculate = (expression) => {
 			.join('')
 }
 
-const _composeTransforms = (transforms) => {
-	return (d) => {
+const _composeTransforms = transforms => {
+	return d => {
 		if (!transforms?.length) {
 			return identity
 		}
@@ -70,7 +70,7 @@ const composeTransforms = memoize(_composeTransforms)
  * @param {object} s Vega Lite specification
  * @returns {function} transform function
  */
-const transform = (s) => {
+const transform = s => {
 	return composeTransforms(s.transform)
 }
 

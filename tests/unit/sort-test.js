@@ -36,7 +36,7 @@ const specification = () => {
 	return s
 }
 
-const dates = (s) => {
+const dates = s => {
 	s.data.values = s.data.values.map((item, index) => {
 		return { ...item, label: `2021-01-0${index}` }
 	})
@@ -103,7 +103,7 @@ module('unit > sort', () => {
 		const labels = specification()
 			.data.values.slice()
 			.sort((a, b) => a[field] - b[field])
-			.map((item) => item.label)
+			.map(item => item.label)
 
 		assert.deepEqual(nonex.domain(), labels)
 		assert.deepEqual(ascx.domain(), labels)
@@ -129,7 +129,7 @@ module('unit > sort', () => {
 		const labels = specification()
 			.data.values.slice()
 			.sort((a, b) => a[field] - b[field])
-			.map((item) => item.label)
+			.map(item => item.label)
 
 		assert.deepEqual(nonex.domain(), labels)
 		assert.deepEqual(ascx.domain(), labels)
@@ -154,7 +154,7 @@ module('unit > sort', () => {
 		const values = specification()
 			.data.values.slice()
 			.sort((a, b) => ascending(a[field], b[field]))
-		const labels = values.map((item) => item.label)
+		const labels = values.map(item => item.label)
 
 		assert.deepEqual(nonex.domain(), labels)
 		assert.deepEqual(ascx.domain(), labels)
@@ -181,8 +181,8 @@ module('unit > sort', () => {
 		const { x } = parseScales(s, dimensions)
 
 		const remaining = specification()
-			.data.values.map((item) => item.label)
-			.filter((item) => !partial.includes(item))
+			.data.values.map(item => item.label)
+			.filter(item => !partial.includes(item))
 
 		const sort = [...partial, ...remaining]
 
@@ -193,7 +193,7 @@ module('unit > sort', () => {
 
 		s.encoding.x.sort = null
 
-		const unsorted = s.data.values.map((item) => item.label)
+		const unsorted = s.data.values.map(item => item.label)
 
 		const { x } = parseScales(s, dimensions)
 

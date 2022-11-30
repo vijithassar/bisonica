@@ -7,12 +7,12 @@ const { module, test } = qunit
 module('unit > color', () => {
 	const defaultColor = 'steelblue'
 	const newColor = 'green'
-	test('color scales use default single color', (assert) => {
+	test('color scales use default single color', assert => {
 		const s = specificationFixture('categoricalBar')
 		const { color } = parseScales(s)
 		assert.equal(color(), defaultColor)
 	})
-	test('color scales use custom single color based on value encoding', (assert) => {
+	test('color scales use custom single color based on value encoding', assert => {
 		const s = specificationFixture('categoricalBar')
 		s.encoding.color = { value: newColor }
 		const { color } = parseScales(s)

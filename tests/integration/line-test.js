@@ -6,7 +6,7 @@ const { module, test } = qunit
 const pointSelector = testSelector('marks-mark-point')
 
 module('integration > line', function () {
-	test('renders a line chart', (assert) => {
+	test('renders a line chart', assert => {
 		const spec = specificationFixture('line')
 		const element = render(spec)
 
@@ -15,23 +15,23 @@ module('integration > line', function () {
 		assert.ok(element.querySelector(selector))
 		assert.ok(element.querySelector(selector).getAttribute('d'))
 
-		const pathStrings = [...element.querySelectorAll(selector)].map((node) =>
+		const pathStrings = [...element.querySelectorAll(selector)].map(node =>
 			node.getAttribute('d')
 		)
 
-		pathStrings.forEach((pathString) => {
+		pathStrings.forEach(pathString => {
 			assert.ok(pathString.length > 0, 'path string is not empty')
 			assert.equal((pathString.match(/NaN/g) || []).length, 0, 'path string does not contain NaN')
 		})
 	})
 
-	test('renders a line chart with points', (assert) => {
+	test('renders a line chart with points', assert => {
 		const spec = specificationFixture('line')
 		const element = render(spec)
 		assert.ok(element.querySelector(pointSelector))
 	})
 
-	test('renders a line chart without points', (assert) => {
+	test('renders a line chart without points', assert => {
 		const spec = specificationFixture('line')
 
 		delete spec.mark.point
@@ -39,7 +39,7 @@ module('integration > line', function () {
 		assert.notOk(element.querySelector(pointSelector))
 	})
 
-	test('renders a line chart with arbitrary field names', (assert) => {
+	test('renders a line chart with arbitrary field names', assert => {
 		const spec = specificationFixture('line')
 		const propertyMap = {
 			label: '_',
@@ -47,7 +47,7 @@ module('integration > line', function () {
 			value: '•'
 		}
 
-		spec.data.values = spec.data.values.map((item) => {
+		spec.data.values = spec.data.values.map(item => {
 			Object.entries(propertyMap).forEach(([a, b]) => {
 				item[b] = item[a]
 				delete item[a]

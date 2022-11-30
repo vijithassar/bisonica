@@ -8,12 +8,12 @@ import qunit from 'qunit'
 
 const { module, test } = qunit
 
-const validateDispatcher = (dispatcher) => {
-	return ['link', 'tooltip'].every((key) => typeof dispatcher._[key] === 'object')
+const validateDispatcher = dispatcher => {
+	return ['link', 'tooltip'].every(key => typeof dispatcher._[key] === 'object')
 }
 
 module('unit > interactions', function () {
-	test('registers an event dispatcher for charts with single layer', (assert) => {
+	test('registers an event dispatcher for charts with single layer', assert => {
 		const element = render(specificationFixture('circular'))
 
 		const mark = element.querySelector(testSelector('mark'))
@@ -22,7 +22,7 @@ module('unit > interactions', function () {
 		assert.ok(validateDispatcher(dispatcher), 'layered node has associated event dispatcher')
 	})
 
-	test('registers an event dispatcher for charts with multiple layers', (assert) => {
+	test('registers an event dispatcher for charts with multiple layers', assert => {
 		const s = {
 			title: {
 				text: 'donut chart'
@@ -35,7 +35,7 @@ module('unit > interactions', function () {
 				]
 			},
 			usermeta: {
-				customTooltipHandler: (event) => {
+				customTooltipHandler: event => {
 					console.log(event)
 				}
 			},

@@ -9,8 +9,8 @@ const metadataChannels = ['description', 'tooltip', 'href']
  * @param {object} s Vega Lite specification
  * @returns {boolean}
  */
-const hasMetadata = (s) => {
-	return Object.keys(s.encoding).some((key) => metadataChannels.includes(key))
+const hasMetadata = s => {
+	return Object.keys(s.encoding).some(key => metadataChannels.includes(key))
 }
 
 /**
@@ -21,7 +21,7 @@ const hasMetadata = (s) => {
  * @returns {string[]} matching fields
  */
 const matchingFields = (a, b, fields) => {
-	return fields.filter((field) => a[field] === b[field])
+	return fields.filter(field => a[field] === b[field])
 }
 
 /**
@@ -30,11 +30,11 @@ const matchingFields = (a, b, fields) => {
  * @param {object} s Vega Lite specification
  * @returns {function(object)} convert datum to string key
  */
-const createKeyBuilder = (s) => {
+const createKeyBuilder = s => {
 	const delimiter = ' + '
 	const fields = coreEncodingFields(s)
-	const getters = fields.map((field) => (item) => item[field])
-	const getter = (item) => getters.map(getter => getter(item)).join(delimiter)
+	const getters = fields.map(field => item => item[field])
+	const getter = item => getters.map(getter => getter(item)).join(delimiter)
 	return getter
 }
 
@@ -42,9 +42,9 @@ const createKeyBuilder = (s) => {
  * determine which fields contain metadata
  * @param {object} s Vega Lite specification
  */
-const metadataFields = (s) => {
+const metadataFields = s => {
 	return metadataChannels
-		.map((channel) => encodingField(s, channel))
+		.map(channel => encodingField(s, channel))
 		.filter(Boolean)
 }
 
@@ -70,7 +70,7 @@ const pick = (object, fields) => {
  * @param {object} s Vega Lite specification
  * @returns {string[]} encoding channels
  */
-const coreEncodingChannels = (s) => {
+const coreEncodingChannels = s => {
 	let channels = []
 	if (feature(s).hasColor()) {
 		channels.push('color')
@@ -87,7 +87,7 @@ const coreEncodingChannels = (s) => {
   * @param {object} s Vega Lite specification
   * @returns {string[]} encoding fields
   */
-const coreEncodingFields = (s) => {
+const coreEncodingFields = s => {
 	return coreEncodingChannels(s).map(channel => encodingField(s, channel)).filter(Boolean)
 }
 
@@ -101,7 +101,7 @@ const coreEncodingFields = (s) => {
 const countFields = (s, data, createKey) => {
 	const counter = {}
 	const fields = metadataFields(s)
-	data.forEach((item) => {
+	data.forEach(item => {
 		const key = createKey(item)
 		if (!counter[key]) {
 			counter[key] = { count: 0 }

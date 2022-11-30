@@ -20,7 +20,7 @@ import { parseTime } from './time.js'
  * @returns {array} nested data points
  */
 const groupByProperty = (data, property) => {
-	return Array.from(d3.group(data, (d) => d[property])).map(([key, values]) => ({ key, values }))
+	return Array.from(d3.group(data, d => d[property])).map(([key, values]) => ({ key, values }))
 }
 
 /**
@@ -34,7 +34,7 @@ const sumByProperty = (datum, property, valueKey) => {
 	const result = {}
 
 	result.key = datum.key
-	datum.values.forEach((item) => {
+	datum.values.forEach(item => {
 		const key = item[property]
 
 		if (result[key] === undefined) {
@@ -48,7 +48,7 @@ const sumByProperty = (datum, property, valueKey) => {
 		// this should be refactored
 		const field = ['url', 'description', 'tooltip']
 
-		field.forEach((field) => {
+		field.forEach(field => {
 			if (item[field]) {
 				result[key][field] = item[field]
 			}
@@ -67,7 +67,7 @@ const sumByProperty = (datum, property, valueKey) => {
  * @returns {array} nested group sums
  */
 const groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
-	return groupByProperty(values, groupBy).map((item) => sumByProperty(item, sumBy, valueKey))
+	return groupByProperty(values, groupBy).map(item => sumByProperty(item, sumBy, valueKey))
 }
 
 /**
@@ -75,10 +75,10 @@ const groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
  * @param {array} data data set
  * @returns {array} keys
  */
-const stackKeys = (data) => {
+const stackKeys = data => {
 	const keys = data
-		.map((item) => {
-			return Object.keys(item).filter((item) => item !== 'key')
+		.map(item => {
+			return Object.keys(item).filter(item => item !== 'key')
 		})
 		.flat()
 	const unique = [...new Set(keys)]
@@ -91,15 +91,15 @@ const stackKeys = (data) => {
  * @param {object} s Vega Lite specification
  * @returns {array} values summed across time period
  */
-const sumByCovariates = (s) => {
+const sumByCovariates = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
 	const group = encodingField(s, 'color')
 
 	const summedByGroup = groupAndSumByProperties(values(s), covariate, group, quantitative)
 	const keys = stackKeys(summedByGroup)
-	const summedByPeriod = summedByGroup.map((item) => {
-		return d3.sum(keys.map((key) => item[key]?.value || 0))
+	const summedByPeriod = summedByGroup.map(item => {
+		return d3.sum(keys.map(key => item[key]?.value || 0))
 	})
 
 	return summedByPeriod
@@ -110,9 +110,9 @@ const sumByCovariates = (s) => {
  * @param {array} data unsorted data set
  * @returns {array} sorted data set
  */
-const sort = (data) => {
+const sort = data => {
 	const keys = stackKeys(data)
-	const sortedDate = data.map((item) => {
+	const sortedDate = data.map(item => {
 		return item.sort((a, b) => {
 			return Number(new Date(a.data.key)) - Number(new Date(b.data.key))
 		})
@@ -132,7 +132,7 @@ const sort = (data) => {
  */
 const stackValue = (d, key) => d[key]?.value || 0
 
-const _stackData = (s) => {
+const _stackData = s => {
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const group = encodingField(s, 'color')
@@ -152,9 +152,9 @@ const _stackData = (s) => {
 	if (sanitize) {
 		// mutate instead of map in order to preserve
 		// hidden keys attached to the stack layout
-		stacked.forEach((series) => {
+		stacked.forEach(series => {
 			series.key = missingSeries()
-			series.forEach((item) => {
+			series.forEach(item => {
 				if (item.data.undefined) {
 					item.data[missingSeries()] = item.data.undefined
 					delete item.data.undefined
@@ -174,7 +174,7 @@ const _stackData = (s) => {
  */
 const stackData = memoize(_stackData)
 
-const _circularData = (s) => {
+const _circularData = s => {
 	const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
 		([key, values]) => ({ key, values })
 	)
@@ -194,16 +194,16 @@ const _circularData = (s) => {
  */
 const circularData = memoize(_circularData)
 
-const _lineData = (s) => {
+const _lineData = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries()
 	const color = encodingField(s, 'color')
 
 	const summed = groupAndSumByProperties(values(s), covariate, color, quantitative)
-	const results = stackKeys(summed).map((key) => {
+	const results = stackKeys(summed).map(key => {
 		const values = summed
-			.filter((item) => !!item[key])
-			.map((item) => {
+			.filter(item => !!item[key])
+			.map(item => {
 				const bucket = feature(s).isTemporal() ? 'period' : encodingField(s, encodingChannelCovariate(s))
 				const result = {
 					[bucket]: item.key,
@@ -249,7 +249,7 @@ const genericData = values
  * @param {object} s Vega Lite specification
  * @returns {array} sorted and aggregated data
  */
-const data = (s) => {
+const data = s => {
 	if (feature(s).isBar() || feature(s).isArea()) {
 		return stackData(s)
 	} else if (feature(s).isLine()) {

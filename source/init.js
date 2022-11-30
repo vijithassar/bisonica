@@ -10,7 +10,7 @@ import { detach } from './helpers.js'
  * @param {object} dimensions desired dimensions of the chart
  */
 const init = (s, dimensions) => {
-	const initializer = (selection) => {
+	const initializer = selection => {
 		selection.html('')
 
 		const chartNode = selection.append('div').classed('chart', true)

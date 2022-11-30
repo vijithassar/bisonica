@@ -38,7 +38,7 @@ const encodingType = (s, channel) => {
 const encodingValue = (s, channel) => {
 	const key = encodingField(s, channel)
 	const nesting = key && key.includes('.')
-	return (d) => {
+	return d => {
 		if (!nesting && d[key] !== undefined) {
 			return d[key]
 		} else if (nesting) {
@@ -56,7 +56,7 @@ const encodingValue = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @returns {string} visual encoding channel
  */
-const encodingChannelQuantitative = (s) => {
+const encodingChannelQuantitative = s => {
 	const test = (channel, definition) => definition.type === 'quantitative'
 
 	return encodingTest(s, test)
@@ -68,7 +68,7 @@ const encodingChannelQuantitative = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {function(object)}
  */
-const encodingValueQuantitative = (s) => {
+const encodingValueQuantitative = s => {
 	return encodingValue(s, encodingChannelQuantitative(s))
 }
 
@@ -92,7 +92,7 @@ const _encodingTest = (s, test) => {
 	}
 
 	if (encodings.length > 1) {
-		const list = encodings.map((encoding) => encoding[0]).join(', ')
+		const list = encodings.map(encoding => encoding[0]).join(', ')
 
 		throw new Error(`multiple channels (${list}) match test function`)
 	}
@@ -104,7 +104,7 @@ const encodingTest = memoize(_encodingTest)
  * @param {object} s Vega Lite specification
  * @returns {string} visual encoding channel
  */
-const encodingChannelCovariate = (s) => {
+const encodingChannelCovariate = s => {
 	if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
 		return 'color'
 	} else if (feature(s).isCartesian()) {
@@ -127,7 +127,7 @@ const encodingChannelCovariate = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {string} visual encoding chanel
  */
-const encodingChannelCovariateCartesian = (s) => {
+const encodingChannelCovariateCartesian = s => {
 	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
 	if (channel) {
 		return channel
@@ -149,9 +149,9 @@ const createEncoders = (s, dimensions, accessors) => {
 	const result = {}
 	const scales = parseScales(s, dimensions)
 
-	Object.keys(accessors).forEach((channel) => {
+	Object.keys(accessors).forEach(channel => {
 		const accessor = accessors[channel]
-		const encoder = (d) => {
+		const encoder = d => {
 			const scale = scales[channel]
 
 			if (s.encoding[channel]?.value) {

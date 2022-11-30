@@ -28,7 +28,7 @@ const timeParseYYYYMM = d3.utcParse('%Y-%m')
  * @param {string} date string in ISO8601 range format
  * @returns {object} date object
  */
-const timeParseIsoRange = (date) => {
+const timeParseIsoRange = date => {
 	if (typeof date === 'string') {
 		const fragment = date.split('Z-')[0]
 
@@ -48,16 +48,16 @@ const timeParseIso = d3.isoParse
  * @param {number} date number of milliseconds
  * @returns {object} date object
  */
-const timeParseMilliseconds = (date) => new Date(date)
+const timeParseMilliseconds = date => new Date(date)
 
 /**
  * convert date in milliseconds as string to date object
  * @param {string} date number of milliseconds
  * @returns {object} date object
  */
-const timeParseMillisecondsString = (date) => timeParseMilliseconds(+date)
+const timeParseMillisecondsString = date => timeParseMilliseconds(+date)
 
-const _getTimeParser = (date) => {
+const _getTimeParser = date => {
 	const parsers = [
 		timeParseYYYYMMDD,
 		timeParseIso,
@@ -66,7 +66,7 @@ const _getTimeParser = (date) => {
 		timeParseMilliseconds,
 		timeParseMillisecondsString
 	]
-	const isDate = (parser) => {
+	const isDate = parser => {
 		const parsed = parser(date)
 		const year = !!parsed && parsed.getFullYear()
 
@@ -93,7 +93,7 @@ const getTimeParser = memoize(_getTimeParser)
  * @param {(string|number)} date date representation
  * @returns {Date} date object
  */
-const _parseTime = (date) => {
+const _parseTime = date => {
 	const parser = getTimeParser(date)
 
 	if (typeof parser === 'function') {
@@ -108,7 +108,7 @@ const findTimePeriod = new RegExp(`(?:${TIME}|${UTC})(\\w+)`, 'gi')
  * @param {string} timeSpecifier lowercase time specifier string
  * @returns {string} camelcased time specifier string
  */
-const camelCaseTimePeriod = (timeSpecifier) => {
+const camelCaseTimePeriod = timeSpecifier => {
 	let matches = [...matchAll(timeSpecifier, findTimePeriod)]
 
 	if (!matches.length) {
@@ -125,7 +125,7 @@ const camelCaseTimePeriod = (timeSpecifier) => {
  * @param {string} specifier time specifier string
  * @returns {string} d3 time interval method name
  */
-const timeMethod = (specifier) => {
+const timeMethod = specifier => {
 	const prefix = specifier.startsWith(UTC) ? '' : TIME
 
 	return camelCaseTimePeriod(`${prefix}${specifier}`)
@@ -163,7 +163,7 @@ const timePeriod = (s, channel) => {
  * @param {object} date Date object
  * @returns {string} string representation
  */
-const defaultTimeFormatter = (date) => date.toUTCString()
+const defaultTimeFormatter = date => date.toUTCString()
 
 /**
  * string key for controlling date functionality

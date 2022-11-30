@@ -4,7 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > rules', function () {
-	test('renders rules', (assert) => {
+	test('renders rules', assert => {
 		const spec = specificationFixture('rules')
 		const element = render(spec)
 
@@ -20,7 +20,7 @@ module('integration > rules', function () {
 		assert.ok(element.querySelector(markSelector))
 		assert.equal(element.querySelector(markSelector).tagName, 'line')
 
-		mark.forEach((item) => {
+		mark.forEach(item => {
 			assert.equal(
 				item.getAttribute('y1'),
 				item.getAttribute('y2'),

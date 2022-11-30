@@ -20,7 +20,7 @@ const temperament = Math.pow(2, 1 / 12)
  * @param {number} root root frequency
  * @returns {number[]} chromatic audio scale
  */
-const chromatic = (root) => {
+const chromatic = root => {
 	return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index))
 }
 
@@ -45,7 +45,7 @@ const minorLinear = (min, max) => {
  * @param {number} root root frequency
  * @returns {number[]} minor audio scale
  */
-const minorExponential = (root) => {
+const minorExponential = root => {
 	const semitones = [0, 2, 3, 5, 7, 8, 10, 12]
 
 	return chromatic(root).filter((_, index) => semitones.includes(index))
@@ -90,7 +90,7 @@ const repeatLinear = (min, max) => {
 		.map((_, index) => {
 			const start = slice * index + min
 			const end = slice * (index + 1) + min
-			const steps = minorLinear(start, end).map((item) => item + start)
+			const steps = minorLinear(start, end).map(item => item + start)
 
 			return index === 0 ? steps : steps.slice(1)
 		})
@@ -124,7 +124,7 @@ const repeatExponential = (min, max) => {
  * @param {object} s Vega Lite specification
  */
 const notes = (values, dispatcher, s) => {
-	const [min, max] = d3.extent(values, (d) => d.value)
+	const [min, max] = d3.extent(values, d => d.value)
 	const domain = repeatLinear(feature(s).isBar() ? 0 : min, max)
 	const range = repeatExponential(root, root * 2 ** octaves)
 	const scale = d3.scaleThreshold().domain(domain).range(range)
@@ -144,12 +144,12 @@ const notes = (values, dispatcher, s) => {
  * @param {object} s Vega Lite specification
  * @returns {function} audio sonification function
  */
-const audio = (s) => {
+const audio = s => {
 	if (s.layer) {
 		return noop
 	}
 
-	return (wrapper) => {
+	return wrapper => {
 		const single = data(s)?.length === 1
 		const playable =
       (feature(s).isLine() && single) ||
@@ -168,7 +168,7 @@ const audio = (s) => {
 		} else if (feature(s).isCircular()) {
 			values = data(s)
 		} else if (feature(s).isBar()) {
-			values = data(s)[0].map((item) => {
+			values = data(s)[0].map(item => {
 				return { value: item.data[missingSeries()].value }
 			})
 		}
@@ -183,7 +183,7 @@ const audio = (s) => {
 			notes(values, dispatcher, s)
 		})
 
-		dispatcher.on('focus', (index) => {
+		dispatcher.on('focus', index => {
 			wrapper.selectAll(markInteractionSelector(s)).nodes()[index].focus()
 
 			if (index === values.length - 1) {

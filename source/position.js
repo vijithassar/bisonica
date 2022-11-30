@@ -29,7 +29,7 @@ const marginCircular = () => {
  * @param {object} s Vega Lite specification
  * @returns {object} D3 margin convention object
  */
-const tickMargin = (s) => {
+const tickMargin = s => {
 	const textLabels = longestAxisTickLabelTextWidth(s)
 	const result = {}
 
@@ -38,7 +38,7 @@ const tickMargin = (s) => {
 
 		if (textLabels[channel] && typeof angle === 'number') {
 			const coordinates = polarToCartesian(textLabels[channel], angle)
-			const opposite = Object.keys(axes).find((axis) => axis !== channel)
+			const opposite = Object.keys(axes).find(axis => axis !== channel)
 			const margin = Math.abs(coordinates[opposite])
 
 			result[position] = Math.min(MARGIN_MAXIMUM, margin + GRID)
@@ -53,7 +53,7 @@ const tickMargin = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {object} D3 margin convention object
  */
-const titleMargin = (s) => {
+const titleMargin = s => {
 	return {
 		bottom: feature(s).hasAxisTitleX() ? TITLE_MARGIN : 0,
 		left: feature(s).hasAxisTitleY() ? TITLE_MARGIN : 0
@@ -65,7 +65,7 @@ const titleMargin = (s) => {
  * @param {object} s Vega Lite specification
  * @returns {object} D3 margin convention object
  */
-const marginCartesian = (s) => {
+const marginCartesian = s => {
 	const defaultMargin = {
 		top: GRID * 2,
 		right: GRID * 2,
@@ -75,7 +75,7 @@ const marginCartesian = (s) => {
 
 	const dynamicMargin = {}
 
-	Object.values(axes).forEach((position) => {
+	Object.values(axes).forEach(position => {
 		dynamicMargin[position] =
       tickMargin(s)?.[position] + titleMargin(s)?.[position] + GRID
 	})
@@ -88,7 +88,7 @@ const marginCartesian = (s) => {
 	}
 }
 
-const _margin = (s) => {
+const _margin = s => {
 	if (feature(s).isCircular()) {
 		return marginCircular()
 	} else {
@@ -129,7 +129,7 @@ const position = (s, dimensions) => {
 	const transform = feature(s).isCircular() ? middle : margins
 	const transformString = `translate(${transform.x},${transform.y})`
 
-	return (selection) => {
+	return selection => {
 		selection.select(`g.${WRAPPER_CLASS}`).attr('transform', transformString)
 	}
 }

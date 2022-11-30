@@ -4,7 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > single bar', function () {
-	test('renders a stacked single bar', (assert) => {
+	test('renders a stacked single bar', assert => {
 		const spec = specificationFixture('singleBar')
 		const element = render(spec)
 
@@ -14,8 +14,8 @@ module('integration > single bar', function () {
 		assert.ok(element.querySelector(mark).tagName, 'rect')
 
 		const nodes = [...element.querySelectorAll(mark)]
-		const nodeHasPositiveHeight = (node) => Number(node.getAttribute('height')) >= 0
-		const nodeHasZeroHeight = (node) => Number(node.getAttribute('height')) === 0
+		const nodeHasPositiveHeight = node => Number(node.getAttribute('height')) >= 0
+		const nodeHasZeroHeight = node => Number(node.getAttribute('height')) === 0
 		const nodesHavePositiveHeights = nodes.every(nodeHasPositiveHeight)
 		const nodesHaveZeroHeights = nodes.every(nodeHasZeroHeight)
 

@@ -4,7 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > text', function () {
-	test('renders text marks', (assert) => {
+	test('renders text marks', assert => {
 		const spec = {
 			$schema: 'https://vega.github.io/schema/vega-lite/v4.json',
 			title: {
@@ -31,7 +31,7 @@ module('integration > text', function () {
 		assert.equal(element.querySelector(markSelector).tagName, 'text')
 	})
 
-	test('renders text marks with dynamic attributes', (assert) => {
+	test('renders text marks with dynamic attributes', assert => {
 		const spec = specificationFixture('scatterPlot')
 
 		spec.mark = { type: 'text' }
@@ -42,11 +42,11 @@ module('integration > text', function () {
 
 		const marks = [...element.querySelectorAll(testSelector('mark'))]
 
-		const sections = [...new Set(spec.data.values.map((item) => item.section)).values()]
+		const sections = [...new Set(spec.data.values.map(item => item.section)).values()]
 
-		sections.forEach((section) => {
-			const matchingValues = spec.data.values.filter((item) => item.section === section)
-			const matchingContent = marks.filter((mark) => mark.textContent === section)
+		sections.forEach(section => {
+			const matchingValues = spec.data.values.filter(item => item.section === section)
+			const matchingContent = marks.filter(mark => mark.textContent === section)
 
 			assert.equal(
 				matchingValues.length,
@@ -56,15 +56,15 @@ module('integration > text', function () {
 		})
 
 		assert.ok(
-			marks.every((mark) => mark.hasAttribute('x')),
+			marks.every(mark => mark.hasAttribute('x')),
 			'every mark has x position'
 		)
 		assert.ok(
-			marks.every((mark) => mark.hasAttribute('y')),
+			marks.every(mark => mark.hasAttribute('y')),
 			'every mark has y position'
 		)
 		assert.ok(
-			marks.every((mark) => mark.hasAttribute('fill')),
+			marks.every(mark => mark.hasAttribute('fill')),
 			'every mark has color'
 		)
 	})

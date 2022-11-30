@@ -8,7 +8,7 @@ import { feature } from './feature.js'
  * @param {number} number number
  * @returns {string} rounded number as string with SI suffix
  */
-const abbreviateNumbers = (number) => {
+const abbreviateNumbers = number => {
 	if (number < 10 && Number.isInteger(number)) {
 		return `${number}`
 	} else if (number < 10 && !Number.isInteger(number)) {
@@ -23,7 +23,7 @@ const abbreviateNumbers = (number) => {
  * @param {object} s Vega Lite specification
  * @returns {array}
  */
-const values = (s) => {
+const values = s => {
 	return s.data?.values.slice()
 }
 
@@ -98,7 +98,7 @@ const getUrl = (s, d) => {
  * @param {object} s Vega Lite specification
  * @returns {string} mark name
  */
-const mark = (s) => {
+const mark = s => {
 	if (typeof s.mark === 'string') {
 		return s.mark
 	} else if (typeof s.mark === 'object') {
@@ -117,21 +117,21 @@ const noop = () => {
 /**
  * returns the input; occasionally useful for composition
  */
-const identity = (x) => x
+const identity = x => x
 
 /**
  * convert a string to machine-friendly key
  * @param {string} string input string
  * @returns {string} kebab case string
  */
-const key = (string) => string?.toLowerCase().replace(/ /g, '-')
+const key = string => string?.toLowerCase().replace(/ /g, '-')
 
 /**
  * convert radians to degrees
  * @param {number} radians angle in radians
  * @returns {number} angle in degrees
  */
-const degrees = (radians) => (radians * 180) / Math.PI
+const degrees = radians => (radians * 180) / Math.PI
 
 /**
  * test whether a channel is continuous
@@ -158,7 +158,7 @@ const isDiscrete = (s, channel) => {
  * @param {array} nodes DOM nodes
  * @returns {boolean} overlap
  */
-const overlap = (nodes) => {
+const overlap = nodes => {
 	return [...nodes].some((node, index) => {
 		if (index === nodes.length - 1) {
 			return false
@@ -193,7 +193,7 @@ const polarToCartesian = (radius, angle) => {
  * @returns {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {
-	return (selection) => {
+	return selection => {
 		const tag = selection.node().tagName
 		const namespace = tag === 'g' ? 'svg' : 'html'
 		const detached = d3.create(`${namespace}:${tag}`)

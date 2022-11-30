@@ -8,10 +8,10 @@ import {
 
 const { module, test } = qunit
 
-const approximate = (value) => Math.round(value * 100) / 100
+const approximate = value => Math.round(value * 100) / 100
 
 module('integration > temporal-bar', function () {
-	test('renders a time series bar chart', (assert) => {
+	test('renders a time series bar chart', assert => {
 		const spec = specificationFixture('temporalBar')
 
 		const element = render(spec)
@@ -40,15 +40,15 @@ module('integration > temporal-bar', function () {
 		})
 	})
 
-	test('handles input data with all zero values', (assert) => {
+	test('handles input data with all zero values', assert => {
 		const spec = specificationFixture('temporalBar')
 
-		spec.data.values.forEach((item) => {
+		spec.data.values.forEach(item => {
 			item.value = 0
 		})
 
 		const element = render(spec)
-		element.querySelectorAll('rect.mark').forEach((mark) => {
+		element.querySelectorAll('rect.mark').forEach(mark => {
 			assert.equal(mark.getAttribute('height'), 0)
 		})
 	})
