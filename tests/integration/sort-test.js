@@ -1,7 +1,6 @@
 import * as d3 from 'd3'
 import qunit from 'qunit'
-import { render, testSelector } from '../test-helpers.js'
-import { specificationFixture } from '../test-helpers.js'
+import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 

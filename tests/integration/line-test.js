@@ -1,6 +1,5 @@
 import qunit from 'qunit'
-import { render, specificationFixture } from '../test-helpers.js'
-import { testSelector } from '../test-helpers.js'
+import { render, specificationFixture, testSelector } from '../test-helpers.js'
 
 const { module, test } = qunit
 

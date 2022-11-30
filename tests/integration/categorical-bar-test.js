@@ -1,9 +1,10 @@
 import qunit from 'qunit'
 import {
 	nodesHavePositiveHeights,
-	specificationFixture
+	specificationFixture,
+	render,
+	testSelector
 } from '../test-helpers.js'
-import { render, testSelector } from '../test-helpers.js'
 
 const { module, test } = qunit
 
