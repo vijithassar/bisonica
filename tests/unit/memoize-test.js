@@ -38,7 +38,7 @@ module('unit > memoize', () => {
 			const value = 'apple'
 			a = () => value
 		})();
-    
+
 		(() => {
 			const value = 'banana'
 			b = () => value

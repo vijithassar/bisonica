@@ -71,7 +71,7 @@ module('integration > description', () => {
 				x: {
 					field: 'a',
 					type: 'quantitative'
-				},  
+				},
 				y: {
 					field: 'b',
 					type: 'quantitative'

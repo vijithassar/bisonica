@@ -176,7 +176,7 @@ module('unit > views', () => {
 					]
 				}
 				assert.equal(layerPrimary(specification).mark.type, 'line', 'selects line from line chart with rule layer')
-			})      
+			})
 			test('linear', (assert) => {
 				const specification = {
 					data: {
@@ -604,7 +604,7 @@ module('unit > views', () => {
 									'type': 'nominal',
 									'scale': {
 										'range': [
-											'red', 
+											'red',
 											'orange'
 										]
 									}

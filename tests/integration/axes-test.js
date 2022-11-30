@@ -40,7 +40,7 @@ module('integration > axes', function () {
 
 	test('renders a chart with custom axis tick intervals', (assert) => {
 		const monthly = specificationFixture('temporalBar')
-		const biannual = specificationFixture('temporalBar') 
+		const biannual = specificationFixture('temporalBar')
 
 		const endpoints = d3.extent(monthly.data.values, (d) => +d.date)
 		const years = endpoints[1] - endpoints[0]

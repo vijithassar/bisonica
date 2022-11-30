@@ -146,7 +146,7 @@ module('unit > encoders', () => {
 		assert.equal(encodingChannelCovariate(nominal), 'x')
 		assert.equal(encodingChannelCovariate(temporal), 'x')
 		assert.throws(() => encodingChannelCovariate(doubleNominal))
-		assert.throws(() => encodingChannelCovariate(doubleQuantitative))    
+		assert.throws(() => encodingChannelCovariate(doubleQuantitative))
 	})
 
 	test('identifies quantitative encoding channels', (assert) => {
