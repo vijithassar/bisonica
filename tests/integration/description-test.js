@@ -21,11 +21,11 @@ module('integration > description', () => {
 	test('detects single minimum and maximum value', (assert) => {
 		let s = specificationFixture('circular')
 		s.data.values = [
-			{group: 'a', value: 1},
-			{group: 'b', value: 2},
-			{group: 'c', value: 3},
-			{group: 'd', value: 4},
-			{group: 'e', value: 5}
+			{ group: 'a', value: 1 },
+			{ group: 'b', value: 2 },
+			{ group: 'c', value: 3 },
+			{ group: 'd', value: 4 },
+			{ group: 'e', value: 5 }
 		]
 		const element = render(s)
 		const labels = [
@@ -37,11 +37,11 @@ module('integration > description', () => {
 	test('detects multiple minimum and maximum values', (assert) => {
 		let s = specificationFixture('circular')
 		s.data.values = [
-			{group: 'a', value: 1},
-			{group: 'b', value: 1},
-			{group: 'c', value: 3},
-			{group: 'd', value: 5},
-			{group: 'e', value: 5}
+			{ group: 'a', value: 1 },
+			{ group: 'b', value: 1 },
+			{ group: 'c', value: 3 },
+			{ group: 'd', value: 5 },
+			{ group: 'e', value: 5 }
 		]
 		const element = render(s)
 		const labels = [
@@ -60,11 +60,11 @@ module('integration > description', () => {
 			},
 			data: {
 				values: [
-					{a: 1, b: 1},
-					{a: 2, b: 1},
-					{a: 3, b: 3},
-					{a: 4, b: 5},
-					{a: 5, b: 5}
+					{ a: 1, b: 1 },
+					{ a: 2, b: 1 },
+					{ a: 3, b: 3 },
+					{ a: 4, b: 5 },
+					{ a: 5, b: 5 }
 				]
 			},
 			encoding: {

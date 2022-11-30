@@ -68,7 +68,7 @@ module('unit > marks', () => {
 			const standardSpec = specificationFixture('temporalBar')
 			const customSpec = specificationFixture('temporalBar')
 			const standardWidth = barWidth(standardSpec, dimensions)
-			customSpec.encoding.x.scale = {domain: ['2010', '2020']}
+			customSpec.encoding.x.scale = { domain: ['2010', '2020'] }
 			const customWidth = barWidth(customSpec, dimensions)
 			assert.ok(standardWidth > customWidth)
 		})

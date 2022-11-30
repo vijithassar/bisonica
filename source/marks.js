@@ -281,7 +281,7 @@ const barMarks = (s, dimensions) => {
  * @returns {object} area encoders
  */
 const areaEncoders = (s, dimensions) => {
-	const {x, y, width, height } = stackEncoders(s, dimensions)
+	const { x, y, width, height } = stackEncoders(s, dimensions)
 	let base = {
 		y0: y,
 		x0: x,

@@ -53,7 +53,7 @@ const calculateExtents = (s) => {
 
 		result[channel] = new Map()
 		const [min, max] = d3.extent(values, value)
-		result[channel].set(min, {type: 'minimum' })
+		result[channel].set(min, { type: 'minimum' })
 		result[channel].set(max, { type: 'maximum' })
 	})
 

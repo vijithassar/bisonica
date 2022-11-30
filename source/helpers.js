@@ -63,7 +63,7 @@ const nested = function(d, key, newValue) {
 	if (arguments.length === 3) {
 		let value = newValue
 		while (keys.length) {
-			value = {[keys.pop()]: value}
+			value = { [keys.pop()]: value }
 		}
 		return value
 	}

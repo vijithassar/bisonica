@@ -111,16 +111,16 @@ module('unit > tooltips', () => {
 		assert.equal(text, 'tooltip value is: 1')
 	})
 	test('handles bidirectional cartesian encodings', (assert) => {
-		const length = {field: 'a', type: 'quantitative'}
-		const category = {field: 'b', type: 'nominal'}
+		const length = { field: 'a', type: 'quantitative' }
+		const category = { field: 'b', type: 'nominal' }
 		const values = [
-			{ a: 10, b: '_'},
+			{ a: 10, b: '_' },
 			{ a: 20, b: '•' },
 			{ a: 30, b: '+' }
 		]
-		const mark = {type: 'bar', tooltip: true}
+		const mark = { type: 'bar', tooltip: true }
 		const horizontal = {
-			data: {values},
+			data: { values },
 			mark,
 			encoding: {
 				x: length,
@@ -128,7 +128,7 @@ module('unit > tooltips', () => {
 			}
 		}
 		const vertical = {
-			data: {values},
+			data: { values },
 			mark,
 			encoding: {
 				y: length,

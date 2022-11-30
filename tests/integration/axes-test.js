@@ -29,7 +29,7 @@ module('integration > axes', function () {
 	test('renders a chart without y-axis tick labels', (assert) => {
 		const spec = specificationFixture('categoricalBar')
 
-		spec.encoding.y.axis = {labels: false}
+		spec.encoding.y.axis = { labels: false }
 
 		const element = render(spec)
 

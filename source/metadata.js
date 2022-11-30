@@ -104,7 +104,7 @@ const countFields = (s, data, createKey) => {
 	data.forEach((item) => {
 		const key = createKey(item)
 		if (!counter[key]) {
-			counter[key] = {count: 0}
+			counter[key] = { count: 0 }
 		}
 		counter[key].count++
 		const count = counter[key].count

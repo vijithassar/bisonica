@@ -100,11 +100,11 @@ module('unit > views', () => {
 		module('primary', () => {
 			test('circular', (assert) => {
 				const specification = {
-					data: {values: [
+					data: { values: [
 						{ group: 'a', value: 1 },
 						{ group: 'b', value: 2 },
 						{ group: 'c', value: 3 }
-					]},
+					] },
 					layer: [
 						{
 							mark: {

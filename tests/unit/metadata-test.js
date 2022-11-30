@@ -129,9 +129,9 @@ module('unit > metadata', () => {
 	test('copies multiple metadata fields', (assert) => {
 		const s = specificationFixture('circular')
 		s.data.values = [
-			{a: '•', b: '-', c: 'https://www.example.com/a', group: 'a', value: 95},
-			{a: '+', b: '_', c: 'https://www.example.com/b', group: 'b', value: 3},
-			{a: '@', b: '|', c: 'https://www.example.com/c', group: 'c', value: 2}
+			{ a: '•', b: '-', c: 'https://www.example.com/a', group: 'a', value: 95 },
+			{ a: '+', b: '_', c: 'https://www.example.com/b', group: 'b', value: 3 },
+			{ a: '@', b: '|', c: 'https://www.example.com/c', group: 'c', value: 2 }
 		]
 		s.encoding.tooltip = { field: 'a' }
 		s.encoding.description = { field: 'b' }
