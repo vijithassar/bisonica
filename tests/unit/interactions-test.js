@@ -1,28 +1,28 @@
-import { dispatchers } from '../../source/interactions.js';
+import { dispatchers } from '../../source/interactions.js'
 import {
     render,
     specificationFixture,
     testSelector
-} from '../test-helpers.js';
-import qunit from 'qunit';
+} from '../test-helpers.js'
+import qunit from 'qunit'
 
-const { module, test } = qunit;
+const { module, test } = qunit
 
 const validateDispatcher = (dispatcher) => {
-    return ['link', 'tooltip'].every((key) => typeof dispatcher._[key] === 'object');
-};
+    return ['link', 'tooltip'].every((key) => typeof dispatcher._[key] === 'object')
+}
 
 module('unit > interactions', function () {
 
     test('registers an event dispatcher for charts with single layer', (assert) => {
 
-        const element = render(specificationFixture('circular'));
+        const element = render(specificationFixture('circular'))
 
-        const mark = element.querySelector(testSelector('mark'));
+        const mark = element.querySelector(testSelector('mark'))
 
-        const dispatcher = dispatchers.get(mark);
-        assert.ok(validateDispatcher(dispatcher), 'layered node has associated event dispatcher');
-    });
+        const dispatcher = dispatchers.get(mark)
+        assert.ok(validateDispatcher(dispatcher), 'layered node has associated event dispatcher')
+    })
 
     test('registers an event dispatcher for charts with multiple layers', (assert) => {
         const s = {
@@ -38,7 +38,7 @@ module('unit > interactions', function () {
             },
             usermeta: {
                 customTooltipHandler: (event) => {
-                    console.log(event);
+                    console.log(event)
                 }
             },
             layer: [
@@ -70,15 +70,15 @@ module('unit > interactions', function () {
                     }
                 }
             ]
-        };
+        }
 
-        const element = render(s);
+        const element = render(s)
 
-        const layers = [...element.querySelectorAll(testSelector('layer'))];
+        const layers = [...element.querySelectorAll(testSelector('layer'))]
         layers.forEach((layer, index) => {
-            const dispatcher = dispatchers.get(layer);
-            assert.ok(validateDispatcher(dispatcher), `layer node at index ${index} has an associated event dispatcher`);
-        });
-    });
+            const dispatcher = dispatchers.get(layer)
+            assert.ok(validateDispatcher(dispatcher), `layer node at index ${index} has an associated event dispatcher`)
+        })
+    })
 
-});
+})

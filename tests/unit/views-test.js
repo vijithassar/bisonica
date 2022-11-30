@@ -3,12 +3,12 @@ import {
   layerMatch,
   layerNode,
   layerPrimary
-} from '../../source/views.js';
-import qunit from 'qunit';
-import { parseScales } from '../../source/scales.js';
-import * as d3 from 'd3';
+} from '../../source/views.js'
+import qunit from 'qunit'
+import { parseScales } from '../../source/scales.js'
+import * as d3 from 'd3'
 
-const { module, test } = qunit;
+const { module, test } = qunit
 
 module('unit > views', () => {
   module('layers', () => {
@@ -24,23 +24,23 @@ module('unit > views', () => {
           encoding: { y: { scale: { domain: [0, 100] }, type: 'quantitative' } },
         },
       ],
-    };
-    const ruleTest = (s) => s.mark.type === 'rule';
-    const barTest = (s) => s.mark.type === 'bar';
+    }
+    const ruleTest = (s) => s.mark.type === 'rule'
+    const barTest = (s) => s.mark.type === 'bar'
 
     test('resolves missing domains', (assert) => {
-      const s = layerMatch(specifications, (s) => s.mark.type === 'rule');
+      const s = layerMatch(specifications, (s) => s.mark.type === 'rule')
 
-      assert.deepEqual(s.encoding.y.scale.domain, specifications.layer[1].encoding.y.scale.domain);
-    });
+      assert.deepEqual(s.encoding.y.scale.domain, specifications.layer[1].encoding.y.scale.domain)
+    })
     test('resolves missing encoding types', (assert) => {
-      const s = layerMatch(specifications, (s) => s.mark.type === 'rule');
+      const s = layerMatch(specifications, (s) => s.mark.type === 'rule')
 
-      assert.equal(s.encoding.y.type, 'quantitative');
-    });
+      assert.equal(s.encoding.y.type, 'quantitative')
+    })
     test('appends data to layer specifications', (assert) => {
-      assert.equal(typeof layerMatch(specifications, barTest).data.values.length, 'number');
-    });
+      assert.equal(typeof layerMatch(specifications, barTest).data.values.length, 'number')
+    })
 
     test('appends encoding to layer specifications', (assert) => {
       const encodingResolveTestSpecification = {
@@ -56,18 +56,18 @@ module('unit > views', () => {
           },
         },
         layer: [{ mark: { type: 'point' } }, { mark: { type: 'text' } }],
-      };
-      const pointTest = (s) => s.mark.type === 'point';
-      const layer = layerMatch(encodingResolveTestSpecification, pointTest);
+      }
+      const pointTest = (s) => s.mark.type === 'point'
+      const layer = layerMatch(encodingResolveTestSpecification, pointTest)
 
-      assert.equal(layer.encoding.x.field, 'a');
-      assert.equal(layer.encoding.y.field, 'b');
-    });
+      assert.equal(layer.encoding.x.field, 'a')
+      assert.equal(layer.encoding.y.field, 'b')
+    })
 
     test('matches nested layers', (assert) => {
-      assert.equal(typeof layerMatch(specifications, ruleTest).encoding.y.datum, 'number');
-      assert.equal(layerMatch(specifications, barTest).encoding.y.type, 'quantitative');
-    });
+      assert.equal(typeof layerMatch(specifications, ruleTest).encoding.y.datum, 'number')
+      assert.equal(layerMatch(specifications, barTest).encoding.y.type, 'quantitative')
+    })
 
     test('finds layer nodes', (assert) => {
       const markup = `
@@ -83,20 +83,20 @@ module('unit > views', () => {
             </g>
           </g>
         </svg>
-      `;
-      const wrapper = document.createElement('div');
+      `
+      const wrapper = document.createElement('div')
 
-      wrapper.innerHTML = markup;
+      wrapper.innerHTML = markup
 
-      const ruleTest = (s) => s.mark.type === 'rule';
-      const barTest = (s) => s.mark.type === 'bar';
+      const ruleTest = (s) => s.mark.type === 'rule'
+      const barTest = (s) => s.mark.type === 'bar'
 
-      const ruleSpec = layerMatch(specifications, ruleTest);
-      const barSpec = layerMatch(specifications, barTest);
+      const ruleSpec = layerMatch(specifications, ruleTest)
+      const barSpec = layerMatch(specifications, barTest)
 
-      assert.equal(layerNode(ruleSpec, wrapper).getAttribute('data-test-selector'), 'a');
-      assert.equal(layerNode(barSpec, wrapper).getAttribute('data-test-selector'), 'b');
-    });
+      assert.equal(layerNode(ruleSpec, wrapper).getAttribute('data-test-selector'), 'a')
+      assert.equal(layerNode(barSpec, wrapper).getAttribute('data-test-selector'), 'b')
+    })
     module('primary', () => {
       test('circular', (assert) => {
         const specification = {
@@ -129,9 +129,9 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        assert.equal(layerPrimary(specification).mark.type, 'arc', 'selects arcs from donut chart with text layer');
-      });
+        }
+        assert.equal(layerPrimary(specification).mark.type, 'arc', 'selects arcs from donut chart with text layer')
+      })
       test('cartesian', (assert) => {
         const specification = {
           data: {
@@ -174,9 +174,9 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        assert.equal(layerPrimary(specification).mark.type, 'line', 'selects line from line chart with rule layer');
-      });      
+        }
+        assert.equal(layerPrimary(specification).mark.type, 'line', 'selects line from line chart with rule layer')
+      })      
       test('linear', (assert) => {
         const specification = {
           data: {
@@ -220,9 +220,9 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        assert.equal(layerPrimary(specification).mark.type, 'point', 'selects points from linear chart with text layer');
-      });
+        }
+        assert.equal(layerPrimary(specification).mark.type, 'point', 'selects points from linear chart with text layer')
+      })
       test('unions color domain', (assert) => {
         const specification = {
           "title": { "text": "layer color legend test specification" },
@@ -417,8 +417,8 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        const domain = parseScales(layerPrimary(specification)).color.domain();
+        }
+        const domain = parseScales(layerPrimary(specification)).color.domain()
         assert.equal(domain.length, 5)
 
         const layers = [0, 1]
@@ -428,8 +428,8 @@ module('unit > views', () => {
 
         unique.forEach((value) => {
           assert.ok(domain.includes(value))
-        });
-      });
+        })
+      })
 
       test('unions color range', (assert) => {
         const specification = {
@@ -638,8 +638,8 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        const range = parseScales(layerPrimary(specification)).color.range();
+        }
+        const range = parseScales(layerPrimary(specification)).color.range()
         assert.equal(range.length, 5)
 
         const layers = [0, 1]
@@ -647,8 +647,8 @@ module('unit > views', () => {
 
         values.forEach((value) => {
           assert.ok(range.includes(value))
-        });
-      });
+        })
+      })
 
       test('multiple graphical layers', (assert) => {
         const specification = {
@@ -703,10 +703,10 @@ module('unit > views', () => {
               }
             }
           ]
-        };
-        assert.equal(layerPrimary(specification).mark.type, 'bar', 'selects layers with explicit axis configuration from charts with multiple graphical layers');
-      });
-    });
+        }
+        assert.equal(layerPrimary(specification).mark.type, 'bar', 'selects layers with explicit axis configuration from charts with multiple graphical layers')
+      })
+    })
 
 
     test('calls a function for multiple layers', (assert) => {
@@ -757,16 +757,16 @@ module('unit > views', () => {
           }
         ]
       }
-      const results = {};
+      const results = {}
       const track = (s) => {
         return () => {
-          results[s.mark.type] = true;
-        };
-      };
-      const element = document.createElement('div');
-      d3.select(element).call(layerCall(s, track));
-      assert.ok(results.point);
-      assert.ok(results.text);
-    });
-  });
-});
+          results[s.mark.type] = true
+        }
+      }
+      const element = document.createElement('div')
+      d3.select(element).call(layerCall(s, track))
+      assert.ok(results.point)
+      assert.ok(results.text)
+    })
+  })
+})

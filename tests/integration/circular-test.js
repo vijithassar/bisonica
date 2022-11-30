@@ -1,151 +1,151 @@
-import qunit from 'qunit';
-import { render, testSelector } from '../test-helpers.js';
-import { specificationFixture } from '../test-helpers.js';
+import qunit from 'qunit'
+import { render, testSelector } from '../test-helpers.js'
+import { specificationFixture } from '../test-helpers.js'
 
-const { module, test } = qunit;
+const { module, test } = qunit
 
-const JITTER_RATIO = 0.01;
+const JITTER_RATIO = 0.01
 
 const isCircular = (marks) => {
-  const jitter = 10;
-  const dimensions = marks.getBBox();
+  const jitter = 10
+  const dimensions = marks.getBBox()
 
-  return Math.abs(Math.round(dimensions.height) - Math.round(dimensions.width)) < jitter;
-};
+  return Math.abs(Math.round(dimensions.height) - Math.round(dimensions.width)) < jitter
+}
 
 const outsideBoundaries = (node, point) => {
-  const bounds = node.getBoundingClientRect();
+  const bounds = node.getBoundingClientRect()
 
   return (
     bounds.top > point.y ||
     bounds.bottom < point.y ||
     bounds.left > point.x ||
     bounds.right < point.x
-  );
-};
+  )
+}
 
 const nodeCenter = (node) => {
-  const dimensions = node.getBoundingClientRect();
+  const dimensions = node.getBoundingClientRect()
 
   return {
     x: dimensions.x + dimensions.width * 0.5,
     y: dimensions.y + dimensions.height * 0.5,
-  };
-};
+  }
+}
 
 const jitter = (point, node) => {
-  const dimensions = node.getBoundingClientRect();
+  const dimensions = node.getBoundingClientRect()
   const totalRange = {
     x: dimensions.width - dimensions.x,
     y: dimensions.height - dimensions.y,
-  };
+  }
   const jitterRange = {
     x: totalRange.x * JITTER_RATIO,
     y: totalRange.y * JITTER_RATIO,
-  };
-  const direction = Math.random() > 0.5 ? 1 : -1;
+  }
+  const direction = Math.random() > 0.5 ? 1 : -1
 
   return {
     x: point.x + jitterRange.x * direction,
     y: point.y + jitterRange.y * direction,
-  };
-};
+  }
+}
 
 // tests whether the bounds overlap the center so this
 // only works if every segment is smaller than 25%
 const isDonut = (marks) => {
-  const center = nodeCenter(marks);
-  const mark = [...marks.querySelectorAll(testSelector('mark'))];
+  const center = nodeCenter(marks)
+  const mark = [...marks.querySelectorAll(testSelector('mark'))]
 
-  return mark.every((mark) => outsideBoundaries(mark, center)) && isCircular(marks);
-};
+  return mark.every((mark) => outsideBoundaries(mark, center)) && isCircular(marks)
+}
 
 const isPie = (marks) => {
-  const mark = [...marks.querySelectorAll(testSelector('mark'))];
+  const mark = [...marks.querySelectorAll(testSelector('mark'))]
   const points = Array.from({ length: 10 })
     .fill(nodeCenter(marks))
-    .map((point) => jitter(point, marks));
+    .map((point) => jitter(point, marks))
   const contained = points.every((point) => {
-    return mark.some((node) => outsideBoundaries(node, point) === false);
-  });
+    return mark.some((node) => outsideBoundaries(node, point) === false)
+  })
 
-  return isCircular(marks) && contained;
-};
+  return isCircular(marks) && contained
+}
 
 module('integration > circular', function () {
   test('renders a circular chart', (assert) => {
-    const spec = specificationFixture('circular');
+    const spec = specificationFixture('circular')
 
-    const element = render(spec);
+    const element = render(spec)
 
-    const markSelector = testSelector('mark');
+    const markSelector = testSelector('mark')
 
-    assert.ok(element.querySelector(markSelector));
-    assert.equal(element.querySelector(markSelector).tagName, 'path');
+    assert.ok(element.querySelector(markSelector))
+    assert.equal(element.querySelector(markSelector).tagName, 'path')
 
-    const marks = element.querySelector(testSelector('marks'));
+    const marks = element.querySelector(testSelector('marks'))
 
-    assert.ok(isCircular(marks), 'marks group has approximately equal height and width');
+    assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
 
-    const mark = [...marks.querySelectorAll(markSelector)];
-    const colors = new Set(mark.map((item) => item.style.fill));
+    const mark = [...marks.querySelectorAll(markSelector)]
+    const colors = new Set(mark.map((item) => item.style.fill))
 
-    assert.ok(mark.length === colors.size, 'every segment is a different color');
-  });
+    assert.ok(mark.length === colors.size, 'every segment is a different color')
+  })
 
   test('renders a circular chart with arbitrary field names', (assert) => {
-    const spec = specificationFixture('circular');
+    const spec = specificationFixture('circular')
     const keys = {
       group: '•',
       label: '-',
       value: '+'
-    };
+    }
     spec.data.values = spec.data.values.map((item) => {
       Object.entries(keys).forEach(([original, altered]) => {
-        item[altered] = item[original];
-        delete item[original];
-      });
-      return item;
-    });
+        item[altered] = item[original]
+        delete item[original]
+      })
+      return item
+    })
     Object.entries(spec.encoding).forEach(([channel, definition]) => {
-      const original = definition.field;
-      const altered = keys[original];
-      spec.encoding[channel].field = altered;
-    });
+      const original = definition.field
+      const altered = keys[original]
+      spec.encoding[channel].field = altered
+    })
 
-    const element = render(spec);
+    const element = render(spec)
 
-    const markSelector = testSelector('mark');
+    const markSelector = testSelector('mark')
 
-    assert.ok(element.querySelector(markSelector));
-    assert.equal(element.querySelector(markSelector).tagName, 'path');
+    assert.ok(element.querySelector(markSelector))
+    assert.equal(element.querySelector(markSelector).tagName, 'path')
 
-    const marks = element.querySelector(testSelector('marks'));
+    const marks = element.querySelector(testSelector('marks'))
 
-    assert.ok(isCircular(marks), 'marks group has approximately equal height and width');
+    assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
 
-    const mark = [...marks.querySelectorAll(markSelector)];
-    const colors = new Set(mark.map((item) => item.style.fill));
+    const mark = [...marks.querySelectorAll(markSelector)]
+    const colors = new Set(mark.map((item) => item.style.fill))
 
-    assert.ok(mark.length === colors.size, 'every segment is a different color');
-  });
+    assert.ok(mark.length === colors.size, 'every segment is a different color')
+  })
 
   test('renders a pie chart', (assert) => {
-    const spec = specificationFixture('circular');
+    const spec = specificationFixture('circular')
 
-    spec.mark = 'arc';
+    spec.mark = 'arc'
 
-    const element = render(spec);
+    const element = render(spec)
 
-    const mark = testSelector('mark');
+    const mark = testSelector('mark')
 
-    assert.ok(element.querySelector(mark));
-    assert.equal(element.querySelector(mark).tagName, 'path');
+    assert.ok(element.querySelector(mark))
+    assert.equal(element.querySelector(mark).tagName, 'path')
 
-    const marks = element.querySelector(testSelector('marks'));
+    const marks = element.querySelector(testSelector('marks'))
 
-    assert.ok(isPie(marks));
-  });
+    assert.ok(isPie(marks))
+  })
 
   test.skip('renders a donut chart', (assert) => {
     const donutChartSpec = {
@@ -162,18 +162,18 @@ module('integration > circular', function () {
           { group: 'e', value: 1 },
         ],
       },
-    };
+    }
 
-    const element = render(donutChartSpec);
+    const element = render(donutChartSpec)
 
-    const marksSelector = testSelector('marks');
-    const markSelector = testSelector('mark');
+    const marksSelector = testSelector('marks')
+    const markSelector = testSelector('mark')
 
-    assert.ok(element.querySelector(markSelector));
-    assert.equal(element.querySelector(markSelector).tagName, 'path');
+    assert.ok(element.querySelector(markSelector))
+    assert.equal(element.querySelector(markSelector).tagName, 'path')
 
-    const marks = element.querySelector(marksSelector);
+    const marks = element.querySelector(marksSelector)
 
-    assert.ok(isDonut(marks));
-  });
-});
+    assert.ok(isDonut(marks))
+  })
+})

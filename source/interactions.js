@@ -1,14 +1,14 @@
-import * as d3 from 'd3';
+import * as d3 from 'd3'
 
-import { category, markInteractionSelector, markSelector } from './marks.js';
-import { customLinkHandler } from './config.js';
-import { feature } from './feature.js';
-import { getUrl, key, noop } from './helpers.js';
-import { layerCall, layerNode } from './views.js';
-import { tooltipEvent } from './tooltips.js';
+import { category, markInteractionSelector, markSelector } from './marks.js'
+import { customLinkHandler } from './config.js'
+import { feature } from './feature.js'
+import { getUrl, key, noop } from './helpers.js'
+import { layerCall, layerNode } from './views.js'
+import { tooltipEvent } from './tooltips.js'
 
-const dispatchers = d3.local();
-const charts = d3.local();
+const dispatchers = d3.local()
+const charts = d3.local()
 
 /**
  * events to listen for
@@ -34,9 +34,9 @@ const events = (s) => {
       'tooltip',
       'play',
       'focus',
-    ];
+    ]
   }
-};
+}
 
 /**
  * events to listen for
@@ -44,12 +44,12 @@ const events = (s) => {
  * @param {object} s Vega Lite specification
  */
 const initializeInteractions = (node, s) => {
-  const dispatcher = d3.dispatch(...(events(s) || []));
+  const dispatcher = d3.dispatch(...(events(s) || []))
 
-  dispatchers.set(node, dispatcher);
+  dispatchers.set(node, dispatcher)
   // allow child nodes to retrieve the parent using d3.local()
-  charts.set(node, node);
-};
+  charts.set(node, node)
+}
 
 /**
  * select nodes to manipulate with interactions
@@ -59,19 +59,19 @@ const initializeInteractions = (node, s) => {
  * @returns {object} nodes
  */
 const interactionTargets = (s, wrapper, node) => {
-  const series = wrapper.select('.marks').selectAll('.series');
-  const mark = wrapper.select('.marks').selectAll(markSelector(s));
-  let target = node;
-  let parent;
+  const series = wrapper.select('.marks').selectAll('.series')
+  const mark = wrapper.select('.marks').selectAll(markSelector(s))
+  let target = node
+  let parent
 
   if (feature(s).isCircular() || (!feature(s).isLine() && feature(s).hasPoints())) {
-    parent = mark.node();
+    parent = mark.node()
   } else if (feature(s).isBar()) {
-    parent = series.filter((d) => key(d.key) === key(category.get(node))).node();
+    parent = series.filter((d) => key(d.key) === key(category.get(node))).node()
   }
 
-  return { target, parent };
-};
+  return { target, parent }
+}
 
 /**
  * determine selectors to which interactions are attached
@@ -81,8 +81,8 @@ const interactionTargets = (s, wrapper, node) => {
 const markMouseoverSelector = (s) => {
   return feature(s).isLine()
     ? `${markSelector(s)},${markInteractionSelector(s)}`
-    : markInteractionSelector(s);
-};
+    : markInteractionSelector(s)
+}
 
 /**
  * dispatch a CustomEvent with a URL from a node
@@ -91,19 +91,19 @@ const markMouseoverSelector = (s) => {
  */
 const handleUrl = (url, node) => {
   if (typeof url !== 'string') {
-    console.error(`cannot link to url of type ${typeof url}`);
+    console.error(`cannot link to url of type ${typeof url}`)
   }
 
   if (typeof customLinkHandler === 'function') {
-    customLinkHandler(url, node);
+    customLinkHandler(url, node)
   } else if (!customLinkHandler) {
-    window.open(url);
+    window.open(url)
   }
 
-  const event = new CustomEvent('link', { bubbles: true, detail: { url } });
+  const event = new CustomEvent('link', { bubbles: true, detail: { url } })
 
-  node.dispatchEvent(event);
-};
+  node.dispatchEvent(event)
+}
 
 /**
  * attach event listeners to a layer
@@ -114,16 +114,16 @@ const _interactions = (s) => {
 
   const fn = (wrapper) => {
     if (!s) {
-      return noop;
+      return noop
     }
 
-    const dispatcher = dispatchers.get(wrapper.node());
+    const dispatcher = dispatchers.get(wrapper.node())
 
     const markMouseover = () => {
-      const layer = layerNode(s, wrapper.node());
-      const mouseover = d3.select(layer).selectAll(markMouseoverSelector(s));
-      const click = d3.select(layer).selectAll(markInteractionSelector(s));
-      const tooltip = d3.select(layer).selectAll(markInteractionSelector(s));
+      const layer = layerNode(s, wrapper.node())
+      const mouseover = d3.select(layer).selectAll(markMouseoverSelector(s))
+      const click = d3.select(layer).selectAll(markInteractionSelector(s))
+      const tooltip = d3.select(layer).selectAll(markInteractionSelector(s))
 
       if (
         feature(s).isBar() ||
@@ -135,110 +135,110 @@ const _interactions = (s) => {
         dispatcher.on('addMarkHighlight', function () {
           // this use of selection.raise() sometimes steals focus
           // from the active node, so make sure it is reset
-          const active = document.activeElement;
+          const active = document.activeElement
 
-          const { target, parent } = interactionTargets(s, wrapper, this);
+          const { target, parent } = interactionTargets(s, wrapper, this)
 
           if (parent) {
-            d3.select(parent).order();
-            d3.select(parent).raise();
+            d3.select(parent).order()
+            d3.select(parent).raise()
           }
 
-          d3.select(target).raise();
-          d3.select(target).attr('data-highlight', true);
+          d3.select(target).raise()
+          d3.select(target).attr('data-highlight', true)
 
           // the .focus() method is not officially supported on SVG
           // elements per the formal specification, but informally
           // it works
 
           // @ts-ignore
-          active.focus();
-        });
+          active.focus()
+        })
 
         // highlighting
         dispatcher.on('removeMarkHighlight', function () {
-          const { target } = interactionTargets(s, wrapper, this);
+          const { target } = interactionTargets(s, wrapper, this)
 
-          d3.select(target).attr('data-highlight', null);
-        });
+          d3.select(target).attr('data-highlight', null)
+        })
         mouseover
           .on('mouseover.highlight', function () {
-            dispatcher.call('addMarkHighlight', this);
-            dispatcher.call('addLegendHighlight', null, category.get(this));
+            dispatcher.call('addMarkHighlight', this)
+            dispatcher.call('addLegendHighlight', null, category.get(this))
           })
           .on('mouseout.highlight', function () {
-            dispatcher.call('removeMarkHighlight', this);
-            dispatcher.call('removeLegendHighlight', this);
-          });
+            dispatcher.call('removeMarkHighlight', this)
+            dispatcher.call('removeLegendHighlight', this)
+          })
 
         // tooltips
         dispatcher.on('tooltip', function (event, s) {
           if (s) {
-            tooltipEvent(s, this, event);
+            tooltipEvent(s, this, event)
           }
-        });
+        })
 
         // focus
         dispatcher.on('focus', function (event, s) {
-          dispatcher.call('tooltip', null, event, s);
-          dispatcher.call('addMarkHighlight', null);
-        });
+          dispatcher.call('tooltip', null, event, s)
+          dispatcher.call('addMarkHighlight', null)
+        })
 
         tooltip.on('mouseover.tooltip', function (event) {
           if (feature(s).hasTooltip()) {
-            dispatcher.call('tooltip', this, event, s);
+            dispatcher.call('tooltip', this, event, s)
           }
-        });
+        })
 
         // pivot links
         dispatcher.on('link', function (url) {
           if (url) {
-            handleUrl(url, this);
+            handleUrl(url, this)
           }
-        });
+        })
         click.on('click', function () {
           if (feature(s).hasLinks()) {
-            const url = getUrl(s, d3.select(this).datum() || null);
-            dispatcher.call('link', this, url);
+            const url = getUrl(s, d3.select(this).datum() || null)
+            dispatcher.call('link', this, url)
           }
-        });
+        })
       }
-    };
+    }
 
-    markMouseover();
+    markMouseover()
 
     const legendMouseover = () => {
-      const legendMouseoverSelector = '.category';
-      const chart = d3.select(charts.get(wrapper.node()));
-      const legendMouseover = chart.select('.legend').selectAll(legendMouseoverSelector);
+      const legendMouseoverSelector = '.category'
+      const chart = d3.select(charts.get(wrapper.node()))
+      const legendMouseover = chart.select('.legend').selectAll(legendMouseoverSelector)
 
       legendMouseover.on('mouseover', function () {
-        const legendCategory = key(d3.select(this).select('.label').text());
+        const legendCategory = key(d3.select(this).select('.label').text())
 
-        dispatcher.call('addLegendHighlight', null, legendCategory);
+        dispatcher.call('addLegendHighlight', null, legendCategory)
         wrapper
           .selectAll(markMouseoverSelector(s))
           .filter(function () {
-            return legendCategory === key(category.get(this));
+            return legendCategory === key(category.get(this))
           })
           .each(function () {
-            dispatcher.call('addMarkHighlight', this);
-          });
-      });
+            dispatcher.call('addMarkHighlight', this)
+          })
+      })
       legendMouseover.on('mouseout', function () {
-        dispatcher.call('removeLegendHighlight');
+        dispatcher.call('removeLegendHighlight')
         wrapper.selectAll(markMouseoverSelector(s)).each(function () {
-          dispatcher.call('removeMarkHighlight', this);
-        });
-      });
-    };
+          dispatcher.call('removeMarkHighlight', this)
+        })
+      })
+    }
 
-    legendMouseover();
-  };
+    legendMouseover()
+  }
 
-  return fn;
-};
+  return fn
+}
 
-const interactions = (s) => layerCall(s, _interactions);
+const interactions = (s) => layerCall(s, _interactions)
 
-export { dispatchers, initializeInteractions, interactions };
+export { dispatchers, initializeInteractions, interactions }

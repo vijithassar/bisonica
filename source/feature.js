@@ -1,11 +1,11 @@
-import { encodingValue } from './encodings.js';
-import { layerTestRecursive } from './views.js';
-import { mark, values } from './helpers.js';
-import { memoize } from './memoize.js';
+import { encodingValue } from './encodings.js'
+import { layerTestRecursive } from './views.js'
+import { mark, values } from './helpers.js'
+import { memoize } from './memoize.js'
 
 // this is a mistake
 // import { isPresent } from '@ember/utils';
-const isPresent = (x) => x !== null;
+const isPresent = (x) => x !== null
 
 const _feature = (s) => {
   const multicolorTest = (s) => {
@@ -13,17 +13,17 @@ const _feature = (s) => {
       ...(Array.from(new Set(values(s))) || [])
         .map(encodingValue(s, 'color'))
         .filter((item) => !!item),
-    ];
+    ]
 
-    return s.encoding?.color && colorValues.length > 1;
-  };
+    return s.encoding?.color && colorValues.length > 1
+  }
 
-  const isMulticolor = layerTestRecursive(s, multicolorTest);
+  const isMulticolor = layerTestRecursive(s, multicolorTest)
 
   const temporalTest = (s) => {
-    return Object.values(s.encoding || {}).some((encoding) => encoding.type === 'temporal');
-  };
-  const isTemporal = layerTestRecursive(s, temporalTest);
+    return Object.values(s.encoding || {}).some((encoding) => encoding.type === 'temporal')
+  }
+  const isTemporal = layerTestRecursive(s, temporalTest)
 
   const tests = {
     isBar: (s) => mark(s) === 'bar',
@@ -57,28 +57,28 @@ const _feature = (s) => {
     hasEncodingX: (s) => s.encoding?.x,
     hasEncodingY: (s) => s.encoding?.y,
     hasEncodingColor: (s) => s.encoding?.color,
-  };
+  }
 
-  tests.hasAxis = (s) => tests.hasEncodingX(s) || tests.hasEncodingY(s);
+  tests.hasAxis = (s) => tests.hasEncodingX(s) || tests.hasEncodingY(s)
 
-  tests.isTemporalBar = (s) => tests.isBar(s) && isTemporal;
+  tests.isTemporalBar = (s) => tests.isBar(s) && isTemporal
 
-  const layerTests = {};
+  const layerTests = {}
 
   Object.entries(tests).forEach(([key, test]) => {
     layerTests[key] = memoize(() => {
-      return !!layerTestRecursive(s, test);
-    });
-  });
+      return !!layerTestRecursive(s, test)
+    })
+  })
 
-  return layerTests;
-};
+  return layerTests
+}
 
 /**
  * use simple heuristics to determine features the chart type
  * @param {object} s Vega Lite specification
  * @returns {object} methods for boolean feature tests
  */
-const feature = memoize(_feature);
+const feature = memoize(_feature)
 
-export { feature };
+export { feature }

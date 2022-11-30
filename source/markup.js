@@ -21,7 +21,7 @@ const selectors = [
   '.legend .pair',
   '.legend .items-main',
   '.legend .items-more',
-];
+]
 
 /**
  * remove dot
@@ -29,13 +29,13 @@ const selectors = [
  * @returns {string} sanitized
  */
 const stripDots = (selector) => {
-  const leading = selector.slice(0, 1) === '.';
-  let result;
+  const leading = selector.slice(0, 1) === '.'
+  let result
 
-  result = leading ? selector.slice(1) : selector;
+  result = leading ? selector.slice(1) : selector
 
-  return result.replace(/\./g, '-');
-};
+  return result.replace(/\./g, '-')
+}
 
 /**
  * filter out unwanted segments from CSS selectors
@@ -43,8 +43,8 @@ const stripDots = (selector) => {
  * @returns {boolean} string match
  */
 const isAllowedSegment = (segment) => {
-  return segment !== '>';
-};
+  return segment !== '>'
+}
 
 /**
  * convert a selector string into a data attribute value
@@ -52,16 +52,16 @@ const isAllowedSegment = (segment) => {
  * @returns {string} attribute
  */
 const convertToTestSelector = (selector) => {
-  return selector.split(' ').map(stripDots).filter(isAllowedSegment).join('-');
-};
+  return selector.split(' ').map(stripDots).filter(isAllowedSegment).join('-')
+}
 
 /**
  * add test selector attributes
  */
 const testAttributes = (selection) => {
   selectors.forEach((selector) => {
-    selection.selectAll(selector).attr('data-test-selector', convertToTestSelector(selector));
-  });
-};
+    selection.selectAll(selector).attr('data-test-selector', convertToTestSelector(selector))
+  })
+}
 
-export { testAttributes };
+export { testAttributes }
