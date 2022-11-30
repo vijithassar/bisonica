@@ -267,10 +267,11 @@ const keyboard = (_s) => {
         if (event.key === 'Enter') {
           const node = mark.nodes()[state.index()];
           const d = d3.select(node).datum();
-          const url = getUrl(s, d);
-
-          if (url) {
-            dispatcher.call('link', node, url);
+          if (feature(s).hasLinks()) {
+            const url = getUrl(s, d);
+            if (url) {
+              dispatcher.call('link', node, url);
+            }
           }
         }
       });
