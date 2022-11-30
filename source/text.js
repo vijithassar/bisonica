@@ -93,10 +93,7 @@ const abbreviate = memoize(_abbreviate)
  * @returns {function} formatting function
  */
 const format = (s, channel) => {
-	const formatter =
-    encodingType(s, channel) === 'temporal'
-    	? getTimeFormatter(s, channel)
-    	: (label) => label.toString()
+	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : (label) => label.toString()
 
 	return (text) => formatter(text)
 }

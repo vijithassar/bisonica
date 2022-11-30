@@ -178,10 +178,7 @@ const x = (s, dimensions) => {
 			let yOffset
 
 			if (scales.y) {
-				yOffset =
-          isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal'
-          	? scales.y.range().pop()
-          	: scales.y.range()[0]
+				yOffset = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
 				yOffset += temporalBarOffsetY
 			} else {
 				if (feature(s).isBar() && !feature(s).hasEncodingY()) {
