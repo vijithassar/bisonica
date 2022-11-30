@@ -13,9 +13,7 @@ const validateDispatcher = (dispatcher) => {
 }
 
 module('unit > interactions', function () {
-
 	test('registers an event dispatcher for charts with single layer', (assert) => {
-
 		const element = render(specificationFixture('circular'))
 
 		const mark = element.querySelector(testSelector('mark'))
@@ -80,5 +78,4 @@ module('unit > interactions', function () {
 			assert.ok(validateDispatcher(dispatcher), `layer node at index ${index} has an associated event dispatcher`)
 		})
 	})
-
 })

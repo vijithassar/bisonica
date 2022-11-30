@@ -6,7 +6,6 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('unit > metadata', () => {
-
 	const urlData = () => {
 		return [
 			{ value: 1, group: 'a', label: '2020-01-01', url: 'https://example.com/a' },
@@ -67,7 +66,6 @@ module('unit > metadata', () => {
 				assert.ok(check)
 			}
 		})
-
 	})
 
 	test('transfers urls to aggregated stacked bar chart segments', (assert) => {
@@ -144,5 +142,4 @@ module('unit > metadata', () => {
 			assert.equal(typeof item.c, 'string')
 		})
 	})
-
 })

@@ -19,7 +19,6 @@ const defaultStyles = {}
  * @returns {number} string width
  */
 const _measureText = (text, styles = defaultStyles) => {
-
 	// set styles
 	Object.assign(context, styles)
 

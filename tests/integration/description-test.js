@@ -89,5 +89,4 @@ module('integration > description', () => {
 		assert.equal(labels.filter((item) => item.includes('minimum value of b')).length, 2, 'detects multiple minimum values in field b')
 		assert.equal(labels.filter((item) => item.includes('maximum value of b')).length, 2, 'detects multiple maximum values in field b')
 	})
-
 })

@@ -77,7 +77,6 @@ module('unit > encoders', () => {
 		}
 		assert.equal(encodingField(s, 'x'), 'a.b', 'looks up nested field as a string')
 		assert.equal(encodingValue(s, 'x')(datum), 2, 'looks up value based on nested field')
-
 	})
 
 	test('accesses nested fields with data preprocessing for circular charts', (assert) => {

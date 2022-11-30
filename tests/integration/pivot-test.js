@@ -11,7 +11,6 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('integration > pivot urls', function () {
-
 	const getUrl = (item) => d3.select(item).datum().url
 
 	test('stacked bar chart pivot links', (assert) => {

@@ -10,7 +10,6 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('integration > tooltips', function () {
-
 	test('renders a chart with SVG title tooltips', (assert) => {
 		const spec = specificationFixture('line')
 		spec.usermeta = { tooltipHandler: false }
@@ -77,7 +76,6 @@ module('integration > tooltips', function () {
 		assert.ok(element.querySelector(testSelector('mark-title')))
 		assert.ok(element.querySelector(testSelector('mark-title')).textContent.length)
 		assert.ok(!element.querySelector(testSelector('mark-title')).textContent.includes('undefined'))
-
 	})
 
 	test('renders a circular chart with SVG title tooltips', (assert) => {

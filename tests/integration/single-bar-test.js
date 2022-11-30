@@ -26,5 +26,4 @@ module('integration > single bar', function () {
 		)
 		assert.ok(!nodesHaveZeroHeights, 'some mark rects have nonzero height attributes')
 	})
-
 })

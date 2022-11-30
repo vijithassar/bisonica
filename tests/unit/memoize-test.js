@@ -62,7 +62,5 @@ module('unit > memoize', () => {
 		assert.equal(eat(a), 'delicious apple')
 		assert.equal(eat(b), 'delicious banana')
 		assert.equal(eat(c), 'delicious cherry')
-
 	})
-
 })

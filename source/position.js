@@ -132,7 +132,6 @@ const position = (s, dimensions) => {
 	return (selection) => {
 		selection.select(`g.${WRAPPER_CLASS}`).attr('transform', transformString)
 	}
-
 }
 
 export { margin, tickMargin, position }

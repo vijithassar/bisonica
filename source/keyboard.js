@@ -208,7 +208,6 @@ const keyMap = (key) => {
  */
 const keyboard = (_s) => {
 	try {
-
 		const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText()
 		const s = layerMatch(_s, keyboardTest)
 

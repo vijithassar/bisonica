@@ -334,7 +334,6 @@ const areaMarks = (s, dimensions) => {
 			.attr('fill', color)
 			.attr('class', 'area mark')
 			.attr('aria-label', (d) => d.key)
-
 	}
 	return renderer
 }
@@ -657,7 +656,6 @@ const textMarks = (s, dimensions) => {
 		text.attr('transform', `translate(0,${dy})`)
 		const hasLink = !!(s.encoding && encodingValue(s, 'href'))
 		text.classed('link', hasLink)
-
 	}
 }
 

@@ -16,7 +16,5 @@ module('integration > stacked area', function () {
 
 		assert.ok(marks.every((mark) => mark.tagName === 'path'), 'every mark is a path node')
 		assert.equal(marks.length, categories.length, 'one mark node per data category')
-
 	})
-
 })

@@ -133,7 +133,6 @@ const sort = (data) => {
 const stackValue = (d, key) => d[key]?.value || 0
 
 const _stackData = (s) => {
-
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const group = encodingField(s, 'color')
@@ -165,7 +164,6 @@ const _stackData = (s) => {
 	}
 
 	return metadata(s, sort(stacked))
-
 }
 
 /**
@@ -177,7 +175,6 @@ const _stackData = (s) => {
 const stackData = memoize(_stackData)
 
 const _circularData = (s) => {
-
 	const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
 		([key, values]) => ({ key, values })
 	)
@@ -187,7 +184,6 @@ const _circularData = (s) => {
 	})
 
 	return metadata(s, summed)
-
 }
 
 /**
@@ -199,7 +195,6 @@ const _circularData = (s) => {
 const circularData = memoize(_circularData)
 
 const _lineData = (s) => {
-
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries()
 	const color = encodingField(s, 'color')

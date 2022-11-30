@@ -4,7 +4,6 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > aria', function () {
-
 	test('aria-label includes tooltip by default', (assert) => {
 		const spec = specificationFixture('circular')
 
@@ -45,7 +44,6 @@ module('integration > aria', function () {
 		[...element.querySelectorAll(testSelector('mark'))].forEach(mark => {
 			assert.ok(mark.getAttribute('aria-label'))
 		})
-
 	})
 
 	test('aria-label can be set to a calculate transform field', (assert) => {

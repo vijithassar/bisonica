@@ -297,7 +297,6 @@ module('unit > scales', (hooks) => {
 			}
 		}
 		assert.equal(parseScales(s).color('red'), 'red')
-
 	})
 
 	test('throws errors for unknown encoding types', (assert) => {
@@ -358,5 +357,4 @@ module('unit > scales', (hooks) => {
 			'symmetric log scales should handle zero'
 		)
 	})
-
 })

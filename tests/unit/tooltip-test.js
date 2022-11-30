@@ -141,6 +141,5 @@ module('unit > tooltips', () => {
 
 		assert.equal(text(horizontal), 'a: 30; b: +')
 		assert.equal(text(vertical), 'a: 30; b: +')
-
 	})
 })

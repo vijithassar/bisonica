@@ -5,7 +5,6 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > text', function () {
-
 	test('renders text marks', (assert) => {
 		const spec = {
 			$schema: 'https://vega.github.io/schema/vega-lite/v4.json',
@@ -31,7 +30,6 @@ module('integration > text', function () {
 
 		assert.equal(element.querySelectorAll(markSelector).length, 1)
 		assert.equal(element.querySelector(markSelector).tagName, 'text')
-
 	})
 
 	test('renders text marks with dynamic attributes', (assert) => {

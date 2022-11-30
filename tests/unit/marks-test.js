@@ -6,7 +6,6 @@ const { module, test } = qunit
 
 module('unit > marks', () => {
 	module('bar width', () => {
-
 		const dimensions = { x: 1000, y: 1000 }
 
 		test('return value', (assert) => {
@@ -73,6 +72,5 @@ module('unit > marks', () => {
 			const customWidth = barWidth(customSpec, dimensions)
 			assert.ok(standardWidth > customWidth)
 		})
-
 	})
 })

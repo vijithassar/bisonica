@@ -111,7 +111,6 @@ const handleUrl = (url, node) => {
  * @returns {function} user interactions
  */
 const _interactions = (s) => {
-
 	const fn = (wrapper) => {
 		if (!s) {
 			return noop

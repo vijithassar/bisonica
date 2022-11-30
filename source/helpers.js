@@ -48,7 +48,6 @@ const datum = (s, d) => {
  * @param {string} key multiple dot-delimited lookup keys
  */
 const nested = function(d, key, newValue) {
-
 	let keys = key.split('.').reverse()
 
 	// get
