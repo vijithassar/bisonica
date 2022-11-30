@@ -108,23 +108,23 @@ module('unit > views', () => {
           layer: [
             {
               mark: {
-                type: "text",
-                text: "this is a text layer"
+                type: 'text',
+                text: 'this is a text layer'
               }
             },
             {
               mark: {
-                type: "arc",
+                type: 'arc',
                 innerRadius: 50
               },
               encoding: {
                 theta: {
-                  field: "value",
-                  type: "quantitative"
+                  field: 'value',
+                  type: 'quantitative'
                 },
                 color: {
-                  field: "group",
-                  type: "nominal"
+                  field: 'group',
+                  type: 'nominal'
                 }
               }
             }
@@ -136,20 +136,20 @@ module('unit > views', () => {
         const specification = {
           data: {
             values: [
-              { date: "2015", value: 1 },
-              { date: "2016", value: 2 },
-              { date: "2017", value: 3 },
-              { date: "2018", value: 4 },
-              { date: "2019", value: 4 },
-              { date: "2020", value: 7 },
-              { date: "2021", value: 10 },
-              { date: "2022", value: 4 }
+              { date: '2015', value: 1 },
+              { date: '2016', value: 2 },
+              { date: '2017', value: 3 },
+              { date: '2018', value: 4 },
+              { date: '2019', value: 4 },
+              { date: '2020', value: 7 },
+              { date: '2021', value: 10 },
+              { date: '2022', value: 4 }
             ]
           },
           layer: [
             {
               mark: {
-                type: "rule"
+                type: 'rule'
               },
               encoding: {
                 y: {
@@ -160,16 +160,16 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "line"
+                type: 'line'
               },
               encoding: {
                 theta: {
-                  field: "value",
-                  type: "quantitative"
+                  field: 'value',
+                  type: 'quantitative'
                 },
                 color: {
-                  field: "date",
-                  type: "temporal"
+                  field: 'date',
+                  type: 'temporal'
                 }
               }
             }
@@ -181,20 +181,20 @@ module('unit > views', () => {
         const specification = {
           data: {
             values: [
-              { group: "a", value: 21 },
-              { group: "a", value: 44 },
-              { group: "b", value: 57 },
-              { group: "a", value: 82 },
-              { group: "a", value: 23 },
-              { group: "b", value: 10 },
-              { group: "b", value: 30 },
-              { group: "a", value: 57 }
+              { group: 'a', value: 21 },
+              { group: 'a', value: 44 },
+              { group: 'b', value: 57 },
+              { group: 'a', value: 82 },
+              { group: 'a', value: 23 },
+              { group: 'b', value: 10 },
+              { group: 'b', value: 30 },
+              { group: 'a', value: 57 }
             ]
           },
           layer: [
             {
               mark: {
-                type: "text",
+                type: 'text',
                 text: 'text annotation'
               },
               encoding: {
@@ -206,16 +206,16 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "point"
+                type: 'point'
               },
               encoding: {
                 x: {
-                  field: "value",
-                  type: "quantitative"
+                  field: 'value',
+                  type: 'quantitative'
                 },
                 color: {
-                  field: "group",
-                  type: "nominal"
+                  field: 'group',
+                  type: 'nominal'
                 }
               }
             }
@@ -225,194 +225,194 @@ module('unit > views', () => {
       })
       test('unions color domain', (assert) => {
         const specification = {
-          "title": { "text": "layer color legend test specification" },
-          "data": {
-            "values": [
+          'title': { 'text': 'layer color legend test specification' },
+          'data': {
+            'values': [
               {
-                "a": "2016",
-                "b": 10,
-                "c": "_",
-                "d": 10,
-                "e": ">"
+                'a': '2016',
+                'b': 10,
+                'c': '_',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2017",
-                "b": 20,
-                "c": "_",
-                "d": 10,
-                "e": "<"
+                'a': '2017',
+                'b': 20,
+                'c': '_',
+                'd': 10,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 10,
-                "c": "_",
-                "d": 20,
-                "e": ">"
+                'a': '2018',
+                'b': 10,
+                'c': '_',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 40,
-                "c": "_",
-                "d": 10,
-                "e": ">"
+                'a': '2019',
+                'b': 40,
+                'c': '_',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 60,
-                "c": "_",
-                "d": 20,
-                "e": ">"
+                'a': '2020',
+                'b': 60,
+                'c': '_',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2021",
-                "b": 80,
-                "c": "_",
-                "d": 30,
-                "e": "<"
+                'a': '2021',
+                'b': 80,
+                'c': '_',
+                'd': 30,
+                'e': '<'
               },
               {
-                "a": "2022",
-                "b": 40,
-                "c": "_",
-                "d": 40,
-                "e": "<"
+                'a': '2022',
+                'b': 40,
+                'c': '_',
+                'd': 40,
+                'e': '<'
               },
               {
-                "a": "2016",
-                "b": 50,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2016',
+                'b': 50,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2017",
-                "b": 60,
-                "c": "•",
-                "d": 30,
-                "e": "<"
+                'a': '2017',
+                'b': 60,
+                'c': '•',
+                'd': 30,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 50,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2018',
+                'b': 50,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 30,
-                "c": "•",
-                "d": 40,
-                "e": ">"
+                'a': '2019',
+                'b': 30,
+                'c': '•',
+                'd': 40,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 10,
-                "c": "•",
-                "d": 60,
-                "e": "<"
+                'a': '2020',
+                'b': 10,
+                'c': '•',
+                'd': 60,
+                'e': '<'
               },
               {
-                "a": "2021",
-                "b": 10,
-                "c": "•",
-                "d": 60,
-                "e": ">"
+                'a': '2021',
+                'b': 10,
+                'c': '•',
+                'd': 60,
+                'e': '>'
               },
               {
-                "a": "2022",
-                "b": 20,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2022',
+                'b': 20,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2016",
-                "b": 70,
-                "c": "+",
-                "d": 50,
-                "e": "<"
+                'a': '2016',
+                'b': 70,
+                'c': '+',
+                'd': 50,
+                'e': '<'
               },
               {
-                "a": "2017",
-                "b": 50,
-                "c": "+",
-                "d": 20,
-                "e": "<"
+                'a': '2017',
+                'b': 50,
+                'c': '+',
+                'd': 20,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 40,
-                "c": "+",
-                "d": 10,
-                "e": ">"
+                'a': '2018',
+                'b': 40,
+                'c': '+',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 60,
-                "c": "+",
-                "d": 50,
-                "e": ">"
+                'a': '2019',
+                'b': 60,
+                'c': '+',
+                'd': 50,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 30,
-                "c": "+",
-                "d": 20,
-                "e": "<"
+                'a': '2020',
+                'b': 30,
+                'c': '+',
+                'd': 20,
+                'e': '<'
               },
               {
-                "a": "2021",
-                "b": 10,
-                "c": "+",
-                "d": 20,
-                "e": ">"
+                'a': '2021',
+                'b': 10,
+                'c': '+',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2022",
-                "b": 20,
-                "c": "+",
-                "d": 50,
-                "e": ">"
+                'a': '2022',
+                'b': 20,
+                'c': '+',
+                'd': 50,
+                'e': '>'
               }
             ]
           },
-          "layer": [
+          'layer': [
             {
-              "mark": {
-                "type": "line"
+              'mark': {
+                'type': 'line'
               },
-              "encoding": {
-                "x": {
-                  "field": "a",
-                  "type": "temporal"
+              'encoding': {
+                'x': {
+                  'field': 'a',
+                  'type': 'temporal'
                 },
-                "y": {
-                  "field": "b",
-                  "type": "quantitative"
+                'y': {
+                  'field': 'b',
+                  'type': 'quantitative'
                 },
-                "color": {
-                  "field": "e",
-                  "type": "nominal"
+                'color': {
+                  'field': 'e',
+                  'type': 'nominal'
                 }
               }
             },
             {
-              "mark": {
-                "type": "bar"
+              'mark': {
+                'type': 'bar'
               },
-              "encoding": {
-                "x": {
-                  "field": "a",
-                  "type": "temporal"
+              'encoding': {
+                'x': {
+                  'field': 'a',
+                  'type': 'temporal'
                 },
-                "y": {
-                  "field": "d",
-                  "type": "quantitative"
+                'y': {
+                  'field': 'd',
+                  'type': 'quantitative'
                 },
-                "color": {
-                  "field": "c",
-                  "type": "nominal"
+                'color': {
+                  'field': 'c',
+                  'type': 'nominal'
                 }
               }
             }
@@ -433,205 +433,205 @@ module('unit > views', () => {
 
       test('unions color range', (assert) => {
         const specification = {
-          "title": { "text": "layer color legend test specification" },
-          "data": {
-            "values": [
+          'title': { 'text': 'layer color legend test specification' },
+          'data': {
+            'values': [
               {
-                "a": "2016",
-                "b": 10,
-                "c": "_",
-                "d": 10,
-                "e": ">"
+                'a': '2016',
+                'b': 10,
+                'c': '_',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2017",
-                "b": 20,
-                "c": "_",
-                "d": 10,
-                "e": "<"
+                'a': '2017',
+                'b': 20,
+                'c': '_',
+                'd': 10,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 10,
-                "c": "_",
-                "d": 20,
-                "e": ">"
+                'a': '2018',
+                'b': 10,
+                'c': '_',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 40,
-                "c": "_",
-                "d": 10,
-                "e": ">"
+                'a': '2019',
+                'b': 40,
+                'c': '_',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 60,
-                "c": "_",
-                "d": 20,
-                "e": ">"
+                'a': '2020',
+                'b': 60,
+                'c': '_',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2021",
-                "b": 80,
-                "c": "_",
-                "d": 30,
-                "e": "<"
+                'a': '2021',
+                'b': 80,
+                'c': '_',
+                'd': 30,
+                'e': '<'
               },
               {
-                "a": "2022",
-                "b": 40,
-                "c": "_",
-                "d": 40,
-                "e": "<"
+                'a': '2022',
+                'b': 40,
+                'c': '_',
+                'd': 40,
+                'e': '<'
               },
               {
-                "a": "2016",
-                "b": 50,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2016',
+                'b': 50,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2017",
-                "b": 60,
-                "c": "•",
-                "d": 30,
-                "e": "<"
+                'a': '2017',
+                'b': 60,
+                'c': '•',
+                'd': 30,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 50,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2018',
+                'b': 50,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 30,
-                "c": "•",
-                "d": 40,
-                "e": ">"
+                'a': '2019',
+                'b': 30,
+                'c': '•',
+                'd': 40,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 10,
-                "c": "•",
-                "d": 60,
-                "e": "<"
+                'a': '2020',
+                'b': 10,
+                'c': '•',
+                'd': 60,
+                'e': '<'
               },
               {
-                "a": "2021",
-                "b": 10,
-                "c": "•",
-                "d": 60,
-                "e": ">"
+                'a': '2021',
+                'b': 10,
+                'c': '•',
+                'd': 60,
+                'e': '>'
               },
               {
-                "a": "2022",
-                "b": 20,
-                "c": "•",
-                "d": 30,
-                "e": ">"
+                'a': '2022',
+                'b': 20,
+                'c': '•',
+                'd': 30,
+                'e': '>'
               },
               {
-                "a": "2016",
-                "b": 70,
-                "c": "+",
-                "d": 50,
-                "e": "<"
+                'a': '2016',
+                'b': 70,
+                'c': '+',
+                'd': 50,
+                'e': '<'
               },
               {
-                "a": "2017",
-                "b": 50,
-                "c": "+",
-                "d": 20,
-                "e": "<"
+                'a': '2017',
+                'b': 50,
+                'c': '+',
+                'd': 20,
+                'e': '<'
               },
               {
-                "a": "2018",
-                "b": 40,
-                "c": "+",
-                "d": 10,
-                "e": ">"
+                'a': '2018',
+                'b': 40,
+                'c': '+',
+                'd': 10,
+                'e': '>'
               },
               {
-                "a": "2019",
-                "b": 60,
-                "c": "+",
-                "d": 50,
-                "e": ">"
+                'a': '2019',
+                'b': 60,
+                'c': '+',
+                'd': 50,
+                'e': '>'
               },
               {
-                "a": "2020",
-                "b": 30,
-                "c": "+",
-                "d": 20,
-                "e": "<"
+                'a': '2020',
+                'b': 30,
+                'c': '+',
+                'd': 20,
+                'e': '<'
               },
               {
-                "a": "2021",
-                "b": 10,
-                "c": "+",
-                "d": 20,
-                "e": ">"
+                'a': '2021',
+                'b': 10,
+                'c': '+',
+                'd': 20,
+                'e': '>'
               },
               {
-                "a": "2022",
-                "b": 20,
-                "c": "+",
-                "d": 50,
-                "e": ">"
+                'a': '2022',
+                'b': 20,
+                'c': '+',
+                'd': 50,
+                'e': '>'
               }
             ]
           },
-          "layer": [
+          'layer': [
             {
-              "mark": {
-                "type": "line"
+              'mark': {
+                'type': 'line'
               },
-              "encoding": {
-                "x": {
-                  "field": "a",
-                  "type": "temporal"
+              'encoding': {
+                'x': {
+                  'field': 'a',
+                  'type': 'temporal'
                 },
-                "y": {
-                  "field": "b",
-                  "type": "quantitative"
+                'y': {
+                  'field': 'b',
+                  'type': 'quantitative'
                 },
-                "color": {
-                  "field": "e",
-                  "type": "nominal",
-                  "scale": {
-                    "range": [
-                      "red", 
-                      "orange"
+                'color': {
+                  'field': 'e',
+                  'type': 'nominal',
+                  'scale': {
+                    'range': [
+                      'red', 
+                      'orange'
                     ]
                   }
                 }
               }
             },
             {
-              "mark": {
-                "type": "bar"
+              'mark': {
+                'type': 'bar'
               },
-              "encoding": {
-                "x": {
-                  "field": "a",
-                  "type": "temporal"
+              'encoding': {
+                'x': {
+                  'field': 'a',
+                  'type': 'temporal'
                 },
-                "y": {
-                  "field": "d",
-                  "type": "quantitative"
+                'y': {
+                  'field': 'd',
+                  'type': 'quantitative'
                 },
-                "color": {
-                  "field": "c",
-                  "type": "nominal",
-                  "scale": {
-                    "range": [
-                      "yellow",
-                      "green",
-                      "blue"
+                'color': {
+                  'field': 'c',
+                  'type': 'nominal',
+                  'scale': {
+                    'range': [
+                      'yellow',
+                      'green',
+                      'blue'
                     ]
                   }
                 }
@@ -654,21 +654,21 @@ module('unit > views', () => {
         const specification = {
           data: {
             values: [
-              { date: "2020", value: 14, otherValue: 66 },
-              { date: "2021", value: 45, otherValue: 65 },
-              { date: "2022", value: 22, otherValue: 66 },
-              { date: "2023", value: 22, otherValue: 64 },
-              { date: "2024", value: 23, otherValue: 62 },
-              { date: "2025", value: 24, otherValue: 55 },
-              { date: "2026", value: 26, otherValue: 57 },
-              { date: "2027", value: 11, otherValue: 53 },
-              { date: "2028", value: 24, otherValue: 44 }
+              { date: '2020', value: 14, otherValue: 66 },
+              { date: '2021', value: 45, otherValue: 65 },
+              { date: '2022', value: 22, otherValue: 66 },
+              { date: '2023', value: 22, otherValue: 64 },
+              { date: '2024', value: 23, otherValue: 62 },
+              { date: '2025', value: 24, otherValue: 55 },
+              { date: '2026', value: 26, otherValue: 57 },
+              { date: '2027', value: 11, otherValue: 53 },
+              { date: '2028', value: 24, otherValue: 44 }
             ]
           },
           layer: [
             {
               mark: {
-                type: "line"
+                type: 'line'
               },
               encoding: {
                 x: {
@@ -683,19 +683,19 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "bar"
+                type: 'bar'
               },
               encoding: {
                 x: {
-                  field: "date",
-                  type: "temporal",
+                  field: 'date',
+                  type: 'temporal',
                   axis: {
                     title: 'date'
                   }
                 },
                 y: {
-                  field: "otherValue",
-                  type: "quantitative",
+                  field: 'otherValue',
+                  type: 'quantitative',
                   axis: {
                     title: 'other value'
                   }

@@ -18,7 +18,7 @@ module('integration > description', () => {
             assert.ok(labels.some((item) => !item.includes('minimum') && !item.includes('maximum')), 'some marks do not match extent')
         })
     })
-    test(`detects single minimum and maximum value`, (assert) => {
+    test('detects single minimum and maximum value', (assert) => {
         let s = specificationFixture('circular')
         s.data.values = [
             {group: 'a', value: 1},
@@ -34,7 +34,7 @@ module('integration > description', () => {
         assert.equal(labels.filter((item) => item.includes('minimum value')).length, 1, 'detects single minimum value')
         assert.equal(labels.filter((item) => item.includes('maximum value')).length, 1, 'detects single maximum value')
     })
-    test(`detects multiple minimum and maximum values`, (assert) => {
+    test('detects multiple minimum and maximum values', (assert) => {
         let s = specificationFixture('circular')
         s.data.values = [
             {group: 'a', value: 1},
@@ -50,7 +50,7 @@ module('integration > description', () => {
         assert.equal(labels.filter((item) => item.includes('minimum value')).length, 2, 'detects multiple minimum values')
         assert.equal(labels.filter((item) => item.includes('maximum value')).length, 2, 'detects multiple maximum values')
     })
-    test(`detects minimum and maximum values in multiple channels`, (assert) => {
+    test('detects minimum and maximum values in multiple channels', (assert) => {
         const s = {
             title: {
                 text: 'multiple channel extent demos'

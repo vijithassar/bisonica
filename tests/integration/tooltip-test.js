@@ -155,74 +155,74 @@ module('integration > tooltips', function () {
 
   test('emits a CustomEvent with tooltip details in response to mouseover on layered charts', (assert) => {
     const s = {
-      "title": {
-        "text": "donut chart with layered event interactions"
+      'title': {
+        'text': 'donut chart with layered event interactions'
       },
-      "data": {
-        "values": [
+      'data': {
+        'values': [
           {
-            "value": 10,
-            "group": "a",
-            "url": "https://www.example.com/a/"
+            'value': 10,
+            'group': 'a',
+            'url': 'https://www.example.com/a/'
           },
           {
-            "value": 20,
-            "group": "b",
-            "url": "https://www.example.com/b/"
+            'value': 20,
+            'group': 'b',
+            'url': 'https://www.example.com/b/'
           },
           {
-            "value": 30,
-            "group": "c",
-            "url": "https://www.example.com/c/"
+            'value': 30,
+            'group': 'c',
+            'url': 'https://www.example.com/c/'
           }
         ]
       },
-      "usermeta": { "tooltipHandler": true },
-      "layer": [
+      'usermeta': { 'tooltipHandler': true },
+      'layer': [
         {
-          "mark": {
-            "type": "arc",
-            "innerRadius": 50,
-            "tooltip": true
+          'mark': {
+            'type': 'arc',
+            'innerRadius': 50,
+            'tooltip': true
           },
-          "encoding": {
-            "href": {
-              "field": "url",
-              "type": "nominal"
+          'encoding': {
+            'href': {
+              'field': 'url',
+              'type': 'nominal'
             },
-            "color": {
-              "field": "group",
-              "type": "nominal"
+            'color': {
+              'field': 'group',
+              'type': 'nominal'
             },
-            "theta": {
-              "field": "value",
-              "type": "quantitative"
+            'theta': {
+              'field': 'value',
+              'type': 'quantitative'
             }
           }
         },
         {
-          "data": {
-            "values": [
+          'data': {
+            'values': [
               {
-                "a": "https://www.google.com",
-                "b": "9999"
+                'a': 'https://www.google.com',
+                'b': '9999'
               }
             ]
           },
-          "mark": {
-            "type": "text",
-            "tooltip": true
+          'mark': {
+            'type': 'text',
+            'tooltip': true
           },
-          "encoding": {
-            "href": {
-              "field": "a"
+          'encoding': {
+            'href': {
+              'field': 'a'
             },
-            "text": {
-              "field": "b"
+            'text': {
+              'field': 'b'
             },
-            "tooltip": {
-              "field": "href",
-              "type": "nominal"
+            'tooltip': {
+              'field': 'href',
+              'type': 'nominal'
             }
           }
         }

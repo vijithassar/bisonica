@@ -12,7 +12,7 @@ module('unit > data', () => {
 
     assert.ok(
       stacked.every((item) => Array.isArray(item)),
-      `stacked bar data returns arrays`
+      'stacked bar data returns arrays'
     )
     assert.ok(
       stacked.every((item) => {

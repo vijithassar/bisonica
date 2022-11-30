@@ -65,7 +65,7 @@ module('unit > interactions', function () {
                     },
                     encoding: {
                         href: {
-                            value: "https://www.example.com"
+                            value: 'https://www.example.com'
                         }
                     }
                 }
