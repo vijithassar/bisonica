@@ -15,7 +15,7 @@
     "postbuild": "yarn run archive",
     "archive": "zip -jr build/bisonica-$(npm view bisonica version).zip build/bisonica.js source/index.css",
     "lint-git": "commitlint --to=HEAD --from=11cd541",
-    "lint-js": "eslint source tests/unit tests/integration",
+    "lint-js": "eslint source tests/unit tests/integration fixtures",
     "lint-styles": "stylelint source/index.css",
     "test": "qunit --require jsdom-global/register --require ./tests/browser-shim.cjs tests/**/*.js",
     "test-serve": "testem --file ./tests/testem.cjs",
