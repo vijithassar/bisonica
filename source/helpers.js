@@ -82,6 +82,9 @@ const missingSeries = () => '_'
  * @returns {string} url
  */
 const getUrl = (s, d) => {
+	if (s.mark.href) {
+		return s.mark.href
+	}
 	if (s.encoding.href.value) {
 		return s.encoding.href.value
 	}
