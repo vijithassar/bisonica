@@ -16,13 +16,12 @@ const colors = (count) => {
         const hue = 360 / count * index;
         return hue;
     });
+    const swatch = hues.map((hue, index) => d3.hcl(hue, 100, 50)[index % 2 ? 'brighter' : 'darker']().toString());
     const midpoint = Math.floor(count * 0.5);
-    const a = hues.slice(0, midpoint);
-    const b = hues.slice(midpoint);
+    const a = swatch.slice(0, midpoint);
+    const b = swatch.slice(midpoint);
     const ordered = d3.zip(a, b).flat();
-    const swatch = ordered.map(hue => d3.hcl(hue, 100, 50).toString());
-
-    return swatch;
+    return ordered;
 };
 
 export { colors }
