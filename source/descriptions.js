@@ -11,7 +11,7 @@ const delimiter = '; '
 
 const quantitativeChannels = (s) => {
 	const result = Object.entries(s.encoding)
-		.filter(([,definition]) => {
+		.filter(([, definition]) => {
 			return definition.type === 'quantitative'
 		})
 		.map(([channel]) => channel)
