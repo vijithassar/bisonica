@@ -36,7 +36,7 @@ const _feature = (s) => {
 		isText: (s) => mark(s) === 'text',
 		isAggregate: (s) => ['x', 'y'].some((channel) => s.encoding?.[channel]?.aggregate),
 		hasColor: (s) => s.encoding?.color,
-		hasLinks: (s) => s.encoding?.href,
+		hasLinks: (s) => s.encoding?.href || s.mark?.href,
 		hasData: (s) => s.data?.values.length,
 		hasLegend: (s) => s.encoding?.color?.legend !== null,
 		hasLegendTitle: (s) => isPresent(s.encoding?.color?.legend?.title),
