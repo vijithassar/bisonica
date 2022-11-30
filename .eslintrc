@@ -1,11 +1,12 @@
 {
-    "extends": ["standard", "plugin:jsdoc/recommended-error"],
+    "extends": ["standard", "plugin:jsdoc/recommended-error", "plugin:compat/recommended"],
     "parserOptions": {
         "ecmaVersion": 2022,
         "sourceType": "module"
     },
     "plugins": [
-        "jsdoc"
+        "jsdoc",
+        "compat"
     ],
     "env": {
         "browser": true,
