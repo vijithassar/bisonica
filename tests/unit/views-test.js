@@ -708,7 +708,6 @@ module('unit > views', () => {
 			})
 		})
 
-
 		test('calls a function for multiple layers', (assert) => {
 			const s = {
 				title: {
