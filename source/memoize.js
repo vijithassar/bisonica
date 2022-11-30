@@ -10,8 +10,9 @@ const argumentKey = (arg) => {
   if (primitive) {
     return `${arg}`;
   } else {
-    if (references.map.has(arg)) {
-      return `${type}-${references.map.get(arg)}`;
+    const reference = references.map.get(arg)
+    if (reference) {
+      return `${type}-${reference}`;
     } else {
       const id = `${references.count++}`;
 
