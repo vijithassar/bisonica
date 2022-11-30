@@ -17,7 +17,7 @@ module('integration > line', function () {
     assert.ok(element.querySelector(selector).getAttribute('d'))
 
     const pathStrings = [...element.querySelectorAll(selector)].map((node) =>
-      node.getAttribute('d'),
+      node.getAttribute('d')
     )
 
     pathStrings.forEach((pathString) => {
@@ -45,7 +45,7 @@ module('integration > line', function () {
     const propertyMap = {
       label: '_',
       group: '*',
-      value: '•',
+      value: '•'
     }
 
     spec.data.values = spec.data.values.map((item) => {

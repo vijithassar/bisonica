@@ -10,19 +10,19 @@ module('integration > text', function () {
     const spec = {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       title: {
-        text: 'text mark test',
+        text: 'text mark test'
       },
       data: {
-        values: [{}],
+        values: [{}]
       },
       mark: {
-        type: 'text',
+        type: 'text'
       },
       encoding: {
         text: {
-          datum: 'A',
-        },
-      },
+          datum: 'A'
+        }
+      }
     }
 
     const element = render(spec)
@@ -54,21 +54,21 @@ module('integration > text', function () {
       assert.equal(
         matchingValues.length,
         matchingContent.length,
-        `data category ${section} has ${matchingValues.length} values and ${matchingContent.length} mark nodes`,
+        `data category ${section} has ${matchingValues.length} values and ${matchingContent.length} mark nodes`
       )
     })
 
     assert.ok(
       marks.every((mark) => mark.hasAttribute('x')),
-      'every mark has x position',
+      'every mark has x position'
     )
     assert.ok(
       marks.every((mark) => mark.hasAttribute('y')),
-      'every mark has y position',
+      'every mark has y position'
     )
     assert.ok(
       marks.every((mark) => mark.hasAttribute('fill')),
-      'every mark has color',
+      'every mark has color'
     )
   })
 })

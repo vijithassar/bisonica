@@ -1,6 +1,6 @@
 const references = {
   count: 0,
-  map: new WeakMap(),
+  map: new WeakMap()
 }
 
 const argumentKey = (arg) => {

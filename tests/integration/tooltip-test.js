@@ -2,7 +2,7 @@ import {
   render,
   specificationFixture,
   testSelector,
-  tooltipContentUpdate,
+  tooltipContentUpdate
 } from '../test-helpers.js'
 import { chart } from '../../source/chart.js'
 import qunit from 'qunit'
@@ -110,12 +110,12 @@ module('integration > tooltips', function () {
     graphic.mark.innerRadius = 50
 
     const text = {
-      mark: { type: 'text', text: 'test' },
+      mark: { type: 'text', text: 'test' }
     }
     const spec = {
       title: { text: 'layer tooltip rendering test' },
       layer: [graphic, text],
-      usermeta: {},
+      usermeta: {}
     }
 
     spec.usermeta = { tooltipHandler: true }
@@ -144,12 +144,12 @@ module('integration > tooltips', function () {
     assert.equal(
       typeof tooltipEvent.detail.interaction.bubbles,
       'boolean',
-      'custom event detail has original interaction event',
+      'custom event detail has original interaction event'
     )
     assert.equal(
       typeof tooltipEvent.detail.node.querySelector,
       'function',
-      'custom event detail has node',
+      'custom event detail has node'
     )
   })
 
@@ -246,12 +246,12 @@ module('integration > tooltips', function () {
     assert.equal(
       typeof tooltipEvent.detail.interaction.bubbles,
       'boolean',
-      'custom event detail has original interaction event',
+      'custom event detail has original interaction event'
     )
     assert.equal(
       typeof tooltipEvent.detail.node.querySelector,
       'function',
-      'custom event detail has node',
+      'custom event detail has node'
     )
   })
 
@@ -284,7 +284,7 @@ module('integration > tooltips', function () {
     assert.ok(tooltipContent.includes('group'), 'tooltip content includes key "group"')
     assert.ok(
       tooltipContent.includes('A'),
-      'tooltip content includes value "A"',
+      'tooltip content includes value "A"'
     )
     assert.ok(tooltipContent.includes('value'), 'tooltip content includes key "label"')
     assert.ok(tooltipContent.includes('167'), 'tooltip content includes value "167"')

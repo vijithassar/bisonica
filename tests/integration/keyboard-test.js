@@ -1,7 +1,7 @@
 import {
   render,
   specificationFixture,
-  tooltipContentUpdate,
+  tooltipContentUpdate
 } from '../test-helpers.js'
 import qunit from 'qunit'
 
@@ -15,11 +15,11 @@ module('integration > keyboard', function () {
   test.skip('keyboard navigation works', async function (assert) {
     const dispatchEvents = {
       [LEFT]: new KeyboardEvent('keyup', {
-        key: LEFT,
+        key: LEFT
       }),
       [RIGHT]: new KeyboardEvent('keyup', {
-        key: RIGHT,
-      }),
+        key: RIGHT
+      })
     }
     const spec = specificationFixture('circular'); // eslint-disable-line
 
@@ -37,7 +37,7 @@ module('integration > keyboard', function () {
       { key: RIGHT, content: 'value 29\ngroup B' },
       { key: RIGHT, content: 'value 20\ngroup I' },
       { key: LEFT, content: 'value 29\ngroup B' },
-      { key: RIGHT, content: 'value 20\ngroup I' },
+      { key: RIGHT, content: 'value 20\ngroup I' }
     ]
 
     const assertions = steps.length

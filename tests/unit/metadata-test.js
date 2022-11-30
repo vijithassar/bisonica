@@ -16,7 +16,7 @@ module('unit > metadata', () => {
             { value: 2, group: 'b', label: '2020-01-05', url: 'https://example.com/b' },
             { value: 3, group: 'c', label: '2020-01-06', url: 'https://example.com/c' },
             { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' },
-            { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' },
+            { value: 3, group: 'c', label: '2020-01-07', url: 'https://example.com/c' }
         ]
     }
 
@@ -28,16 +28,16 @@ module('unit > metadata', () => {
     test('transfers urls to aggregated circular chart segments', (assert) => {
         const s = {
             data: {
-                values: urlData(),
+                values: urlData()
             },
             mark: {
-                type: 'arc',
+                type: 'arc'
             },
             encoding: {
                 color: { field: 'group' },
                 href: { field: 'url' },
-                theta: { field: 'value' },
-            },
+                theta: { field: 'value' }
+            }
         }
 
         assert.ok(data(s).every((item) => item.url.startsWith('https://example.com/')))
@@ -46,16 +46,16 @@ module('unit > metadata', () => {
     test('avoids transplanting mismatched data in aggregated circular chart segments', (assert) => {
         const s = {
             data: {
-                values: mismatch(urlData()),
+                values: mismatch(urlData())
             },
             mark: {
-                type: 'arc',
+                type: 'arc'
             },
             encoding: {
                 color: { field: 'group' },
                 href: { field: 'url' },
-                theta: { field: 'value' },
-            },
+                theta: { field: 'value' }
+            }
         }
 
         data(s).forEach((item) => {
@@ -73,15 +73,15 @@ module('unit > metadata', () => {
     test('transfers urls to aggregated stacked bar chart segments', (assert) => {
         const s = {
             data: {
-                values: urlData(),
+                values: urlData()
             },
             mark: { type: 'bar' },
             encoding: {
                 color: { field: 'group', type: 'nominal' },
                 href: { field: 'url' },
                 x: { field: 'label', type: 'temporal' },
-                y: { aggregate: 'value', type: 'quantitative' },
-            },
+                y: { aggregate: 'value', type: 'quantitative' }
+            }
         }
 
         data(s).forEach((series) => {
@@ -100,15 +100,15 @@ module('unit > metadata', () => {
     test('avoids transplanting mismatched data in aggregated stacked bar chart segments', (assert) => {
         const s = {
             data: {
-                values: mismatch(urlData()),
+                values: mismatch(urlData())
             },
             mark: { type: 'bar' },
             encoding: {
                 color: { field: 'group', type: 'nominal' },
                 href: { field: 'url' },
                 x: { field: 'label', type: 'temporal' },
-                y: { aggregate: 'value', type: 'quantitative' },
-            },
+                y: { aggregate: 'value', type: 'quantitative' }
+            }
         }
 
         data(s).forEach((series) => {
@@ -133,7 +133,7 @@ module('unit > metadata', () => {
         s.data.values = [
             {a: '•', b: '-', c: 'https://www.example.com/a', group: 'a', value: 95},
             {a: '+', b: '_', c: 'https://www.example.com/b', group: 'b', value: 3},
-            {a: '@', b: '|', c: 'https://www.example.com/c', group: 'c', value: 2},
+            {a: '@', b: '|', c: 'https://www.example.com/c', group: 'c', value: 2}
         ]
         s.encoding.tooltip = { field: 'a' }
         s.encoding.description = { field: 'b' }

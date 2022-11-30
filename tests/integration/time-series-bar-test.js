@@ -3,7 +3,7 @@ import {
   nodesHavePositiveHeights,
   render,
   specificationFixture,
-  testSelector,
+  testSelector
 } from '../test-helpers.js'
 
 const { module, test } = qunit
@@ -24,7 +24,7 @@ module('integration > temporal-bar', function () {
 
     assert.ok(
       nodesHavePositiveHeights(nodes),
-      'all mark rects have positive numbers as height attributes',
+      'all mark rects have positive numbers as height attributes'
     )
 
     let baseline = nodes[0].getBoundingClientRect().bottom
@@ -35,7 +35,7 @@ module('integration > temporal-bar', function () {
       assert.equal(
         approximate(bottom),
         approximate(baseline),
-        `Rect #${i} starts at the correct position: about: ${approximate(baseline)}`,
+        `Rect #${i} starts at the correct position: about: ${approximate(baseline)}`
       )
     })
   })

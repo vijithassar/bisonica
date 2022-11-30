@@ -1,6 +1,6 @@
 import {
   calculate,
-  transform,
+  transform
 } from '../../source/transform.js'
 import { encodingValue } from '../../source/encodings.js'
 import qunit from 'qunit'
@@ -10,7 +10,7 @@ const { module, test } = qunit
 const expressions = {
   naive: "'https://www.example.com' + '/' + 'test'",
   interpolate: "'https://www.example.com' + '/' + datum.a",
-  multiple: "'https://www.example.com' + '/' + datum.a + datum.b",
+  multiple: "'https://www.example.com' + '/' + datum.a + datum.b"
 }
 
 module('unit > transform', () => {
@@ -28,14 +28,14 @@ module('unit > transform', () => {
     test('runs multiple transforms', (assert) => {
       const datum = {
         a: 1,
-        b: 2,
+        b: 2
       }
       const s = {
         transform: [
           { calculate: expressions.naive, as: 'c' },
           { calculate: expressions.interpolate, as: 'd' },
-          { calculate: expressions.multiple, as: 'e' },
-        ],
+          { calculate: expressions.multiple, as: 'e' }
+        ]
       }
 
       assert.equal(transform(s)(datum).c, 'https://www.example.com/test')
@@ -46,7 +46,7 @@ module('unit > transform', () => {
       const s = {
         data: { values: [{ a: 1 }] },
         transform: [{ calculate: "'value: ' + datum.a", as: 'b' }],
-        encoding: { x: { type: 'nominal', field: 'b' } },
+        encoding: { x: { type: 'nominal', field: 'b' } }
       }
 
       assert.equal(encodingValue(s, 'x')(s.data.values[0]), 'value: 1')
@@ -70,19 +70,19 @@ module('unit > transform', () => {
     test('interpolates properties', (assert) => {
       assert.equal(
         calculate(expressions.interpolate)({ a: 'test' }),
-        'https://www.example.com/test',
+        'https://www.example.com/test'
       )
     })
     test('interpolates multiple properties', (assert) => {
       assert.equal(
         calculate(expressions.multiple)({ a: '1', b: '2' }),
-        'https://www.example.com/12',
+        'https://www.example.com/12'
       )
     })
     test('omits malformed string interpolations', (assert) => {
       assert.equal(
         calculate("'https://www.example.com' + '/' + datum.a + '/test")({ a: '1' }),
-        'https://www.example.com/1',
+        'https://www.example.com/1'
       )
     })
   })

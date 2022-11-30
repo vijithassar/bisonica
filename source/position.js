@@ -20,7 +20,7 @@ const marginCircular = () => {
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0,
+    left: 0
   }
 }
 
@@ -56,7 +56,7 @@ const tickMargin = (s) => {
 const titleMargin = (s) => {
   return {
     bottom: feature(s).hasAxisTitleX() ? TITLE_MARGIN : 0,
-    left: feature(s).hasAxisTitleY() ? TITLE_MARGIN : 0,
+    left: feature(s).hasAxisTitleY() ? TITLE_MARGIN : 0
   }
 }
 
@@ -70,7 +70,7 @@ const marginCartesian = (s) => {
     top: GRID * 2,
     right: GRID * 2,
     bottom: GRID * 4,
-    left: GRID * 4,
+    left: GRID * 4
   }
 
   const dynamicMargin = {}
@@ -84,7 +84,7 @@ const marginCartesian = (s) => {
     top: defaultMargin.top,
     right: defaultMargin.right,
     bottom: dynamicMargin.bottom || defaultMargin.bottom,
-    left: dynamicMargin.left || defaultMargin.left,
+    left: dynamicMargin.left || defaultMargin.left
   }
 }
 
@@ -114,7 +114,7 @@ const position = (s, dimensions) => {
     dimensions.x > dimensions.y ? (dimensions.y - radius(dimensions) * 2) * 0.5 : 0
   const middle = {
     x: dimensions.x * 0.5,
-    y: dimensions.y * 0.5 + yOffsetCircular,
+    y: dimensions.y * 0.5 + yOffsetCircular
   }
 
   let margins
@@ -123,7 +123,7 @@ const position = (s, dimensions) => {
 
   margins = {
     x: left,
-    y: top,
+    y: top
   }
 
   const transform = feature(s).isCircular() ? middle : margins

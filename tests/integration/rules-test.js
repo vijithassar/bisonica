@@ -12,7 +12,7 @@ module('integration > rules', function () {
     const markSelector = testSelector('mark')
     const axisSelectors = {
       y: testSelector('axes-y'),
-      x: testSelector('axes-x'),
+      x: testSelector('axes-x')
     }
     const mark = [...element.querySelectorAll(markSelector)]
 
@@ -25,12 +25,12 @@ module('integration > rules', function () {
       assert.equal(
         item.getAttribute('y1'),
         item.getAttribute('y2'),
-        'rule y attributes are the same',
+        'rule y attributes are the same'
       )
       assert.notEqual(
         item.getAttribute('x1'),
         item.getAttribute('x2'),
-        'rule x attributes are not the same',
+        'rule x attributes are not the same'
       )
     })
   })

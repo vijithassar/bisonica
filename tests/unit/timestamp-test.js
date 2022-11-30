@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import {
   getTimeParser,
   parseTime,
-  timeMethod,
+  timeMethod
 } from '../../source/time.js'
 import qunit from 'qunit'
 
@@ -13,7 +13,7 @@ module('unit > timestamps', () => {
     '2020-01-01',
     '2020-07-04T20:00:33.245Z',
     '2020-07-03T20:03:33.245Z-2020-07-04T20:03:33.245Z',
-    1596057847949,
+    1596057847949
   ]
 
   test('converts time period specifiers to d3 time interval method names', (assert) => {
@@ -21,7 +21,7 @@ module('unit > timestamps', () => {
       assert.equal(
         typeof d3[timeMethod(timeSpecifier)],
         'function',
-        `time specifier ${timeSpecifier} converted to d3 method name`,
+        `time specifier ${timeSpecifier} converted to d3 method name`
       )
     })
   })

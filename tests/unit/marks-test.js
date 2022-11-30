@@ -15,7 +15,7 @@ module('unit > marks', () => {
       assert.equal(
         typeof barWidth(specification, dimensions),
         'number',
-        'bar width is a number',
+        'bar width is a number'
       )
     })
 
@@ -25,7 +25,7 @@ module('unit > marks', () => {
 
       assert.ok(
         barWidth(specification, dimensions) <= dimensions.x / dates,
-        'time series bar width sized according to number of timestamps',
+        'time series bar width sized according to number of timestamps'
       )
     })
 
@@ -35,7 +35,7 @@ module('unit > marks', () => {
 
       assert.ok(
         barWidth(specification, dimensions) <= dimensions.x / categories,
-        'time series bar width sized according to number of categories',
+        'time series bar width sized according to number of categories'
       )
     })
 
@@ -45,11 +45,11 @@ module('unit > marks', () => {
         { label: '2020-01-01', value: 10, group: 'a' },
         { label: '2020-01-01', value: 20, group: 'b' },
         { label: '2020-01-02', value: 30, group: 'a' },
-        { label: '2020-01-02', value: 40, group: 'b' },
+        { label: '2020-01-02', value: 40, group: 'b' }
       ]
       assert.ok(
         barWidth(specification, dimensions) <= dimensions.x / 3,
-        'gap left between two time series bars',
+        'gap left between two time series bars'
       )
     })
 
@@ -57,11 +57,11 @@ module('unit > marks', () => {
       const specification = specificationFixture('categoricalBar')
       specification.data.values = [
         { group: 'a', value: 10 },
-        { group: 'b', value: 20 },
+        { group: 'b', value: 20 }
       ]
       assert.ok(
         barWidth(specification, dimensions) <= dimensions.x / 3,
-        'gap left between two categorical bars',
+        'gap left between two categorical bars'
       )
     })
 

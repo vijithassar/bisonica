@@ -33,7 +33,7 @@ module('unit > mutation', () => {
     assert.equal(
       typeof chart(s, dimensions),
       'function',
-      'factory successfully generates a chart function for a frozen specification',
+      'factory successfully generates a chart function for a frozen specification'
     )
 
     const render = () => {

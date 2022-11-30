@@ -68,7 +68,7 @@ const color = (_s) => {
       const items = color.domain().map((label, index) => {
         const itemConfig = {
           group: label,
-          color: color.range()[index],
+          color: color.range()[index]
         }
 
         return createLegendItem(itemConfig)

@@ -7,7 +7,7 @@ import {
   encodingChannelCovariateCartesian,
   encodingChannelQuantitative,
   encodingType,
-  encodingValue,
+  encodingValue
 } from './encodings.js'
 import { data, pointData } from './data.js'
 import { markDescription } from './descriptions.js'
@@ -49,7 +49,7 @@ const category = {
     } else {
       this.datum.set(key, category)
     }
-  },
+  }
 }
 
 const stroke = 3
@@ -164,7 +164,7 @@ const stackEncoders = (s, dimensions) => {
     x: vertical ? lane : start,
     y: vertical ? start : lane,
     height: vertical ? length : width,
-    width: vertical ? width : length,
+    width: vertical ? width : length
   }
 }
 
@@ -285,7 +285,7 @@ const areaEncoders = (s, dimensions) => {
   let base = {
     y0: y,
     x0: x,
-    x1: (d) => x(d) + width(d),
+    x1: (d) => x(d) + width(d)
   }
   if (encodingChannelQuantitative(s) === 'x') {
     return {
@@ -295,7 +295,7 @@ const areaEncoders = (s, dimensions) => {
     return {
       x0: x,
       y0: y,
-      y1: (d) => y(d) + height(d),
+      y1: (d) => y(d) + height(d)
     }
   }
 }
@@ -640,7 +640,7 @@ const textMarks = (s, dimensions) => {
       fontSize: 'font-size',
       font: 'font-family',
       fontStyle: 'font-style',
-      fontWeight: 'font-weight',
+      fontWeight: 'font-weight'
     }
 
     Object.entries(styles).forEach(([key, value]) => {

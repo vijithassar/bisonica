@@ -55,7 +55,7 @@ const scaleMethod = (s, channel) => {
     temporal: 'scaleUtc',
     nominal: 'scaleOrdinal',
     quantitative: 'scaleLinear',
-    ordinal: 'scaleOrdinal',
+    ordinal: 'scaleOrdinal'
   }
 
   let method
@@ -73,7 +73,7 @@ const scaleMethod = (s, channel) => {
     return method
   } else {
     throw new Error(
-      `could not determine scale method for ${channel} channel because encoding type is ${encodingType(s, channel)}`,
+      `could not determine scale method for ${channel} channel because encoding type is ${encodingType(s, channel)}`
     )
   }
 }
@@ -247,7 +247,7 @@ const range = (s, dimensions, _channel) => {
         colors((customDomain(s, channel) || colorRangeProcessor(s)).length)
       )
     },
-    theta: () => [0, Math.PI * 2],
+    theta: () => [0, Math.PI * 2]
   }
 
   return ranges[channel]()

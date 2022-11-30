@@ -4,7 +4,7 @@ import {
   encodingChannelCovariate,
   encodingChannelQuantitative,
   encodingType,
-  encodingValue,
+  encodingValue
 } from '../../source/encodings.js'
 import { data } from '../../source/data.js'
 import { dimensions } from './support.js'
@@ -19,7 +19,7 @@ module('unit > encoders', () => {
     const accessors = {
       x: (d) => parseTime(d.label),
       y: (d) => d.value,
-      color: (d) => d.group,
+      color: (d) => d.group
     }
     const specification = specificationFixture('line')
     const encoders = createEncoders(specification, dimensions, accessors)
@@ -32,17 +32,17 @@ module('unit > encoders', () => {
     assert.equal(
       typeof encoders.x(dataPoint),
       'number',
-      'x encoder function returns a numerical value',
+      'x encoder function returns a numerical value'
     )
     assert.equal(
       typeof encoders.y(dataPoint),
       'number',
-      'y encoder function returns a numerical value',
+      'y encoder function returns a numerical value'
     )
     assert.equal(
       typeof encoders.color(dataPoint),
       'string',
-      'color encoder function returns a string',
+      'color encoder function returns a string'
     )
   })
 
@@ -140,7 +140,7 @@ module('unit > encoders', () => {
     const temporal = { encoding: { x: { type: 'temporal' }, y: { type: 'quantitative' } } }
     const doubleNominal = { encoding: { x: { type: 'nominal' }, y: { type: 'nominal' } } }
     const doubleQuantitative = {
-      encoding: { x: { type: 'quantitative' }, y: { type: 'quantitative' } },
+      encoding: { x: { type: 'quantitative' }, y: { type: 'quantitative' } }
     }
 
     assert.equal(encodingChannelCovariate(ordinal), 'x')

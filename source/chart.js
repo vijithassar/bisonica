@@ -50,7 +50,7 @@ const chart = (s, panelDimensions) => {
     // subtract rendered height of legend from dimensions
     const dimensions = {
       x: panelDimensions.x - left - right,
-      y: imageHeight - top - bottom,
+      y: imageHeight - top - bottom
     }
 
     if (dimensions.y > 0) {

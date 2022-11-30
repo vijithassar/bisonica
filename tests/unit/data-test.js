@@ -12,21 +12,21 @@ module('unit > data', () => {
 
     assert.ok(
       stacked.every((item) => Array.isArray(item)),
-      `stacked bar data returns arrays`,
+      `stacked bar data returns arrays`
     )
     assert.ok(
       stacked.every((item) => {
         return item.every((point) => point.length === 2)
       }),
-      'every item in the stack is an array of two points',
+      'every item in the stack is an array of two points'
     )
     assert.ok(
       stacked.every((item) => typeof item.key === 'string'),
-      'each series has a string key',
+      'each series has a string key'
     )
     assert.ok(
       stacked.every((item) => typeof item.index === 'number'),
-      'each series has a numerical index',
+      'each series has a numerical index'
     )
   })
 
@@ -71,7 +71,7 @@ module('unit > data', () => {
     const spec = specificationFixture('multiline')
     const dailyTotals = data(spec, encodingField(spec, 'x'))
     const groupNames = dailyTotals.every(
-      (item) => typeof item[encodingField(spec, 'color')] === 'string',
+      (item) => typeof item[encodingField(spec, 'color')] === 'string'
     )
 
     assert.ok(groupNames, 'every series specifies a group')

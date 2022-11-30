@@ -33,7 +33,7 @@ const events = (s) => {
       'link',
       'tooltip',
       'play',
-      'focus',
+      'focus'
     ]
   }
 }

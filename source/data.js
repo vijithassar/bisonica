@@ -5,7 +5,7 @@ import {
   encodingChannelCovariate,
   encodingChannelCovariateCartesian,
   encodingField,
-  encodingValue,
+  encodingValue
 } from './encodings.js'
 import { metadata } from './metadata.js'
 import { feature } from './feature.js'
@@ -179,7 +179,7 @@ const stackData = memoize(_stackData)
 const _circularData = (s) => {
 
   const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
-    ([key, values]) => ({ key, values }),
+    ([key, values]) => ({ key, values })
   )
 
   const summed = grouped.map(({ key, values }) => {
@@ -212,7 +212,7 @@ const _lineData = (s) => {
         const bucket = feature(s).isTemporal() ? 'period' : encodingField(s, encodingChannelCovariate(s))
         const result = {
           [bucket]: item.key,
-          value: item[key].value,
+          value: item[key].value
         }
         return result
       })
@@ -220,7 +220,7 @@ const _lineData = (s) => {
 
     return {
       [encodingField(s, 'color') || missingSeries()]: key,
-      values,
+      values
     }
   })
 

@@ -12,7 +12,7 @@ const _feature = (s) => {
     const colorValues = [
       ...(Array.from(new Set(values(s))) || [])
         .map(encodingValue(s, 'color'))
-        .filter((item) => !!item),
+        .filter((item) => !!item)
     ]
 
     return s.encoding?.color && colorValues.length > 1
@@ -56,7 +56,7 @@ const _feature = (s) => {
     isMulticolor: () => isMulticolor,
     hasEncodingX: (s) => s.encoding?.x,
     hasEncodingY: (s) => s.encoding?.y,
-    hasEncodingColor: (s) => s.encoding?.color,
+    hasEncodingColor: (s) => s.encoding?.color
   }
 
   tests.hasAxis = (s) => tests.hasEncodingX(s) || tests.hasEncodingY(s)

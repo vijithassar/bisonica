@@ -11,7 +11,7 @@ module('integration > description', () => {
             const element = render(s)
             const labels = [
                 ...element.querySelectorAll(testSelector('mark')),
-                ...element.querySelectorAll(testSelector('marks-mark-point')),
+                ...element.querySelectorAll(testSelector('marks-mark-point'))
             ].map((node) => node.getAttribute('aria-label'))
             assert.ok(labels.some((item) => item.includes('minimum value')), 'detects minimum value')
             assert.ok(labels.some((item) => item.includes('maximum value')), 'detects maximum value')
@@ -25,11 +25,11 @@ module('integration > description', () => {
             {group: 'b', value: 2},
             {group: 'c', value: 3},
             {group: 'd', value: 4},
-            {group: 'e', value: 5},
+            {group: 'e', value: 5}
         ]
         const element = render(s)
         const labels = [
-            ...element.querySelectorAll(testSelector('mark')),
+            ...element.querySelectorAll(testSelector('mark'))
         ].map((node) => node.getAttribute('aria-label'))
         assert.equal(labels.filter((item) => item.includes('minimum value')).length, 1, 'detects single minimum value')
         assert.equal(labels.filter((item) => item.includes('maximum value')).length, 1, 'detects single maximum value')
@@ -41,11 +41,11 @@ module('integration > description', () => {
             {group: 'b', value: 1},
             {group: 'c', value: 3},
             {group: 'd', value: 5},
-            {group: 'e', value: 5},
+            {group: 'e', value: 5}
         ]
         const element = render(s)
         const labels = [
-            ...element.querySelectorAll(testSelector('mark')),
+            ...element.querySelectorAll(testSelector('mark'))
         ].map((node) => node.getAttribute('aria-label'))
         assert.equal(labels.filter((item) => item.includes('minimum value')).length, 2, 'detects multiple minimum values')
         assert.equal(labels.filter((item) => item.includes('maximum value')).length, 2, 'detects multiple maximum values')
@@ -64,7 +64,7 @@ module('integration > description', () => {
                     {a: 2, b: 1},
                     {a: 3, b: 3},
                     {a: 4, b: 5},
-                    {a: 5, b: 5},
+                    {a: 5, b: 5}
                 ]
             },
             encoding: {
@@ -82,7 +82,7 @@ module('integration > description', () => {
         const element = render(s)
 
         const labels = [
-            ...element.querySelectorAll(testSelector('marks-mark-point')),
+            ...element.querySelectorAll(testSelector('marks-mark-point'))
         ].map((node) => node.getAttribute('aria-label'))
         assert.equal(labels.filter((item) => item.includes('minimum value of a')).length, 1, 'detects single minimum value in field a')
         assert.equal(labels.filter((item) => item.includes('maximum value of a')).length, 1, 'detects single maximum value in field a')

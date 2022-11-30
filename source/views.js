@@ -159,7 +159,7 @@ const _layerPrimary = (s) => {
     // cartesian
     (s) => s.encoding.x && s.encoding.y,
     // linear
-    (s) => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y),
+    (s) => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y)
   ]
   // add a wrapper to require encoding
   .map((heuristic) => (s) => s.encoding && heuristic(s))
@@ -229,13 +229,13 @@ const layerSpecification = (s, index) => {
 
   if (layer.layer) {
     throw new Error(
-      `layer at index ${index} has a layer property, but nested layers are not supported`,
+      `layer at index ${index} has a layer property, but nested layers are not supported`
     )
   }
 
   const layerSpecification = {
     ...s,
-    ...layer,
+    ...layer
   }
 
   // clean up layers with text content defined by the mark object
@@ -267,7 +267,7 @@ const layerSpecification = (s, index) => {
 
       if (!layerSpecification.encoding[channel]?.scale?.domain) {
         layerSpecification.encoding[channel].scale = {
-          domain: unionDomains(s, channel),
+          domain: unionDomains(s, channel)
         }
       }
     }

@@ -17,13 +17,13 @@ module('unit > views', () => {
       layer: [
         {
           mark: { type: 'rule' },
-          encoding: { y: { datum: 10 } },
+          encoding: { y: { datum: 10 } }
         },
         {
           mark: { type: 'bar' },
-          encoding: { y: { scale: { domain: [0, 100] }, type: 'quantitative' } },
-        },
-      ],
+          encoding: { y: { scale: { domain: [0, 100] }, type: 'quantitative' } }
+        }
+      ]
     }
     const ruleTest = (s) => s.mark.type === 'rule'
     const barTest = (s) => s.mark.type === 'bar'
@@ -48,14 +48,14 @@ module('unit > views', () => {
         encoding: {
           x: {
             field: 'a',
-            type: 'quantitative',
+            type: 'quantitative'
           },
           y: {
             field: 'b',
-            type: 'quantitative',
-          },
+            type: 'quantitative'
+          }
         },
-        layer: [{ mark: { type: 'point' } }, { mark: { type: 'text' } }],
+        layer: [{ mark: { type: 'point' } }, { mark: { type: 'text' } }]
       }
       const pointTest = (s) => s.mark.type === 'point'
       const layer = layerMatch(encodingResolveTestSpecification, pointTest)
@@ -103,7 +103,7 @@ module('unit > views', () => {
           data: {values: [
             { group: 'a', value: 1 },
             { group: 'b', value: 2 },
-            { group: 'c', value: 3 },
+            { group: 'c', value: 3 }
           ]},
           layer: [
             {
@@ -115,7 +115,7 @@ module('unit > views', () => {
             {
               mark: {
                 type: "arc",
-                innerRadius: 50,
+                innerRadius: 50
               },
               encoding: {
                 theta: {
@@ -143,7 +143,7 @@ module('unit > views', () => {
               { date: "2019", value: 4 },
               { date: "2020", value: 7 },
               { date: "2021", value: 10 },
-              { date: "2022", value: 4 },
+              { date: "2022", value: 4 }
             ]
           },
           layer: [
@@ -160,7 +160,7 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "line",
+                type: "line"
               },
               encoding: {
                 theta: {
@@ -188,7 +188,7 @@ module('unit > views', () => {
               { group: "a", value: 23 },
               { group: "b", value: 10 },
               { group: "b", value: 30 },
-              { group: "a", value: 57 },
+              { group: "a", value: 57 }
             ]
           },
           layer: [
@@ -206,7 +206,7 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "point",
+                type: "point"
               },
               encoding: {
                 x: {
@@ -662,13 +662,13 @@ module('unit > views', () => {
               { date: "2025", value: 24, otherValue: 55 },
               { date: "2026", value: 26, otherValue: 57 },
               { date: "2027", value: 11, otherValue: 53 },
-              { date: "2028", value: 24, otherValue: 44 },
+              { date: "2028", value: 24, otherValue: 44 }
             ]
           },
           layer: [
             {
               mark: {
-                type: "line",
+                type: "line"
               },
               encoding: {
                 x: {
@@ -683,7 +683,7 @@ module('unit > views', () => {
             },
             {
               mark: {
-                type: "bar",
+                type: "bar"
               },
               encoding: {
                 x: {
@@ -691,15 +691,15 @@ module('unit > views', () => {
                   type: "temporal",
                   axis: {
                     title: 'date'
-                  },
+                  }
                 },
                 y: {
                   field: "otherValue",
                   type: "quantitative",
                   axis: {
                     title: 'other value'
-                  },
-                },
+                  }
+                }
               }
             }
           ]
@@ -718,7 +718,7 @@ module('unit > views', () => {
           values: [
             { a: 1, b: 10 },
             { a: 2, b: 11 },
-            { a: 3, b: 12 },
+            { a: 3, b: 12 }
           ]
         },
         layer: [

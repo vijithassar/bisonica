@@ -26,5 +26,5 @@ export {
   MINIMUM_TICK_COUNT,
   BAR_WIDTH_MINIMUM,
   RENDER_FREQUENCY,
-  customLinkHandler,
+  customLinkHandler
 }

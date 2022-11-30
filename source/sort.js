@@ -346,7 +346,7 @@ const _sorter = (s, channel) => {
     throw new Error(
       `could not sort encoding ${channel} by ${
         typeof sort === 'string' ? sort : JSON.stringify(sort)
-      } - ${error.message}`,
+      } - ${error.message}`
     )
   }
 }

@@ -33,7 +33,7 @@ module('unit > interactions', function () {
                 values: [
                     { value: 10, group: '*' },
                     { value: 20, group: '_' },
-                    { value: 30, group: '•' },
+                    { value: 30, group: '•' }
                 ]
             },
             usermeta: {
@@ -61,7 +61,7 @@ module('unit > interactions', function () {
                 {
                     mark: {
                         type: 'text',
-                        text: 60,
+                        text: 60
                     },
                     encoding: {
                         href: {

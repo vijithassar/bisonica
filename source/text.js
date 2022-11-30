@@ -193,7 +193,7 @@ const _longestAxisTickLabelTextWidth = (s) => {
   const result = longest.reduce((previous, current, index) => {
     return {
       ...previous,
-      [channels[index]]: current ? current : null,
+      [channels[index]]: current ? current : null
     }
   }, {})
 
@@ -230,5 +230,5 @@ export {
   truncate,
   axisTickLabelTextContent,
   axisTickLabelText,
-  longestAxisTickLabelTextWidth,
+  longestAxisTickLabelTextWidth
 }

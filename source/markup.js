@@ -20,7 +20,7 @@ const selectors = [
   '.legend',
   '.legend .pair',
   '.legend .items-main',
-  '.legend .items-more',
+  '.legend .items-more'
 ]
 
 /**

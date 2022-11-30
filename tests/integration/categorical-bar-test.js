@@ -1,7 +1,7 @@
 import qunit from 'qunit'
 import {
   nodesHavePositiveHeights,
-  specificationFixture,
+  specificationFixture
 } from '../test-helpers.js'
 import { render, testSelector } from '../test-helpers.js'
 
@@ -23,7 +23,7 @@ module('integration > categorical-bar', function () {
 
     assert.ok(
       nodesHavePositiveHeights(nodes),
-      'all mark rects have positive numbers as height attributes',
+      'all mark rects have positive numbers as height attributes'
     )
 
     let baseline = nodes[0].getBoundingClientRect().bottom
@@ -34,7 +34,7 @@ module('integration > categorical-bar', function () {
       assert.equal(
         approximate(bottom),
         approximate(baseline),
-        `Rect #${i} starts at the correct position: about: ${approximate(baseline)}`,
+        `Rect #${i} starts at the correct position: about: ${approximate(baseline)}`
       )
     })
   })

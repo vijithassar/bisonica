@@ -22,7 +22,7 @@ module('integration > single bar', function () {
 
         assert.ok(
             nodesHavePositiveHeights,
-            'all mark rects have positive numbers as height attributes',
+            'all mark rects have positive numbers as height attributes'
         )
         assert.ok(!nodesHaveZeroHeights, 'some mark rects have nonzero height attributes')
     })

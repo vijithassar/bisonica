@@ -11,14 +11,14 @@ const specification = (modifier) => {
       values: [
         { value: 10, label: 'a' },
         { value: 10, label: 'b' },
-        { value: 30, label: 'c' },
-      ],
+        { value: 30, label: 'c' }
+      ]
     },
     mark: { type: 'bar' },
     encoding: {
       x: { field: 'value', type: 'quantitative' },
-      y: { field: 'label', type: 'nominal' },
-    },
+      y: { field: 'label', type: 'nominal' }
+    }
   })
 }
 
@@ -77,12 +77,12 @@ module('unit > margin', () => {
             assert.equal(
               bottom(a),
               bottom(b),
-              `rotating x axis tick text ${a} degrees and ${b} degrees results in identical bottom margins`,
+              `rotating x axis tick text ${a} degrees and ${b} degrees results in identical bottom margins`
             )
           })
         })
       })
-    },
+    }
   )
   module('increases margin for axis titles', () => {
     const axes = { x: 'bottom', y: 'left' }

@@ -2,7 +2,7 @@ import {
   abbreviate,
   format,
   rotation,
-  truncate,
+  truncate
 } from '../../source/text.js'
 import qunit from 'qunit'
 import { specificationFixture } from '../test-helpers.js'
@@ -22,9 +22,9 @@ module('unit > axes', () => {
       encoding: {
         x: {
           field: 'value',
-          type: 'quantitative',
-        },
-      },
+          type: 'quantitative'
+        }
+      }
     }
     const text = abbreviate(s, { x: 100, y: 100 }, 'x')(100000)
 
@@ -35,12 +35,12 @@ module('unit > axes', () => {
       encoding: {
         x: {
           type: 'temporal',
-          axis: { format: '%Y-%m-%d' },
+          axis: { format: '%Y-%m-%d' }
         },
         y: {
-          type: 'nominal',
-        },
-      },
+          type: 'nominal'
+        }
+      }
     }
 
     const date = new Date(2020, 1, 15)
@@ -58,10 +58,10 @@ module('unit > axes', () => {
           field: 'label',
           type: 'nominal',
           axis: {
-            labelLimit: 15,
-          },
-        },
-      },
+            labelLimit: 15
+          }
+        }
+      }
     }
     const text = 'aaaaaaaaaaaaaaaaaaaaaaaaaa'
     const truncated = truncate(s, 'x', text, [])

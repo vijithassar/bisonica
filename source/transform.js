@@ -50,10 +50,10 @@ const _composeTransforms = (transforms) => {
 
         return {
           ...previous,
-          [current.as]: calculate(current.calculate)({ ...d }),
+          [current.as]: calculate(current.calculate)({ ...d })
         }
       },
-      { ...d },
+      { ...d }
     )
   }
 }

@@ -110,7 +110,7 @@ const encodingChannelCovariate = (s) => {
   } else if (feature(s).isCartesian()) {
     const covariate = Object.entries(s.encoding).filter(
       ([channel, definition]) =>
-        channel !== 'color' && definition.type && definition.type !== 'quantitative',
+        channel !== 'color' && definition.type && definition.type !== 'quantitative'
     )
 
     if (covariate.length !== 1) {
@@ -203,5 +203,5 @@ export {
   encodingChannelCovariate,
   encodingChannelCovariateCartesian,
   createEncoders,
-  encodingValueQuantitative,
+  encodingValueQuantitative
 }

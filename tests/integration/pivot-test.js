@@ -80,7 +80,7 @@ module('integration > pivot urls', function () {
       { group: 'b', value: 3, url: 'https://www.example.com/b' },
       { group: 'b', value: 4, url: 'https://www.example.com/b' },
       { group: 'c', value: 5, url: 'https://www.example.com/c' },
-      { group: 'c', value: 6, url: 'https://www.example.com/c' },
+      { group: 'c', value: 6, url: 'https://www.example.com/c' }
     ]
 
     spec.encoding.href = { field: 'url' }

@@ -15,7 +15,7 @@ module('integration > views', function () {
     const spec = { ...specificationFixture('line') }
     const lineLayer = {
       mark: spec.mark,
-      encoding: spec.encoding,
+      encoding: spec.encoding
     }
 
     delete spec.mark
@@ -31,7 +31,7 @@ module('integration > views', function () {
 
     const lineLayer = {
       mark: spec.mark,
-      encoding: spec.encoding,
+      encoding: spec.encoding
     }
 
     delete spec.mark
@@ -40,7 +40,7 @@ module('integration > views', function () {
     const ruleLayer = {
       data: { values: [{}] },
       encoding: { y: { datum: 15 } },
-      mark: { type: 'rule', size: 2 },
+      mark: { type: 'rule', size: 2 }
     }
 
     spec.layer = [lineLayer, ruleLayer]
@@ -55,7 +55,7 @@ module('integration > views', function () {
     const lineLayer = {
       data: { values: [...lineChartSpec.data.values] },
       mark: { ...lineChartSpec.mark },
-      encoding: { ...lineChartSpec.encoding },
+      encoding: { ...lineChartSpec.encoding }
     }
 
     delete layerSpec.mark

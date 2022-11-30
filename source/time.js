@@ -64,7 +64,7 @@ const _getTimeParser = (date) => {
     timeParseIsoRange,
     timeParseYYYYMM,
     timeParseMilliseconds,
-    timeParseMillisecondsString,
+    timeParseMillisecondsString
   ]
   const isDate = (parser) => {
     const parsed = parser(date)

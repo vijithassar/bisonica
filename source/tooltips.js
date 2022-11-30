@@ -71,7 +71,7 @@ function tooltipEvent(s, node, interaction) {
 
     const customEvent = new CustomEvent('tooltip', {
       bubbles: true,
-      detail,
+      detail
     })
 
     node.dispatchEvent(customEvent)

@@ -17,20 +17,20 @@ const specification = () => {
         { group: 'v', label: 'e', value: 25 },
         { group: 's', label: 'h', value: 22 },
         { group: 'r', label: 'i', value: 30 },
-        { group: 't', label: 'g', value: 5 },
-      ],
+        { group: 't', label: 'g', value: 5 }
+      ]
     },
     mark: { type: 'bar' },
     encoding: {
       x: {
         field: 'label',
-        type: 'nominal',
+        type: 'nominal'
       },
       y: {
         field: 'value',
-        type: 'quantitative',
-      },
-    },
+        type: 'quantitative'
+      }
+    }
   }
 
   return s

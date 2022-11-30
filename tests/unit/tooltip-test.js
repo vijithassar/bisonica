@@ -11,7 +11,7 @@ module('unit > tooltips', () => {
 
   const values = [
     { a: 1, b: 2, c: 3, group: 'a' },
-    { a: 1, b: 2, c: 3, group: 'b' },
+    { a: 1, b: 2, c: 3, group: 'b' }
   ]
 
   const encoding = { x: { field: 'a' }, y: { field: 'b' }, color: { field: 'group' } }
@@ -20,7 +20,7 @@ module('unit > tooltips', () => {
     const s = {
       data: { values },
       mark: { tooltip: true },
-      encoding,
+      encoding
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -32,7 +32,7 @@ module('unit > tooltips', () => {
     const s = {
       data: { values },
       mark: { tooltip: true },
-      encoding,
+      encoding
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -42,7 +42,7 @@ module('unit > tooltips', () => {
     const s = {
       data: { values },
       mark: { tooltip: { content: 'data' } },
-      encoding,
+      encoding
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -57,8 +57,8 @@ module('unit > tooltips', () => {
       mark: { type: null, tooltip: true },
       encoding: {
         ...encoding,
-        tooltip: { field: 'a' },
-      },
+        tooltip: { field: 'a' }
+      }
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -72,9 +72,9 @@ module('unit > tooltips', () => {
         ...encoding,
         tooltip: [
           { field: 'a', type: 'quantitative' },
-          { field: 'b', type: 'quantitative' },
-        ],
-      },
+          { field: 'b', type: 'quantitative' }
+        ]
+      }
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -88,9 +88,9 @@ module('unit > tooltips', () => {
         ...encoding,
         tooltip: [
           { field: 'a', type: 'quantitative', label: 'VALUE OF A' },
-          { field: 'b', type: 'quantitative', label: 'VALUE OF B' },
-        ],
-      },
+          { field: 'b', type: 'quantitative', label: 'VALUE OF B' }
+        ]
+      }
     }
     const text = tooltipContent(s)(s.data.values[0])
 
@@ -103,8 +103,8 @@ module('unit > tooltips', () => {
       transform: [{ calculate: "'tooltip value is: ' + datum.a", as: 'd' }],
       encoding: {
         ...encoding,
-        tooltip: { field: 'd' },
-      },
+        tooltip: { field: 'd' }
+      }
     }
     const text = tooltipContent(transformField)(datum)
 

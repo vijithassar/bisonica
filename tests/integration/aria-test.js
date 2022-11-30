@@ -66,7 +66,7 @@ module('integration > aria', function () {
 
     spec.transform = [
       { calculate: "'a'", as: 'a' },
-      { calculate: "'b'", as: 'b' },
+      { calculate: "'b'", as: 'b' }
     ]
     spec.encoding.description = { field: 'a' }
     spec.encoding.tooltip = { field: 'b' }

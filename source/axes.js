@@ -249,11 +249,11 @@ const y = (s, dimensions) => {
     if (feature(s).hasAxisTitleY()) {
       const yTitle = y.append('text').attr('class', 'title')
       const yTitlePadding = {
-        x: 0.2,
+        x: 0.2
       }
       const yTitlePosition = {
         x: yAxis.node().getBBox().width * (1 + yTitlePadding.x) * -1,
-        y: dimensions.y * 0.5,
+        y: dimensions.y * 0.5
       }
 
       yTitle

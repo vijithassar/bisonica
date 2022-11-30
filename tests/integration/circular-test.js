@@ -29,7 +29,7 @@ const nodeCenter = (node) => {
 
   return {
     x: dimensions.x + dimensions.width * 0.5,
-    y: dimensions.y + dimensions.height * 0.5,
+    y: dimensions.y + dimensions.height * 0.5
   }
 }
 
@@ -37,17 +37,17 @@ const jitter = (point, node) => {
   const dimensions = node.getBoundingClientRect()
   const totalRange = {
     x: dimensions.width - dimensions.x,
-    y: dimensions.height - dimensions.y,
+    y: dimensions.height - dimensions.y
   }
   const jitterRange = {
     x: totalRange.x * JITTER_RATIO,
-    y: totalRange.y * JITTER_RATIO,
+    y: totalRange.y * JITTER_RATIO
   }
   const direction = Math.random() > 0.5 ? 1 : -1
 
   return {
     x: point.x + jitterRange.x * direction,
-    y: point.y + jitterRange.y * direction,
+    y: point.y + jitterRange.y * direction
   }
 }
 
@@ -159,9 +159,9 @@ module('integration > circular', function () {
           { group: 'b', value: 1 },
           { group: 'c', value: 1 },
           { group: 'd', value: 1 },
-          { group: 'e', value: 1 },
-        ],
-      },
+          { group: 'e', value: 1 }
+        ]
+      }
     }
 
     const element = render(donutChartSpec)

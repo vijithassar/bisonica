@@ -30,7 +30,7 @@ const series = {
       category.get(mark.nodes()[index]) !== category.get(mark.nodes()[state.index()]) &&
       index < state.index()
     )
-  },
+  }
 }
 
 const x = {
@@ -39,7 +39,7 @@ const x = {
   },
   match(node, mark, state) {
     return this.position(node) === this.position(mark.nodes()[state.index()])
-  },
+  }
 }
 
 /**
@@ -92,7 +92,7 @@ const key = (s, direction) => {
 
       if (direction === LEFT) {
         const row = [...mark.nodes()].filter(
-          (node) => series.match(node, mark, state) && !isEmpty(node),
+          (node) => series.match(node, mark, state) && !isEmpty(node)
         )
 
         step = (node) => {
@@ -171,7 +171,7 @@ const createState = () => {
     },
     index(n) {
       return n === undefined ? index : ((index = n), true)
-    },
+    }
   }
 }
 
@@ -195,7 +195,7 @@ const keyMap = (key) => {
     ArrowUp: UP,
     ArrowRight: RIGHT,
     ArrowDown: DOWN,
-    ArrowLeft: LEFT,
+    ArrowLeft: LEFT
   }
 
   return map[key]

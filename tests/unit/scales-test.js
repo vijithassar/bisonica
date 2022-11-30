@@ -18,7 +18,7 @@ module('unit > scales', (hooks) => {
   hooks.beforeEach(() => {
     scales = {
       ...parseScales(lineChartSpec, dimensions),
-      colorOrdinal: parseScales(ordinalSpec, dimensions).color,
+      colorOrdinal: parseScales(ordinalSpec, dimensions).color
     }
   })
 
@@ -26,7 +26,7 @@ module('unit > scales', (hooks) => {
     x: 'temporal',
     y: 'quantitative',
     color: 'nominal',
-    colorOrdinal: 'ordinal',
+    colorOrdinal: 'ordinal'
   }
 
   Object.entries(scaleTypes).forEach(([channel, type]) => {
@@ -37,32 +37,32 @@ module('unit > scales', (hooks) => {
       assert.equal(
         typeof scale.domain,
         'function',
-        `${type} scale for ${channel} provides a domain method`,
+        `${type} scale for ${channel} provides a domain method`
       )
       assert.ok(
         Array.isArray(scale.domain()),
-        `${type} scale for ${channel} domain method returns an array`,
+        `${type} scale for ${channel} domain method returns an array`
       )
       assert.equal(
         typeof scale.range,
         'function',
-        `${type} scale for ${channel} provides a range method`,
+        `${type} scale for ${channel} provides a range method`
       )
       assert.ok(
         Array.isArray(scale.range()),
-        `${type} scale for ${channel} range method returns an array`,
+        `${type} scale for ${channel} range method returns an array`
       )
 
       if (['quantitative', 'temporal'].includes(type)) {
         assert.equal(
           scale.domain().length,
           2,
-          `${channel} domain for ${type} scale is a set of two data endpoints`,
+          `${channel} domain for ${type} scale is a set of two data endpoints`
         )
         assert.equal(
           scale.range().length,
           2,
-          `${channel} range for ${type} scale is a set of two spatial endpoints`,
+          `${channel} range for ${type} scale is a set of two spatial endpoints`
         )
       }
     })
@@ -84,9 +84,9 @@ module('unit > scales', (hooks) => {
     const range = ['black', 'white']
     const s = {
       data: {
-        values: [{ value: 1 }, { value: 2 }, { value: 3 }],
+        values: [{ value: 1 }, { value: 2 }, { value: 3 }]
       },
-      encoding: { color: { scale: { range }, type: 'nominal' } },
+      encoding: { color: { scale: { range }, type: 'nominal' } }
     }
     const scales = parseScales(s, dimensions)
 
@@ -101,21 +101,21 @@ module('unit > scales', (hooks) => {
           values: [
             { value: 100, label: '2020-01-01' },
             { value: 200, label: '2020-01-02' },
-            { value: 300, label: '2020-01-03' },
-          ],
+            { value: 300, label: '2020-01-03' }
+          ]
         },
         mark: 'line',
         encoding: {
           y: {
             field: 'value',
             type: 'quantitative',
-            scale: { zero: null },
+            scale: { zero: null }
           },
           x: {
             field: 'label',
-            type: 'temporal',
-          },
-        },
+            type: 'temporal'
+          }
+        }
       }
     }
 
@@ -158,26 +158,26 @@ module('unit > scales', (hooks) => {
         values: [
           { value: 100, group: 'a', label: '2020-01-01' },
           { value: 200, group: 'b', label: '2020-01-02' },
-          { value: 300, broup: 'c', label: '2020-01-03' },
-        ],
+          { value: 300, broup: 'c', label: '2020-01-03' }
+        ]
       },
       encoding: {
         y: {
           field: 'value',
           type: 'quantitative',
-          scale: { domain: [0, 500] },
+          scale: { domain: [0, 500] }
         },
         x: {
           field: 'label',
           type: 'temporal',
-          scale: { domain: ['2010-01-01', '2013-01-01'] },
+          scale: { domain: ['2010-01-01', '2013-01-01'] }
         },
         color: {
           field: 'group',
           type: 'nominal',
-          scale: { domain: ['a', 'b', 'c', 'd'] },
-        },
-      },
+          scale: { domain: ['a', 'b', 'c', 'd'] }
+        }
+      }
     }
     const { x, y, color } = parseScales(s)
 
@@ -194,15 +194,15 @@ module('unit > scales', (hooks) => {
     const domain = ['a', 'b', 'c', 'd']
     const s = {
       data: {
-        values: [{ group: 'a' }, { group: 'b' }, { group: 'c' }],
+        values: [{ group: 'a' }, { group: 'b' }, { group: 'c' }]
       },
       encoding: {
         color: {
           field: 'group',
           type: 'nominal',
-          scale: { domain },
-        },
-      },
+          scale: { domain }
+        }
+      }
     }
     const { color } = parseScales(s)
 
@@ -213,9 +213,9 @@ module('unit > scales', (hooks) => {
     const s = {
       encoding: {
         size: {
-          value: 5,
-        },
-      },
+          value: 5
+        }
+      }
     }
     const { size } = parseScales(s)
 
@@ -229,15 +229,15 @@ module('unit > scales', (hooks) => {
         values: [
           { date: '2021-01-01', value: 0 },
           { date: '2021-01-02', value: 10 },
-          { date: '2021-01-03', value: 100 },
-        ],
+          { date: '2021-01-03', value: 100 }
+        ]
       },
       encoding: {
         x: {
           type: 'temporal',
-          field: 'date',
-        },
-      },
+          field: 'date'
+        }
+      }
     }
     const { x } = parseScales(s)
 
@@ -254,15 +254,15 @@ module('unit > scales', (hooks) => {
         values: [
           { date: '2021-01-01', value: 0 },
           { date: '2021-01-02', value: 10 },
-          { date: '2021-01-03', value: 100 },
-        ],
+          { date: '2021-01-03', value: 100 }
+        ]
       },
       encoding: {
         x: {
           type: 'nominal',
-          field: 'date',
-        },
-      },
+          field: 'date'
+        }
+      }
     }
     const { x } = parseScales(s)
 
@@ -278,8 +278,8 @@ module('unit > scales', (hooks) => {
         values: [
           { group: 'red', value: 0 },
           { group: 'blue', value: 10 },
-          { group: 'green', value: 100 },
-        ],
+          { group: 'green', value: 100 }
+        ]
       },
       mark: {
         type: 'arc'
@@ -287,14 +287,14 @@ module('unit > scales', (hooks) => {
       encoding: {
         theta: {
           type: 'quantitative',
-          field: 'value',
+          field: 'value'
         },
         color: {
           type: 'nominal',
           field: 'group',
           scale: null
         }
-      },
+      }
     }
     assert.equal(parseScales(s).color('red'), 'red')
 
@@ -306,8 +306,8 @@ module('unit > scales', (hooks) => {
         values: [
           { group: 'a', value: 0 },
           { group: 'b', value: 10 },
-          { group: 'c', value: 100 },
-        ],
+          { group: 'c', value: 100 }
+        ]
       },
       mark: {
         type: 'arc'
@@ -315,13 +315,13 @@ module('unit > scales', (hooks) => {
       encoding: {
         theta: {
           type: 'unknown encoding type',
-          field: 'value',
+          field: 'value'
         },
         color: {
           type: 'nominal',
-          field: 'group',
+          field: 'group'
         }
-      },
+      }
     }
     assert.throws(() => parseScales(s))
   })
@@ -334,28 +334,28 @@ module('unit > scales', (hooks) => {
           { value: 200, label: '2020-01-02' },
           { value: 300, label: '2020-01-03' },
           { value: 400, label: '2020-01-04' },
-          { value: 500, label: '2020-01-05' },
-        ],
+          { value: 500, label: '2020-01-05' }
+        ]
       },
       mark: 'line',
       encoding: {
         y: {
           field: 'value',
           type: 'quantitative',
-          scale: { type: 'symlog' },
-        },
-      },
+          scale: { type: 'symlog' }
+        }
+      }
     }
 
     assert.strictEqual(
       parseScales(spec, dimensions).y(100).toFixed(4),
       '50.5953',
-      'should generate symmetric log scales',
+      'should generate symmetric log scales'
     )
     assert.strictEqual(
       parseScales(spec, dimensions).y(0).toFixed(4),
       '100.0000',
-      'symmetric log scales should handle zero',
+      'symmetric log scales should handle zero'
     )
   })
 
