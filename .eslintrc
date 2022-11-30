@@ -7,5 +7,13 @@
     "env": {
         "browser": true,
         "es6": true
+    },
+    "rules": {
+        "array-callback-return": "off",
+        "prefer-const": "off",
+        "space-before-function-paren": "off",
+        "quote-props": "off",
+        "no-useless-return": "off",
+        "object-curly-newline": "off"
     }
 }
