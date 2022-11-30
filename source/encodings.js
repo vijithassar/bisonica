@@ -128,7 +128,7 @@ const encodingChannelCovariate = (s) => {
  * @returns {string} visual encoding chanel
  */
 const encodingChannelCovariateCartesian = (s) => {
-	const channel = ['x', 'y'].find((channel => channel !== encodingChannelQuantitative(s)))
+	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
 	if (channel) {
 		return channel
 	} else {

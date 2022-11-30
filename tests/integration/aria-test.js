@@ -82,9 +82,9 @@ module('integration > aria', function () {
 	test('every bar chart mark has an aria-label attribute by default', (assert) => {
 		const spec = specificationFixture('categoricalBar')
 		const element = render(spec)
-		element.querySelectorAll(testSelector('mark')).forEach((mark => {
+		element.querySelectorAll(testSelector('mark')).forEach(mark => {
 			assert.ok(mark.getAttribute('aria-label'))
-		}))
+		})
 	})
 
 	test('every circular chart mark has an aria-label attribute by default', (assert) => {
