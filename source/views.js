@@ -159,7 +159,7 @@ const _layerPrimary = (s) => {
     // cartesian
     (s) => s.encoding.x && s.encoding.y,
     // linear
-    (s) => s.encoding.x && !s.encoding.y || !s.encoding.x && s.encoding.y,
+    (s) => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y),
   ]
   // add a wrapper to require encoding
   .map((heuristic) => (s) => s.encoding && heuristic(s))
