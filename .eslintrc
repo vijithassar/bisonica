@@ -1,5 +1,5 @@
 {
-    "extends": "standard",
+    "extends": ["standard", "plugin:compat/recommended"],
     "parserOptions": {
         "ecmaVersion": 2022,
         "sourceType": "module"
@@ -8,6 +8,9 @@
         "browser": true,
         "es6": true
     },
+    "plugins": [
+        "compat"
+    ],
     "rules": {
         "array-callback-return": "off",
         "prefer-const": "off",

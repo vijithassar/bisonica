@@ -36,6 +36,7 @@
     "esbuild": "^0.14.43",
     "eslint": "^8.17.0",
     "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-compat": "^4.0.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.5.1",
     "eslint-plugin-promise": "^6.1.1",
