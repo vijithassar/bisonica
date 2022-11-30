@@ -649,7 +649,7 @@ const textMarks = (s, dimensions) => {
 		})
 
 		text.attr('text-anchor', s.mark.align || 'middle')
-		text.attr('alignment-baseline', s.mark.baseline || 'baseline')
+		text.attr('alignment-baseline', s.mark.baseline || 'middle')
 
 		const hasLink = !!(s.encoding && encodingValue(s, 'href'))
 		text.classed('link', hasLink)
