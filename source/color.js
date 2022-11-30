@@ -20,7 +20,7 @@ const colors = (count) => {
     const a = hues.slice(0, midpoint);
     const b = hues.slice(midpoint);
     const ordered = d3.zip(a, b).flat();
-    const swatch = ordered.map(hue => `hsl(${hue}, 100%, 50%)`);
+    const swatch = ordered.map(hue => d3.hcl(hue, 100, 50).toString());
 
     return swatch;
 };
