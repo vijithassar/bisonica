@@ -1,12 +1,12 @@
-const WRAPPER_CLASS = 'wrapper';
+const WRAPPER_CLASS = 'wrapper'
 
-const BAR_WIDTH_MINIMUM = 2;
+const BAR_WIDTH_MINIMUM = 2
 
-const GRID = 10;
+const GRID = 10
 
-const MINIMUM_TICK_COUNT = 3;
+const MINIMUM_TICK_COUNT = 3
 
-const RENDER_FREQUENCY = 32;
+const RENDER_FREQUENCY = 32
 
 /**
  * custom behavior for opening links when mark nodes are
@@ -18,13 +18,13 @@ const RENDER_FREQUENCY = 32;
  * with the url and the node as the arguments
  * @type {boolean|function}
  */
-const customLinkHandler = true;
+const customLinkHandler = true
 
 export {
-  WRAPPER_CLASS,
-  GRID,
-  MINIMUM_TICK_COUNT,
-  BAR_WIDTH_MINIMUM,
-  RENDER_FREQUENCY,
-  customLinkHandler,
-};
+	WRAPPER_CLASS,
+	GRID,
+	MINIMUM_TICK_COUNT,
+	BAR_WIDTH_MINIMUM,
+	RENDER_FREQUENCY,
+	customLinkHandler
+}

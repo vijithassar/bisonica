@@ -1,16 +1,16 @@
-import * as d3 from 'd3';
-import { MINIMUM_TICK_COUNT } from './config.js';
-import { encodingType } from './encodings.js';
-import { getTimeFormatter } from './time.js';
-import { memoize } from './memoize.js';
-import { parseScales } from './scales.js';
-import { ticks } from './axes.js';
-import { isContinuous, isDiscrete } from './helpers.js';
+import * as d3 from 'd3'
+import { MINIMUM_TICK_COUNT } from './config.js'
+import { encodingType } from './encodings.js'
+import { getTimeFormatter } from './time.js'
+import { memoize } from './memoize.js'
+import { parseScales } from './scales.js'
+import { ticks } from './axes.js'
+import { isContinuous, isDiscrete } from './helpers.js'
 
-const canvas = document.createElement('canvas');
-const context = canvas.getContext('2d');
+const canvas = document.createElement('canvas')
+const context = canvas.getContext('2d')
 
-const defaultStyles = {};
+const defaultStyles = {}
 
 /**
  * measure the width of a text string
@@ -19,21 +19,20 @@ const defaultStyles = {};
  * @returns {number} string width
  */
 const _measureText = (text, styles = defaultStyles) => {
+	// set styles
+	Object.assign(context, styles)
 
-  // set styles
-  Object.assign(context, styles);
+	const value = context.measureText(text).width
 
-  const value = context.measureText(text).width;
+	// reset styles on shared global <canvas> DOM node
+	Object.entries(styles).forEach(([key]) => {
+		context[key] = null
+	})
 
-  // reset styles on shared global <canvas> DOM node
-  Object.entries(styles).forEach(([key]) => {
-    context[key] = null;
-  });
+	return value
+}
 
-  return value;
-};
-
-const measureText = memoize(_measureText);
+const measureText = memoize(_measureText)
 
 /**
  * extract font styles relevant to string width
@@ -42,20 +41,20 @@ const measureText = memoize(_measureText);
  * @returns {object} hashmap of styles
  */
 const fontStyles = (node) => {
-  const fontStyleProperties = ['letter-spacing', 'font-size', 'font', 'font-weight'];
-  const computedStyles = getComputedStyle(node);
-  let fontStyles = {};
+	const fontStyleProperties = ['letter-spacing', 'font-size', 'font', 'font-weight']
+	const computedStyles = getComputedStyle(node)
+	let fontStyles = {}
 
-  fontStyleProperties.forEach((property) => {
-    const value = computedStyles[property];
+	fontStyleProperties.forEach((property) => {
+		const value = computedStyles[property]
 
-    if (value) {
-      fontStyles[property] = value;
-    }
-  });
+		if (value) {
+			fontStyles[property] = value
+		}
+	})
 
-  return fontStyles;
-};
+	return fontStyles
+}
 
 /**
  * abbreviate axis tick label text
@@ -65,27 +64,27 @@ const fontStyles = (node) => {
  * @returns {function} abbreviation function
  */
 const _abbreviate = (s, dimensions, channel) => {
-  return (tick) => {
-    if (encodingType(s, channel) !== 'quantitative') {
-      return tick;
-    }
+	return (tick) => {
+		if (encodingType(s, channel) !== 'quantitative') {
+			return tick
+		}
 
-    const scales = parseScales(s, dimensions);
+		const scales = parseScales(s, dimensions)
 
-    const hasLargeValues = scales[channel]
-      .ticks()
-      .some((tick) => typeof tick === 'number' && tick >= 1000);
+		const hasLargeValues = scales[channel]
+			.ticks()
+			.some((tick) => typeof tick === 'number' && tick >= 1000)
 
-    if (!hasLargeValues) {
-      return tick;
-    }
+		if (!hasLargeValues) {
+			return tick
+		}
 
-    const si = scales[channel].tickFormat(MINIMUM_TICK_COUNT, '.1~s');
+		const si = scales[channel].tickFormat(MINIMUM_TICK_COUNT, '.1~s')
 
-    return si(tick).toUpperCase().replace('G', 'B');
-  };
-};
-const abbreviate = memoize(_abbreviate);
+		return si(tick).toUpperCase().replace('G', 'B')
+	}
+}
+const abbreviate = memoize(_abbreviate)
 
 /**
  * format axis tick label text
@@ -94,20 +93,17 @@ const abbreviate = memoize(_abbreviate);
  * @returns {function} formatting function
  */
 const format = (s, channel) => {
-  const formatter =
-    encodingType(s, channel) === 'temporal'
-      ? getTimeFormatter(s, channel)
-      : (label) => label.toString();
+	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : (label) => label.toString()
 
-  return (text) => formatter(text);
-};
+	return (text) => formatter(text)
+}
 
 /**
  * rotate axis tick label text
  * @param {object} s Vega Lite specification
  * @returns {number} axis tick text rotation
  */
-const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math.PI) / 180 || 0;
+const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math.PI) / 180 || 0
 
 /**
  * truncate axis tick label text
@@ -124,25 +120,25 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * @returns {string} truncated string
  */
 const _truncate = (s, channel, text, styles = defaultStyles) => {
-  const max = 180;
+	const max = 180
 
-  let limit = d3.min([s.encoding[channel].axis?.labelLimit, max]);
+	let limit = d3.min([s.encoding[channel].axis?.labelLimit, max])
 
-  if (limit === 0) {
-    return text;
-  }
+	if (limit === 0) {
+		return text
+	}
 
-  let substring = text;
+	let substring = text
 
-  while (measureText(`${substring}…`, styles) > limit && substring.length > 0) {
-    substring = substring.slice(0, -1);
-  }
+	while (measureText(`${substring}…`, styles) > limit && substring.length > 0) {
+		substring = substring.slice(0, -1)
+	}
 
-  const suffix = substring.length < text.length ? '…' : '';
+	const suffix = substring.length < text.length ? '…' : ''
 
-  return `${substring}${suffix}`;
-};
-const truncate = memoize(_truncate);
+	return `${substring}${suffix}`
+}
+const truncate = memoize(_truncate)
 
 /**
  * process axis tick text content
@@ -153,17 +149,17 @@ const truncate = memoize(_truncate);
  * @returns {string} text processing function
  */
 const _axisTickLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
-  let text = textContent;
+	let text = textContent
 
-  text = format(s, channel)(text);
+	text = format(s, channel)(text)
 
-  text = abbreviate(s, channel)(text);
+	text = abbreviate(s, channel)(text)
 
-  text = truncate(s, channel, text, styles);
+	text = truncate(s, channel, text, styles)
 
-  return text;
-};
-const axisTickLabelTextContent = memoize(_axisTickLabelTextContent);
+	return text
+}
+const axisTickLabelTextContent = memoize(_axisTickLabelTextContent)
 
 /**
  * compute margin values based on chart type
@@ -171,35 +167,35 @@ const axisTickLabelTextContent = memoize(_axisTickLabelTextContent);
  * @returns {object} longest axis tick label text length in pixels
  */
 const _longestAxisTickLabelTextWidth = (s) => {
-  const scales = parseScales(s);
+	const scales = parseScales(s)
 
-  const channels = ['x', 'y'];
-  const tickLabels = channels.map((channel) => {
-    const processText = (tick) => axisTickLabelTextContent(s, channel, tick);
+	const channels = ['x', 'y']
+	const tickLabels = channels.map((channel) => {
+		const processText = (tick) => axisTickLabelTextContent(s, channel, tick)
 
-    if (isContinuous(s, channel)) {
-      return scales[channel].ticks(ticks(s, channel)).map(processText);
-    } else if (isDiscrete(s, channel)) {
-      return scales[channel].domain().map(processText);
-    } else {
-      return [''];
-    }
-  });
+		if (isContinuous(s, channel)) {
+			return scales[channel].ticks(ticks(s, channel)).map(processText)
+		} else if (isDiscrete(s, channel)) {
+			return scales[channel].domain().map(processText)
+		} else {
+			return ['']
+		}
+	})
 
-  const longest = tickLabels.map((ticks) => {
-    return d3.max(ticks, (d) => measureText(d));
-  });
+	const longest = tickLabels.map((ticks) => {
+		return d3.max(ticks, (d) => measureText(d))
+	})
 
-  const result = longest.reduce((previous, current, index) => {
-    return {
-      ...previous,
-      [channels[index]]: current ? current : null,
-    };
-  }, {});
+	const result = longest.reduce((previous, current, index) => {
+		return {
+			...previous,
+			[channels[index]]: current || null
+		}
+	}, {})
 
-  return result;
-};
-const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth);
+	return result
+}
+const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
 
 /**
  * render axis tick text
@@ -208,27 +204,27 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth);
  * @returns {function} text processing function
  */
 const axisTickLabelText = (s, channel) => {
-  let styles = {};
+	let styles = {}
 
-  return (selection) => {
-    // only retrieve rendered font styles once per axis instead of separately
-    // for each tick to avoid performance issues
-    const node = selection.node();
+	return (selection) => {
+		// only retrieve rendered font styles once per axis instead of separately
+		// for each tick to avoid performance issues
+		const node = selection.node()
 
-    if (!styles[channel] && node) {
-      styles[channel] = fontStyles(node);
-    }
+		if (!styles[channel] && node) {
+			styles[channel] = fontStyles(node)
+		}
 
-    selection.text((label) => axisTickLabelTextContent(s, channel, label, styles[channel]));
-  };
-};
+		selection.text((label) => axisTickLabelTextContent(s, channel, label, styles[channel]))
+	}
+}
 
 export {
-  abbreviate,
-  rotation,
-  format,
-  truncate,
-  axisTickLabelTextContent,
-  axisTickLabelText,
-  longestAxisTickLabelTextWidth,
-};
+	abbreviate,
+	rotation,
+	format,
+	truncate,
+	axisTickLabelTextContent,
+	axisTickLabelText,
+	longestAxisTickLabelTextWidth
+}

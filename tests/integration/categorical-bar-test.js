@@ -1,54 +1,55 @@
-import qunit from 'qunit';
+import qunit from 'qunit'
 import {
-  nodesHavePositiveHeights,
-  specificationFixture,
-} from '../test-helpers.js';
-import { render, testSelector } from '../test-helpers.js';
+	nodesHavePositiveHeights,
+	specificationFixture,
+	render,
+	testSelector
+} from '../test-helpers.js'
 
-const { module, test } = qunit;
+const { module, test } = qunit
 
-const approximate = (value) => Math.round(value * 100) / 100;
+const approximate = (value) => Math.round(value * 100) / 100
 
 module('integration > categorical-bar', function () {
-  test('renders a categorical bar chart', (assert) => {
-    const spec = specificationFixture('categoricalBar');
+	test('renders a categorical bar chart', (assert) => {
+		const spec = specificationFixture('categoricalBar')
 
-    const element = render(spec);
-    const mark = testSelector('mark');
+		const element = render(spec)
+		const mark = testSelector('mark')
 
-    assert.ok(element.querySelector(mark));
-    assert.equal(element.querySelector(mark).tagName, 'rect');
+		assert.ok(element.querySelector(mark))
+		assert.equal(element.querySelector(mark).tagName, 'rect')
 
-    const nodes = [...element.querySelectorAll(mark)];
+		const nodes = [...element.querySelectorAll(mark)]
 
-    assert.ok(
-      nodesHavePositiveHeights(nodes),
-      'all mark rects have positive numbers as height attributes',
-    );
+		assert.ok(
+			nodesHavePositiveHeights(nodes),
+			'all mark rects have positive numbers as height attributes'
+		)
 
-    let baseline = nodes[0].getBoundingClientRect().bottom;
+		let baseline = nodes[0].getBoundingClientRect().bottom
 
-    nodes.forEach((node, i) => {
-      let { bottom } = node.getBoundingClientRect();
+		nodes.forEach((node, i) => {
+			let { bottom } = node.getBoundingClientRect()
 
-      assert.equal(
-        approximate(bottom),
-        approximate(baseline),
-        `Rect #${i} starts at the correct position: about: ${approximate(baseline)}`,
-      );
-    });
-  });
+			assert.equal(
+				approximate(bottom),
+				approximate(baseline),
+				`Rect #${i} starts at the correct position: about: ${approximate(baseline)}`
+			)
+		})
+	})
 
-  test('handles input data with all zero values', (assert) => {
-    const spec = specificationFixture('categoricalBar');
+	test('handles input data with all zero values', (assert) => {
+		const spec = specificationFixture('categoricalBar')
 
-    spec.data.values.forEach((item) => {
-      item.value = 0;
-    });
+		spec.data.values.forEach((item) => {
+			item.value = 0
+		})
 
-    const element = render(spec);
-    element.querySelectorAll('rect.mark').forEach((mark) => {
-      assert.equal(mark.getAttribute('height'), 0);
-    });
-  });
-});
+		const element = render(spec)
+		element.querySelectorAll('rect.mark').forEach((mark) => {
+			assert.equal(mark.getAttribute('height'), 0)
+		})
+	})
+})

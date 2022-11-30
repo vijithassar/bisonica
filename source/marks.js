@@ -1,23 +1,23 @@
-import * as d3 from 'd3';
+import * as d3 from 'd3'
 
-import { BAR_WIDTH_MINIMUM } from './config.js';
-import { createAccessors } from './accessors.js';
+import { BAR_WIDTH_MINIMUM } from './config.js'
+import { createAccessors } from './accessors.js'
 import {
-  createEncoders,
-  encodingChannelCovariateCartesian,
-  encodingChannelQuantitative,
-  encodingType,
-  encodingValue,
-} from './encodings.js';
-import { data, pointData } from './data.js';
-import { markDescription } from './descriptions.js';
-import { detach, datum, isDiscrete, key, missingSeries, values } from './helpers.js';
-import { feature } from './feature.js';
-import { memoize } from './memoize.js';
-import { parseScales } from './scales.js';
-import { parseTime, timePeriod } from './time.js';
-import { sortMarkData } from './sort.js';
-import { tooltips } from './tooltips.js';
+	createEncoders,
+	encodingChannelCovariateCartesian,
+	encodingChannelQuantitative,
+	encodingType,
+	encodingValue
+} from './encodings.js'
+import { data, pointData } from './data.js'
+import { markDescription } from './descriptions.js'
+import { detach, datum, isDiscrete, key, missingSeries, values } from './helpers.js'
+import { feature } from './feature.js'
+import { memoize } from './memoize.js'
+import { parseScales } from './scales.js'
+import { parseTime, timePeriod } from './time.js'
+import { sortMarkData } from './sort.js'
+import { tooltips } from './tooltips.js'
 
 /**
  * aggregate and sort mark data
@@ -25,34 +25,34 @@ import { tooltips } from './tooltips.js';
  * @returns {array} aggregated and sorted data for data join
  */
 const markData = (s) => {
-  const series = Array.isArray(data(s)) && data(s).every(Array.isArray);
+	const series = Array.isArray(data(s)) && data(s).every(Array.isArray)
 
-  if (series) {
-    return data(s).map((item) => item.sort(sortMarkData(s)));
-  } else {
-    return data(s).sort((a, b) => sortMarkData(s)(a, b));
-  }
-};
+	if (series) {
+		return data(s).map((item) => item.sort(sortMarkData(s)))
+	} else {
+		return data(s).sort((a, b) => sortMarkData(s)(a, b))
+	}
+}
 
 const category = {
-  get(key) {
-    return this.datum.get(key) || this.datum.get(d3.select(key).datum()) || this.node.get(key);
-  },
-  datum: new Map(),
-  node: d3.local(),
-  set(key, category) {
-    const isNode = typeof key.querySelector === 'function';
+	get(key) {
+		return this.datum.get(key) || this.datum.get(d3.select(key).datum()) || this.node.get(key)
+	},
+	datum: new Map(),
+	node: d3.local(),
+	set(key, category) {
+		const isNode = typeof key.querySelector === 'function'
 
-    if (isNode) {
-      this.datum.set(d3.select(key).datum(), category);
-      this.node.set(key, category);
-    } else {
-      this.datum.set(key, category);
-    }
-  },
-};
+		if (isNode) {
+			this.datum.set(d3.select(key).datum(), category)
+			this.node.set(key, category)
+		} else {
+			this.datum.set(key, category)
+		}
+	}
+}
 
-const stroke = 3;
+const stroke = 3
 
 /**
  * bar chart bar width
@@ -61,43 +61,43 @@ const stroke = 3;
  * @returns {number} bar width
  */
 const _barWidth = (s, dimensions) => {
-  const channel = encodingChannelCovariateCartesian(s);
-  const barWidthMaximum = dimensions[channel] / 3;
-  const stacked = markData(s);
-  const type = encodingType(s, channel);
-  const temporal = type === 'temporal';
-  const customDomain = s.encoding[channel]?.scale?.domain;
+	const channel = encodingChannelCovariateCartesian(s)
+	const barWidthMaximum = dimensions[channel] / 3
+	const stacked = markData(s)
+	const type = encodingType(s, channel)
+	const temporal = type === 'temporal'
+	const customDomain = s.encoding[channel]?.scale?.domain
 
-  let count;
+	let count
 
-  if (customDomain && !temporal) {
-    count = customDomain.length;
-  } else if (temporal) {
-    let endpoints;
-    // this check is logically the same as parseScales()[channel].domain()
-    // but writing it that way would be circular
-    if (customDomain) {
-      endpoints = customDomain?.map(parseTime);
-    } else {
-      endpoints = d3.extent(stacked.flat(), (d) => parseTime(d.data.key));
-    }
-    const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1]);
-    count = periods;
-  } else {
-    count = d3.max(stacked, (d) => d.length);
-  }
+	if (customDomain && !temporal) {
+		count = customDomain.length
+	} else if (temporal) {
+		let endpoints
+		// this check is logically the same as parseScales()[channel].domain()
+		// but writing it that way would be circular
+		if (customDomain) {
+			endpoints = customDomain?.map(parseTime)
+		} else {
+			endpoints = d3.extent(stacked.flat(), (d) => parseTime(d.data.key))
+		}
+		const periods = d3[timePeriod(s, channel)].count(endpoints[0], endpoints[1])
+		count = periods
+	} else {
+		count = d3.max(stacked, (d) => d.length)
+	}
 
-  const dynamic = (dimensions[channel] / count) * 0.5;
+	const dynamic = (dimensions[channel] / count) * 0.5
 
-  if (dynamic > BAR_WIDTH_MINIMUM && dynamic < barWidthMaximum) {
-    return dynamic;
-  } else if (dynamic < BAR_WIDTH_MINIMUM) {
-    return BAR_WIDTH_MINIMUM;
-  } else if (dynamic > barWidthMaximum) {
-    return barWidthMaximum;
-  }
-};
-const barWidth = memoize(_barWidth);
+	if (dynamic > BAR_WIDTH_MINIMUM && dynamic < barWidthMaximum) {
+		return dynamic
+	} else if (dynamic < BAR_WIDTH_MINIMUM) {
+		return BAR_WIDTH_MINIMUM
+	} else if (dynamic > barWidthMaximum) {
+		return barWidthMaximum
+	}
+}
+const barWidth = memoize(_barWidth)
 
 /**
  * mark tagName
@@ -105,18 +105,18 @@ const barWidth = memoize(_barWidth);
  * @returns {('rect'|'path'|'circle'|'line'|'text')} tagName to use in DOM for mark
  */
 const markSelector = (s) => {
-  if (feature(s).isBar()) {
-    return 'rect';
-  } else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
-    return 'path';
-  } else if (!feature(s).isLine() && feature(s).hasPoints()) {
-    return 'circle';
-  } else if (feature(s).isRule()) {
-    return 'line';
-  } else if (feature(s).isText()) {
-    return 'text';
-  }
-};
+	if (feature(s).isBar()) {
+		return 'rect'
+	} else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
+		return 'path'
+	} else if (!feature(s).isLine() && feature(s).hasPoints()) {
+		return 'circle'
+	} else if (feature(s).isRule()) {
+		return 'line'
+	} else if (feature(s).isText()) {
+		return 'text'
+	}
+}
 
 /**
  * determine the selector string used for interactions
@@ -124,26 +124,26 @@ const markSelector = (s) => {
  * @returns {string} DOM selector string
  */
 const markInteractionSelector = (_s) => {
-  const s = !feature(_s).hasLayers() ? _s : _s.layer.find((layer) => !feature(layer).isRule());
+	const s = !feature(_s).hasLayers() ? _s : _s.layer.find((layer) => !feature(layer).isRule())
 
-  if (feature(s).isLine()) {
-    return '.marks circle.point.mark';
-  } else {
-    return `.marks ${markSelector(s)}`;
-  }
-};
+	if (feature(s).isLine()) {
+		return '.marks circle.point.mark'
+	} else {
+		return `.marks ${markSelector(s)}`
+	}
+}
 
 /**
  * determine which way marks are oriented
  * @param {object} s Vega Lite specification
  */
 const layoutDirection = (s) => {
-  if (s.encoding.x?.type === 'quantitative') {
-    return 'horizontal';
-  } else if (s.encoding.y?.type === 'quantitative') {
-    return 'vertical';
-  }
-};
+	if (s.encoding.x?.type === 'quantitative') {
+		return 'horizontal'
+	} else if (s.encoding.y?.type === 'quantitative') {
+		return 'vertical'
+	}
+}
 
 /**
  * shuffle around mark encoders to
@@ -153,20 +153,20 @@ const layoutDirection = (s) => {
  * @returns {object} bar encoder methods
  */
 const stackEncoders = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s));
-  const vertical = layoutDirection(s) === 'vertical';
-  const lane = encoders[encodingChannelCovariateCartesian(s)];
-  const start = encoders.start;
-  const length = encoders.length;
-  const width = () => barWidth(s, dimensions);
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const vertical = layoutDirection(s) === 'vertical'
+	const lane = encoders[encodingChannelCovariateCartesian(s)]
+	const start = encoders.start
+	const length = encoders.length
+	const width = () => barWidth(s, dimensions)
 
-  return {
-    x: vertical ? lane : start,
-    y: vertical ? start : lane,
-    height: vertical ? length : width,
-    width: vertical ? width : length,
-  };
-};
+	return {
+		x: vertical ? lane : start,
+		y: vertical ? start : lane,
+		height: vertical ? length : width,
+		width: vertical ? width : length
+	}
+}
 
 /**
  * render a single bar chart mark
@@ -175,33 +175,33 @@ const stackEncoders = (s, dimensions) => {
  * @returns {function} single mark renderer
  */
 const barMark = (s, dimensions) => {
-  const encoders = stackEncoders(s, dimensions);
+	const encoders = stackEncoders(s, dimensions)
 
-  const y = feature(s).hasEncodingY() ? encoders.y : 0;
-  const x = feature(s).hasEncodingX() ? encoders.x : 0;
-  const description = markDescription(s);
-  const hasLink = encodingValue(s, 'href');
-  const tooltipFn = tooltips(s);
+	const y = feature(s).hasEncodingY() ? encoders.y : 0
+	const x = feature(s).hasEncodingX() ? encoders.x : 0
+	const description = markDescription(s)
+	const hasLink = encodingValue(s, 'href')
+	const tooltipFn = tooltips(s)
 
-  const markRenderer = (selection) => {
-    const rect = selection.append(markSelector(s));
+	const markRenderer = (selection) => {
+		const rect = selection.append(markSelector(s))
 
-    rect
-      .attr('role', 'region')
-      .attr('aria-roledescription', 'data point')
-      .attr('tabindex', -1)
-      .attr('class', 'block mark')
-      .attr('y', y)
-      .attr('x', x)
-      .attr('aria-label', description)
-      .attr('height', encoders.height)
-      .attr('width', encoders.width)
-      .classed('link', hasLink)
-      .call(tooltipFn);
-  };
+		rect
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data point')
+			.attr('tabindex', -1)
+			.attr('class', 'block mark')
+			.attr('y', y)
+			.attr('x', x)
+			.attr('aria-label', description)
+			.attr('height', encoders.height)
+			.attr('width', encoders.width)
+			.classed('link', hasLink)
+			.call(tooltipFn)
+	}
 
-  return markRenderer;
-};
+	return markRenderer
+}
 
 /**
  * lane transform for all bar marks
@@ -210,25 +210,25 @@ const barMark = (s, dimensions) => {
  * @returns {string} transform
  */
 const barMarksTransform = (s, dimensions) => {
-  let x = 0;
-  let y = 0;
+	let x = 0
+	let y = 0
 
-  if (encodingType(s, 'y') === 'quantitative') {
-    if (feature(s).hasEncodingX()) {
-      if (isDiscrete(s, 'x')) {
-        x = barWidth(s, dimensions) * 0.5;
-      }
-    }
-  } else if (encodingType(s, 'x') === 'quantitative') {
-    if (feature(s).hasEncodingY()) {
-      if (isDiscrete(s, 'y')) {
-        y = barWidth(s, dimensions) * 0.5;
-      }
-    }
-  }
+	if (encodingType(s, 'y') === 'quantitative') {
+		if (feature(s).hasEncodingX()) {
+			if (isDiscrete(s, 'x')) {
+				x = barWidth(s, dimensions) * 0.5
+			}
+		}
+	} else if (encodingType(s, 'x') === 'quantitative') {
+		if (feature(s).hasEncodingY()) {
+			if (isDiscrete(s, 'y')) {
+				y = barWidth(s, dimensions) * 0.5
+			}
+		}
+	}
 
-  return `translate(${x},${y})`;
-};
+	return `translate(${x},${y})`
+}
 
 /**
  * render bar chart marks
@@ -237,42 +237,42 @@ const barMarksTransform = (s, dimensions) => {
  * @returns {function} bar renderer
  */
 const barMarks = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'));
-  const renderer = (selection) => {
-    const marks = selection
-      .append('g')
-      .attr('class', 'marks')
-      .attr('transform', barMarksTransform(s, dimensions));
+	const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'))
+	const renderer = (selection) => {
+		const marks = selection
+			.append('g')
+			.attr('class', 'marks')
+			.attr('transform', barMarksTransform(s, dimensions))
 
-    const series = marks
-      .selectAll('g')
-      .data(markData(s))
-      .enter()
-      .append('g')
-      .each(function (d) {
-        category.set(this, d.key);
-        d.forEach((item) => {
-          category.set(item, d.key);
-        });
-      })
-      .attr('class', (d) => {
-        return ['series', key(category.get(d))].join(' ');
-      })
-      .attr('role', 'region')
-      .attr('aria-label', (d) => `${d.key}`)
-      .style('fill', encoders.color);
+		const series = marks
+			.selectAll('g')
+			.data(markData(s))
+			.enter()
+			.append('g')
+			.each(function (d) {
+				category.set(this, d.key)
+				d.forEach((item) => {
+					category.set(item, d.key)
+				})
+			})
+			.attr('class', (d) => {
+				return ['series', key(category.get(d))].join(' ')
+			})
+			.attr('role', 'region')
+			.attr('aria-label', (d) => `${d.key}`)
+			.style('fill', encoders.color)
 
-    series.order();
+		series.order()
 
-    series
-      .selectAll(markSelector(s))
-      .data((d) => d)
-      .enter()
-      .call(barMark(s, dimensions));
-  };
+		series
+			.selectAll(markSelector(s))
+			.data((d) => d)
+			.enter()
+			.call(barMark(s, dimensions))
+	}
 
-  return renderer;
-};
+	return renderer
+}
 
 /**
  * assign encoders to area mark methods
@@ -281,24 +281,24 @@ const barMarks = (s, dimensions) => {
  * @returns {object} area encoders
  */
 const areaEncoders = (s, dimensions) => {
-  const {x, y, width, height } = stackEncoders(s, dimensions);
-  let base = {
-    y0: y,
-    x0: x,
-    x1: (d) => x(d) + width(d),
-  };
-  if (encodingChannelQuantitative(s) === 'x') {
-    return {
-      ...base
-    };
-  } else if (encodingChannelQuantitative(s) === 'y') {
-    return {
-      x0: x,
-      y0: y,
-      y1: (d) => y(d) + height(d),
-    };
-  }
-};
+	const { x, y, width, height } = stackEncoders(s, dimensions)
+	let base = {
+		y0: y,
+		x0: x,
+		x1: (d) => x(d) + width(d)
+	}
+	if (encodingChannelQuantitative(s) === 'x') {
+		return {
+			...base
+		}
+	} else if (encodingChannelQuantitative(s) === 'y') {
+		return {
+			x0: x,
+			y0: y,
+			y1: (d) => y(d) + height(d)
+		}
+	}
+}
 
 /**
  * render area marks
@@ -307,36 +307,35 @@ const areaEncoders = (s, dimensions) => {
  * @returns {function} area mark renderer
  */
 const areaMarks = (s, dimensions) => {
-  const encoders = areaEncoders(s, dimensions);
-  const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'));
-  const renderer = (selection) => {
-    const marks = selection
-      .append('g')
-      .attr('class', 'marks');
+	const encoders = areaEncoders(s, dimensions)
+	const { color } = createEncoders(s, dimensions, createAccessors(s, 'series'))
+	const renderer = (selection) => {
+		const marks = selection
+			.append('g')
+			.attr('class', 'marks')
 
-    const area = d3.area();
+		const area = d3.area();
 
-    ['x0', 'x1', 'y0', 'y1'].forEach((point) => {
-      area[point](encoders[point]);
-    });
+		['x0', 'x1', 'y0', 'y1'].forEach((point) => {
+			area[point](encoders[point])
+		})
 
-    const layout = data(s);
+		const layout = data(s)
 
-    marks
-      .selectAll(markSelector(s))
-      .data(layout)
-      .enter()
-      .append('path')
-      .attr('d', area)
-      .attr('role', 'region')
-      .attr('aria-roledescription', 'data series')
-      .attr('tabindex', -1)
-      .attr('fill', color)
-      .attr('class', 'area mark')
-      .attr('aria-label', (d) => d.key);
-
-  }
-  return renderer;
+		marks
+			.selectAll(markSelector(s))
+			.data(layout)
+			.enter()
+			.append('path')
+			.attr('d', area)
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data series')
+			.attr('tabindex', -1)
+			.attr('fill', color)
+			.attr('class', 'area mark')
+			.attr('aria-label', (d) => d.key)
+	}
+	return renderer
 }
 
 /**
@@ -346,62 +345,62 @@ const areaMarks = (s, dimensions) => {
  * @returns {function} points renderer
  */
 const pointMarks = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s));
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
 
-  const renderer = (selection) => {
-    const radius = stroke * 1.2;
+	const renderer = (selection) => {
+		const radius = stroke * 1.2
 
-    const marks = selection.append('g').attr('class', () => {
-      const classes = ['marks', 'points'];
+		const marks = selection.append('g').attr('class', () => {
+			const classes = ['marks', 'points']
 
-      if (feature(s).isLine()) {
-        classes.push('mark-group');
-      }
+			if (feature(s).isLine()) {
+				classes.push('mark-group')
+			}
 
-      return classes.join(' ');
-    });
+			return classes.join(' ')
+		})
 
-    const getPointData = feature(s).isLine() ? (d) => d.values : pointData(s);
+		const getPointData = feature(s).isLine() ? (d) => d.values : pointData(s)
 
-    const points = marks
-      .selectAll('circle')
-      .data(getPointData)
-      .enter()
-      .append('circle')
-      .classed('point', true)
-      .classed('mark', true)
-      .attr('role', 'region')
-      .attr('aria-roledescription', 'data point');
+		const points = marks
+			.selectAll('circle')
+			.data(getPointData)
+			.enter()
+			.append('circle')
+			.classed('point', true)
+			.classed('mark', true)
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data point')
 
-    points
-      .each(function (d) {
-        const categoryValue = encodingValue(s, 'color')(d);
-        if (categoryValue) {
-          category.set(this, categoryValue);
-        }
-      })
-      .attr('aria-label', markDescription(s))
-      .attr('cx', encoders.x)
-      .attr('cy', encoders.y)
-      .attr('r', radius)
-      .classed('link', encodingValue(s, 'href'))
-      .call(tooltips(s));
+		points
+			.each(function (d) {
+				const categoryValue = encodingValue(s, 'color')(d)
+				if (categoryValue) {
+					category.set(this, categoryValue)
+				}
+			})
+			.attr('aria-label', markDescription(s))
+			.attr('cx', encoders.x)
+			.attr('cy', encoders.y)
+			.attr('r', radius)
+			.classed('link', encodingValue(s, 'href'))
+			.call(tooltips(s))
 
-    if (!feature(s).isLine()) {
-      points.style('stroke', encoders.color);
+		if (!feature(s).isLine()) {
+			points.style('stroke', encoders.color)
 
-      points.attr('aria-label', markDescription(s));
+			points.attr('aria-label', markDescription(s))
 
-      if (s.mark?.filled) {
-        points.style('fill', encoders.color);
-      } else {
-        points.style('fill-opacity', 0.001);
-      }
-    }
-  };
+			if (s.mark?.filled) {
+				points.style('fill', encoders.color)
+			} else {
+				points.style('fill-opacity', 0.001)
+			}
+		}
+	}
 
-  return renderer;
-};
+	return renderer
+}
 
 /**
  * render line chart marks
@@ -410,77 +409,77 @@ const pointMarks = (s, dimensions) => {
  * @returns {function} line renderer
  */
 const lineMarks = (s, dimensions) => {
-  const encoders = createEncoders(s, dimensions, createAccessors(s));
-  const line = d3.line().x(encoders.x).y(encoders.y);
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const line = d3.line().x(encoders.x).y(encoders.y)
 
-  const renderer = (selection) => {
-    const marks = selection.append('g').attr('class', 'marks');
-    const markTransforms = ['x', 'y'].map((channel) => {
-      const offset = ['nominal', 'ordinal'].includes(s.encoding[channel].type);
+	const renderer = (selection) => {
+		const marks = selection.append('g').attr('class', 'marks')
+		const markTransforms = ['x', 'y'].map((channel) => {
+			const offset = ['nominal', 'ordinal'].includes(s.encoding[channel].type)
 
-      if (offset) {
-        const scale = parseScales(s, dimensions)[channel];
-        const difference = Math.abs(scale.range()[1] - scale.range()[0]);
+			if (offset) {
+				const scale = parseScales(s, dimensions)[channel]
+				const difference = Math.abs(scale.range()[1] - scale.range()[0])
 
-        return difference / scale.domain().length / 2;
-      }
+				return difference / scale.domain().length / 2
+			}
 
-      return 0;
-    });
+			return 0
+		})
 
-    if (markTransforms.some((item) => !!item)) {
-      marks.attr('transform', `translate(${markTransforms.join(',')})`);
-    }
+		if (markTransforms.some((item) => !!item)) {
+			marks.attr('transform', `translate(${markTransforms.join(',')})`)
+		}
 
-    const series = marks
-      .selectAll('g.series')
-      .data(markData(s))
-      .enter()
-      .append('g')
-      .classed('series', true);
+		const series = marks
+			.selectAll('g.series')
+			.data(markData(s))
+			.enter()
+			.append('g')
+			.classed('series', true)
 
-    series.each((d) => {
-      const categoryValue = encodingValue(s, 'color')(d);
-      category.set(d, categoryValue);
-      d.values.forEach((item) => {
-        category.set(item, categoryValue);
-      });
-    });
+		series.each((d) => {
+			const categoryValue = encodingValue(s, 'color')(d)
+			category.set(d, categoryValue)
+			d.values.forEach((item) => {
+				category.set(item, categoryValue)
+			})
+		})
 
-    series.attr('fill', encoders.color);
+		series.attr('fill', encoders.color)
 
-    const path = series
-      .append('g')
-      .attr('class', 'mark-group line')
-      .attr('aria-hidden', true)
-      .append('path')
-      .classed('mark', true);
+		const path = series
+			.append('g')
+			.attr('class', 'mark-group line')
+			.attr('aria-hidden', true)
+			.append('path')
+			.classed('mark', true)
 
-    path
-      .attr('d', (d) => line(d.values))
-      .attr('aria-label', (d) => {
-        const series = category.get(d);
+		path
+			.attr('d', (d) => line(d.values))
+			.attr('aria-label', (d) => {
+				const series = category.get(d)
 
-        return typeof series === 'string' && series !== missingSeries() ? series : 'line';
-      })
-      .style('fill', 'none')
-      .style('stroke', encoders.color)
-      .style('stroke-width', stroke);
+				return typeof series === 'string' && series !== missingSeries() ? series : 'line'
+			})
+			.style('fill', 'none')
+			.style('stroke', encoders.color)
+			.style('stroke-width', stroke)
 
-    if (s.mark.point) {
-      series.call(pointMarks(s, dimensions));
-    }
-  };
+		if (s.mark.point) {
+			series.call(pointMarks(s, dimensions))
+		}
+	}
 
-  return renderer;
-};
+	return renderer
+}
 
 /**
  * maximum viable radius for a given set of dimensions
  * @param {object} dimensions chart dimensions
  * @returns {number} radius
  */
-const radius = (dimensions) => Math.min(dimensions.x, dimensions.y) * 0.5;
+const radius = (dimensions) => Math.min(dimensions.x, dimensions.y) * 0.5
 
 /**
  * render arc marks for a circular pie or donut chart
@@ -489,41 +488,41 @@ const radius = (dimensions) => Math.min(dimensions.x, dimensions.y) * 0.5;
  * @returns {function} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
-  const outerRadius = radius(dimensions);
-  const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0;
-  const innerRadius = outerRadius * innerRadiusRatio;
-  const { color } = parseScales(s);
-  const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group);
-  const value = (d) => d.value;
-  const layout = d3.pie().value(value).sort(sort);
-  const encoders = createEncoders(s, dimensions, createAccessors(s));
-  const renderer = (selection) => {
-    const marks = selection.append('g').attr('class', 'marks');
-    const mark = marks
-      .selectAll('path')
-      .data(layout(markData(s)))
-      .enter()
-      .append('path')
-      .attr('role', 'region')
-      .attr('aria-roledescription', 'data point')
-      .each(function (d) {
-        category.set(this, d.data.key);
-      })
-      .attr('class', 'mark arc');
-    const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+	const outerRadius = radius(dimensions)
+	const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0
+	const innerRadius = outerRadius * innerRadiusRatio
+	const { color } = parseScales(s)
+	const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group)
+	const value = (d) => d.value
+	const layout = d3.pie().value(value).sort(sort)
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = (selection) => {
+		const marks = selection.append('g').attr('class', 'marks')
+		const mark = marks
+			.selectAll('path')
+			.data(layout(markData(s)))
+			.enter()
+			.append('path')
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data point')
+			.each(function (d) {
+				category.set(this, d.data.key)
+			})
+			.attr('class', 'mark arc')
+		const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
 
-    mark
-      .attr('d', arc)
-      .attr('aria-label', markDescription(s))
-      .style('fill', encoders.color)
-      .classed('link', (d) => {
-        return encodingValue(s, 'href')(datum(s, d))
-      })
-      .call(tooltips(s));
-  };
+		mark
+			.attr('d', arc)
+			.attr('aria-label', markDescription(s))
+			.style('fill', encoders.color)
+			.classed('link', (d) => {
+				return encodingValue(s, 'href')(datum(s, d))
+			})
+			.call(tooltips(s))
+	}
 
-  return renderer;
-};
+	return renderer
+}
 
 /**
  * determine orientation of rule marks
@@ -531,28 +530,28 @@ const circularMarks = (s, dimensions) => {
  * @returns {('diagonal'|'horizontal'|'vertical')} rule orientation
  */
 const ruleDirection = (s) => {
-  if (s.encoding.x && s.encoding.x2 && s.encoding.y && s.encoding.y2) {
-    return 'diagonal';
-  }
+	if (s.encoding.x && s.encoding.x2 && s.encoding.y && s.encoding.y2) {
+		return 'diagonal'
+	}
 
-  if (s.encoding.y && !s.encoding.x) {
-    return 'horizontal';
-  }
+	if (s.encoding.y && !s.encoding.x) {
+		return 'horizontal'
+	}
 
-  if (s.encoding.x && !s.encoding.y) {
-    return 'vertical';
-  }
+	if (s.encoding.x && !s.encoding.y) {
+		return 'vertical'
+	}
 
-  if (s.encoding.x && s.encoding.y) {
-    if (s.encoding.x2) {
-      return 'horizontal';
-    }
+	if (s.encoding.x && s.encoding.y) {
+		if (s.encoding.x2) {
+			return 'horizontal'
+		}
 
-    if (s.encoding.y2) {
-      return 'vertical';
-    }
-  }
-};
+		if (s.encoding.y2) {
+			return 'vertical'
+		}
+	}
+}
 
 /**
  * render rule marks
@@ -561,105 +560,104 @@ const ruleDirection = (s) => {
  * @returns {function} rule renderer
  */
 const ruleMarks = (s, dimensions) => {
-  const renderer = (selection) => {
-    const marks = selection.append('g').attr('class', 'marks');
-    const encoders = createEncoders(s, dimensions, createAccessors(s));
+	const renderer = (selection) => {
+		const marks = selection.append('g').attr('class', 'marks')
+		const encoders = createEncoders(s, dimensions, createAccessors(s))
 
-    const rule = {};
+		const rule = {}
 
-    rule.vertical = (selection) => {
-      selection
-        .attr('x1', encoders.x)
-        .attr('x2', encoders.x)
-        .attr('y1', encoders.y || 0)
-        .attr('y2', encoders.y2 || dimensions.y);
-    };
+		rule.vertical = (selection) => {
+			selection
+				.attr('x1', encoders.x)
+				.attr('x2', encoders.x)
+				.attr('y1', encoders.y || 0)
+				.attr('y2', encoders.y2 || dimensions.y)
+		}
 
-    rule.horizontal = (selection) => {
-      selection
-        .attr('x1', encoders.x || 0)
-        .attr('x2', encoders.x2 || dimensions.x)
-        .attr('y1', encoders.y)
-        .attr('y2', encoders.y);
-    };
+		rule.horizontal = (selection) => {
+			selection
+				.attr('x1', encoders.x || 0)
+				.attr('x2', encoders.x2 || dimensions.x)
+				.attr('y1', encoders.y)
+				.attr('y2', encoders.y)
+		}
 
-    const mark = marks.selectAll('line').data(values(s)).enter().append('line');
+		const mark = marks.selectAll('line').data(values(s)).enter().append('line')
 
-    mark
-      .call(rule[ruleDirection(s)])
-      .each(function (d) {
-        category.set(this, encodingValue(s, 'color')(d));
-      })
-      .style('stroke', encoders.color)
-      .attr('class', 'mark rule')
-      .attr('role', 'region')
-      .attr('aria-roledescription', 'data point')
-      .attr('aria-label', markDescription(s))
-      .style('fill', encoders.color);
-  };
+		mark
+			.call(rule[ruleDirection(s)])
+			.each(function (d) {
+				category.set(this, encodingValue(s, 'color')(d))
+			})
+			.style('stroke', encoders.color)
+			.attr('class', 'mark rule')
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data point')
+			.attr('aria-label', markDescription(s))
+			.style('fill', encoders.color)
+	}
 
-  return renderer;
-};
+	return renderer
+}
 
 const textMarks = (s, dimensions) => {
-  return (selection) => {
-    const marks = selection.append('g').attr('class', 'marks');
-    const encoders = createEncoders(s, dimensions, createAccessors(s));
+	return (selection) => {
+		const marks = selection.append('g').attr('class', 'marks')
+		const encoders = createEncoders(s, dimensions, createAccessors(s))
 
-    let text;
+		let text
 
-    if (feature(s).hasData()) {
-      text = marks.selectAll('text').data(markData(s)).enter().append('text').attr('class', 'mark');
-      text.text(encoders.text);
-    } else if (s.mark.text) {
-      text = marks.append('text').classed('mark', true);
-      text.text(s.mark.text);
-    }
+		if (feature(s).hasData()) {
+			text = marks.selectAll('text').data(markData(s)).enter().append('text').attr('class', 'mark')
+			text.text(encoders.text)
+		} else if (s.mark.text) {
+			text = marks.append('text').classed('mark', true)
+			text.text(s.mark.text)
+		}
 
-    // encoded attributes
-    ['x', 'y'].forEach((channel) => {
-      if (typeof encoders[channel] === 'function') {
-        text.attr(channel, encoders[channel]);
-      }
-    });
+		// encoded attributes
+		['x', 'y'].forEach((channel) => {
+			if (typeof encoders[channel] === 'function') {
+				text.attr(channel, encoders[channel])
+			}
+		})
 
-    // encoded attributes with aliases
-    if (encoders.color) {
-      text.attr('fill', encoders.color);
-    }
+		// encoded attributes with aliases
+		if (encoders.color) {
+			text.attr('fill', encoders.color)
+		}
 
-    // static attributes
-    ['dx', 'dy'].forEach((attribute) => {
-      if (s.mark[attribute]) {
-        text.attr(attribute, s.mark[attribute]);
-      }
-    });
+		// static attributes
+		['dx', 'dy'].forEach((attribute) => {
+			if (s.mark[attribute]) {
+				text.attr(attribute, s.mark[attribute])
+			}
+		})
 
-    // styles with aliases
-    const styles = {
-      fontSize: 'font-size',
-      font: 'font-family',
-      fontStyle: 'font-style',
-      fontWeight: 'font-weight',
-    };
+		// styles with aliases
+		const styles = {
+			fontSize: 'font-size',
+			font: 'font-family',
+			fontStyle: 'font-style',
+			fontWeight: 'font-weight'
+		}
 
-    Object.entries(styles).forEach(([key, value]) => {
-      if (s.mark[key]) {
-        text.style(value, s.mark[key]);
-      }
-    });
+		Object.entries(styles).forEach(([key, value]) => {
+			if (s.mark[key]) {
+				text.style(value, s.mark[key])
+			}
+		})
 
-    text.attr('text-anchor', s.mark.align || 'middle');
-    text.attr('alignment-baseline', s.mark.baseline || 'baseline');
+		text.attr('text-anchor', s.mark.align || 'middle')
+		text.attr('alignment-baseline', s.mark.baseline || 'baseline')
 
-    const dy = text.node().getBoundingClientRect().height * 0.25;
+		const dy = text.node().getBoundingClientRect().height * 0.25
 
-    text.attr('transform', `translate(0,${dy})`);
-    const hasLink = !!(s.encoding && encodingValue(s, 'href'));
-    text.classed('link', hasLink);
-
-  };
-};
+		text.attr('transform', `translate(0,${dy})`)
+		const hasLink = !!(s.encoding && encodingValue(s, 'href'))
+		text.classed('link', hasLink)
+	}
+}
 
 /**
  * select an appropriate mark renderer
@@ -668,27 +666,27 @@ const textMarks = (s, dimensions) => {
  * @returns {function} mark renderer
  */
 const _marks = (s, dimensions) => {
-  try {
-    if (feature(s).isBar()) {
-      return barMarks(s, dimensions);
-    } else if (feature(s).isArea()) {
-      return areaMarks(s, dimensions);
-    } else if (feature(s).isCircular()) {
-      return circularMarks(s, dimensions);
-    } else if (feature(s).isLine()) {
-      return lineMarks(s, dimensions);
-    } else if (feature(s).isRule()) {
-      return ruleMarks(s, dimensions);
-    } else if (feature(s).hasPoints() && !feature(s).isLine()) {
-      return pointMarks(s, dimensions);
-    } else if (feature(s).isText()) {
-      return textMarks(s, dimensions);
-    }
-  } catch (error) {
-    error.message = `could not render marks - ${error.message}`;
-    throw error;
-  }
-};
-const marks = (s, dimensions) => detach(_marks(s, dimensions));
+	try {
+		if (feature(s).isBar()) {
+			return barMarks(s, dimensions)
+		} else if (feature(s).isArea()) {
+			return areaMarks(s, dimensions)
+		} else if (feature(s).isCircular()) {
+			return circularMarks(s, dimensions)
+		} else if (feature(s).isLine()) {
+			return lineMarks(s, dimensions)
+		} else if (feature(s).isRule()) {
+			return ruleMarks(s, dimensions)
+		} else if (feature(s).hasPoints() && !feature(s).isLine()) {
+			return pointMarks(s, dimensions)
+		} else if (feature(s).isText()) {
+			return textMarks(s, dimensions)
+		}
+	} catch (error) {
+		error.message = `could not render marks - ${error.message}`
+		throw error
+	}
+}
+const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category };
+export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category }

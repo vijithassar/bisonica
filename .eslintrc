@@ -1,5 +1,5 @@
 {
-    "extends": "eslint:recommended",
+    "extends": "standard",
     "parserOptions": {
         "ecmaVersion": 2022,
         "sourceType": "module"
@@ -7,5 +7,19 @@
     "env": {
         "browser": true,
         "es6": true
+    },
+    "rules": {
+        "array-callback-return": "off",
+        "prefer-const": "off",
+        "space-before-function-paren": "off",
+        "quote-props": "off",
+        "no-useless-return": "off",
+        "object-curly-newline": "off",
+        "indent": ["error", "tab"],
+        "no-tabs": ["error", { "allowIndentationTabs": true} ],
+        "no-mixed-spaces-and-tabs": [
+            "error",
+            "smart-tabs"
+        ]
     }
 }
