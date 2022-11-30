@@ -9,13 +9,13 @@ import { feature } from './feature.js'
  * @returns {string} rounded number as string with SI suffix
  */
 const abbreviateNumbers = (number) => {
-  if (number < 10 && Number.isInteger(number)) {
-    return `${number}`
-  } else if (number < 10 && !Number.isInteger(number)) {
-    return d3.format('.1f')(number)
-  } else if (number > 10) {
-    return d3.format('.2s')(number)
-  }
+	if (number < 10 && Number.isInteger(number)) {
+		return `${number}`
+	} else if (number < 10 && !Number.isInteger(number)) {
+		return d3.format('.1f')(number)
+	} else if (number > 10) {
+		return d3.format('.2s')(number)
+	}
 }
 
 /**
@@ -24,7 +24,7 @@ const abbreviateNumbers = (number) => {
  * @returns {array}
  */
 const values = (s) => {
-  return s.data?.values.slice()
+	return s.data?.values.slice()
 }
 
 /**
@@ -35,11 +35,11 @@ const values = (s) => {
  * @returns {object} datum
  */
 const datum = (s, d) => {
-  if (feature(s).isCircular() && d.data) {
-    return d.data
-  }
+	if (feature(s).isCircular() && d.data) {
+		return d.data
+	}
 
-  return d
+	return d
 }
 
 /**
@@ -49,25 +49,25 @@ const datum = (s, d) => {
  */
 const nested = function(d, key, newValue) {
 
-  let keys = key.split('.').reverse()
+	let keys = key.split('.').reverse()
 
-  // get
-  if (arguments.length === 2) {
-    let value = d
-    while (keys.length) {
-      value = value[keys.pop()]
-    }
-    return value
-  }
+	// get
+	if (arguments.length === 2) {
+		let value = d
+		while (keys.length) {
+			value = value[keys.pop()]
+		}
+		return value
+	}
 
-  // set
-  if (arguments.length === 3) {
-    let value = newValue
-    while (keys.length) {
-      value = {[keys.pop()]: value}
-    }
-    return value
-  }
+	// set
+	if (arguments.length === 3) {
+		let value = newValue
+		while (keys.length) {
+			value = {[keys.pop()]: value}
+		}
+		return value
+	}
 }
 
 /**
@@ -83,11 +83,11 @@ const missingSeries = () => '_'
  * @returns {string} url
  */
 const getUrl = (s, d) => {
-  if (s.encoding.href.value) {
-    return s.encoding.href.value
-  }
-  const field = encodingField(s, 'href')
-  return d?.data?.[missingSeries()]?.[field] || d?.data?.[field] || encodingValue(s, 'href')(d)
+	if (s.encoding.href.value) {
+		return s.encoding.href.value
+	}
+	const field = encodingField(s, 'href')
+	return d?.data?.[missingSeries()]?.[field] || d?.data?.[field] || encodingValue(s, 'href')(d)
 }
 
 /**
@@ -97,11 +97,11 @@ const getUrl = (s, d) => {
  * @returns {string} mark name
  */
 const mark = (s) => {
-  if (typeof s.mark === 'string') {
-    return s.mark
-  } else if (typeof s.mark === 'object') {
-    return s.mark.type
-  }
+	if (typeof s.mark === 'string') {
+		return s.mark
+	} else if (typeof s.mark === 'object') {
+		return s.mark.type
+	}
 }
 
 /**
@@ -109,7 +109,7 @@ const mark = (s) => {
  * returned consistently from a factory or composition
  */
 const noop = () => {
-  return
+	return
 }
 
 /**
@@ -138,7 +138,7 @@ const degrees = (radians) => (radians * 180) / Math.PI
  * @returns {boolean}
  */
 const isContinuous = (s, channel) => {
-  return ['temporal', 'quantitative'].includes(encodingType(s, channel))
+	return ['temporal', 'quantitative'].includes(encodingType(s, channel))
 }
 
 /**
@@ -148,7 +148,7 @@ const isContinuous = (s, channel) => {
  * @returns {boolean}
  */
 const isDiscrete = (s, channel) => {
-  return ['nominal', 'ordinal'].includes(encodingType(s, channel))
+	return ['nominal', 'ordinal'].includes(encodingType(s, channel))
 }
 
 /**
@@ -157,16 +157,16 @@ const isDiscrete = (s, channel) => {
  * @returns {boolean} overlap
  */
 const overlap = (nodes) => {
-  return [...nodes].some((node, index) => {
-    if (index === nodes.length - 1) {
-      return false
-    }
-    const a = node.getBoundingClientRect()
-    const b = nodes[index + 1]?.getBoundingClientRect()
-    const overlap = !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom)
+	return [...nodes].some((node, index) => {
+		if (index === nodes.length - 1) {
+			return false
+		}
+		const a = node.getBoundingClientRect()
+		const b = nodes[index + 1]?.getBoundingClientRect()
+		const overlap = !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom)
 
-    return overlap
-  })
+		return overlap
+	})
 }
 
 /**
@@ -176,7 +176,7 @@ const overlap = (nodes) => {
  * @returns {object} equivalent Cartesian coordinates
  */
 const polarToCartesian = (radius, angle) => {
-  return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) }
+	return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) }
 }
 
 /**
@@ -191,30 +191,30 @@ const polarToCartesian = (radius, angle) => {
  * @returns {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {
-  return (selection) => {
-    const tag = selection.node().tagName
-    const namespace = tag === 'g' ? 'svg' : 'html'
-    const detached = d3.create(`${namespace}:${tag}`)
-    detached.call(fn, ...rest)
-    selection.append(() => detached.node())
-  }
+	return (selection) => {
+		const tag = selection.node().tagName
+		const namespace = tag === 'g' ? 'svg' : 'html'
+		const detached = d3.create(`${namespace}:${tag}`)
+		detached.call(fn, ...rest)
+		selection.append(() => detached.node())
+	}
 }
 
 export {
-  abbreviateNumbers,
-  mark,
-  values,
-  datum,
-  nested,
-  missingSeries,
-  getUrl,
-  noop,
-  identity,
-  key,
-  degrees,
-  isContinuous,
-  isDiscrete,
-  overlap,
-  polarToCartesian,
-  detach
+	abbreviateNumbers,
+	mark,
+	values,
+	datum,
+	nested,
+	missingSeries,
+	getUrl,
+	noop,
+	identity,
+	key,
+	degrees,
+	isContinuous,
+	isDiscrete,
+	overlap,
+	polarToCartesian,
+	detach
 }

@@ -12,38 +12,38 @@ const { module, test } = qunit
  * @returns {object} frozen object
  */
 const freeze = (object) => {
-  const propNames = Object.getOwnPropertyNames(object)
+	const propNames = Object.getOwnPropertyNames(object)
 
-  for (const name of propNames) {
-    const value = object[name]
+	for (const name of propNames) {
+		const value = object[name]
 
-    if (value && typeof value === 'object') {
-      freeze(value)
-    }
-  }
+		if (value && typeof value === 'object') {
+			freeze(value)
+		}
+	}
 
-  return Object.freeze(object)
+	return Object.freeze(object)
 }
 
 module('unit > mutation', () => {
-  test('does not mutate specifications', (assert) => {
-    const s = freeze(JSON.parse(JSON.stringify(specificationFixture('line'))))
-    const dimensions = { x: 500, y: 500 }
+	test('does not mutate specifications', (assert) => {
+		const s = freeze(JSON.parse(JSON.stringify(specificationFixture('line'))))
+		const dimensions = { x: 500, y: 500 }
 
-    assert.equal(
-      typeof chart(s, dimensions),
-      'function',
-      'factory successfully generates a chart function for a frozen specification'
-    )
+		assert.equal(
+			typeof chart(s, dimensions),
+			'function',
+			'factory successfully generates a chart function for a frozen specification'
+		)
 
-    const render = () => {
-      const node = document.createElement('div')
+		const render = () => {
+			const node = document.createElement('div')
 
-      select(node).call(init(s, dimensions)).call(chart(s, dimensions))
-    }
+			select(node).call(init(s, dimensions)).call(chart(s, dimensions))
+		}
 
-    render()
+		render()
 
-    assert.ok(true, 'chart function generated with a frozen specification does not throw error')
-  })
+		assert.ok(true, 'chart function generated with a frozen specification does not throw error')
+	})
 })

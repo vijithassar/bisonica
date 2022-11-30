@@ -21,7 +21,7 @@ const temperament = Math.pow(2, 1 / 12)
  * @returns {number[]} chromatic audio scale
  */
 const chromatic = (root) => {
-  return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index))
+	return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index))
 }
 
 /**
@@ -31,13 +31,13 @@ const chromatic = (root) => {
  * @returns {number[]} minor scale in linear data space
  */
 const minorLinear = (min, max) => {
-  const h = (max - min) / 12
-  const w = h * 2
-  const steps = [0, w, h, w, w, h, w, w]
+	const h = (max - min) / 12
+	const w = h * 2
+	const steps = [0, w, h, w, w, h, w, w]
 
-  return steps.map((_, index) => {
-    return d3.sum(steps.slice(0, index)) + min
-  })
+	return steps.map((_, index) => {
+		return d3.sum(steps.slice(0, index)) + min
+	})
 }
 
 /**
@@ -46,9 +46,9 @@ const minorLinear = (min, max) => {
  * @returns {number[]} minor audio scale
  */
 const minorExponential = (root) => {
-  const semitones = [0, 2, 3, 5, 7, 8, 10, 12]
+	const semitones = [0, 2, 3, 5, 7, 8, 10, 12]
 
-  return chromatic(root).filter((_, index) => semitones.includes(index))
+	return chromatic(root).filter((_, index) => semitones.includes(index))
 }
 
 /**
@@ -57,23 +57,23 @@ const minorExponential = (root) => {
  * @param {number} start start time
  */
 const note = (frequency, start) => {
-  const oscillator = context.createOscillator()
-  const gainNode = context.createGain()
+	const oscillator = context.createOscillator()
+	const gainNode = context.createGain()
 
-  gainNode.gain.setValueAtTime(1.0, context.currentTime + start)
+	gainNode.gain.setValueAtTime(1.0, context.currentTime + start)
 
-  const end = context.currentTime + start + duration
+	const end = context.currentTime + start + duration
 
-  oscillator.connect(gainNode)
-  gainNode.connect(context.destination)
+	oscillator.connect(gainNode)
+	gainNode.connect(context.destination)
 
-  oscillator.frequency.value = frequency
+	oscillator.frequency.value = frequency
 
-  gainNode.gain.setValueAtTime(context.currentTime + start * 0.8, 1)
-  gainNode.gain.linearRampToValueAtTime(0.001, end)
+	gainNode.gain.setValueAtTime(context.currentTime + start * 0.8, 1)
+	gainNode.gain.linearRampToValueAtTime(0.001, end)
 
-  oscillator.start(context.currentTime + start)
-  oscillator.stop(end)
+	oscillator.start(context.currentTime + start)
+	oscillator.stop(end)
 }
 
 /**
@@ -83,18 +83,18 @@ const note = (frequency, start) => {
  * @returns {number[]} multiple octave data scale
  */
 const repeatLinear = (min, max) => {
-  const spread = max - min
-  const slice = spread / octaves
+	const spread = max - min
+	const slice = spread / octaves
 
-  return Array.from({ length: octaves })
-    .map((_, index) => {
-      const start = slice * index + min
-      const end = slice * (index + 1) + min
-      const steps = minorLinear(start, end).map((item) => item + start)
+	return Array.from({ length: octaves })
+		.map((_, index) => {
+			const start = slice * index + min
+			const end = slice * (index + 1) + min
+			const steps = minorLinear(start, end).map((item) => item + start)
 
-      return index === 0 ? steps : steps.slice(1)
-    })
-    .flat()
+			return index === 0 ? steps : steps.slice(1)
+		})
+		.flat()
 }
 
 /**
@@ -104,17 +104,17 @@ const repeatLinear = (min, max) => {
  * @returns {number[]} multiple octave audio scale
  */
 const repeatExponential = (min, max) => {
-  if (max % min !== 0) {
-    console.error('endpoints supplied for exponential scale repetition are not octaves')
-  }
+	if (max % min !== 0) {
+		console.error('endpoints supplied for exponential scale repetition are not octaves')
+	}
 
-  return Array.from({ length: octaves })
-    .map((_, index) => {
-      const steps = minorExponential(min * 2 ** index)
+	return Array.from({ length: octaves })
+		.map((_, index) => {
+			const steps = minorExponential(min * 2 ** index)
 
-      return index === 0 ? steps : steps.slice(1)
-    })
-    .flat()
+			return index === 0 ? steps : steps.slice(1)
+		})
+		.flat()
 }
 
 /**
@@ -124,19 +124,19 @@ const repeatExponential = (min, max) => {
  * @param {object} s Vega Lite specification
  */
 const notes = (values, dispatcher, s) => {
-  const [min, max] = d3.extent(values, (d) => d.value)
-  const domain = repeatLinear(feature(s).isBar() ? 0 : min, max)
-  const range = repeatExponential(root, root * 2 ** octaves)
-  const scale = d3.scaleThreshold().domain(domain).range(range)
+	const [min, max] = d3.extent(values, (d) => d.value)
+	const domain = repeatLinear(feature(s).isBar() ? 0 : min, max)
+	const range = repeatExponential(root, root * 2 ** octaves)
+	const scale = d3.scaleThreshold().domain(domain).range(range)
 
-  const pitches = values.map(({ value }) => scale(value))
+	const pitches = values.map(({ value }) => scale(value))
 
-  pitches.forEach((pitch, index) => {
-    note(pitch, index * duration)
-    setTimeout(() => {
-      dispatcher.call('focus', null, index, s)
-    }, (index + 1) * duration * 1000)
-  })
+	pitches.forEach((pitch, index) => {
+		note(pitch, index * duration)
+		setTimeout(() => {
+			dispatcher.call('focus', null, index, s)
+		}, (index + 1) * duration * 1000)
+	})
 }
 
 /**
@@ -145,62 +145,62 @@ const notes = (values, dispatcher, s) => {
  * @returns {function} audio sonification function
  */
 const audio = (s) => {
-  if (s.layer) {
-    return noop
-  }
+	if (s.layer) {
+		return noop
+	}
 
-  return (wrapper) => {
-    const single = data(s)?.length === 1
-    const playable =
+	return (wrapper) => {
+		const single = data(s)?.length === 1
+		const playable =
       (feature(s).isLine() && single) ||
       (feature(s).isBar() && single) ||
       feature(s).isCircular()
-    const disabled = extension(s, 'audio') === null
+		const disabled = extension(s, 'audio') === null
 
-    if (!playable || disabled) {
-      return
-    }
+		if (!playable || disabled) {
+			return
+		}
 
-    let values
+		let values
 
-    if (feature(s).isLine()) {
-      ({ values } = data(s)[0])
-    } else if (feature(s).isCircular()) {
-      values = data(s)
-    } else if (feature(s).isBar()) {
-      values = data(s)[0].map((item) => {
-        return { value: item.data[missingSeries()].value }
-      })
-    }
+		if (feature(s).isLine()) {
+			({ values } = data(s)[0])
+		} else if (feature(s).isCircular()) {
+			values = data(s)
+		} else if (feature(s).isBar()) {
+			values = data(s)[0].map((item) => {
+				return { value: item.data[missingSeries()].value }
+			})
+		}
 
-    if (!values) {
-      return
-    }
+		if (!values) {
+			return
+		}
 
-    const dispatcher = dispatchers.get(wrapper.node())
+		const dispatcher = dispatchers.get(wrapper.node())
 
-    dispatcher.on('play', (values, s) => {
-      notes(values, dispatcher, s)
-    })
+		dispatcher.on('play', (values, s) => {
+			notes(values, dispatcher, s)
+		})
 
-    dispatcher.on('focus', (index) => {
-      wrapper.selectAll(markInteractionSelector(s)).nodes()[index].focus()
+		dispatcher.on('focus', (index) => {
+			wrapper.selectAll(markInteractionSelector(s)).nodes()[index].focus()
 
-      if (index === values.length - 1) {
-        playing = false
-      }
-    })
+			if (index === values.length - 1) {
+				playing = false
+			}
+		})
 
-    const play = wrapper.append('div').classed('play', true).text('▶')
-    let playing = false
+		const play = wrapper.append('div').classed('play', true).text('▶')
+		let playing = false
 
-    play.on('click', () => {
-      if (!playing) {
-        dispatcher.call('play', null, values, s)
-        playing = true
-      }
-    })
-  }
+		play.on('click', () => {
+			if (!playing) {
+				dispatcher.call('play', null, values, s)
+				playing = true
+			}
+		})
+	}
 }
 
 export { audio }

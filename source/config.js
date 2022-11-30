@@ -21,10 +21,10 @@ const RENDER_FREQUENCY = 32
 const customLinkHandler = true
 
 export {
-  WRAPPER_CLASS,
-  GRID,
-  MINIMUM_TICK_COUNT,
-  BAR_WIDTH_MINIMUM,
-  RENDER_FREQUENCY,
-  customLinkHandler
+	WRAPPER_CLASS,
+	GRID,
+	MINIMUM_TICK_COUNT,
+	BAR_WIDTH_MINIMUM,
+	RENDER_FREQUENCY,
+	customLinkHandler
 }

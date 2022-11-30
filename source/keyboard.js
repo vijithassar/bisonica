@@ -12,34 +12,34 @@ const DOWN = 'down'
 const LEFT = 'left'
 
 const series = {
-  match(node, mark, state) {
-    return category.get(mark.nodes()[state.index()]) === category.get(node)
-  },
-  later(node, mark, state) {
-    const index = [...mark.nodes()].indexOf(node)
+	match(node, mark, state) {
+		return category.get(mark.nodes()[state.index()]) === category.get(node)
+	},
+	later(node, mark, state) {
+		const index = [...mark.nodes()].indexOf(node)
 
-    return (
-      category.get(mark.nodes()[index]) !== category.get(mark.nodes()[state.index()]) &&
+		return (
+			category.get(mark.nodes()[index]) !== category.get(mark.nodes()[state.index()]) &&
       index > state.index()
-    )
-  },
-  earlier(node, mark, state) {
-    const index = [...mark.nodes()].indexOf(node)
+		)
+	},
+	earlier(node, mark, state) {
+		const index = [...mark.nodes()].indexOf(node)
 
-    return (
-      category.get(mark.nodes()[index]) !== category.get(mark.nodes()[state.index()]) &&
+		return (
+			category.get(mark.nodes()[index]) !== category.get(mark.nodes()[state.index()]) &&
       index < state.index()
-    )
-  }
+		)
+	}
 }
 
 const x = {
-  position(node) {
-    return Math.round(node.getBoundingClientRect().left)
-  },
-  match(node, mark, state) {
-    return this.position(node) === this.position(mark.nodes()[state.index()])
-  }
+	position(node) {
+		return Math.round(node.getBoundingClientRect().left)
+	},
+	match(node, mark, state) {
+		return this.position(node) === this.position(mark.nodes()[state.index()])
+	}
 }
 
 /**
@@ -49,111 +49,111 @@ const x = {
  * @returns {function} key listener
  */
 const key = (s, direction) => {
-  return (mark, state) => {
-    const dispatcher = dispatchers.get(mark.node())
+	return (mark, state) => {
+		const dispatcher = dispatchers.get(mark.node())
 
-    let min = 0
-    let max = mark.nodes().length - 1
-    const current = () => mark.nodes()[state.index()]
+		let min = 0
+		let max = mark.nodes().length - 1
+		const current = () => mark.nodes()[state.index()]
 
-    const isEmpty = (node) => {
-      if (feature(s).isBar()) {
-        return (
-          isNaN(d3.select(node).datum()[1]) ||
+		const isEmpty = (node) => {
+			if (feature(s).isBar()) {
+				return (
+					isNaN(d3.select(node).datum()[1]) ||
           d3.select(node).datum()[1] - d3.select(node).datum()[0] === 0
-        )
-      }
+				)
+			}
 
-      return false
-    }
+			return false
+		}
 
-    if (state.index() === undefined) {
-      state.init()
-      dispatcher.call('addMarkHighlight', current())
-      dispatcher.call('addLegendHighlight', null, category.get(current()))
+		if (state.index() === undefined) {
+			state.init()
+			dispatcher.call('addMarkHighlight', current())
+			dispatcher.call('addLegendHighlight', null, category.get(current()))
 
-      return
-    }
+			return
+		}
 
-    dispatcher.call('removeMarkHighlight', current())
-    dispatcher.call('removeLegendHighlight', null, current())
+		dispatcher.call('removeMarkHighlight', current())
+		dispatcher.call('removeLegendHighlight', null, current())
 
-    let step
-    let cycle
+		let step
+		let cycle
 
-    if (feature(s).isCartesian()) {
-      if (direction === RIGHT) {
-        step = (node, index) => {
-          return series.match(node, mark, state) && index > state.index() && !isEmpty(node)
-        }
+		if (feature(s).isCartesian()) {
+			if (direction === RIGHT) {
+				step = (node, index) => {
+					return series.match(node, mark, state) && index > state.index() && !isEmpty(node)
+				}
 
-        cycle = (node) => series.match(node, mark, state) && !isEmpty(node)
-      }
+				cycle = (node) => series.match(node, mark, state) && !isEmpty(node)
+			}
 
-      if (direction === LEFT) {
-        const row = [...mark.nodes()].filter(
-          (node) => series.match(node, mark, state) && !isEmpty(node)
-        )
+			if (direction === LEFT) {
+				const row = [...mark.nodes()].filter(
+					(node) => series.match(node, mark, state) && !isEmpty(node)
+				)
 
-        step = (node) => {
-          return node === row[row.indexOf(current()) - 1]
-        }
+				step = (node) => {
+					return node === row[row.indexOf(current()) - 1]
+				}
 
-        cycle = (node) => {
-          return node === row[row.length - 1]
-        }
-      }
+				cycle = (node) => {
+					return node === row[row.length - 1]
+				}
+			}
 
-      if (direction === UP) {
-        step = (node) =>
-          series.later(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
-        cycle = (node) =>
-          series.earlier(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
-      }
+			if (direction === UP) {
+				step = (node) =>
+					series.later(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
+				cycle = (node) =>
+					series.earlier(node, mark, state) && x.match(node, mark, state) && !isEmpty(node)
+			}
 
-      if (direction === DOWN) {
-        const column = [...mark.nodes()].filter((node) => {
-          return x.match(node, mark, state) && !isEmpty(node)
-        })
+			if (direction === DOWN) {
+				const column = [...mark.nodes()].filter((node) => {
+					return x.match(node, mark, state) && !isEmpty(node)
+				})
 
-        step = (node) => node === column[column.indexOf(current()) - 1]
+				step = (node) => node === column[column.indexOf(current()) - 1]
 
-        cycle = (node) => node === column[column.length - 1]
-      }
-    }
+				cycle = (node) => node === column[column.length - 1]
+			}
+		}
 
-    if (feature(s).isCircular()) {
-      if (direction === RIGHT) {
-        step = (node, index) => index === state.index() + 1
-        cycle = (node, index) => index === min
-      }
+		if (feature(s).isCircular()) {
+			if (direction === RIGHT) {
+				step = (node, index) => index === state.index() + 1
+				cycle = (node, index) => index === min
+			}
 
-      if (direction === LEFT) {
-        step = (node, index) => index === state.index() - 1
-        cycle = (node, index) => index === max
-      }
-    }
+			if (direction === LEFT) {
+				step = (node, index) => index === state.index() - 1
+				cycle = (node, index) => index === max
+			}
+		}
 
-    let next
+		let next
 
-    const nextStep = [...mark.nodes()].findIndex(step)
-    const nextCycle = [...mark.nodes()].findIndex(cycle)
+		const nextStep = [...mark.nodes()].findIndex(step)
+		const nextCycle = [...mark.nodes()].findIndex(cycle)
 
-    if (nextStep !== -1) {
-      next = nextStep
-    } else if (nextCycle !== -1) {
-      next = nextCycle
-    }
+		if (nextStep !== -1) {
+			next = nextStep
+		} else if (nextCycle !== -1) {
+			next = nextCycle
+		}
 
-    if (typeof next === 'number') {
-      mark.attr('tabindex', -1)
-      state.index(next)
-      d3.select(current()).attr('tabindex', 0)
-      current().focus()
-      dispatcher.call('addMarkHighlight', current())
-      dispatcher.call('addLegendHighlight', null, category.get(current()))
-    }
-  }
+		if (typeof next === 'number') {
+			mark.attr('tabindex', -1)
+			state.index(next)
+			d3.select(current()).attr('tabindex', 0)
+			current().focus()
+			dispatcher.call('addMarkHighlight', current())
+			dispatcher.call('addLegendHighlight', null, category.get(current()))
+		}
+	}
 }
 
 /**
@@ -161,18 +161,18 @@ const key = (s, direction) => {
  * @returns {object} methods for modifying keyboard position state
  */
 const createState = () => {
-  let index
+	let index
 
-  return {
-    init() {
-      if (index === undefined) {
-        index = 0
-      }
-    },
-    index(n) {
-      return n === undefined ? index : ((index = n), true)
-    }
-  }
+	return {
+		init() {
+			if (index === undefined) {
+				index = 0
+			}
+		},
+		index(n) {
+			return n === undefined ? index : ((index = n), true)
+		}
+	}
 }
 
 /**
@@ -180,9 +180,9 @@ const createState = () => {
  * @returns {object} key event
  */
 const stopScroll = (event) => {
-  if (event.key !== 'Tab') {
-    event.preventDefault()
-  }
+	if (event.key !== 'Tab') {
+		event.preventDefault()
+	}
 }
 
 /**
@@ -191,14 +191,14 @@ const stopScroll = (event) => {
  * @returns {('up'|'right'|'down'|'left')} shorter key name
  */
 const keyMap = (key) => {
-  const map = {
-    ArrowUp: UP,
-    ArrowRight: RIGHT,
-    ArrowDown: DOWN,
-    ArrowLeft: LEFT
-  }
+	const map = {
+		ArrowUp: UP,
+		ArrowRight: RIGHT,
+		ArrowDown: DOWN,
+		ArrowLeft: LEFT
+	}
 
-  return map[key]
+	return map[key]
 }
 
 /**
@@ -207,12 +207,12 @@ const keyMap = (key) => {
  * @returns {function}
  */
 const keyboard = (_s) => {
-  try {
+	try {
 
-    const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText()
-    const s = layerMatch(_s, keyboardTest)
+		const keyboardTest = (s) => !feature(s).isRule() && !feature(s).isText()
+		const s = layerMatch(_s, keyboardTest)
 
-    const exit =
+		const exit =
       !s || // no specification
       !mark(s) || // no mark
       feature(s).isRule() || // rule mark
@@ -220,77 +220,77 @@ const keyboard = (_s) => {
       (!feature(s).isLine() && feature(s).hasPoints()) || // points with no line
       (feature(s).isLine() && !feature(s).hasPoints()) // line with no points
 
-    if (exit) {
-      return noop
-    }
+		if (exit) {
+			return noop
+		}
 
-    const navigation = (wrapper) => {
-      let navigator = {}
+		const navigation = (wrapper) => {
+			let navigator = {}
 
-      navigator[LEFT] = key(s, LEFT)
-      navigator[RIGHT] = key(s, RIGHT)
+			navigator[LEFT] = key(s, LEFT)
+			navigator[RIGHT] = key(s, RIGHT)
 
-      if (feature(s).isMulticolor() && feature(s).isCartesian()) {
-        navigator[UP] = key(s, UP)
-        navigator[DOWN] = key(s, DOWN)
-      }
+			if (feature(s).isMulticolor() && feature(s).isCartesian()) {
+				navigator[UP] = key(s, UP)
+				navigator[DOWN] = key(s, DOWN)
+			}
 
-      const mark = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s))
+			const mark = d3.select(layerNode(s, wrapper.node())).selectAll(markInteractionSelector(s))
 
-      const state = createState()
+			const state = createState()
 
-      const node = mark.node()
+			const node = mark.node()
 
-      if (!(node instanceof Element)) {
-        return
-      }
+			if (!(node instanceof Element)) {
+				return
+			}
 
-      const dispatcher = dispatchers.get(node)
+			const dispatcher = dispatchers.get(node)
 
-      const first = mark.filter((d, i) => i === 0)
+			const first = mark.filter((d, i) => i === 0)
 
-      first.attr('tabindex', 0)
+			first.attr('tabindex', 0)
 
-      // fire navigation initialization behaviors on first focus
+			// fire navigation initialization behaviors on first focus
 
-      mark.on('focus', function (event) {
-        if (state.index() === undefined) {
-          navigator[RIGHT](mark, state)
-        }
+			mark.on('focus', function (event) {
+				if (state.index() === undefined) {
+					navigator[RIGHT](mark, state)
+				}
 
-        dispatcher.call('tooltip', this, event, s)
-      })
+				dispatcher.call('tooltip', this, event, s)
+			})
 
-      mark.on('keydown', (event) => {
-        stopScroll(event)
+			mark.on('keydown', (event) => {
+				stopScroll(event)
 
-        if (event.key === 'Enter') {
-          const node = mark.nodes()[state.index()]
-          const d = d3.select(node).datum()
-          if (feature(s).hasLinks()) {
-            const url = getUrl(s, d)
-            if (url) {
-              dispatcher.call('link', node, url)
-            }
-          }
-        }
-      })
-      mark.on('keyup', (event) => {
-        stopScroll(event)
+				if (event.key === 'Enter') {
+					const node = mark.nodes()[state.index()]
+					const d = d3.select(node).datum()
+					if (feature(s).hasLinks()) {
+						const url = getUrl(s, d)
+						if (url) {
+							dispatcher.call('link', node, url)
+						}
+					}
+				}
+			})
+			mark.on('keyup', (event) => {
+				stopScroll(event)
 
-        const move = navigator[keyMap(event.key)]
+				const move = navigator[keyMap(event.key)]
 
-        if (typeof move === 'function') {
-          move(mark, state)
-          dispatcher.call('tooltip', mark.nodes()[state.index()], event, s)
-        }
-      })
-    }
+				if (typeof move === 'function') {
+					move(mark, state)
+					dispatcher.call('tooltip', mark.nodes()[state.index()], event, s)
+				}
+			})
+		}
 
-    return navigation
-  } catch (error) {
-    throw new Error(`keyboard navigation failure - ${error.message}`)
-  }
+		return navigation
+	} catch (error) {
+		throw new Error(`keyboard navigation failure - ${error.message}`)
+	}
 }
 
 export { keyboard }

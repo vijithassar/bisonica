@@ -29,11 +29,11 @@ const timeParseYYYYMM = d3.utcParse('%Y-%m')
  * @returns {object} date object
  */
 const timeParseIsoRange = (date) => {
-  if (typeof date === 'string') {
-    const fragment = date.split('Z-')[0]
+	if (typeof date === 'string') {
+		const fragment = date.split('Z-')[0]
 
-    return d3.isoParse(`${fragment}Z`)
-  }
+		return d3.isoParse(`${fragment}Z`)
+	}
 }
 
 /**
@@ -58,27 +58,27 @@ const timeParseMilliseconds = (date) => new Date(date)
 const timeParseMillisecondsString = (date) => timeParseMilliseconds(+date)
 
 const _getTimeParser = (date) => {
-  const parsers = [
-    timeParseYYYYMMDD,
-    timeParseIso,
-    timeParseIsoRange,
-    timeParseYYYYMM,
-    timeParseMilliseconds,
-    timeParseMillisecondsString
-  ]
-  const isDate = (parser) => {
-    const parsed = parser(date)
-    const year = !!parsed && parsed.getFullYear()
+	const parsers = [
+		timeParseYYYYMMDD,
+		timeParseIso,
+		timeParseIsoRange,
+		timeParseYYYYMM,
+		timeParseMilliseconds,
+		timeParseMillisecondsString
+	]
+	const isDate = (parser) => {
+		const parsed = parser(date)
+		const year = !!parsed && parsed.getFullYear()
 
-    return typeof year === 'number' && !Number.isNaN(year)
-  }
+		return typeof year === 'number' && !Number.isNaN(year)
+	}
 
-  // use the first date parsing function that works
-  const parser = parsers.find(isDate)
+	// use the first date parsing function that works
+	const parser = parsers.find(isDate)
 
-  const isFunction = typeof parser === 'function'
+	const isFunction = typeof parser === 'function'
 
-  return isFunction ? parser : null
+	return isFunction ? parser : null
 }
 
 /**
@@ -94,11 +94,11 @@ const getTimeParser = memoize(_getTimeParser)
  * @returns {Date} date object
  */
 const _parseTime = (date) => {
-  const parser = getTimeParser(date)
+	const parser = getTimeParser(date)
 
-  if (typeof parser === 'function') {
-    return parser(date)
-  }
+	if (typeof parser === 'function') {
+		return parser(date)
+	}
 }
 const parseTime = memoize(_parseTime)
 
@@ -109,15 +109,15 @@ const findTimePeriod = new RegExp(`(?:${TIME}|${UTC})(\\w+)`, 'gi')
  * @returns {string} camelcased time specifier string
  */
 const camelCaseTimePeriod = (timeSpecifier) => {
-  let matches = [...matchAll(timeSpecifier, findTimePeriod)]
+	let matches = [...matchAll(timeSpecifier, findTimePeriod)]
 
-  if (!matches.length) {
-    return timeSpecifier
-  }
+	if (!matches.length) {
+		return timeSpecifier
+	}
 
-  let [, period] = matches[0]
+	let [, period] = matches[0]
 
-  return timeSpecifier.replace(period, period[0].toUpperCase() + period.slice(1))
+	return timeSpecifier.replace(period, period[0].toUpperCase() + period.slice(1))
 }
 
 /**
@@ -126,9 +126,9 @@ const camelCaseTimePeriod = (timeSpecifier) => {
  * @returns {string} d3 time interval method name
  */
 const timeMethod = (specifier) => {
-  const prefix = specifier.startsWith(UTC) ? '' : TIME
+	const prefix = specifier.startsWith(UTC) ? '' : TIME
 
-  return camelCaseTimePeriod(`${prefix}${specifier}`)
+	return camelCaseTimePeriod(`${prefix}${specifier}`)
 }
 
 /**
@@ -137,25 +137,25 @@ const timeMethod = (specifier) => {
  * @param {string} channel temporal channel
  */
 const timePeriod = (s, channel) => {
-  const unit = s.encoding[channel].timeUnit || 'utcday'
-  const utc = unit.startsWith(UTC)
-  const weekly = unit.endsWith('week')
-  const prefix = utc ? UTC : TIME
-  let period
+	const unit = s.encoding[channel].timeUnit || 'utcday'
+	const utc = unit.startsWith(UTC)
+	const weekly = unit.endsWith('week')
+	const prefix = utc ? UTC : TIME
+	let period
 
-  if (!utc) {
-    period = unit
-  } else {
-    if (weekly) {
-      const firstDate = parseTime(d3.min(s.data.values, encodingValue(s, channel)))
+	if (!utc) {
+		period = unit
+	} else {
+		if (weekly) {
+			const firstDate = parseTime(d3.min(s.data.values, encodingValue(s, channel)))
 
-      period = d3.utcFormat('%A')(firstDate)
-    } else {
-      period = unit.slice(UTC.length)
-    }
-  }
+			period = d3.utcFormat('%A')(firstDate)
+		} else {
+			period = unit.slice(UTC.length)
+		}
+	}
 
-  return camelCaseTimePeriod(`${prefix}${period}`)
+	return camelCaseTimePeriod(`${prefix}${period}`)
 }
 
 /**
@@ -172,13 +172,13 @@ const defaultTimeFormatter = (date) => date.toUTCString()
  * @returns {function} date string formatting function
  */
 const _getTimeFormatter = (s, channel) => {
-  const format = s.encoding?.[channel]?.axis?.format
+	const format = s.encoding?.[channel]?.axis?.format
 
-  if (format) {
-    return d3.utcFormat(format)
-  }
+	if (format) {
+		return d3.utcFormat(format)
+	}
 
-  return defaultTimeFormatter
+	return defaultTimeFormatter
 }
 const getTimeFormatter = memoize(_getTimeFormatter)
 
@@ -190,12 +190,12 @@ const getTimeFormatter = memoize(_getTimeFormatter)
  * @returns {object} chart dimensions with bar width offset
  */
 const temporalBarDimensions = (s, dimensions) => {
-  const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0
-  const channel = encodingChannelCovariateCartesian(s)
-  return {
-    ...dimensions,
-    [channel]: dimensions[channel] - offset
-  }
+	const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0
+	const channel = encodingChannelCovariateCartesian(s)
+	return {
+		...dimensions,
+		[channel]: dimensions[channel] - offset
+	}
 }
 
 export { getTimeParser, parseTime, timePeriod, getTimeFormatter, timeMethod, temporalBarDimensions }
