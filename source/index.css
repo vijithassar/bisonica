@@ -187,6 +187,10 @@ table {
   font-family: monospace;
 }
 
+table thead {
+  font-weight: bold;
+}
+
 table td {
   padding: 0 0.5rem;
 }

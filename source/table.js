@@ -27,6 +27,7 @@ const header = s => {
 	return selection => {
 		const header = selection
 			.select('table')
+			.append('thead')
 			.append('tr')
 		header
 			.selectAll('td')
