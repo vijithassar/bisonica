@@ -340,7 +340,7 @@ const layerCall = (s, fn) => {
 				selection.call(fn(layer))
 			} catch (error) {
 				error.message = `function ${fn.name} does not return a function for layer ${index} - ${error.message}`
-				throw new Error(error)
+				throw error
 			}
 		})
 	}
