@@ -1,8 +1,8 @@
 import { extension } from './extensions.js'
 import { noop, values } from './helpers.js'
 import { encodingField } from './encodings.js'
-import { markData } from './marks.js'
 import { layerPrimary } from './views.js'
+import { markData } from './marks.js'
 
 /**
  * render table header
@@ -48,25 +48,29 @@ const rows = s => {
 }
 
 /**
+ * compile options to pass to an external table renderer
+ * @param {object} s Vega Lite specification
+ * @returns {object} options for table rendering
+ */
+const tableOptions = s => {
+	return { data: { marks: markData(layerPrimary(s)) } }
+}
+
+/**
  * render table
  * @param {object} _s Vega Lite specification
  * @returns {function(object)} table renderer
  */
-const table = _s => {
+const table = (_s, options) => {
 	const s = layerPrimary(_s)
 	if (extension(s, 'table') === null) {
 		return noop
 	}
 	return selection => {
-		const config = extension(s, 'table')?.renderer
-		if (config?.renderer) {
-			config.renderer(s, selection, { data: { raw: values(s), marks: markData(s) } })
-			return
-		}
 		const table = selection.append('div').classed('table', true)
 		table.call(header(s))
 		table.call(rows(s))
 	}
 }
 
-export { table }
+export { table, tableOptions }

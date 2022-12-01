@@ -10,7 +10,7 @@ import { margin, position } from './position.js'
 import { marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
-import { table } from './table.js'
+import { table, tableOptions } from './table.js'
 
 /**
  * generate chart rendering function based on
@@ -21,6 +21,7 @@ import { table } from './table.js'
  */
 const chart = (s, panelDimensions) => {
 	let tooltipHandler
+	let tableRenderer = table
 
 	const renderer = selection => {
 		selection.html('')
@@ -37,7 +38,7 @@ const chart = (s, panelDimensions) => {
 
 		// render legend
 		chartNode.select('.legend').call(legend(s))
-		chartNode.call(table(s))
+		chartNode.call(tableRenderer(s, tableOptions(s)))
 
 		const legendHeight = chartNode.select('.legend').node().getBoundingClientRect().height
 
@@ -67,6 +68,18 @@ const chart = (s, panelDimensions) => {
 				.call(keyboard(s))
 				.call(interactions(s))
 			selection.call(testAttributes)
+		}
+	}
+
+	renderer.table = t => {
+		if (t === undefined) {
+			return tableRenderer
+		} else {
+			if (typeof t === 'function') {
+				tableRenderer = t
+			}
+
+			return renderer
 		}
 	}
 
