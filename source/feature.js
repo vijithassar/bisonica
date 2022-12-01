@@ -38,7 +38,7 @@ const _feature = s => {
 		hasColor: s => s.encoding?.color,
 		hasLinks: s => s.encoding?.href || s.mark?.href,
 		hasData: s => s.data?.values.length,
-		hasLegend: s => s.encoding?.color?.legend !== null,
+		hasLegend: s => s.encoding?.color && s.encoding?.color?.legend !== null,
 		hasLegendTitle: s => isPresent(s.encoding?.color?.legend?.title),
 		hasTooltip: s => s.mark?.tooltip || s.encoding?.tooltip,
 		hasTransforms: s => Array.isArray(s.transform),

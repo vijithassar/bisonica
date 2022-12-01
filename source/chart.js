@@ -11,6 +11,7 @@ import { marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
+import { feature } from './feature.js'
 
 /**
  * generate chart rendering function based on
@@ -37,10 +38,12 @@ const chart = (s, panelDimensions) => {
 		initializeInteractions(chartNode.node(), s)
 
 		// render legend
-		chartNode.select('.legend').call(legend(s))
 		chartNode.call(tableRenderer(s, tableOptions(s)))
 
-		const legendHeight = chartNode.select('.legend').node().getBoundingClientRect().height
+		if (feature(s).hasLegend()) {
+			chartNode.select('.legend').call(legend(s))
+		}
+		const legendHeight = chartNode.select('.legend').node()?.getBoundingClientRect().height || 0
 
 		const svg = chartNode.select('svg')
 		const imageHeight = panelDimensions.y - legendHeight

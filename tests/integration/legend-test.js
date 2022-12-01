@@ -23,7 +23,7 @@ module('integration > legend', function () {
 		spec.encoding.color.legend = null
 		const element = render(spec)
 
-		assert.equal(element.querySelector(testSelector('legend')).textContent, '')
+		assert.equal(element.querySelector(testSelector('legend')), null)
 	})
 
 	test('renders a legend with all categories', assert => {

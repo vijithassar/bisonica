@@ -17,7 +17,9 @@ const init = (s, dimensions) => {
 
 		const graphic = chartNode.append('div').classed('graphic', true)
 
-		chartNode.append('div').classed('legend', true)
+		if (feature(s).hasLegend()) {
+			chartNode.append('div').classed('legend', true)
+		}
 
 		const svg = graphic.append('svg')
 
