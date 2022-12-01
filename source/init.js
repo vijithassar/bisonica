@@ -21,6 +21,10 @@ const init = (s, dimensions) => {
 			chartNode.append('div').classed('legend', true)
 		}
 
+		if (feature(s).hasTable()) {
+			chartNode.append('div').classed('table', true)
+		}
+
 		const svg = graphic.append('svg')
 
 		svg.attr('tabindex', 0)
