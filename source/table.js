@@ -5,6 +5,17 @@ import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
 
 /**
+ *
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} table setup function
+ */
+const setup = s => {
+	return selection => {
+		selection.append('table')
+	}
+}
+
+/**
  * render table header
  * @param {object} s Vega Lite specification
  * @returns {function(object)} header renderer
@@ -13,7 +24,7 @@ const header = s => {
 	const columns = Object.keys(s.encoding).map(channel => encodingField(s, channel))
 	return selection => {
 		const header = selection
-			.append('table')
+			.select('table')
 			.append('tr')
 		header
 			.selectAll('td')
@@ -70,6 +81,7 @@ const table = (_s, options) => {
 	}
 	return selection => {
 		const table = selection.append('div').classed('table', true)
+		table.call(setup(s))
 		table.call(header(s))
 		table.call(rows(s))
 	}
