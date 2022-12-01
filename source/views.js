@@ -327,6 +327,7 @@ const layerTestRecursive = (s, test) => {
 /**
  * run a function with selection.call() across multiple layers
  * @param {object} s Vega Lite specification
+ * @param {function} fn function
  * @returns {function(object)}
  */
 const layerCall = (s, fn) => {
@@ -339,8 +340,8 @@ const layerCall = (s, fn) => {
 			try {
 				selection.call(fn(layer))
 			} catch (error) {
-				error.message = `function ${fn.name} does not return a function for layer ${index}`
-				throw new Error(error)
+				error.message = `function ${fn.name} does not return a function for layer ${index} - ${error.message}`
+				throw error
 			}
 		})
 	}
