@@ -10,6 +10,7 @@ import { margin, position } from './position.js'
 import { marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
+import { table } from './table.js'
 
 /**
  * generate chart rendering function based on
@@ -36,6 +37,7 @@ const chart = (s, panelDimensions) => {
 
 		// render legend
 		chartNode.select('.legend').call(legend(s))
+		chartNode.call(table(s))
 
 		const legendHeight = chartNode.select('.legend').node().getBoundingClientRect().height
 
