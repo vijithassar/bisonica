@@ -686,4 +686,4 @@ const _marks = (s, dimensions) => {
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, radius, barWidth, layoutDirection, markSelector, markInteractionSelector, category }
+export { marks, radius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }

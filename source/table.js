@@ -1,5 +1,6 @@
 import { extension } from './extensions.js'
-import { noop } from './helpers.js'
+import { noop, values } from './helpers.js'
+import { markData } from './marks.js'
 
 /**
  * render table header
@@ -33,6 +34,11 @@ const table = s => {
 		return noop
 	}
 	return selection => {
+		const config = extension(s, 'table')?.renderer
+		if (config?.renderer) {
+			config.renderer(s, selection, { data: { raw: values(s), marks: markData(s) } })
+			return
+		}
 		const table = selection.append('div').classed('table', true)
 		table.call(header(s))
 		table.call(rows(s))
