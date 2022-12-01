@@ -327,6 +327,7 @@ const layerTestRecursive = (s, test) => {
 /**
  * run a function with selection.call() across multiple layers
  * @param {object} s Vega Lite specification
+ * @param {function} fn function
  * @returns {function(object)}
  */
 const layerCall = (s, fn) => {
