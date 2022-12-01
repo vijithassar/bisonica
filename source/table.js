@@ -20,6 +20,7 @@ const header = s => {
 			.data(columns)
 			.enter()
 			.append('td')
+			.attr('scope', 'col')
 			.text(d => d)
 	}
 }
@@ -38,6 +39,7 @@ const rows = s => {
 			.data(values(s))
 			.enter()
 			.append('tr')
+			.attr('scope', 'row')
 			.selectAll('td')
 			.data(d => Object.values(d))
 			.enter()
