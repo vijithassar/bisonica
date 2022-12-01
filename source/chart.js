@@ -37,9 +37,9 @@ const chart = (s, panelDimensions) => {
 
 		initializeInteractions(chartNode.node(), s)
 
-		// render legend
 		chartNode.call(tableRenderer(s, tableOptions(s)))
 
+		// render legend
 		if (feature(s).hasLegend()) {
 			chartNode.select('.legend').call(legend(s))
 		}
