@@ -4,7 +4,7 @@
  * @param {string} key usermeta key
  */
 const extension = (s, key) => {
-	if (s.usermeta?.[key]) {
+	if (s.usermeta?.[key] !== undefined) {
 		return s.usermeta[key]
 	}
 }
