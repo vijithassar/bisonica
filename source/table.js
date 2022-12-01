@@ -5,6 +5,19 @@ import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
 
 /**
+ *
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} table setup function
+ */
+const setup = s => {
+	return selection => {
+		selection.append('table')
+			.append('caption')
+			.text(s.title.text)
+	}
+}
+
+/**
  * render table header
  * @param {object} s Vega Lite specification
  * @returns {function(object)} header renderer
@@ -13,13 +26,14 @@ const header = s => {
 	const columns = Object.keys(s.encoding).map(channel => encodingField(s, channel))
 	return selection => {
 		const header = selection
-			.append('table')
+			.select('table')
 			.append('tr')
 		header
 			.selectAll('td')
 			.data(columns)
 			.enter()
 			.append('td')
+			.attr('scope', 'col')
 			.text(d => d)
 	}
 }
@@ -38,6 +52,7 @@ const rows = s => {
 			.data(values(s))
 			.enter()
 			.append('tr')
+			.attr('scope', 'row')
 			.selectAll('td')
 			.data(d => Object.values(d))
 			.enter()
@@ -67,9 +82,13 @@ const table = (_s, options) => {
 		return noop
 	}
 	return selection => {
-		const table = selection.append('div').classed('table', true)
-		table.call(header(s))
-		table.call(rows(s))
+		const table = selection
+			.append('div')
+			.classed('table', true)
+		table
+			.call(setup(_s))
+			.call(header(s))
+			.call(rows(s))
 	}
 }
 
