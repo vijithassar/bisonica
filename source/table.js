@@ -3,6 +3,7 @@ import { noop, values } from './helpers.js'
 import { encodingField } from './encodings.js'
 import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
+import { parseScales } from './scales.js'
 
 /**
  *
@@ -36,10 +37,9 @@ const fields = s => channels(s).map(channel => encodingField(s, channel))
  * @param {object} s datum
  * @returns {function(object)} function to convert a datum into key/value pairs
  */
-const columnValues = s => {
+const columnEntries = s => {
 	return d => Object.entries(d)
 		.sort((a, b) => fields(s).indexOf(a[0]) - fields(s).indexOf(b[0]))
-		.map(item => item[1])
 }
 
 /**
@@ -70,7 +70,7 @@ const header = s => {
  */
 const rows = s => {
 	return selection => {
-		selection
+		const cell = selection
 			.select('table')
 			.append('tbody')
 			.selectAll('tr')
@@ -79,11 +79,16 @@ const rows = s => {
 			.append('tr')
 			.attr('scope', 'row')
 			.selectAll('td')
-			.data(d => columnValues(s)(d))
+			.data(d => columnEntries(s)(d))
 			.enter()
 			.append('td')
-			.text(d => d)
-			.attr('class', d => typeof d === 'number' ? 'quantitative' : null)
+			.text(([_, value]) => value)
+			.attr('class', ([_, value]) => typeof value === 'number' ? 'quantitative' : null)
+		if (s.encoding.color?.field) {
+			cell.filter(([key]) => key === encodingField(s, 'color'))
+				.append('div')
+				.style('background-color', ([_, value]) => parseScales(s).color(value))
+		}
 	}
 }
 
