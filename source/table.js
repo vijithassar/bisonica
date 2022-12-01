@@ -18,12 +18,36 @@ const setup = s => {
 }
 
 /**
+ * column headers
+ * @param {object} s Vega Lite specification
+ * @returns {string[]} array of column names
+ */
+const channels = s => Object.keys(s.encoding)
+
+/**
+ * column encoding fields
+ * @param {object} s Vega Lite specification
+ * @returns {string[]} array of column encoding fields
+ */
+const fields = s => channels(s).map(channel => encodingField(s, channel))
+
+/**
+ * create an ordered datum for data binding
+ * @param {object} s datum
+ * @returns {function(object)} function to convert a datum into key/value pairs
+ */
+const columnValues = s => {
+	return d => Object.entries(d)
+		.sort((a, b) => fields(s).indexOf(a[0]) - fields(s).indexOf(b[0]))
+		.map(item => item[1])
+}
+
+/**
  * render table header
  * @param {object} s Vega Lite specification
  * @returns {function(object)} header renderer
  */
 const header = s => {
-	const columns = Object.keys(s.encoding).map(channel => encodingField(s, channel))
 	return selection => {
 		const header = selection
 			.select('table')
@@ -31,7 +55,7 @@ const header = s => {
 			.append('tr')
 		header
 			.selectAll('td')
-			.data(columns)
+			.data(fields(s))
 			.enter()
 			.append('td')
 			.attr('scope', 'col')
@@ -55,7 +79,7 @@ const rows = s => {
 			.append('tr')
 			.attr('scope', 'row')
 			.selectAll('td')
-			.data(d => Object.values(d))
+			.data(d => columnValues(s)(d))
 			.enter()
 			.append('td')
 			.text(d => d)
