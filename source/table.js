@@ -12,7 +12,8 @@ import { parseScales } from './scales.js'
  */
 const setup = s => {
 	return selection => {
-		selection.append('table')
+		selection
+			.append('table')
 			.append('caption')
 			.text(s.title.text)
 	}
@@ -112,10 +113,7 @@ const table = (_s, options) => {
 		return noop
 	}
 	return selection => {
-		const table = selection
-			.append('div')
-			.classed('table', true)
-		table
+		selection
 			.call(setup(_s))
 			.call(header(s))
 			.call(rows(s))
