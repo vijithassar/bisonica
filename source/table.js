@@ -82,10 +82,13 @@ const table = (_s, options) => {
 		return noop
 	}
 	return selection => {
-		const table = selection.append('div').classed('table', true)
-		table.call(setup(_s))
-		table.call(header(s))
-		table.call(rows(s))
+		const table = selection
+			.append('div')
+			.classed('table', true)
+		table
+			.call(setup(_s))
+			.call(header(s))
+			.call(rows(s))
 	}
 }
 
