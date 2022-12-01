@@ -42,6 +42,7 @@ const rows = s => {
 			.enter()
 			.append('td')
 			.text(d => d)
+			.attr('class', d => typeof d === 'number' ? 'quantitative' : null)
 	}
 }
 

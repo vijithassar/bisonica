@@ -182,3 +182,15 @@ path.mark {
 .play:hover {
   color: var(--highlight);
 }
+
+table {
+  font-family: monospace;
+}
+
+table td {
+  padding: 0 0.5rem;
+}
+
+table td.quantitative {
+  text-align: right;
+}
