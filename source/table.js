@@ -2,6 +2,7 @@ import { extension } from './extensions.js'
 import { noop, values } from './helpers.js'
 import { encodingField } from './encodings.js'
 import { markData } from './marks.js'
+import { layerPrimary } from './views.js'
 
 /**
  * render table header
@@ -48,10 +49,11 @@ const rows = s => {
 
 /**
  * render table
- * @param {object} s Vega Lite specification
+ * @param {object} _s Vega Lite specification
  * @returns {function(object)} table renderer
  */
-const table = s => {
+const table = _s => {
+	const s = layerPrimary(_s)
 	if (extension(s, 'table') === null) {
 		return noop
 	}
