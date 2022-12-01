@@ -1,5 +1,6 @@
 import { extension } from './extensions.js'
 import { noop, values } from './helpers.js'
+import { encodingField } from './encodings.js'
 import { markData } from './marks.js'
 
 /**
@@ -8,8 +9,17 @@ import { markData } from './marks.js'
  * @returns {function(object)} header renderer
  */
 const header = s => {
+	const columns = Object.keys(s.encoding).map(channel => encodingField(s, channel))
 	return selection => {
-		console.log(s)
+		const header = selection
+			.append('table')
+			.append('tr')
+		header
+			.selectAll('td')
+			.data(columns)
+			.enter()
+			.append('td')
+			.text(d => d)
 	}
 }
 
@@ -20,7 +30,18 @@ const header = s => {
  */
 const rows = s => {
 	return selection => {
-		console.log(s)
+		selection
+			.select('table')
+			.append('tbody')
+			.selectAll('tr')
+			.data(values(s))
+			.enter()
+			.append('tr')
+			.selectAll('td')
+			.data(d => Object.values(d))
+			.enter()
+			.append('td')
+			.text(d => d)
 	}
 }
 
