@@ -12,6 +12,8 @@ import { markData } from './marks.js'
 const setup = s => {
 	return selection => {
 		selection.append('table')
+			.append('caption')
+			.text(s.title.text)
 	}
 }
 
@@ -81,7 +83,7 @@ const table = (_s, options) => {
 	}
 	return selection => {
 		const table = selection.append('div').classed('table', true)
-		table.call(setup(s))
+		table.call(setup(_s))
 		table.call(header(s))
 		table.call(rows(s))
 	}
