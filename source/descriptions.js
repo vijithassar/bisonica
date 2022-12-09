@@ -181,6 +181,22 @@ const chartDescription = s => {
 }
 
 /**
+ * generate a string describing the keyboard navigation
+ * @param {object} s Vega Lite specification
+ * @returns {string} instructions
+ */
+const instructions = s => {
+	if (extension(s, 'description')?.instructions === false) {
+		return ''
+	}
+	return [
+		'Use the arrow keys to navigate',
+		feature(s).hasLinks() ? ' and press the Enter key to open links' : '',
+		'.'
+	].join('')
+}
+
+/**
  * chart name which includes title and subtitle
  * @param {object} s Vega Lite specification
  * @returns {string} chart title
@@ -192,7 +208,7 @@ const chartName = s => {
 	if (s.description) {
 		return s.description
 	} else {
-		return [s.title.text, s.title.subtitle].filter(Boolean).join(' - ')
+		return `${[s.title.text, s.title.subtitle].filter(Boolean).join(' - ')}. ${instructions(s)}`
 	}
 }
 
