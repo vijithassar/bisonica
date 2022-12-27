@@ -1,7 +1,6 @@
 import * as d3 from 'd3'
 
 import { category, markInteractionSelector, markSelector } from './marks.js'
-import { customLinkHandler } from './config.js'
 import { feature } from './feature.js'
 import { getUrl, key, noop } from './helpers.js'
 import { layerCall, layerNode } from './views.js'
@@ -86,23 +85,10 @@ const markMouseoverSelector = s => {
 
 /**
  * dispatch a CustomEvent with a URL from a node
- * @param {object} node node
  * @param {string} url url
  */
-const handleUrl = (url, node) => {
-	if (typeof url !== 'string') {
-		console.error(`cannot link to url of type ${typeof url}`)
-	}
-
-	if (typeof customLinkHandler === 'function') {
-		customLinkHandler(url, node)
-	} else if (!customLinkHandler) {
-		window.open(url)
-	}
-
-	const event = new CustomEvent('link', { bubbles: true, detail: { url } })
-
-	node.dispatchEvent(event)
+const handleUrl = url => {
+	window.open(url)
 }
 
 /**
@@ -192,7 +178,7 @@ const _interactions = s => {
 				// pivot links
 				dispatcher.on('link', function (url) {
 					if (url) {
-						handleUrl(url, this)
+						handleUrl(url)
 					}
 				})
 				click.on('click', function () {
