@@ -137,14 +137,6 @@ path.mark {
   text-anchor: middle;
 }
 
-.axes .x.alternate-ticks .tick {
-  opacity: 0;
-}
-
-.axes .y.alternate-ticks .tick {
-  opacity: 0;
-}
-
 .axes .x .axis .tick line {
   stroke: var(--medium-grey);
 }
@@ -155,14 +147,6 @@ path.mark {
 
 .axes:not(.angled) .x .tick text {
   text-anchor: middle;
-}
-
-.axes .x.alternate-ticks .tick:nth-of-type(4n) {
-  opacity: 1;
-}
-
-.axes .y.alternate-ticks .tick:nth-of-type(odd) {
-  opacity: 1;
 }
 
 .axes .axis.nominal.angled .tick text {
