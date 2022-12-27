@@ -3,7 +3,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > text', function () {
+module('integration > text', function() {
 	test('renders text marks', assert => {
 		const spec = {
 			$schema: 'https://vega.github.io/schema/vega-lite/v4.json',

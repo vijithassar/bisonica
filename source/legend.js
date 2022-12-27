@@ -104,7 +104,7 @@ const color = _s => {
 			const addLegendHighlight = group => {
 				selection
 					.selectAll('.pair')
-					.filter(function () {
+					.filter(function() {
 						return key(d3.select(this).text()) === key(group)
 					})
 					.attr('data-highlight', true)

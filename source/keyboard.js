@@ -252,7 +252,7 @@ const keyboard = _s => {
 
 			// fire navigation initialization behaviors on first focus
 
-			mark.on('focus', function (event) {
+			mark.on('focus', function(event) {
 				if (state.index() === undefined) {
 					navigator[RIGHT](mark, state)
 				}

@@ -3,7 +3,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > stacked area', function () {
+module('integration > stacked area', function() {
 	test('renders a stacked area chart', assert => {
 		const spec = specificationFixture('stackedArea')
 		const element = render(spec)

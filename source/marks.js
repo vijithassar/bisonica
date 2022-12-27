@@ -249,7 +249,7 @@ const barMarks = (s, dimensions) => {
 			.data(markData(s))
 			.enter()
 			.append('g')
-			.each(function (d) {
+			.each(function(d) {
 				category.set(this, d.key)
 				d.forEach(item => {
 					category.set(item, d.key)
@@ -373,7 +373,7 @@ const pointMarks = (s, dimensions) => {
 			.attr('aria-roledescription', 'data point')
 
 		points
-			.each(function (d) {
+			.each(function(d) {
 				const categoryValue = encodingValue(s, 'color')(d)
 				if (categoryValue) {
 					category.set(this, categoryValue)
@@ -505,7 +505,7 @@ const circularMarks = (s, dimensions) => {
 			.append('path')
 			.attr('role', 'region')
 			.attr('aria-roledescription', 'data point')
-			.each(function (d) {
+			.each(function(d) {
 				category.set(this, d.data.key)
 			})
 			.attr('class', 'mark arc')
@@ -586,7 +586,7 @@ const ruleMarks = (s, dimensions) => {
 
 		mark
 			.call(rule[ruleDirection(s)])
-			.each(function (d) {
+			.each(function(d) {
 				category.set(this, encodingValue(s, 'color')(d))
 			})
 			.style('stroke', encoders.color)

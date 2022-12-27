@@ -5,7 +5,7 @@ const { module, test } = qunit
 
 const pointSelector = testSelector('marks-mark-point')
 
-module('integration > line', function () {
+module('integration > line', function() {
 	test('renders a line chart', assert => {
 		const spec = specificationFixture('line')
 		const element = render(spec)

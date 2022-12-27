@@ -4,7 +4,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > sort', function () {
+module('integration > sort', function() {
 	test('renders marks in ascending order', assert => {
 		const spec = specificationFixture('categoricalBar')
 

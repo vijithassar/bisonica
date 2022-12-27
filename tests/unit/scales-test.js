@@ -30,7 +30,7 @@ module('unit > scales', hooks => {
 	}
 
 	Object.entries(scaleTypes).forEach(([channel, type]) => {
-		test(`${type} scales`, function (assert) {
+		test(`${type} scales`, function(assert) {
 			const scale = scales[channel]
 
 			assert.equal(typeof scale, 'function', `${type} scale for ${channel} is a function`)
@@ -75,7 +75,7 @@ module('unit > scales', hooks => {
 		assert.ok(Object.keys(core).length < Object.keys(extended).length, 'creates additional scales')
 		Object.entries(extended)
 			.filter(([key]) => typeof core[key] === 'undefined')
-			.forEach(function ([name, scale]) {
+			.forEach(function([name, scale]) {
 				assert.equal(typeof scale, 'function', `${name} scale is a function`)
 			})
 	})

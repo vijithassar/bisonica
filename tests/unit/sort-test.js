@@ -49,7 +49,7 @@ const dates = s => {
 const dimensions = { x: 500, y: 500 }
 
 module('unit > sort', () => {
-	test('natural sort for quantitative scales', function (assert) {
+	test('natural sort for quantitative scales', function(assert) {
 		const asc = specification()
 
 		asc.mark.type = 'point'
@@ -66,7 +66,7 @@ module('unit > sort', () => {
 
 		assert.deepEqual(ascy.domain(), [...descy.domain()].reverse())
 	})
-	test('natural sort for time scales', function (assert) {
+	test('natural sort for time scales', function(assert) {
 		const asc = dates(specification())
 
 		asc.mark.type = 'point'
@@ -84,7 +84,7 @@ module('unit > sort', () => {
 		assert.deepEqual(ascx.domain(), [...descx.domain()].reverse())
 	})
 
-	test('sort by encoding', function (assert) {
+	test('sort by encoding', function(assert) {
 		const none = specification()
 		const asc = specification()
 		const desc = specification()
@@ -110,7 +110,7 @@ module('unit > sort', () => {
 		assert.deepEqual(descx.domain(), [...labels].reverse())
 	})
 
-	test('sort by encoding with string shorthand', function (assert) {
+	test('sort by encoding with string shorthand', function(assert) {
 		const none = specification()
 		const asc = specification()
 		const desc = specification()
@@ -136,7 +136,7 @@ module('unit > sort', () => {
 		assert.deepEqual(descx.domain(), [...labels].reverse())
 	})
 
-	test('sort by field', function (assert) {
+	test('sort by field', function(assert) {
 		const none = specification()
 		const asc = specification()
 		const desc = specification()
@@ -160,7 +160,7 @@ module('unit > sort', () => {
 		assert.deepEqual(ascx.domain(), labels)
 		assert.deepEqual(descx.domain(), [...labels].reverse())
 	})
-	test('array specifies sorting', function (assert) {
+	test('array specifies sorting', function(assert) {
 		const s = specification()
 
 		const sort = ['a', 'c', 'b', 'd', 'f', 'i', 'h']
@@ -171,7 +171,7 @@ module('unit > sort', () => {
 
 		assert.deepEqual(x.domain().slice(0, sort.length), sort)
 	})
-	test('remaining items are appended to sort after specified values', function (assert) {
+	test('remaining items are appended to sort after specified values', function(assert) {
 		const s = specification()
 
 		const partial = ['a', 'c']
@@ -188,7 +188,7 @@ module('unit > sort', () => {
 
 		assert.deepEqual(x.domain(), sort)
 	})
-	test('null disables sorting', function (assert) {
+	test('null disables sorting', function(assert) {
 		const s = specification()
 
 		s.encoding.x.sort = null
@@ -199,7 +199,7 @@ module('unit > sort', () => {
 
 		assert.deepEqual(x.domain(), unsorted)
 	})
-	test('resolves duplicates with min for most charts', function (assert) {
+	test('resolves duplicates with min for most charts', function(assert) {
 		const s = specification()
 
 		s.mark.type = 'line'
@@ -210,7 +210,7 @@ module('unit > sort', () => {
 
 		assert.deepEqual(x.domain(), ['a', 'g', 'c', 'd', 'f', 'b', 'h', 'e', 'i'])
 	})
-	test('resolves duplicates with sum for bar charts', function (assert) {
+	test('resolves duplicates with sum for bar charts', function(assert) {
 		const s = specification()
 
 		s.data.values.push(extra)

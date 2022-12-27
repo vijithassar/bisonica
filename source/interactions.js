@@ -117,7 +117,7 @@ const _interactions = s => {
         feature(s).isText() ||
         (!feature(s).isLine() && feature(s).hasPoints())
 			) {
-				dispatcher.on('addMarkHighlight', function () {
+				dispatcher.on('addMarkHighlight', function() {
 					// this use of selection.raise() sometimes steals focus
 					// from the active node, so make sure it is reset
 					const active = document.activeElement
@@ -141,47 +141,47 @@ const _interactions = s => {
 				})
 
 				// highlighting
-				dispatcher.on('removeMarkHighlight', function () {
+				dispatcher.on('removeMarkHighlight', function() {
 					const { target } = interactionTargets(s, wrapper, this)
 
 					d3.select(target).attr('data-highlight', null)
 				})
 				mouseover
-					.on('mouseover.highlight', function () {
+					.on('mouseover.highlight', function() {
 						dispatcher.call('addMarkHighlight', this)
 						dispatcher.call('addLegendHighlight', null, category.get(this))
 					})
-					.on('mouseout.highlight', function () {
+					.on('mouseout.highlight', function() {
 						dispatcher.call('removeMarkHighlight', this)
 						dispatcher.call('removeLegendHighlight', this)
 					})
 
 				// tooltips
-				dispatcher.on('tooltip', function (event, s) {
+				dispatcher.on('tooltip', function(event, s) {
 					if (s) {
 						tooltipEvent(s, this, event)
 					}
 				})
 
 				// focus
-				dispatcher.on('focus', function (event, s) {
+				dispatcher.on('focus', function(event, s) {
 					dispatcher.call('tooltip', null, event, s)
 					dispatcher.call('addMarkHighlight', null)
 				})
 
-				tooltip.on('mouseover.tooltip', function (event) {
+				tooltip.on('mouseover.tooltip', function(event) {
 					if (feature(s).hasTooltip()) {
 						dispatcher.call('tooltip', this, event, s)
 					}
 				})
 
 				// pivot links
-				dispatcher.on('link', function (url) {
+				dispatcher.on('link', function(url) {
 					if (url) {
 						handleUrl(url)
 					}
 				})
-				click.on('click', function () {
+				click.on('click', function() {
 					if (feature(s).hasLinks()) {
 						const url = getUrl(s, d3.select(this).datum() || null)
 						dispatcher.call('link', this, url)
@@ -197,22 +197,22 @@ const _interactions = s => {
 			const chart = d3.select(charts.get(wrapper.node()))
 			const legendMouseover = chart.select('.legend').selectAll(legendMouseoverSelector)
 
-			legendMouseover.on('mouseover', function () {
+			legendMouseover.on('mouseover', function() {
 				const legendCategory = key(d3.select(this).select('.label').text())
 
 				dispatcher.call('addLegendHighlight', null, legendCategory)
 				wrapper
 					.selectAll(markMouseoverSelector(s))
-					.filter(function () {
+					.filter(function() {
 						return legendCategory === key(category.get(this))
 					})
-					.each(function () {
+					.each(function() {
 						dispatcher.call('addMarkHighlight', this)
 					})
 			})
-			legendMouseover.on('mouseout', function () {
+			legendMouseover.on('mouseout', function() {
 				dispatcher.call('removeLegendHighlight')
-				wrapper.selectAll(markMouseoverSelector(s)).each(function () {
+				wrapper.selectAll(markMouseoverSelector(s)).each(function() {
 					dispatcher.call('removeMarkHighlight', this)
 				})
 			})
