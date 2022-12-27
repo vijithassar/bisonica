@@ -154,24 +154,6 @@ const isDiscrete = (s, channel) => {
 }
 
 /**
- * determine whether DOM nodes overlap
- * @param {array} nodes DOM nodes
- * @returns {boolean} overlap
- */
-const overlap = nodes => {
-	return [...nodes].some((node, index) => {
-		if (index === nodes.length - 1) {
-			return false
-		}
-		const a = node.getBoundingClientRect()
-		const b = nodes[index + 1]?.getBoundingClientRect()
-		const overlap = !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom)
-
-		return overlap
-	})
-}
-
-/**
  * convert polar coordinates to Cartesian
  * @param {number} radius radius
  * @param {number} angle angle in radians
@@ -216,7 +198,6 @@ export {
 	degrees,
 	isContinuous,
 	isDiscrete,
-	overlap,
 	polarToCartesian,
 	detach
 }

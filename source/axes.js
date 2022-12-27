@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 import { axisTickLabelText, rotation } from './text.js'
 import { barWidth } from './marks.js'
-import { degrees, isDiscrete, noop, overlap } from './helpers.js'
+import { degrees, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
@@ -75,30 +75,6 @@ const title = (s, channel) => {
 	const encoding = s.encoding[channel]
 
 	return encoding.axis?.title || encoding.field
-}
-
-/**
- * alternate ticks
- * @param {object} s Vega Lite specification
- * @returns {function} alternation function
- */
-const alternate = s => {
-	return selection => {
-		['x', 'y'].forEach(channel => {
-			if (s.encoding[channel] === undefined) {
-				return
-			}
-
-			const axisSelector = `.${channel}`
-			const ticks = selection.select(axisSelector).selectAll('.tick')
-
-			if (!isDiscrete(s, channel)) {
-				if (overlap([...ticks.nodes()])) {
-					selection.select(axisSelector).classed('alternate-ticks', true)
-				}
-			}
-		})
-	}
 }
 
 /**
@@ -307,8 +283,6 @@ const axes = (_s, dimensions) => {
 		if (feature(s).hasEncodingX()) {
 			axes.call(x(s, dimensions))
 		}
-
-		axes.call(alternate(s))
 	}
 
 	return renderer
