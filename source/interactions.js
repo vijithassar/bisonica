@@ -88,9 +88,6 @@ const markMouseoverSelector = s => {
  * @param {string} url url
  */
 const handleUrl = url => {
-	if (typeof url !== 'string') {
-		console.error(`cannot link to url of type ${typeof url}`)
-	}
 	window.open(url)
 }
 
