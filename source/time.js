@@ -4,8 +4,6 @@ import { memoize } from './memoize.js'
 import { feature } from './feature.js'
 import { barWidth } from './marks.js'
 
-import matchAll from 'string.prototype.matchall'
-
 const UTC = 'utc'
 const TIME = 'time'
 
@@ -109,7 +107,7 @@ const findTimePeriod = new RegExp(`(?:${TIME}|${UTC})(\\w+)`, 'gi')
  * @returns {string} camelcased time specifier string
  */
 const camelCaseTimePeriod = timeSpecifier => {
-	let matches = [...matchAll(timeSpecifier, findTimePeriod)]
+	let matches = [...timeSpecifier.matchAll(findTimePeriod)]
 
 	if (!matches.length) {
 		return timeSpecifier
