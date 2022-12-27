@@ -1,7 +1,7 @@
 import { WRAPPER_CLASS } from './config.js'
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
-import { chartName, chartDescription } from './descriptions.js'
+import { chartLabel, chartDescription } from './descriptions.js'
 import { detach } from './helpers.js'
 
 /**
@@ -38,7 +38,7 @@ const init = (s, dimensions) => {
 			throw new Error('specification title is required')
 		}
 
-		svg.attr('aria-label', chartName(s))
+		svg.attr('aria-label', chartLabel(s))
 		svg.attr('aria-description', chartDescription(s))
 
 		if (feature(s).hasAxis()) {
