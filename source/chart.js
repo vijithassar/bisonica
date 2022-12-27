@@ -22,57 +22,62 @@ import { feature } from './feature.js'
  */
 const chart = (s, panelDimensions) => {
 	let tooltipHandler
+	let errorHandler = console.error
 	let tableRenderer = table
 
 	const renderer = selection => {
-		selection.html('')
+		try {
+			selection.html('')
 
-		selection.call(init(s, panelDimensions))
+			selection.call(init(s, panelDimensions))
 
-		initializeInteractions(selection.node(), s)
+			initializeInteractions(selection.node(), s)
 
-		selection.call(audio(s))
+			selection.call(audio(s))
 
-		const chartNode = selection.select('div.chart')
+			const chartNode = selection.select('div.chart')
 
-		initializeInteractions(chartNode.node(), s)
+			initializeInteractions(chartNode.node(), s)
 
-		if (feature(s).hasTable()) {
-			chartNode.select('.table').call(tableRenderer(s, tableOptions(s)))
-		}
+			if (feature(s).hasTable()) {
+				chartNode.select('.table').call(tableRenderer(s, tableOptions(s)))
+			}
 
-		// render legend
-		if (feature(s).hasLegend()) {
-			chartNode.select('.legend').call(legend(s))
-		}
-		const legendHeight = chartNode.select('.legend').node()?.getBoundingClientRect().height || 0
+			// render legend
+			if (feature(s).hasLegend()) {
+				chartNode.select('.legend').call(legend(s))
+			}
+			const legendHeight = chartNode.select('.legend').node()?.getBoundingClientRect().height || 0
 
-		const svg = chartNode.select('svg')
-		const imageHeight = panelDimensions.y - legendHeight
+			const svg = chartNode.select('svg')
+			const imageHeight = panelDimensions.y - legendHeight
 
-		svg.attr('height', Math.max(imageHeight, 0))
+			svg.attr('height', Math.max(imageHeight, 0))
 
-		const { top, right, bottom, left } = margin(s, panelDimensions)
+			const { top, right, bottom, left } = margin(s, panelDimensions)
 
-		// subtract rendered height of legend from dimensions
-		const dimensions = {
-			x: panelDimensions.x - left - right,
-			y: imageHeight - top - bottom
-		}
+			// subtract rendered height of legend from dimensions
+			const dimensions = {
+				x: panelDimensions.x - left - right,
+				y: imageHeight - top - bottom
+			}
 
-		if (dimensions.y > 0) {
-			const wrapper = chartNode
-				.select('.graphic')
-				.select('svg')
-				.call(position(s, { x: panelDimensions.x, y: imageHeight }))
-				.select(`g.${WRAPPER_CLASS}`)
+			if (dimensions.y > 0) {
+				const wrapper = chartNode
+					.select('.graphic')
+					.select('svg')
+					.call(position(s, { x: panelDimensions.x, y: imageHeight }))
+					.select(`g.${WRAPPER_CLASS}`)
 
-			wrapper
-				.call(axes(s, dimensions))
-				.call((s.layer ? layerMarks : marks)(s, dimensions))
-				.call(keyboard(s))
-				.call(interactions(s))
-			selection.call(testAttributes)
+				wrapper
+					.call(axes(s, dimensions))
+					.call((s.layer ? layerMarks : marks)(s, dimensions))
+					.call(keyboard(s))
+					.call(interactions(s))
+				selection.call(testAttributes)
+			}
+		} catch (error) {
+			errorHandler(error)
 		}
 	}
 
@@ -103,6 +108,7 @@ const chart = (s, panelDimensions) => {
 			return renderer
 		}
 	}
+	renderer.error = h => typeof h !== 'undefined' ? (errorHandler = h, renderer) : errorHandler
 
 	return renderer
 }

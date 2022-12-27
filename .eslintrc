@@ -21,6 +21,7 @@
             "error",
             "smart-tabs"
         ],
-        "arrow-parens": ["error", "as-needed"]
+        "arrow-parens": ["error", "as-needed"],
+        "no-return-assign": "off"
     }
 }
