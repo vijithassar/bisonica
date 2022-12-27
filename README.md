@@ -100,4 +100,4 @@ Escaping special characters in field names is not supported. Instead, you should
 
 Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
 
-Rendering to alternative output formats such as `<canvas>` instead of SVG will most likely never be supported.
+Rendering to alternative output formats such as `<canvas>` instead of `<svg>` will most likely never be supported.
