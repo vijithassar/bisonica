@@ -48,21 +48,13 @@ const timeParseIso = d3.isoParse
  */
 const timeParseMilliseconds = date => new Date(date)
 
-/**
- * convert date in milliseconds as string to date object
- * @param {string} date number of milliseconds
- * @returns {object} date object
- */
-const timeParseMillisecondsString = date => timeParseMilliseconds(+date)
-
 const _getTimeParser = date => {
 	const parsers = [
 		timeParseYYYYMMDD,
 		timeParseIso,
 		timeParseIsoRange,
 		timeParseYYYYMM,
-		timeParseMilliseconds,
-		timeParseMillisecondsString
+		timeParseMilliseconds
 	]
 	const isDate = parser => {
 		const parsed = parser(date)
