@@ -18,7 +18,7 @@ const stackedBarChartSpec = {
 			}
 		},
 		y: {
-			aggregate: 'value',
+			field: 'value',
 			type: 'quantitative',
 			axis: {
 				title: null

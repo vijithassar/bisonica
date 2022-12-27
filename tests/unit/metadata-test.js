@@ -78,7 +78,7 @@ module('unit > metadata', () => {
 				color: { field: 'group', type: 'nominal' },
 				href: { field: 'url' },
 				x: { field: 'label', type: 'temporal' },
-				y: { aggregate: 'value', type: 'quantitative' }
+				y: { field: 'value', type: 'quantitative' }
 			}
 		}
 
@@ -105,7 +105,7 @@ module('unit > metadata', () => {
 				color: { field: 'group', type: 'nominal' },
 				href: { field: 'url' },
 				x: { field: 'label', type: 'temporal' },
-				y: { aggregate: 'value', type: 'quantitative' }
+				y: { field: 'value', type: 'quantitative' }
 			}
 		}
 

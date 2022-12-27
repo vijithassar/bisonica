@@ -12,9 +12,7 @@ import { nested } from './helpers.js'
  * @returns {string} encoding field
  */
 const encodingField = (s, channel) => {
-	return (
-		s.encoding?.[channel]?.aggregate || s.encoding?.[channel]?.field || s.facet?.[channel]?.field
-	)
+	return s.encoding?.[channel]?.field || s.facet?.[channel]?.field
 }
 
 /**
