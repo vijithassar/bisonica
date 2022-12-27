@@ -12,7 +12,7 @@ const validateDispatcher = dispatcher => {
 	return ['link', 'tooltip'].every(key => typeof dispatcher._[key] === 'object')
 }
 
-module('unit > interactions', function () {
+module('unit > interactions', function() {
 	test('registers an event dispatcher for charts with single layer', assert => {
 		const element = render(specificationFixture('circular'))
 

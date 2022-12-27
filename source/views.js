@@ -198,7 +198,7 @@ const layerPrimary = memoize(_layerPrimary)
  */
 const layerNode = (s, wrapper) => {
 	const layers = d3.select(wrapper).selectAll('g.layer')
-	const match = layers.filter(function () {
+	const match = layers.filter(function() {
 		return !!d3.select(this).selectAll(markSelector(s)).size()
 	})
 

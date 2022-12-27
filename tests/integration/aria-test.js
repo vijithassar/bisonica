@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > aria', function () {
+module('integration > aria', function() {
 	test('aria-label includes tooltip by default', assert => {
 		const spec = specificationFixture('circular')
 

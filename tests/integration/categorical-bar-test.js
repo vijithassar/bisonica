@@ -10,7 +10,7 @@ const { module, test } = qunit
 
 const approximate = value => Math.round(value * 100) / 100
 
-module('integration > categorical-bar', function () {
+module('integration > categorical-bar', function() {
 	test('renders a categorical bar chart', assert => {
 		const spec = specificationFixture('categoricalBar')
 

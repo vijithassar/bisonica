@@ -103,7 +103,7 @@ const tooltips = s => {
 		return noop
 	}
 	return selection => {
-		selection.each(function () {
+		selection.each(function() {
 			tooltip(d3.select(this), s)
 		})
 	}

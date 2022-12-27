@@ -9,7 +9,7 @@ import qunit from 'qunit'
 
 const { module, test } = qunit
 
-module('integration > tooltips', function () {
+module('integration > tooltips', function() {
 	test('renders a chart with SVG title tooltips', assert => {
 		const spec = specificationFixture('line')
 		spec.usermeta = { tooltipHandler: false }
@@ -261,7 +261,7 @@ module('integration > tooltips', function () {
 		assert.throws(() => renderer.tooltip(null), 'rejects invalid tooltip handler functions')
 	})
 
-	test.skip('displays a custom tooltip', async function (assert) {
+	test.skip('displays a custom tooltip', async function(assert) {
     const spec = specificationFixture('circular'); // eslint-disable-line
 
 		await render(`

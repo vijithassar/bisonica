@@ -3,7 +3,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > stacked-bar', function () {
+module('integration > stacked-bar', function() {
 	test('renders a vertical stacked bar chart', assert => {
 		const spec = specificationFixture('stackedBar')
 		const element = render(spec)

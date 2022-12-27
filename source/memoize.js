@@ -35,7 +35,7 @@ const memoizeKey = args => {
 const memoize = fn => {
 	const cache = new Map()
 
-	return function (...args) {
+	return function(...args) {
 		const key = memoizeKey(args)
 
 		if (cache.has(key)) {

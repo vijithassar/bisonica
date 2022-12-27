@@ -71,7 +71,7 @@ const isPie = marks => {
 	return isCircular(marks) && contained
 }
 
-module('integration > circular', function () {
+module('integration > circular', function() {
 	test('renders a circular chart', assert => {
 		const spec = specificationFixture('circular')
 

@@ -3,7 +3,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > legend', function () {
+module('integration > legend', function() {
 	test('renders a chart with legend', assert => {
 		const spec = specificationFixture('circular')
 		const element = render(spec)

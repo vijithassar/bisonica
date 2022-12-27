@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 
 const { module, test } = qunit
 
-module('integration > axes', function () {
+module('integration > axes', function() {
 	test('renders a chart with axes', assert => {
 		const spec = specificationFixture('categoricalBar')
 		const element = render(spec)

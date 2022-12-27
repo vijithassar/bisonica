@@ -11,7 +11,7 @@
     "rules": {
         "array-callback-return": "off",
         "prefer-const": "off",
-        "space-before-function-paren": "off",
+        "space-before-function-paren": ["error", "never"],
         "quote-props": "off",
         "no-useless-return": "off",
         "object-curly-newline": "off",

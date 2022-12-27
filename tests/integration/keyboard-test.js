@@ -10,8 +10,8 @@ const { module, test } = qunit
 const LEFT = 'ArrowLeft'
 const RIGHT = 'ArrowRight'
 
-module('integration > keyboard', function () {
-	test.skip('keyboard navigation works', async function (assert) {
+module('integration > keyboard', function() {
+	test.skip('keyboard navigation works', async function(assert) {
 		const dispatchEvents = {
 			[LEFT]: new KeyboardEvent('keyup', {
 				key: LEFT

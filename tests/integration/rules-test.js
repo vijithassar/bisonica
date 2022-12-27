@@ -3,7 +3,7 @@ import { render, testSelector, specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
-module('integration > rules', function () {
+module('integration > rules', function() {
 	test('renders rules', assert => {
 		const spec = specificationFixture('rules')
 		const element = render(spec)
