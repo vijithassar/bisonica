@@ -15,26 +15,6 @@ const TIME = 'time'
 const timeParseYYYYMMDD = d3.utcParse('%Y-%m-%d')
 
 /**
- * convert date string in YYYY-MM format to date object
- * @param {string} dateString string in YYYY-MM format
- * @returns {object} date object
- */
-const timeParseYYYYMM = d3.utcParse('%Y-%m')
-
-/**
- * convert date string in ISO8601 range format to date object
- * @param {string} date string in ISO8601 range format
- * @returns {object} date object
- */
-const timeParseIsoRange = date => {
-	if (typeof date === 'string') {
-		const fragment = date.split('Z-')[0]
-
-		return d3.isoParse(`${fragment}Z`)
-	}
-}
-
-/**
  * convert date string in ISO8601 format to date object
  * @param {string} dateString string in ISO8601 format
  * @returns {object} date object
@@ -52,8 +32,6 @@ const _getTimeParser = date => {
 	const parsers = [
 		timeParseYYYYMMDD,
 		timeParseIso,
-		timeParseIsoRange,
-		timeParseYYYYMM,
 		timeParseMilliseconds
 	]
 	const isDate = parser => {
