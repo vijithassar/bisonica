@@ -201,7 +201,7 @@ const instructions = s => {
  * @param {object} s Vega Lite specification
  * @returns {string} chart title
  */
-const chartName = s => {
+const chartLabel = s => {
 	if (!s.title.text) {
 		throw new Error('specification title is required')
 	}
@@ -212,4 +212,4 @@ const chartName = s => {
 	}
 }
 
-export { markDescription, chartName, chartDescription }
+export { markDescription, chartLabel, chartDescription }
