@@ -344,8 +344,10 @@ const areaMarks = (s, dimensions) => {
  * @returns {function(object)} point rendering function
  */
 const pointMark = (s, dimensions) => {
+	const defaultSize = 30
+	const size = s.mark.size || defaultSize
+	const radius = Math.sqrt(size / Math.PI)
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
-	const radius = stroke * 1.2
 	const renderer = selection => {
 		const point = selection
 			.append('circle')
