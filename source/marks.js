@@ -119,7 +119,7 @@ const pointMarkSelector = s => {
 /**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'rect'|'line'|'text')} tagName to use in DOM for mark
+ * @returns {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {
@@ -132,6 +132,8 @@ const markSelector = s => {
 		return 'line'
 	} else if (feature(s).isText()) {
 		return 'text'
+	} else if (feature(s).isImage()) {
+		return 'image'
 	}
 }
 
@@ -422,6 +424,37 @@ const pointMark = (s, dimensions) => {
 			point.attr('aria-label', markDescription(s))
 		}
 	}
+	return renderer
+}
+
+/**
+ * render image marks
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} image mark renderer
+ */
+const imageMarks = (s, dimensions) => {
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		const marks = selection.append('g').attr('class', 'images')
+
+		marks
+			.selectAll(markSelector(s))
+			.data(data(s))
+			.enter()
+			.append(markSelector(s))
+			.attr('class', 'mark image')
+			.attr('href', encoders.url)
+			.attr('transform', d => {
+				const x = encoders.x(d)
+				const y = encoders.y(d)
+				return `translate(${x},${y})`
+			})
+			.attr('aspect', s.mark.aspect)
+			.attr('width', s.mark.width)
+			.attr('height', s.mark.height)
+	}
+
 	return renderer
 }
 
@@ -763,6 +796,8 @@ const _marks = (s, dimensions) => {
 			return pointMarks(s, dimensions)
 		} else if (feature(s).isText()) {
 			return textMarks(s, dimensions)
+		} else if (feature(s).isImage()) {
+			return imageMarks(s, dimensions)
 		} else {
 			throw new Error('could not determine mark rendering function')
 		}

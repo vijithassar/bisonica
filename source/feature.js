@@ -35,6 +35,7 @@ const _feature = s => {
 		isCircular: s => mark(s) === 'arc',
 		isRule: s => mark(s) === 'rule',
 		isText: s => mark(s) === 'text',
+		isImage: s => mark(s) === 'image',
 		hasColor: s => s.encoding?.color,
 		hasLinks: s => s.encoding?.href || s.mark?.href,
 		hasData: s => s.data?.values.length,

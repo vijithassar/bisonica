@@ -85,6 +85,10 @@ const _createAccessors = (s, type = null) => {
 		standard('x', 'y', 'color', 'text')
 	}
 
+	if (key === 'image') {
+		standard('x', 'y', 'url')
+	}
+
 	if (!s.encoding) {
 		return accessors
 	}
