@@ -673,18 +673,28 @@ const ruleMarks = (s, dimensions) => {
 }
 
 const textMarks = (s, dimensions) => {
+	const defaultFontSize = 11
 	return selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const encoders = createEncoders(s, dimensions, createAccessors(s))
 
 		let text
 
+		// data binding
 		if (feature(s).hasData()) {
 			text = marks.selectAll('text').data(markData(s)).enter().append('text').attr('class', 'mark')
-			text.text(encoders.text)
 		} else if (s.mark.text) {
 			text = marks.append('text').classed('mark', true)
+		}
+
+		// default font size
+		text.style('font-size', defaultFontSize)
+
+		// text content
+		if (s.mark.text) {
 			text.text(s.mark.text)
+		} else {
+			text.text(encoders.text)
 		}
 
 		// encoded attributes
@@ -708,6 +718,9 @@ const textMarks = (s, dimensions) => {
 
 		// styles with aliases
 		const styles = {
+			// mark.fontSize will override mark.size since
+			// it is probably a more specialized case
+			size: 'font-size',
 			fontSize: 'font-size',
 			font: 'font-family',
 			fontStyle: 'font-style',
