@@ -712,6 +712,9 @@ const textMarks = (s, dimensions) => {
 
 		// styles with aliases
 		const styles = {
+			// mark.fontSize will override mark.size since
+			// it is probably a more specialized case
+			size: 'font-size',
 			fontSize: 'font-size',
 			font: 'font-family',
 			fontStyle: 'font-style',
