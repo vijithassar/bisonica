@@ -111,6 +111,8 @@ const pointMarkSelector = s => {
 		return defaultPointMark
 	} else if (mark(s) === 'square') {
 		return 'rect'
+	} else if (mark(s) === 'circle') {
+		return 'circle'
 	}
 }
 
