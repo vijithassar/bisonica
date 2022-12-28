@@ -673,6 +673,7 @@ const ruleMarks = (s, dimensions) => {
 }
 
 const textMarks = (s, dimensions) => {
+	const defaultFontSize = 11
 	return selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -685,6 +686,9 @@ const textMarks = (s, dimensions) => {
 		} else if (s.mark.text) {
 			text = marks.append('text').classed('mark', true)
 		}
+
+		// default font size
+		text.style('font-size', defaultFontSize)
 
 		// text content
 		if (s.mark.text) {
