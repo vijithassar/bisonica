@@ -100,9 +100,23 @@ const _barWidth = (s, dimensions) => {
 const barWidth = memoize(_barWidth)
 
 /**
+ * point mark tagName
+ * @param {object} s Vega Lite specification
+ * @returns {'circle'|'square'} point mark tag name
+ */
+const pointMarkSelector = s => {
+	const defaultPointMark = 'circle'
+	if (feature(s).isLine() || mark(s) === 'point') {
+		return defaultPointMark
+	} else {
+		return s.mark.type
+	}
+}
+
+/**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'line'|'text')} tagName to use in DOM for mark
+ * @returns {('rect'|'path'|'circle'|'square'|'line'|'text')} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {
@@ -110,7 +124,7 @@ const markSelector = s => {
 	} else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
 		return 'path'
 	} else if (!feature(s).isLine() && feature(s).hasPoints()) {
-		return 'circle'
+		return pointMarkSelector(s)
 	} else if (feature(s).isRule()) {
 		return 'line'
 	} else if (feature(s).isText()) {
@@ -127,7 +141,7 @@ const markInteractionSelector = _s => {
 	const s = !feature(_s).hasLayers() ? _s : _s.layer.find(layer => !feature(layer).isRule())
 
 	if (feature(s).isLine()) {
-		return '.marks circle.point.mark'
+		return `.marks ${pointMarkSelector(s)}.point.mark`
 	} else {
 		return `.marks ${markSelector(s)}`
 	}
@@ -365,7 +379,7 @@ const pointMarkCircle = (s, dimensions) => {
 const pointMark = (s, dimensions) => {
 	const renderer = selection => {
 		const point = selection
-			.append('circle')
+			.append(pointMarkSelector(s))
 		point
 			.classed('point', true)
 			.classed('mark', true)
@@ -410,7 +424,7 @@ const pointMarks = (s, dimensions) => {
 		const getPointData = feature(s).isLine() ? d => d.values : pointData(s)
 
 		marks
-			.selectAll('circle')
+			.selectAll(pointMarkSelector(s))
 			.style('stroke', encoders.color)
 			.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
 			.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)

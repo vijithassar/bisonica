@@ -1,4 +1,4 @@
-import { barWidth } from '../../source/marks.js'
+import { barWidth, markSelector } from '../../source/marks.js'
 import qunit from 'qunit'
 import { specificationFixture } from '../test-helpers.js'
 
@@ -71,6 +71,19 @@ module('unit > marks', () => {
 			customSpec.encoding.x.scale = { domain: ['2010', '2020'] }
 			const customWidth = barWidth(customSpec, dimensions)
 			assert.ok(standardWidth > customWidth)
+		})
+	})
+	module('point marks', () => {
+		test('point', assert => {
+			assert.equal(markSelector(specificationFixture('scatterPlot')), 'circle')
+		})
+		test('circle', assert => {
+			assert.equal(markSelector(specificationFixture('scatterPlot')), 'circle')
+		})
+		test('square', assert => {
+			const s = specificationFixture('scatterPlot')
+			s.mark.type = 'square'
+			assert.equal(markSelector(s), 'rect')
 		})
 	})
 })
