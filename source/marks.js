@@ -11,7 +11,7 @@ import {
 } from './encodings.js'
 import { data, pointData } from './data.js'
 import { markDescription } from './descriptions.js'
-import { detach, datum, isDiscrete, key, missingSeries, values } from './helpers.js'
+import { detach, datum, isDiscrete, key, mark, missingSeries, values } from './helpers.js'
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
@@ -53,6 +53,7 @@ const category = {
 }
 
 const stroke = 3
+const defaultSize = 30
 
 /**
  * bar chart bar width
@@ -100,9 +101,25 @@ const _barWidth = (s, dimensions) => {
 const barWidth = memoize(_barWidth)
 
 /**
+ * point mark tagName
+ * @param {object} s Vega Lite specification
+ * @returns {'circle'|'rect'} point mark tag name
+ */
+const pointMarkSelector = s => {
+	const defaultPointMark = 'circle'
+	if (feature(s).isLine() || mark(s) === 'point') {
+		return defaultPointMark
+	} else if (mark(s) === 'square') {
+		return 'rect'
+	} else if (mark(s) === 'circle') {
+		return 'circle'
+	}
+}
+
+/**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'line'|'text')} tagName to use in DOM for mark
+ * @returns {('rect'|'path'|'circle'|'rect'|'line'|'text')} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {
@@ -110,7 +127,7 @@ const markSelector = s => {
 	} else if (feature(s).isLine() || feature(s).isCircular() || feature(s).isArea()) {
 		return 'path'
 	} else if (!feature(s).isLine() && feature(s).hasPoints()) {
-		return 'circle'
+		return pointMarkSelector(s)
 	} else if (feature(s).isRule()) {
 		return 'line'
 	} else if (feature(s).isText()) {
@@ -127,7 +144,7 @@ const markInteractionSelector = _s => {
 	const s = !feature(_s).hasLayers() ? _s : _s.layer.find(layer => !feature(layer).isRule())
 
 	if (feature(s).isLine()) {
-		return '.marks circle.point.mark'
+		return `.marks ${pointMarkSelector(s)}.point.mark`
 	} else {
 		return `.marks ${markSelector(s)}`
 	}
@@ -339,17 +356,84 @@ const areaMarks = (s, dimensions) => {
 }
 
 /**
- * render point marks
+ * render a circular point mark
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} circular point mark rendering function
+ */
+const pointMarkCircle = (s, dimensions) => {
+	const size = s.mark.size || defaultSize
+	const radius = Math.sqrt(size / Math.PI)
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		selection
+			.attr('cx', encoders.x)
+			.attr('cy', encoders.y)
+			.attr('r', radius)
+	}
+	return renderer
+}
+
+/**
+ * render a square point mark
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} square point mark rendering function
+ */
+const pointMarkSquare = (s, dimensions) => {
+	const size = s.mark.size || defaultSize
+	const side = Math.sqrt(size)
+	const offset = side * 0.5 * -1
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		selection
+			.attr('x', d => encoders.x(d) + offset)
+			.attr('y', d => encoders.y(d) + offset)
+			.attr('height', side)
+			.attr('width', side)
+	}
+	return renderer
+}
+
+/**
+ * render a single point mark
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} point rendering function
+ */
+const pointMark = (s, dimensions) => {
+	const pointMarkRenderer = mark(s) === 'square' ? pointMarkSquare : pointMarkCircle
+	const renderer = selection => {
+		const point = selection
+			.append(pointMarkSelector(s))
+		point
+			.classed('point', true)
+			.classed('mark', true)
+			.attr('role', 'region')
+			.attr('aria-roledescription', 'data point')
+			.each(function(d) {
+				const categoryValue = encodingValue(s, 'color')(d)
+				if (categoryValue) {
+					category.set(this, categoryValue)
+				}
+			})
+			.attr('aria-label', markDescription(s))
+			.classed('link', encodingValue(s, 'href'))
+			.call(pointMarkRenderer(s, dimensions))
+			.call(tooltips(s))
+		if (!feature(s).isLine()) {
+			point.attr('aria-label', markDescription(s))
+		}
+	}
+	return renderer
+}
+
+/**
+ * render multiple point marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @returns {function} points renderer
  */
 const pointMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
-
 	const renderer = selection => {
-		const radius = stroke * 1.2
-
 		const marks = selection.append('g').attr('class', () => {
 			const classes = ['marks', 'points']
 
@@ -362,40 +446,28 @@ const pointMarks = (s, dimensions) => {
 
 		const getPointData = feature(s).isLine() ? d => d.values : pointData(s)
 
-		const points = marks
-			.selectAll('circle')
+		marks
+			.selectAll(pointMarkSelector(s))
 			.data(getPointData)
 			.enter()
-			.append('circle')
-			.classed('point', true)
-			.classed('mark', true)
-			.attr('role', 'region')
-			.attr('aria-roledescription', 'data point')
+			.call(pointMark(s, dimensions))
 
-		points
-			.each(function(d) {
-				const categoryValue = encodingValue(s, 'color')(d)
-				if (categoryValue) {
-					category.set(this, categoryValue)
-				}
-			})
-			.attr('aria-label', markDescription(s))
-			.attr('cx', encoders.x)
-			.attr('cy', encoders.y)
-			.attr('r', radius)
-			.classed('link', encodingValue(s, 'href'))
-			.call(tooltips(s))
-
+		// style the point mark directly when they are standalone
 		if (!feature(s).isLine()) {
-			points.style('stroke', encoders.color)
-
-			points.attr('aria-label', markDescription(s))
-
-			if (s.mark?.filled) {
-				points.style('fill', encoders.color)
-			} else {
-				points.style('fill-opacity', 0.001)
-			}
+			const { color } = parseScales(s)
+			const points = marks.selectAll(pointMarkSelector(s))
+			points
+				.style('stroke', feature(s).isMulticolor() ? encoders.color : color)
+				.style('stroke-width', 1)
+			points
+				.style('fill', feature(s).isMulticolor() ? encoders.color : color)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+		// style the series node when point marks are on top of line marks
+		} else {
+			marks
+				.style('stroke', encoders.color)
+				.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
 		}
 	}
 
@@ -678,6 +750,8 @@ const _marks = (s, dimensions) => {
 			return pointMarks(s, dimensions)
 		} else if (feature(s).isText()) {
 			return textMarks(s, dimensions)
+		} else {
+			throw new Error('could not determine mark rendering function')
 		}
 	} catch (error) {
 		error.message = `could not render marks - ${error.message}`
