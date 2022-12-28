@@ -68,7 +68,7 @@ const _createAccessors = (s, type = null) => {
 		standard('x', 'y', 'color')
 	}
 
-	if (key === 'point') {
+	if (['point', 'square', 'circle'].includes(key)) {
 		standard('x', 'y', 'color')
 	}
 

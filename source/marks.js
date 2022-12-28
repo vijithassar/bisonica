@@ -11,7 +11,7 @@ import {
 } from './encodings.js'
 import { data, pointData } from './data.js'
 import { markDescription } from './descriptions.js'
-import { detach, datum, isDiscrete, key, missingSeries, values } from './helpers.js'
+import { detach, datum, isDiscrete, key, mark, missingSeries, values } from './helpers.js'
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
@@ -53,6 +53,7 @@ const category = {
 }
 
 const stroke = 3
+const defaultSize = 30
 
 /**
  * bar chart bar width
@@ -102,21 +103,21 @@ const barWidth = memoize(_barWidth)
 /**
  * point mark tagName
  * @param {object} s Vega Lite specification
- * @returns {'circle'|'square'} point mark tag name
+ * @returns {'circle'|'rect'} point mark tag name
  */
 const pointMarkSelector = s => {
 	const defaultPointMark = 'circle'
 	if (feature(s).isLine() || mark(s) === 'point') {
 		return defaultPointMark
-	} else {
-		return s.mark.type
+	} else if (mark(s) === 'square') {
+		return 'rect'
 	}
 }
 
 /**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'square'|'line'|'text')} tagName to use in DOM for mark
+ * @returns {('rect'|'path'|'circle'|'rect'|'line'|'text')} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {
@@ -358,7 +359,6 @@ const areaMarks = (s, dimensions) => {
  * @returns {function(object)} circular point mark rendering function
  */
 const pointMarkCircle = (s, dimensions) => {
-	const defaultSize = 30
 	const size = s.mark.size || defaultSize
 	const radius = Math.sqrt(size / Math.PI)
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -372,11 +372,32 @@ const pointMarkCircle = (s, dimensions) => {
 }
 
 /**
+ * render a square point mark
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} square point mark rendering function
+ */
+const pointMarkSquare = (s, dimensions) => {
+	const size = s.mark.size || defaultSize
+	const side = Math.sqrt(size)
+	const offset = side * 0.5 * -1
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		selection
+			.attr('x', d => encoders.x(d) + offset)
+			.attr('y', d => encoders.y(d) + offset)
+			.attr('height', side)
+			.attr('width', side)
+	}
+	return renderer
+}
+
+/**
  * render a single point mark
  * @param {object} s Vega Lite specification
  * @returns {function(object)} point rendering function
  */
 const pointMark = (s, dimensions) => {
+	const pointMarkRenderer = mark(s) === 'square' ? pointMarkSquare : pointMarkCircle
 	const renderer = selection => {
 		const point = selection
 			.append(pointMarkSelector(s))
@@ -393,7 +414,7 @@ const pointMark = (s, dimensions) => {
 			})
 			.attr('aria-label', markDescription(s))
 			.classed('link', encodingValue(s, 'href'))
-			.call(pointMarkCircle(s, dimensions))
+			.call(pointMarkRenderer(s, dimensions))
 			.call(tooltips(s))
 		if (!feature(s).isLine()) {
 			point.attr('aria-label', markDescription(s))

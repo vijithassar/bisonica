@@ -29,7 +29,7 @@ const _feature = s => {
 		isBar: s => mark(s) === 'bar',
 		isLine: s => mark(s) === 'line',
 		isArea: s => mark(s) === 'area',
-		hasPoints: s => mark(s) === 'point' || s.mark?.point === true,
+		hasPoints: s => ['point', 'circle', 'square'].includes(mark(s)) || s.mark?.point === true,
 		hasPointsFilled: s => (mark(s) !== 'point') && (s.mark?.filled !== false),
 		hasLayers: s => s.layer,
 		isCircular: s => mark(s) === 'arc',
