@@ -448,12 +448,27 @@ const pointMarks = (s, dimensions) => {
 
 		marks
 			.selectAll(pointMarkSelector(s))
-			.style('stroke', encoders.color)
-			.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
-			.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
 			.data(getPointData)
 			.enter()
 			.call(pointMark(s, dimensions))
+
+		// style the point mark directly when they are standalone
+		if (!feature(s).isLine()) {
+			const { color } = parseScales(s)
+			const points = marks.selectAll(pointMarkSelector(s))
+			points
+				.style('stroke', feature(s).isMulticolor() ? encoders.color : color)
+				.style('stroke-width', 1)
+			points
+				.style('fill', feature(s).isMulticolor() ? encoders.color : color)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+		// style the series node when point marks are on top of line marks
+		} else {
+			marks
+				.style('stroke', encoders.color)
+				.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+		}
 	}
 
 	return renderer
