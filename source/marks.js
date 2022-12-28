@@ -679,12 +679,14 @@ const textMarks = (s, dimensions) => {
 
 		let text
 
+		// data binding
 		if (feature(s).hasData()) {
 			text = marks.selectAll('text').data(markData(s)).enter().append('text').attr('class', 'mark')
 		} else if (s.mark.text) {
 			text = marks.append('text').classed('mark', true)
 		}
 
+		// text content
 		if (s.mark.text) {
 			text.text(s.mark.text)
 		} else {
