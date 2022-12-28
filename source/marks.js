@@ -435,6 +435,8 @@ const pointMark = (s, dimensions) => {
  */
 const imageMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const dx = (s.mark.width || 0) * 0.5 * -1
+	const dy = (s.mark.height || 0) * 0.5 * -1
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'images')
 
@@ -448,7 +450,7 @@ const imageMarks = (s, dimensions) => {
 			.attr('transform', d => {
 				const x = encoders.x(d)
 				const y = encoders.y(d)
-				return `translate(${x},${y})`
+				return `translate(${x + dx},${y + dy})`
 			})
 			.attr('aspect', s.mark.aspect)
 			.attr('width', s.mark.width)
