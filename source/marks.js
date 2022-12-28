@@ -712,6 +712,8 @@ const _marks = (s, dimensions) => {
 			return pointMarks(s, dimensions)
 		} else if (feature(s).isText()) {
 			return textMarks(s, dimensions)
+		} else {
+			throw new Error('could not determine mark rendering function')
 		}
 	} catch (error) {
 		error.message = `could not render marks - ${error.message}`
