@@ -339,15 +339,30 @@ const areaMarks = (s, dimensions) => {
 }
 
 /**
+ * render a circular point mark
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} circular point mark rendering function
+ */
+const pointMarkCircle = (s, dimensions) => {
+	const defaultSize = 30
+	const size = s.mark.size || defaultSize
+	const radius = Math.sqrt(size / Math.PI)
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		selection
+			.attr('cx', encoders.x)
+			.attr('cy', encoders.y)
+			.attr('r', radius)
+	}
+	return renderer
+}
+
+/**
  * render a single point mark
  * @param {object} s Vega Lite specification
  * @returns {function(object)} point rendering function
  */
 const pointMark = (s, dimensions) => {
-	const defaultSize = 30
-	const size = s.mark.size || defaultSize
-	const radius = Math.sqrt(size / Math.PI)
-	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const renderer = selection => {
 		const point = selection
 			.append('circle')
@@ -363,10 +378,8 @@ const pointMark = (s, dimensions) => {
 				}
 			})
 			.attr('aria-label', markDescription(s))
-			.attr('cx', encoders.x)
-			.attr('cy', encoders.y)
-			.attr('r', radius)
 			.classed('link', encodingValue(s, 'href'))
+			.call(pointMarkCircle(s, dimensions))
 			.call(tooltips(s))
 		if (!feature(s).isLine()) {
 			point.attr('aria-label', markDescription(s))
