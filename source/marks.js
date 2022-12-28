@@ -681,10 +681,14 @@ const textMarks = (s, dimensions) => {
 
 		if (feature(s).hasData()) {
 			text = marks.selectAll('text').data(markData(s)).enter().append('text').attr('class', 'mark')
-			text.text(encoders.text)
 		} else if (s.mark.text) {
 			text = marks.append('text').classed('mark', true)
+		}
+
+		if (s.mark.text) {
 			text.text(s.mark.text)
+		} else {
+			text.text(encoders.text)
 		}
 
 		// encoded attributes
