@@ -339,40 +339,21 @@ const areaMarks = (s, dimensions) => {
 }
 
 /**
- * render point marks
+ * render a single point mark
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
- * @returns {function} points renderer
+ * @returns {function(object)} point rendering function
  */
-const pointMarks = (s, dimensions) => {
+const pointMark = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
-
+	const radius = stroke * 1.2
 	const renderer = selection => {
-		const radius = stroke * 1.2
-
-		const marks = selection.append('g').attr('class', () => {
-			const classes = ['marks', 'points']
-
-			if (feature(s).isLine()) {
-				classes.push('mark-group')
-			}
-
-			return classes.join(' ')
-		})
-
-		const getPointData = feature(s).isLine() ? d => d.values : pointData(s)
-
-		const points = marks
-			.selectAll('circle')
-			.data(getPointData)
-			.enter()
+		const point = selection
 			.append('circle')
+		point
 			.classed('point', true)
 			.classed('mark', true)
 			.attr('role', 'region')
 			.attr('aria-roledescription', 'data point')
-
-		points
 			.each(function(d) {
 				const categoryValue = encodingValue(s, 'color')(d)
 				if (categoryValue) {
@@ -385,18 +366,42 @@ const pointMarks = (s, dimensions) => {
 			.attr('r', radius)
 			.classed('link', encodingValue(s, 'href'))
 			.call(tooltips(s))
-
 		if (!feature(s).isLine()) {
-			points.style('stroke', encoders.color)
-
-			points.attr('aria-label', markDescription(s))
-
-			if (s.mark?.filled) {
-				points.style('fill', encoders.color)
-			} else {
-				points.style('fill-opacity', 0.001)
-			}
+			point.attr('aria-label', markDescription(s))
 		}
+	}
+	return renderer
+}
+
+/**
+ * render multiple point marks
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} points renderer
+ */
+const pointMarks = (s, dimensions) => {
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const renderer = selection => {
+		const marks = selection.append('g').attr('class', () => {
+			const classes = ['marks', 'points']
+
+			if (feature(s).isLine()) {
+				classes.push('mark-group')
+			}
+
+			return classes.join(' ')
+		})
+
+		const getPointData = feature(s).isLine() ? d => d.values : pointData(s)
+
+		marks
+			.selectAll('circle')
+			.style('stroke', encoders.color)
+			.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
+			.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+			.data(getPointData)
+			.enter()
+			.call(pointMark(s, dimensions))
 	}
 
 	return renderer
