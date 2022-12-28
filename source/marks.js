@@ -19,6 +19,8 @@ import { parseTime, timePeriod } from './time.js'
 import { sortMarkData } from './sort.js'
 import { tooltips } from './tooltips.js'
 
+const transparent = 0.001
+
 /**
  * aggregate and sort mark data
  * @param {object} s Vega Lite specification
@@ -496,13 +498,19 @@ const pointMarks = (s, dimensions) => {
 				.style('stroke-width', 1)
 			points
 				.style('fill', feature(s).isMulticolor() ? encoders.color : color)
-				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : transparent)
 		// style the series node when point marks are on top of line marks
 		} else {
 			marks
 				.style('stroke', encoders.color)
 				.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
-				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : 0.001)
+				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : transparent)
+			if (s.mark.point === 'transparent') {
+				marks
+					.selectAll(pointMarkSelector(s))
+					.style('stroke-opacity', transparent)
+					.style('fill-opacity', transparent)
+			}
 		}
 	}
 
