@@ -102,7 +102,7 @@ const customDomain = (s, channel) => {
  * @returns {boolean} whether the field is text based
  */
 const isTextChannel = channel => {
-	return ['href', 'text', 'tooltip', 'description'].includes(channel)
+	return ['href', 'text', 'tooltip', 'description', 'url'].includes(channel)
 }
 
 /**
@@ -272,7 +272,7 @@ const coreScales = (s, dimensions) => {
 			scales[channel] = () => definition.value
 		}
 
-		if (definition.datum && isTextChannel(channel)) {
+		if ((definition.datum && isTextChannel(channel)) || (feature(s).isImage() && channel === 'url')) {
 			scales[channel] = identity
 		}
 	})
