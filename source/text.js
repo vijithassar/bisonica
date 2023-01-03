@@ -10,6 +10,8 @@ import { isContinuous, isDiscrete } from './helpers.js'
 const canvas = document.createElement('canvas')
 const context = canvas.getContext('2d')
 
+const maxWidth = 180
+
 const defaultStyles = {}
 
 /**
@@ -113,28 +115,25 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * so it's particularly helpful to be able to memoize
  * all the arguments at once.
  *
- * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
  * @param {string} text text to truncate
+ * @param {number} limit maximum width
  * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} truncated string
  */
-const _truncate = (s, channel, text, styles = defaultStyles) => {
-	const max = 180
-
-	let limit = d3.min([s.encoding[channel].axis?.labelLimit, max])
-
+const _truncate = (text, limit, styles = defaultStyles) => {
 	if (limit === 0) {
 		return text
 	}
+	let change = false
 
 	let substring = text
 
 	while (measureText(`${substring}…`, styles) > limit && substring.length > 0) {
+		change = true
 		substring = substring.slice(0, -1)
 	}
 
-	const suffix = substring.length < text.length ? '…' : ''
+	const suffix = change ? '…' : ''
 
 	return `${substring}${suffix}`
 }
@@ -155,7 +154,9 @@ const _axisTickLabelTextContent = (s, channel, textContent, styles = defaultStyl
 
 	text = abbreviate(s, channel)(text)
 
-	text = truncate(s, channel, text, styles)
+	const limit = d3.min([s.encoding[channel].axis?.labelLimit, maxWidth])
+
+	text = truncate(text, limit, styles)
 
 	return text
 }
