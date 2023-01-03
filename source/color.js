@@ -6,9 +6,11 @@ const defaultColor = 'steelblue'
 /**
  * alternate luminance on a set of color objects
  * @param {object} color color
+ * @param {number} index position of the color in the palette
+ * @param {number} k severity of luminance adjustment
  * @returns {object} color
  */
-const alternateLuminance = (color, index) => color[index % 2 ? 'brighter' : 'darker']()
+const alternateLuminance = (color, index, k = 1) => color[index % 2 ? 'brighter' : 'darker'](k)
 
 const stops = {
 	deuteranopia: ['#e1daae', '#ff934f', '#cc2d35', '#058ed9', '#2d3142'],
@@ -31,8 +33,17 @@ const accessibleColors = (count, variant) => {
 	const step = 1 / count
 	const values = Array.from({ length: count }).map((_, index) => {
 		return interpolator(index * step)
+	}).map(item => {
+		return d3.hsl(item)
 	})
-	return values.map(d3.color).map(alternateLuminance)
+
+	let k
+	if (variant === 'tritanopia') {
+		k = 0.1
+	} else {
+		k = 0.5
+	}
+	return values.map((item, index) => alternateLuminance(item, index, k))
 }
 
 /**
@@ -51,7 +62,7 @@ const standardColors = count => {
 	})
 	const swatch = hues
 		.map(hue => d3.hcl(hue, 100, 50))
-		.map(alternateLuminance)
+		.map((color, index) => alternateLuminance(color, index))
 		.map(item => item.toString())
 	const midpoint = Math.floor(count * 0.5)
 	const a = swatch.slice(0, midpoint)
