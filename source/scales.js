@@ -244,7 +244,7 @@ const range = (s, dimensions, _channel) => {
 
 			return (
 				s.encoding.color?.scale?.range ||
-        colors((customDomain(s, channel) || colorRangeProcessor(s)).length)
+        colors(s, (customDomain(s, channel) || colorRangeProcessor(s)).length)
 			)
 		},
 		theta: () => [0, Math.PI * 2]
@@ -300,7 +300,7 @@ const coreScales = (s, dimensions) => {
 		})
 
 	if (!scales.color && !feature(s).isMulticolor()) {
-		scales.color = () => colors(1).pop()
+		scales.color = () => colors(s, 1).pop()
 	}
 
 	return scales
