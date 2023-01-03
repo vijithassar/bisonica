@@ -97,12 +97,12 @@ const tickText = (s, channel) => {
 }
 
 /**
- * render x axis
+ * create x axis
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} x axis renderer
+ * @returns {function(object)} x axis creator
  */
-const x = (s, dimensions) => {
+const createX = (s, dimensions) => {
 	if (!feature(s).hasAxisX()) {
 		return noop
 	}
@@ -186,12 +186,12 @@ const x = (s, dimensions) => {
 }
 
 /**
- * render y axis
+ * create y axis
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} y axis renderer
+ * @returns {function(object)} y axis creator
  */
-const y = (s, dimensions) => {
+const createY = (s, dimensions) => {
 	if (!feature(s).hasAxisY()) {
 		return noop
 	}
@@ -277,11 +277,11 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.call(y(s, dimensions))
+			axes.call(createY(s, dimensions))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.call(x(s, dimensions))
+			axes.call(createX(s, dimensions))
 		}
 	}
 
