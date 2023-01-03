@@ -123,16 +123,16 @@ const createX = (s, dimensions) => {
 		const x = selection.select('g.x').attr('class', 'x')
 		const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''].join(' ')
 
-		const xAxis = x
+		const xAxis = selection
 			.append('g')
 			.attr('class', classes)
 			.classed(encodingType(s, 'x'), true)
 
 		xAxis.call(axis)
-		x.call(tickText(s, 'x'))
+		selection.call(tickText(s, 'x'))
 
 		const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
-		x.attr('transform', () => {
+		selection.attr('transform', () => {
 			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
 			const xOffset = shift ? bar * 0.5 : 0
 			let yOffset
@@ -187,11 +187,10 @@ const createY = (s, dimensions) => {
 
 		axis.ticks(ticks(s, 'y'))
 
-		const y = selection.select('g.y')
-		const yAxis = y.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
+		const yAxis = selection.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
-		y.call(tickText(s, 'y'))
+		selection.call(tickText(s, 'y'))
 
 		const angle = degrees(rotation(s, 'y'))
 
@@ -331,11 +330,11 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.call(createY(s, dimensions))
+			axes.select('.y').call(createY(s, dimensions))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.call(createX(s, dimensions))
+			axes.select('.x').call(createX(s, dimensions))
 		}
 
 		if (feature(s).hasAxis()) {
