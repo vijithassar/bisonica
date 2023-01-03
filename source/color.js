@@ -32,7 +32,7 @@ const accessibleColors = (count, variant) => {
 	const values = Array.from({ length: count }).map((_, index) => {
 		return interpolator(index * step)
 	})
-	return values
+	return values.map(d3.color).map(alternateLuminance)
 }
 
 /**
