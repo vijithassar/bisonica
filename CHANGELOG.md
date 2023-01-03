@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/vijithassar/bisonica/compare/v0.1.9...v0.1.10) (2023-01-03)
+
+
+### Features
+
+* **core:** add audio sonification module ([de81dae](https://github.com/vijithassar/bisonica/commit/de81daec200e7eb3d9d6c87bb3c774725bfaa00d))
+* **core:** add bar chart to benchmarks output ([4f4612c](https://github.com/vijithassar/bisonica/commit/4f4612c8ea3f635c016bcf6de728c8cebe7350be))
+* **core:** add helper for rendering to detached node ([d1eddf1](https://github.com/vijithassar/bisonica/commit/d1eddf18b4cfeef4796591269fdf1aab0494c723))
+* **core:** add table module ([beea5de](https://github.com/vijithassar/bisonica/commit/beea5def49df16a12399931cb24e5da781516054))
+* **core:** add top level aria-description attribute with chart type ([ff8d33d](https://github.com/vijithassar/bisonica/commit/ff8d33d1c3c75c08217e18b4de13651e257fdecc))
+* **core:** append extent description to aria-description attribute ([8b5a466](https://github.com/vijithassar/bisonica/commit/8b5a46696c7040fe0161dede22ea93ff91d57c18))
+* **core:** circle point marks ([a841b11](https://github.com/vijithassar/bisonica/commit/a841b113d6da96b4ade743763656cf6aa367dd5e))
+* **core:** configurable point fill ([e3bf295](https://github.com/vijithassar/bisonica/commit/e3bf295b781d30c1e255861e59af21349e1d0d4f))
+* **core:** configurable point size ([664539b](https://github.com/vijithassar/bisonica/commit/664539b5b64839d3971488e65bdc28477cf33550))
+* **core:** custom error handling ([ee138e3](https://github.com/vijithassar/bisonica/commit/ee138e381c838ec84b57c1d1aaa4e0bfa252dd03))
+* **core:** encoding description ([52b775d](https://github.com/vijithassar/bisonica/commit/52b775d25d80a1aac263ccd72dccb3d3a431aabf))
+* **core:** high contrast color order ([500dbf1](https://github.com/vijithassar/bisonica/commit/500dbf1962d83e955c133a60c6a0d8a1b9d1921c))
+* **core:** image marks ([a1565eb](https://github.com/vijithassar/bisonica/commit/a1565eb316637e98be288c99d1f39d842de70580))
+* **core:** interpret mark.size as fontSize for text marks ([7e105c4](https://github.com/vijithassar/bisonica/commit/7e105c4204b0f7b337bdc7a10575a8d6836b1bbf))
+* **core:** keyboard navigation instructions ([55c64da](https://github.com/vijithassar/bisonica/commit/55c64da4f32a764442f6093ed0c6133e48ce6082))
+* **core:** mark href property ([d62818d](https://github.com/vijithassar/bisonica/commit/d62818d837f92b3ed12642137aaa2b50d267b1a9))
+* **core:** nested field lookup ([5e9047b](https://github.com/vijithassar/bisonica/commit/5e9047bf1cc57167959eebe93ae90ca52f99c6a7))
+* **core:** provide accessible color palettes ([f2b43e3](https://github.com/vijithassar/bisonica/commit/f2b43e3eb164b59002ec285fb1f7732b06d16a8f))
+* **core:** separate data binding from static text marks ([2524116](https://github.com/vijithassar/bisonica/commit/2524116ec42721427634e6fab26410292bbcb69d))
+* **core:** square point marks ([8575aca](https://github.com/vijithassar/bisonica/commit/8575acae6cd59e57335bebfad4a8447d9ff58e50))
+* **core:** transparent points ([cca179a](https://github.com/vijithassar/bisonica/commit/cca179a0fa21a72f00421a515b487283fa8768a2))
+
+
+### Bug Fixes
+
+* **core:** add aria-label descriptions to point marks ([3080ae6](https://github.com/vijithassar/bisonica/commit/3080ae6b6937cdcef1769a0d591133adc501c09b))
+* **core:** add tabindex to svg ([0835d1a](https://github.com/vijithassar/bisonica/commit/0835d1ab21e67fac32fce5ba2a95ed645a1b5a8e))
+* **core:** correct tick alignment for horizontal time series bar charts ([2b012e9](https://github.com/vijithassar/bisonica/commit/2b012e9abe9f754e5895ca2bdfcb9587d5f542b6))
+* **core:** correct tick length for discrete encodings ([edf0463](https://github.com/vijithassar/bisonica/commit/edf04632daf7281df1d4b6aaac97d5173c2b20bc))
+* **core:** detach initialization ([39ee036](https://github.com/vijithassar/bisonica/commit/39ee036419cb5d85db55c9a169e12e4e9701332f))
+* **core:** disabling tooltips shouldn't disable descriptions ([2ef1024](https://github.com/vijithassar/bisonica/commit/2ef1024f37bb5962c2d427f9a0018c298130da6b))
+* **core:** fix point data ([5452bd6](https://github.com/vijithassar/bisonica/commit/5452bd6309d10744564609ed379cb7114b1cfe64))
+* **core:** include subtitle in top level aria-label description ([370aae4](https://github.com/vijithassar/bisonica/commit/370aae4ba8e211fc72d934c360494c1c42d6f88e))
+* **core:** incorrect associativity in legend conditional ([9e46696](https://github.com/vijithassar/bisonica/commit/9e46696a2dd8f76df2948ebb588fc248fd129324))
+* **core:** memoize computing longest tick ([452c387](https://github.com/vijithassar/bisonica/commit/452c3873dfa9bc57bcbbc9ae34edc6f4acb57460))
+* **core:** more accurate legend test ([ed7d0bc](https://github.com/vijithassar/bisonica/commit/ed7d0bc7840db8454bf5703788ed5e1e37a0234e))
+* **core:** only create legend node when necessary ([e8fbc50](https://github.com/vijithassar/bisonica/commit/e8fbc501bad5a6f8b061f0cc59ef50001851647d))
+* **core:** optional encoding hash in feature tests ([bd1fabd](https://github.com/vijithassar/bisonica/commit/bd1fabdc8b7832ce12143292b5c5b743c2d1cbee))
+* **core:** refactor metadata field transplanting ([8d6f2cc](https://github.com/vijithassar/bisonica/commit/8d6f2cc11323db93cb92c781880e4949dc86ed40))
+* **core:** stricter isDiscrete helper ([c6527d7](https://github.com/vijithassar/bisonica/commit/c6527d735d69e3ef2563d36facf00a6e934a61f1))
+* **core:** support multiple namespaces in detach helper ([5cc97b4](https://github.com/vijithassar/bisonica/commit/5cc97b4bb82d98a9bbeba23b339b08367917b9fb))
+* **core:** type cast feature helper methods ([ed6c5f6](https://github.com/vijithassar/bisonica/commit/ed6c5f6c63d1acbd1422c135835823edc3bb72c5))
+* **core:** use static accessors for circular chart layouts ([02fd863](https://github.com/vijithassar/bisonica/commit/02fd8637cb348cba07665669957a136e91a6cd84))
+* **tests:** test internal functions ([3fb99e6](https://github.com/vijithassar/bisonica/commit/3fb99e6c19ac0bf9c1eada346541f756b0a71c43))
+* **tooling:** add standard linter ([91095f2](https://github.com/vijithassar/bisonica/commit/91095f2cb33dc36c104ac1571f7be530929b3dab))
+
 ### [0.1.9](https://github.com/vijithassar/bisonica/compare/v0.1.8...v0.1.9) (2022-10-19)
 
 
