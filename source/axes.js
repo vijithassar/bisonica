@@ -120,7 +120,6 @@ const createX = (s, dimensions) => {
 			axis.tickSize(0)
 		}
 
-		const x = selection.select('g.x').attr('class', 'x')
 		const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''].join(' ')
 
 		const xAxis = selection
