@@ -80,7 +80,7 @@ Errors inside the chart library are nested, and error handling typically appends
 
 ## Disabling
 
-To disable default trapping errors and instead surface the semantic stack traces to the consumer:
+To disable default trapping of errors and instead surface the semantic stack traces to the consumer:
 
 ```javascript
 chart(specification).error(null);
