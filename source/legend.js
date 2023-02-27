@@ -73,11 +73,13 @@ const color = _s => {
 			const { color } = parseScales(s)
 			const dispatcher = dispatchers.get(selection.node())
 
+			if (s.encoding.color.legend?.aria !== false) {
+				selection.attr('aria-description', legendDescription(s))
+			}
+
 			if (feature(s).hasLegendTitle()) {
 				selection.append('h3').text(legendTitle(s))
 			}
-
-			selection.attr('aria-description', legendDescription(s))
 
 			const main = selection.append('div').classed('items-main', true).append('ul')
 			const more = d3.create('ul').classed('items-more', true)
