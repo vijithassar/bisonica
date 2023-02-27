@@ -41,7 +41,7 @@ const list = items => {
 	} else {
 		const rest = items.slice(0, -1)
 		const last = items.slice().pop()
-		return `${rest.join(', ')} and ${last}`
+		return `${rest.join(', ')}, and ${last}`
 	}
 }
 
