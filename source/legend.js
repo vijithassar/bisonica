@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 import { dispatchers } from './interactions.js'
 import { encodingField } from './encodings.js'
 import { feature } from './feature.js'
-import { key, noop } from './helpers.js'
+import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
 
@@ -31,6 +31,27 @@ function createLegendItem(config) {
 }
 
 /**
+ * look up the title of the legend
+ * @param {object} s Vega Lite specification
+ */
+const legendTitle = s => {
+	return s.encoding.color.legend?.title || encodingField(s, 'color')
+}
+
+/**
+ * generate a written description for the legend
+ * @param {object} s Vega Lite specification
+ */
+const legendDescription = s => {
+	const description = s.encoding.color.legend?.description
+	if (description) {
+		return description
+	}
+	const domain = parseScales(s).color.domain()
+	return `${mark(s)} legend titled '${legendTitle(s)}' with ${domain.length} values: ${domain.join(', ')}`
+}
+
+/**
  * test whether a node is overflowing
  * @param {object} node DOM node
  * @returns {boolean}
@@ -52,11 +73,14 @@ const color = _s => {
 			const { color } = parseScales(s)
 			const dispatcher = dispatchers.get(selection.node())
 
-			if (feature(s).hasLegendTitle()) {
-				const title = s.encoding.color.legend?.title
-				const legendTitle = title || encodingField(s, 'color')
+			if (s.encoding.color.legend?.aria !== false) {
+				selection.attr('aria-description', legendDescription(s))
+			} else {
+				selection.attr('aria-hidden', true)
+			}
 
-				selection.append('h3').text(legendTitle)
+			if (feature(s).hasLegendTitle()) {
+				selection.append('h3').text(legendTitle(s))
 			}
 
 			const main = selection.append('div').classed('items-main', true).append('ul')
