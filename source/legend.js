@@ -75,6 +75,8 @@ const color = _s => {
 
 			if (s.encoding.color.legend?.aria !== false) {
 				selection.attr('aria-description', legendDescription(s))
+			} else {
+				selection.attr('aria-hidden', true)
 			}
 
 			if (feature(s).hasLegendTitle()) {
