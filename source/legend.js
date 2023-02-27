@@ -33,6 +33,7 @@ function createLegendItem(config) {
 /**
  * look up the title of the legend
  * @param {object} s Vega Lite specification
+ * @returns {string} legend title
  */
 const legendTitle = s => {
 	return s.encoding.color.legend?.title || encodingField(s, 'color')
@@ -41,6 +42,7 @@ const legendTitle = s => {
 /**
  * generate a written description for the legend
  * @param {object} s Vega Lite specification
+ * @returns {string} legend description
  */
 const legendDescription = s => {
 	const description = s.encoding.color.legend?.description
