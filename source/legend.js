@@ -31,6 +31,14 @@ function createLegendItem(config) {
 }
 
 /**
+ * look up the title of the legend
+ * @param {object} s Vega Lite specification
+ */
+const legendTitle = s => {
+	return s.encoding.color.legend?.title || encodingField(s, 'color')
+}
+
+/**
  * test whether a node is overflowing
  * @param {object} node DOM node
  * @returns {boolean}
@@ -53,10 +61,7 @@ const color = _s => {
 			const dispatcher = dispatchers.get(selection.node())
 
 			if (feature(s).hasLegendTitle()) {
-				const title = s.encoding.color.legend?.title
-				const legendTitle = title || encodingField(s, 'color')
-
-				selection.append('h3').text(legendTitle)
+				selection.append('h3').text(legendTitle(s))
 			}
 
 			const main = selection.append('div').classed('items-main', true).append('ul')
