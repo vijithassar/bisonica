@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js'
+import { encodingChannelCovariateCartesian, encodingType, encodingValue } from './encodings.js'
 import { memoize } from './memoize.js'
 import { feature } from './feature.js'
 import { barWidth } from './marks.js'
@@ -140,10 +140,16 @@ const defaultTimeFormatter = date => date.toUTCString()
  * @returns {function} date string formatting function
  */
 const _getTimeFormatter = (s, channel) => {
+	const type = encodingType(s, channel)
 	const format = s.encoding?.[channel]?.axis?.format
-
-	if (format) {
-		return d3.utcFormat(format)
+	const timeUnit = s.encoding?.[channel]?.timeUnit
+	const utc = !!timeUnit?.startsWith('utc')
+	if (type === 'temporal' && format) {
+		if (utc) {
+			return d3.utcFormat(format)
+		} else {
+			return d3.timeFormat(format)
+		}
 	}
 
 	return defaultTimeFormatter
