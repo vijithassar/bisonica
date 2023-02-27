@@ -142,8 +142,14 @@ const defaultTimeFormatter = date => date.toUTCString()
 const _getTimeFormatter = (s, channel) => {
 	const type = encodingType(s, channel)
 	const format = s.encoding?.[channel]?.axis?.format
+	const timeUnit = s.encoding?.[channel]?.timeUnit
+	const utc = !!timeUnit?.startsWith('utc')
 	if (type === 'temporal' && format) {
-		return d3.utcFormat(format)
+		if (utc) {
+			return d3.utcFormat(format)
+		} else {
+			return d3.timeFormat(format)
+		}
 	}
 
 	return defaultTimeFormatter
