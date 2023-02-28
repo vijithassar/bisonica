@@ -134,14 +134,15 @@ const color = _s => {
 
 			let target = main
 
-			const items = color.domain().map((label, index) => {
-				const itemConfig = {
-					group: label,
-					color: color.range()[index]
-				}
+			const items = color.domain()
+				.map((label, index) => {
+					const itemConfig = {
+						group: label,
+						color: color.range()[index]
+					}
 
-				return createLegendItem(itemConfig)
-			})
+					return createLegendItem(itemConfig)
+				})
 
 			target.node().append(...items)
 
