@@ -78,6 +78,32 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
 }
 
 /**
+ * style the legend based on the specification
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} legend style renderer
+ */
+const legendStyle = s => {
+	// map specification properties to styles
+	const styleMap = {
+		cornerRadius: 'border-radius',
+		fillColor: 'background-color',
+		padding: 'padding'
+	}
+	const renderer = selection => {
+		const legend = s.encoding?.color?.legend
+		if (!legend) {
+			return
+		}
+		Object.entries(styleMap).forEach(([property, style]) => {
+			if (legend[property]) {
+				selection.style(style, legend[property])
+			}
+		})
+	}
+	return renderer
+}
+
+/**
  * color scale legend
  * @param {object} _s Vega Lite specification
  * @returns {function} renderer
@@ -95,6 +121,8 @@ const color = _s => {
 			} else {
 				selection.attr('aria-hidden', true)
 			}
+
+			selection.call(legendStyle(s))
 
 			if (feature(s).hasLegendTitle()) {
 				selection.append('h3').text(legendTitle(s))
