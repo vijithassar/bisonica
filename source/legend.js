@@ -135,6 +135,9 @@ const color = _s => {
 			let target = main
 
 			const items = color.domain()
+				.filter(item => {
+					return s.encoding.color?.legend?.values ? s.encoding.color.legend.values.includes(item) : true
+				})
 				.map((label, index) => {
 					const itemConfig = {
 						group: label,
