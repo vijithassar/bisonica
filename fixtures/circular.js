@@ -12,7 +12,6 @@ const circularChartSpec = {
 			type: 'nominal'
 		}
 	},
-	view: { stroke: null },
 	data: {
 		values: [
 			{
