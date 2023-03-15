@@ -255,11 +255,19 @@ const axisTitleY = (s, dimensions) => {
 				.attr('transform', `rotate(270 ${yTitlePosition.x} ${yTitlePosition.y})`)
 				.text(title(s, 'y'))
 		}
+	}
+}
 
-		// extend y axis ticks across the whole chart
+/**
+ * extend ticks across the chart
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ */
+const axisTicksY = (s, dimensions) => {
+	return selection => {
 		if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y' && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
-			const tickEnd = parseScales(s).x.range()[1] + offset
+			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
 			selection
 				.select('.y .axis')
 				.selectAll('.tick')
@@ -279,6 +287,18 @@ const axisTitles = (s, dimensions) => {
 	return selection => {
 		selection.select('.y').call(axisTitleY(s, dimensions))
 		selection.select('.x').call(axisTitleX(s, dimensions))
+	}
+}
+
+/**
+ * adjust axis ticks based on a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} axis tick adjustment function
+ */
+const axisTicks = (s, dimensions) => {
+	return selection => {
+		selection.select('.y').call(axisTicksY(s, dimensions))
 	}
 }
 
@@ -319,6 +339,7 @@ const axes = (_s, dimensions) => {
 
 		if (feature(s).hasAxis()) {
 			selection.select('.axes').call(axisTitles(s, dimensions))
+			selection.select('.axes').call(axisTicks(s, dimensions))
 		}
 	}
 
