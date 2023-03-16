@@ -14,6 +14,7 @@ import { timeMethod, timePeriod } from './time.js'
  * tick count specifier
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
+ * @returns {number|function} tick count
  */
 const ticks = (s, channel) => {
 	const tickCount = s.encoding[channel].axis?.tickCount
@@ -81,7 +82,7 @@ const title = (s, channel) => {
  * render axis tick text content
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
- * @returns {function} tick text renderer
+ * @returns {function(object)} tick text renderer
  */
 const tickText = (s, channel) => {
 	return selection => {
@@ -355,7 +356,7 @@ const postAxisRender = (s, dimensions) => {
  * render chart axes
  * @param {object} _s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} renderer
+ * @returns {function(object)} renderer
  */
 const axes = (_s, dimensions) => {
 	const test = s => {
