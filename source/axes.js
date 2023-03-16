@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 import { axisTickLabelText, rotation } from './text.js'
 import { barWidth } from './marks.js'
-import { degrees, isDiscrete, noop } from './helpers.js'
+import { degrees, detach, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
@@ -344,11 +344,11 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.select('.y').call(createY(s, dimensions))
+			axes.select('.y').call(detach(createY(s, dimensions)))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.select('.x').call(createX(s, dimensions))
+			axes.select('.x').call(detach(createX(s, dimensions)))
 		}
 
 		selection.call(postAxisRender(s, dimensions))
