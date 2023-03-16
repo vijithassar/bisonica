@@ -375,6 +375,39 @@ const _parseScales = (s, dimensions = defaultDimensions) => {
 }
 
 /**
+ * determine whether an encoding uses a time scale
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {boolean}
+ */
+const isTemporalScale = (s, channel) => {
+	const scale = s.encoding[channel].scale?.type
+	return ['time', 'utc'].includes(scale)
+}
+
+/**
+ * determine whether an encoding uses an ordinal scale
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {boolean}
+ */
+const isOrdinalScale = (s, channel) => {
+	const scale = s.encoding[channel].scale?.type
+	return ['ordinal', 'point', 'band'].includes(scale)
+}
+
+/**
+ * determine whether an encoding uses an ordinal scale
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {boolean}
+ */
+const isQuantitativeScale = (s, channel) => {
+	const scale = s.encoding[channel].scale?.type
+	return ['linear', 'pow', 'sqrt', 'symlog', 'log'].includes(scale)
+}
+
+/**
  * generate all scale functions necessary to render a s
  * @param {object} s Vega Lite specification
  * @param {object} [dimensions] chart dimensions
@@ -382,4 +415,4 @@ const _parseScales = (s, dimensions = defaultDimensions) => {
  */
 const parseScales = memoize(_parseScales)
 
-export { colors, parseScales }
+export { colors, isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales }
