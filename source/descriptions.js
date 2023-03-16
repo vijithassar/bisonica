@@ -10,11 +10,8 @@ import { extension } from './extensions.js'
 const delimiter = '; '
 
 const quantitativeChannels = s => {
-	const result = Object.entries(s.encoding)
-		.filter(([_, definition]) => {
-			return definition.type === 'quantitative'
-		})
-		.map(([channel]) => channel)
+	const result = Object.keys(s.encoding)
+		.filter(channel => encodingType(s, channel) === 'quantitative')
 	return result
 }
 
