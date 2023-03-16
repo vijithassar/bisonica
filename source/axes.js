@@ -302,6 +302,21 @@ const axisTicks = (s, dimensions) => {
 }
 
 /**
+ * run functions that require a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} axis adjustment function
+ */
+const postAxisRender = (s, dimensions) => {
+	return selection => {
+		if (feature(s).hasAxis()) {
+			selection.select('.axes').call(axisTitles(s, dimensions))
+			selection.select('.axes').call(axisTicks(s, dimensions))
+		}
+	}
+}
+
+/**
  * render chart axes
  * @param {object} _s Vega Lite specification
  * @param {object} dimensions chart dimensions
@@ -336,10 +351,7 @@ const axes = (_s, dimensions) => {
 			axes.select('.x').call(createX(s, dimensions))
 		}
 
-		if (feature(s).hasAxis()) {
-			selection.select('.axes').call(axisTitles(s, dimensions))
-			selection.select('.axes').call(axisTicks(s, dimensions))
-		}
+		selection.call(postAxisRender(s, dimensions))
 	}
 
 	return renderer
