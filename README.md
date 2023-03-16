@@ -60,6 +60,12 @@ bisonica is often considerably faster than rendering the same chart using `vega-
 
 Unlike `vega-lite.js`, bisonica renders legends as HTML next to the SVG instead of inside the SVG, and as a result they are much easier to restyle with CSS or even control with custom JavaScript behaviors.
 
+# Comparison
+
+In general, bisonica may be a good choice if you need to render straightforward charts with strong accessibility properties using Vega Lite's JSON as the backing format and you can handle writing the custom CSS that will probably be necessary to get the generated graphics over the finish line for your use case.
+
+On the other hand, Vega Lite is definitely still the way to go if you need its more elaborate graphical options, [faceted trellis plots](https://vega.github.io/vega-lite/docs/facet.html), a dynamic exploratory workflow powered by [evaluating string expressions](https://github.com/vega/vega-expression), or any of the features bisonica has intentionally omitted.
+
 # Errors
 
 ## Catching
