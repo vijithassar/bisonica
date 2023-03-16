@@ -60,6 +60,26 @@ bisonica is often considerably faster than rendering the same chart using `vega-
 
 Unlike `vega-lite.js`, bisonica renders legends as HTML next to the SVG instead of inside the SVG, and as a result they are much easier to restyle with CSS or even control with custom JavaScript behaviors.
 
+# Comparison
+
+In general, bisonica may be a good choice if you need to render straightforward charts with strong accessibility properties using Vega Lite's JSON as the backing format and you can handle writing the custom CSS that will probably be necessary to get the generated graphics over the finish line for your use case.
+
+On the other hand, Vega Lite is definitely still the way to go if you need its more elaborate graphical options, [faceted trellis plots](https://vega.github.io/vega-lite/docs/facet.html), a dynamic exploratory workflow powered by [evaluating string expressions](https://github.com/vega/vega-expression), or any of the features bisonica has intentionally omitted.
+
+## Omissions
+
+bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`source/marks.js`](./source/marks.js).
+
+Data must be supplied [inline](https://vega.github.io/vega-lite/docs/data.html#inline) as an array of JavaScript objects attached to `specification.data.values`.
+
+Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
+
+Escaping special characters in field names is not supported. Instead, you should mutate your data before rendering to clean up the affected field names.
+
+Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
+
+Rendering to alternative output formats such as `<canvas>` instead of `<svg>` will most likely never be supported.
+
 # Errors
 
 ## Catching
@@ -87,17 +107,3 @@ chart(specification).error(null);
 ```
 
 You'll then want to handle these in your page or application.
-
-# Omissions
-
-bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`source/marks.js`](./source/marks.js).
-
-Data must be supplied [inline](https://vega.github.io/vega-lite/docs/data.html#inline) as an array of JavaScript objects attached to `specification.data.values`.
-
-Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
-
-Escaping special characters in field names is not supported. Instead, you should mutate your data before rendering to clean up the affected field names.
-
-Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
-
-Rendering to alternative output formats such as `<canvas>` instead of `<svg>` will most likely never be supported.
