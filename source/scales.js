@@ -26,17 +26,14 @@ const syntheticScale = (scale, domain, range) => {
  * parse scale types which have been explicitly specified
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {'scaleSymlog'|null}
+ * @returns {string|null}
  */
 const explicitScale = (s, channel) => {
 	if (s.encoding[channel]?.scale === null) {
 		return null
-	}
-	if (
-		s.encoding[channel]?.scale?.type === 'symlog' &&
-    encodingType(s, channel) === 'quantitative'
-	) {
-		return 'scaleSymlog'
+	} else {
+		const type = s.encoding[channel]?.scale.type
+		return `scale${type.slice(0, 1).toUpperCase() + type.slice(1)}`
 	}
 }
 
