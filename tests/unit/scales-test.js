@@ -357,4 +357,30 @@ module('unit > scales', hooks => {
 			'symmetric log scales should handle zero'
 		)
 	})
+
+	module('explicit scales', () => {
+		const scales = [
+			'sqrt',
+			'pow',
+			'linear',
+			'log',
+			'symlog',
+			'time',
+			'utc',
+			'ordinal',
+			'band',
+			'point',
+			'quantile',
+			'quantize',
+			'threshold'
+		]
+		scales.forEach(scale => {
+			test(`${scale} scale`, assert => {
+				const s = specificationFixture('line')
+				s.encoding.y.scale = { type: scale }
+				const { y } = parseScales(s)
+				assert.equal(typeof y, 'function', `generates d3 scale function for ${scale} scale type`)
+			})
+		})
+	})
 })
