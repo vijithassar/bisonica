@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 import { axisTickLabelText, rotation } from './text.js'
 import { barWidth } from './marks.js'
-import { degrees, isDiscrete, noop } from './helpers.js'
+import { degrees, detach, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
@@ -14,6 +14,7 @@ import { timeMethod, timePeriod } from './time.js'
  * tick count specifier
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
+ * @returns {number|function} tick count
  */
 const ticks = (s, channel) => {
 	const tickCount = s.encoding[channel].axis?.tickCount
@@ -81,7 +82,7 @@ const title = (s, channel) => {
  * render axis tick text content
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
- * @returns {function} tick text renderer
+ * @returns {function(object)} tick text renderer
  */
 const tickText = (s, channel) => {
 	return selection => {
@@ -97,19 +98,45 @@ const tickText = (s, channel) => {
 }
 
 /**
- * render x axis
+ * y axis positions
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} x axis renderer
+ * @returns {object} y axis positions
  */
-const x = (s, dimensions) => {
+const axisOffsetY = (s, dimensions) => {
+	const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
+	const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
+	const x = shift ? bar * 0.5 : 0
+
+	let y
+	const scales = parseScales(s, dimensions)
+	const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
+	if (scales.y) {
+		y = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
+		y += temporalBarOffsetY
+	} else {
+		if (feature(s).isBar() && !feature(s).hasEncodingY()) {
+			y = barWidth(s, dimensions)
+		} else {
+			y = 0
+		}
+	}
+
+	return { x, y }
+}
+
+/**
+ * create x axis
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} x axis creator
+ */
+const createX = (s, dimensions) => {
 	if (!feature(s).hasAxisX()) {
 		return noop
 	}
 	return selection => {
 		const scales = parseScales(s, dimensions)
-		const barOffset = feature(s).isBar() ? barWidth(s, dimensions) : 0
-		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
 
 		const axis = d3.axisBottom(scales.x)
 
@@ -121,111 +148,91 @@ const x = (s, dimensions) => {
 			axis.tickSize(0)
 		}
 
-		const x = selection.select('g.x').attr('class', 'x')
 		const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''].join(' ')
 
-		const xAxis = x
+		const xAxis = selection
 			.append('g')
 			.attr('class', classes)
 			.classed(encodingType(s, 'x'), true)
 
 		xAxis.call(axis)
-		x.call(tickText(s, 'x'))
+		selection.call(tickText(s, 'x'))
 
-		if (feature(s).hasAxisTitleX()) {
-			const xTitle = x.append('text').attr('class', 'title')
-
-			xTitle
-				.attr('x', dimensions.x * 0.5 - barOffset * 0.5)
-				.attr('y', () => {
-					const axisHeight = xAxis.node().getBBox().height * 2
-					const tickHeight = tickMargin(s).bottom
-					const yPosition = axisHeight + tickHeight
-
-					return yPosition
-				})
-				.text(title(s, 'x'))
-		}
-
-		const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
-
-		x.attr('transform', () => {
-			const xOffset = shift ? barOffset * 0.5 : 0
-			let yOffset
-
-			if (scales.y) {
-				yOffset = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
-				yOffset += temporalBarOffsetY
-			} else {
-				if (feature(s).isBar() && !feature(s).hasEncodingY()) {
-					yOffset = barWidth(s, dimensions)
-				} else {
-					yOffset = 0
-				}
-			}
-
-			return `translate(${xOffset},${yOffset})`
+		selection.attr('transform', () => {
+			const { x, y } = axisOffsetY(s, dimensions)
+			return `translate(${x},${y})`
 		})
-
-		const angle = degrees(rotation(s, 'x'))
-
-		if (angle) {
-			const ticks = xAxis.selectAll('.tick text')
-			const textHeight = ticks.node().getBBox().height
-			const position = [textHeight * 0.5 * -1, 0]
-			const degrees = angle % 360
-			const below = degrees > 0 && degrees < 180
-			const transform = `translate(${position.join(', ')}) rotate(${angle})`
-			ticks
-				.attr('transform', transform)
-				.attr('text-anchor', below ? 'start' : 'end')
-		}
 
 		return axis
 	}
 }
 
 /**
- * render y axis
+ * create y axis
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} y axis renderer
+ * @returns {function(object)} y axis creator
  */
-const y = (s, dimensions) => {
+const createY = (s, dimensions) => {
 	if (!feature(s).hasAxisY()) {
 		return noop
 	}
 	return selection => {
 		const scales = parseScales(s, dimensions)
-		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
 
 		const axis = d3.axisLeft(scales.y)
 
 		axis.ticks(ticks(s, 'y'))
 
-		const y = selection.select('g.y')
-		const yAxis = y.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
+		const yAxis = selection.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
-		y.call(tickText(s, 'y'))
+		selection.call(tickText(s, 'y'))
+	}
+}
 
-		const angle = degrees(rotation(s, 'y'))
+/**
+ * render x axis title
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} x axis title renderer
+ */
+const axisTitleX = (s, dimensions) => {
+	return selection => {
+		if (feature(s).hasAxisTitleX()) {
+			const xTitle = selection.append('text').attr('class', 'title')
+			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
 
-		if (angle) {
-			const ticks = yAxis.selectAll('.tick text')
-			const textHeight = ticks.node().getBBox().height
-			const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5]
-			const transform = `translate(${position.join(', ')}) rotate(${angle})`
-			ticks.attr('transform', transform)
+			xTitle
+				.attr('x', dimensions.x * 0.5 - bar * 0.5)
+				.attr('y', () => {
+					const axisHeight = selection.node().getBBox().height * 2
+					const tickHeight = tickMargin(s).bottom
+					const yPosition = axisHeight + tickHeight
+
+					return yPosition
+				})
+				.attr('transform', `translate(0,${axisOffsetY(s, dimensions).y})`)
+				.text(title(s, 'x'))
 		}
+	}
+}
 
+/**
+ * render y axis title
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} y axis title renderer
+ */
+const axisTitleY = (s, dimensions) => {
+	return selection => {
 		if (feature(s).hasAxisTitleY()) {
-			const yTitle = y.append('text').attr('class', 'title')
+			const yTitle = selection.append('text').attr('class', 'title')
 			const yTitlePadding = {
 				x: 0.2
 			}
 			const yTitlePosition = {
-				x: yAxis.node().getBBox().width * (1 + yTitlePadding.x) * -1,
+				x: selection.node().getBBox().width * (1 + yTitlePadding.x) * -1,
 				y: dimensions.y * 0.5
 			}
 
@@ -235,11 +242,20 @@ const y = (s, dimensions) => {
 				.attr('transform', `rotate(270 ${yTitlePosition.x} ${yTitlePosition.y})`)
 				.text(title(s, 'y'))
 		}
+	}
+}
 
-		// extend y axis ticks across the whole chart
+/**
+ * extend ticks across the chart
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} y axis tick extension adjustment function
+ */
+const axisTicksExtensionY = (s, dimensions) => {
+	return selection => {
 		if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y' && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
-			const tickEnd = scales.x.range()[1] + offset
+			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
 			selection
 				.select('.y .axis')
 				.selectAll('.tick')
@@ -250,10 +266,97 @@ const y = (s, dimensions) => {
 }
 
 /**
+ * adjust y axis tick rotation based on a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} y axis tick rotation adjustment function
+ */
+const axisTicksRotationY = (s, dimensions) => {
+	return selection => {
+		const angle = degrees(rotation(s, 'y'))
+
+		if (angle) {
+			const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
+			const ticks = selection.selectAll('.tick text')
+			const textHeight = ticks.node().getBBox().height
+			const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5]
+			const transform = `translate(${position.join(', ')}) rotate(${angle})`
+			ticks.attr('transform', transform)
+		}
+	}
+}
+
+/**
+ * adjust y axis tick rotation based on a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} x axis tick rotation adjustment function
+ */
+const axisTicksRotationX = (s, dimensions) => {
+	return selection => {
+		const angle = degrees(rotation(s, 'x'))
+
+		if (angle) {
+			const ticks = selection.selectAll('.tick text')
+			const textHeight = ticks.node().getBBox().height
+			const position = [textHeight * 0.5 * -1, 0]
+			const degrees = angle % 360
+			const below = degrees > 0 && degrees < 180
+			const transform = `translate(${position.join(', ')}) rotate(${angle})`
+			ticks
+				.attr('transform', transform)
+				.attr('text-anchor', below ? 'start' : 'end')
+		}
+	}
+}
+
+/**
+ * adjust axis titles based on a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} axis title adjustment function
+ */
+const axisTitles = (s, dimensions) => {
+	return selection => {
+		selection.select('.y').call(axisTitleY(s, dimensions))
+		selection.select('.x').call(axisTitleX(s, dimensions))
+	}
+}
+
+/**
+ * adjust axis ticks based on a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} axis tick adjustment function
+ */
+const axisTicks = (s, dimensions) => {
+	return selection => {
+		selection.select('.y').call(axisTicksExtensionY(s, dimensions))
+		selection.select('.x').call(axisTicksRotationX(s, dimensions))
+		selection.select('.y').call(axisTicksRotationY(s, dimensions))
+	}
+}
+
+/**
+ * run functions that require a live DOM node
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} axis adjustment function
+ */
+const postAxisRender = (s, dimensions) => {
+	return selection => {
+		if (feature(s).hasAxis()) {
+			selection.select('.axes').call(axisTitles(s, dimensions))
+			selection.select('.axes').call(axisTicks(s, dimensions))
+		}
+	}
+}
+
+/**
  * render chart axes
  * @param {object} _s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} renderer
+ * @returns {function(object)} renderer
  */
 const axes = (_s, dimensions) => {
 	const test = s => {
@@ -277,12 +380,14 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.call(y(s, dimensions))
+			axes.select('.y').call(detach(createY(s, dimensions)))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.call(x(s, dimensions))
+			axes.select('.x').call(detach(createX(s, dimensions)))
 		}
+
+		selection.call(postAxisRender(s, dimensions))
 	}
 
 	return renderer
