@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/vijithassar/bisonica/compare/v0.1.10...v0.1.11) (2023-03-16)
+
+
+### Features
+
+* **core:** add type declarations ([fdd84f3](https://github.com/vijithassar/bisonica/commit/fdd84f3f96b1147db2dba43a4a73d2a4a2fb02d8))
+* **core:** legend description attribute ([9dbcf00](https://github.com/vijithassar/bisonica/commit/9dbcf0066a3d4dd8e2bf1bbec3b61670c6ca9a7e))
+* **core:** legend styling ([fa2b7af](https://github.com/vijithassar/bisonica/commit/fa2b7aff676f1dbc0e949fd75675545e70094c02))
+* **core:** local time zone formatting ([0f6a841](https://github.com/vijithassar/bisonica/commit/0f6a8410fd0a00cfc15b0bf4c7c996c83b76e56c))
+* **core:** optionally disable all aria attributes for legend ([eb2f7de](https://github.com/vijithassar/bisonica/commit/eb2f7de344443a7a9b2b6775aae1c219e2b04e17))
+* **core:** optionally disable legend description attribute ([f448733](https://github.com/vijithassar/bisonica/commit/f448733b257568306b402feae4292f5e2be728b3))
+* **core:** specify legend values ([ca106a6](https://github.com/vijithassar/bisonica/commit/ca106a64fd9d7b7fab5662ac1502a2af9f23fc97))
+
+
+### Bug Fixes
+
+* **core:** description domain string formatting ([999bf55](https://github.com/vijithassar/bisonica/commit/999bf55eb634e76231c358381f589088b9af6db8))
+* **core:** require temporal type for time format functions ([801026d](https://github.com/vijithassar/bisonica/commit/801026d8611885a789523200d26a28519d4918d3))
+
 ### [0.1.10](https://github.com/vijithassar/bisonica/compare/v0.1.9...v0.1.10) (2023-01-03)
 
 
