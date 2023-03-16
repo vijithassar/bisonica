@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.13](https://github.com/vijithassar/bisonica/compare/v0.1.12...v0.1.13) (2023-03-16)
+
+
+### Bug Fixes
+
+* **core:** add type annotations for transform composition ([772d5b0](https://github.com/vijithassar/bisonica/commit/772d5b0062e47b52dbc465dd149ee5a02156c285))
+
 ### [0.1.12](https://github.com/vijithassar/bisonica/compare/v0.1.11-old...v0.1.12) (2023-03-16)
 
 Upgrade dependencies.
