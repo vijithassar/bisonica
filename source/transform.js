@@ -36,6 +36,12 @@ const calculate = expression => {
 			.join('')
 }
 
+/**
+ * compose all calculate transforms
+ * into a single function
+ * @param {object[]} transforms
+ * @returns {function(object)}
+ */
 const _composeTransforms = transforms => {
 	return d => {
 		if (!transforms?.length) {
