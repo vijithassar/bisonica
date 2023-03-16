@@ -262,8 +262,9 @@ const axisTitleY = (s, dimensions) => {
  * extend ticks across the chart
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
+ * @returns {function(object)} y axis tick extension adjustment function
  */
-const axisTicksY = (s, dimensions) => {
+const axisTicksExtensionY = (s, dimensions) => {
 	return selection => {
 		if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y' && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
@@ -298,7 +299,7 @@ const axisTitles = (s, dimensions) => {
  */
 const axisTicks = (s, dimensions) => {
 	return selection => {
-		selection.select('.y').call(axisTicksY(s, dimensions))
+		selection.select('.y').call(axisTicksExtensionY(s, dimensions))
 	}
 }
 
