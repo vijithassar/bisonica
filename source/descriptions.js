@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { datum } from './helpers.js'
-import { encodingField, encodingValue, encodingChannelQuantitative, encodingChannelCovariateCartesian } from './encodings.js'
+import { encodingField, encodingType, encodingValue, encodingChannelQuantitative, encodingChannelCovariateCartesian } from './encodings.js'
 import { memoize } from './memoize.js'
 import { getTooltipField, tooltipContent } from './tooltips.js'
 import { data } from './data.js'
