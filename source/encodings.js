@@ -1,6 +1,6 @@
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
-import { parseScales } from './scales.js'
+import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'
 import { parseTime } from './time.js'
 import { transform } from './transform.js'
 import { nested } from './helpers.js'
@@ -23,7 +23,7 @@ const encodingField = (s, channel) => {
  * @returns {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
  */
 const encodingType = (s, channel) => {
-	return s.encoding?.[channel]?.type
+	return s.encoding?.[channel]?.type || encodingTypeDefault(s, channel)
 }
 
 /**
@@ -69,6 +69,55 @@ const encodingChannelQuantitative = s => {
 const encodingValueQuantitative = s => {
 	return encodingValue(s, encodingChannelQuantitative(s))
 }
+
+/**
+ * default encoding types
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {string} default encoding type
+ */
+const _encodingTypeDefault = (s, channel) => {
+	const channelDefinition = s.encoding?.[channel]
+	if (!channelDefinition) {
+		return null
+	}
+	// quantitative
+	if (channelDefinition.bin) {
+		return 'quantitative'
+	}
+	if (channelDefinition.aggregate && !['argmin', 'argmax'].includes(channelDefinition.aggregate)) {
+		return 'quantitative'
+	}
+	if (isQuantitativeScale(s, channel)) {
+		return 'quantitative'
+	}
+	// temporal
+	if (channelDefinition.timeUnit || isTemporalScale(s, channel)) {
+		return 'temporal'
+	}
+	// ordinal
+	if (channelDefinition.sort || isOrdinalScale(s, channel) || encodingField(s, channel) === 'order') {
+		return 'ordinal'
+	}
+	// constant values
+	if (channelDefinition.datum) {
+		switch (typeof channelDefinition.datum) {
+		case 'number':
+			return 'quantitative'
+		case 'string':
+			return 'nominal'
+		// this should be a datetime object
+		// specifically, not any object
+		case 'object':
+			return 'temporal'
+		}
+	}
+	// field default
+	if (channelDefinition.field) {
+		return 'nominal'
+	}
+}
+const encodingTypeDefault = memoize(_encodingTypeDefault)
 
 /**
  * determine which channel matches a predicate function
