@@ -10,7 +10,8 @@ import { data } from '../../source/data.js'
 import { dimensions } from './support.js'
 import qunit from 'qunit'
 import { parseTime } from '../../source/time.js'
-import { specificationFixture } from '../test-helpers.js'
+import { render, specificationFixture } from '../test-helpers.js'
+import { chart } from '../../source/chart.js'
 
 const { module, test } = qunit
 
@@ -167,5 +168,82 @@ module('unit > encoders', () => {
 		const getValue = encodingValue(s, 'x')
 
 		assert.ok(getValue(target), 1)
+	})
+
+	module('default encoding types', () => {
+		module('nominal', () => {
+			test('field property', assert => {
+				const s = { encoding: { x: { field: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'nominal')
+			})
+		})
+		module('quantitative', () => {
+			test('aggregate property', assert => {
+				const s = { encoding: { x: { aggregate: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'quantitative')
+			})
+			test('argmin aggregate', assert => {
+				const s = { encoding: { x: { aggregate: 'argmin' } } }
+				assert.notEqual(encodingType(s, 'x'), 'quantitative')
+			})
+			test('argmax aggregate', assert => {
+				const s = { encoding: { x: { aggregate: 'argmax' } } }
+				assert.notEqual(encodingType(s, 'x'), 'quantitative')
+			})
+			test('bin property', assert => {
+				const s = { encoding: { x: { bin: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'quantitative')
+			})
+			test('quantitative scale', assert => {
+				const s = { encoding: { x: { scale: { type: 'linear' } } } }
+				assert.equal(encodingType(s, 'x'), 'quantitative')
+			})
+		})
+		module('temporal', () => {
+			test('timeUnit property', assert => {
+				const s = { encoding: { x: { timeUnit: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'temporal')
+			})
+			test('temporal scale', assert => {
+				const s = { encoding: { x: { scale: { type: 'utc' } } } }
+				assert.equal(encodingType(s, 'x'), 'temporal')
+			})
+		})
+		module('ordinal', () => {
+			test('sort property', assert => {
+				const s = { encoding: { x: { sort: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'ordinal')
+			})
+			test('order encoding field', assert => {
+				const s = { encoding: { x: { field: 'order' } } }
+				assert.equal(encodingType(s, 'x'), 'ordinal')
+			})
+			test('ordinal scale', assert => {
+				const s = { encoding: { x: { scale: { type: 'ordinal' } } } }
+				assert.equal(encodingType(s, 'x'), 'ordinal')
+			})
+		})
+		module('datum encoding', () => {
+			test('number implies quantitative encoding', assert => {
+				const s = { encoding: { x: { datum: 1 } } }
+				assert.equal(encodingType(s, 'x'), 'quantitative')
+			})
+			test('string implies nominal encoding', assert => {
+				const s = { encoding: { x: { datum: 'a' } } }
+				assert.equal(encodingType(s, 'x'), 'nominal')
+			})
+			test('datetime object implies temporal encoding', assert => {
+				const s = { encoding: { x: { datum: { year: 2000 } } } }
+				assert.equal(encodingType(s, 'x'), 'temporal')
+			})
+		})
+		test('successfully creates charts with default encoding types', assert => {
+			const s = specificationFixture('circular')
+			delete s.encoding.color.type
+			delete s.encoding.theta.type
+			s.encoding.theta.scale = { type: 'linear' }
+			assert.equal(typeof chart(s), 'function', 'generates a chart function from default encoding types')
+			assert.equal(render(s).querySelectorAll('.chart').length, 1, 'chart function with default encoding types does not throw error')
+		})
 	})
 })
