@@ -3,7 +3,7 @@ import { data, sumByCovariates } from './data.js'
 import { colors } from './color.js'
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
-import { identity, isDiscrete, values } from './helpers.js'
+import { identity, isDiscrete, isTextChannel, values } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime, temporalBarDimensions } from './time.js'
 import { sorter } from './sort.js'
@@ -91,15 +91,6 @@ const customDomain = (s, channel) => {
 			return domain
 		}
 	}
-}
-
-/**
- * determine whether a given channel is text based
- * @param {string} channel encoding parameter
- * @returns {boolean} whether the field is text based
- */
-const isTextChannel = channel => {
-	return ['href', 'text', 'tooltip', 'description', 'url'].includes(channel)
 }
 
 /**

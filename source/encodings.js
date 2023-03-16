@@ -3,7 +3,7 @@ import { memoize } from './memoize.js'
 import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'
 import { parseTime } from './time.js'
 import { transform } from './transform.js'
-import { nested } from './helpers.js'
+import { isTextChannel, nested } from './helpers.js'
 
 /**
  * look up the field used for a visual encoding

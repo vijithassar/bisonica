@@ -154,6 +154,15 @@ const isDiscrete = (s, channel) => {
 }
 
 /**
+ * determine whether a given channel is text based
+ * @param {string} channel encoding parameter
+ * @returns {boolean} whether the field is text based
+ */
+const isTextChannel = channel => {
+	return ['href', 'text', 'tooltip', 'description', 'url'].includes(channel)
+}
+
+/**
  * convert polar coordinates to Cartesian
  * @param {number} radius radius
  * @param {number} angle angle in radians
@@ -198,6 +207,7 @@ export {
 	degrees,
 	isContinuous,
 	isDiscrete,
+	isTextChannel,
 	polarToCartesian,
 	detach
 }
