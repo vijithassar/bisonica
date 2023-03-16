@@ -33,9 +33,9 @@ const chart = (s, panelDimensions) => {
 
 			initializeInteractions(selection.node(), s)
 
-			selection.call(audio(s))
-
 			const chartNode = selection.select('div.chart')
+
+			chartNode.call(audio(s))
 
 			initializeInteractions(chartNode.node(), s)
 
