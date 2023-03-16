@@ -363,7 +363,7 @@ const axes = (_s, dimensions) => {
 		if (feature(_s).hasLayers()) {
 			return s
 		} else {
-			return s.encoding?.x?.type && s.encoding?.y?.type
+			return s.encoding?.x && s.encoding?.y
 		}
 	}
 	let s = layerMatch(_s, test)

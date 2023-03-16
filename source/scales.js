@@ -265,9 +265,9 @@ const coreScales = (s, dimensions) => {
 		}
 	})
 
-	Object.entries(s.encoding)
-		.filter(([channel]) => !isTextChannel(channel) && !scales[channel])
-		.forEach(([channel]) => {
+	Object.keys(s.encoding)
+		.filter(channel => !isTextChannel(channel) && !scales[channel])
+		.forEach(channel => {
 			try {
 				const method = scaleMethod(s, channelRoot(s, channel))
 				if (method === null) {

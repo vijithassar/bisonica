@@ -1,5 +1,5 @@
 import { layoutDirection } from './marks.js'
-import { encodingChannelCovariateCartesian, encodingChannelQuantitative, encodingValue } from './encodings.js'
+import { encodingChannelCovariateCartesian, encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
 import { mark } from './helpers.js'
 import { memoize } from './memoize.js'
@@ -99,8 +99,8 @@ const _createAccessors = (s, type = null) => {
 		}
 	})
 
-	Object.entries(s.encoding).forEach(([channel, encoding]) => {
-		if (encoding?.type === 'temporal') {
+	Object.keys(s.encoding).forEach(channel => {
+		if (encodingType(s, channel) === 'temporal') {
 			const originalAccessor = accessors[channel]
 
 			accessors[channel] = d => parseTime(originalAccessor(d))

@@ -1,4 +1,4 @@
-import { encodingValue } from './encodings.js'
+import { encodingType, encodingValue } from './encodings.js'
 import { layerTestRecursive } from './views.js'
 import { mark, values } from './helpers.js'
 import { memoize } from './memoize.js'
@@ -21,7 +21,7 @@ const _feature = s => {
 	const isMulticolor = layerTestRecursive(s, multicolorTest)
 
 	const temporalTest = s => {
-		return Object.values(s.encoding || {}).some(encoding => encoding.type === 'temporal')
+		return Object.keys(s.encoding || {}).some(channel => encodingType(s, channel) === 'temporal')
 	}
 	const isTemporal = layerTestRecursive(s, temporalTest)
 

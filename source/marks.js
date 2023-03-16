@@ -159,9 +159,9 @@ const markInteractionSelector = _s => {
  * @param {object} s Vega Lite specification
  */
 const layoutDirection = s => {
-	if (s.encoding.x?.type === 'quantitative') {
+	if (encodingType(s, 'x') === 'quantitative') {
 		return 'horizontal'
-	} else if (s.encoding.y?.type === 'quantitative') {
+	} else if (encodingType(s, 'y') === 'quantitative') {
 		return 'vertical'
 	}
 }
@@ -530,7 +530,7 @@ const lineMarks = (s, dimensions) => {
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const markTransforms = ['x', 'y'].map(channel => {
-			const offset = ['nominal', 'ordinal'].includes(s.encoding[channel].type)
+			const offset = ['nominal', 'ordinal'].includes(encodingType(s, channel))
 
 			if (offset) {
 				const scale = parseScales(s, dimensions)[channel]
