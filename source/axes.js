@@ -97,6 +97,34 @@ const tickText = (s, channel) => {
 }
 
 /**
+ * y axis positions
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {object} y axis positions
+ */
+const axisOffsetY = (s, dimensions) => {
+	const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
+	const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
+	const x = shift ? bar * 0.5 : 0
+
+	let y
+	const scales = parseScales(s, dimensions)
+	const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
+	if (scales.y) {
+		y = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
+		y += temporalBarOffsetY
+	} else {
+		if (feature(s).isBar() && !feature(s).hasEncodingY()) {
+			y = barWidth(s, dimensions)
+		} else {
+			y = 0
+		}
+	}
+
+	return { x, y }
+}
+
+/**
  * create x axis
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
@@ -108,7 +136,6 @@ const createX = (s, dimensions) => {
 	}
 	return selection => {
 		const scales = parseScales(s, dimensions)
-		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
 
 		const axis = d3.axisBottom(scales.x)
 
@@ -130,24 +157,9 @@ const createX = (s, dimensions) => {
 		xAxis.call(axis)
 		selection.call(tickText(s, 'x'))
 
-		const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
 		selection.attr('transform', () => {
-			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
-			const xOffset = shift ? bar * 0.5 : 0
-			let yOffset
-
-			if (scales.y) {
-				yOffset = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
-				yOffset += temporalBarOffsetY
-			} else {
-				if (feature(s).isBar() && !feature(s).hasEncodingY()) {
-					yOffset = barWidth(s, dimensions)
-				} else {
-					yOffset = 0
-				}
-			}
-
-			return `translate(${xOffset},${yOffset})`
+			const { x, y } = axisOffsetY(s, dimensions)
+			return `translate(${x},${y})`
 		})
 
 		const angle = degrees(rotation(s, 'x'))
@@ -224,6 +236,7 @@ const axisTitleX = (s, dimensions) => {
 
 					return yPosition
 				})
+				.attr('transform', `translate(0,${axisOffsetY(s, dimensions)})`)
 				.text(title(s, 'x'))
 		}
 	}
