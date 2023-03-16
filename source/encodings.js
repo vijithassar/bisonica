@@ -55,7 +55,7 @@ const encodingValue = (s, channel) => {
  * @returns {string} visual encoding channel
  */
 const encodingChannelQuantitative = s => {
-	const test = (channel, definition) => definition.type === 'quantitative'
+	const test = channel => encodingType(s, channel) === 'quantitative'
 
 	return encodingTest(s, test)
 }
@@ -155,10 +155,12 @@ const encodingChannelCovariate = s => {
 	if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
 		return 'color'
 	} else if (feature(s).isCartesian()) {
-		const covariate = Object.entries(s.encoding).filter(
-			([channel, definition]) =>
-				channel !== 'color' && definition.type && definition.type !== 'quantitative'
-		)
+		const filter = channel => {
+			return isTextChannel(channel) === false &&
+				channel !== 'color' &&
+				encodingType(s, channel) !== 'quantitative'
+		}
+		const covariate = Object.keys(s.encoding).filter(filter)
 
 		if (covariate.length !== 1) {
 			throw new Error(`could not identify independent variable between ${covariate.join(', ')}`)

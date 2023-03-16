@@ -10,7 +10,8 @@ import { data } from '../../source/data.js'
 import { dimensions } from './support.js'
 import qunit from 'qunit'
 import { parseTime } from '../../source/time.js'
-import { specificationFixture } from '../test-helpers.js'
+import { render, specificationFixture } from '../test-helpers.js'
+import { chart } from '../../source/chart.js'
 
 const { module, test } = qunit
 
@@ -235,6 +236,14 @@ module('unit > encoders', () => {
 				const s = { encoding: { x: { datum: { year: 2000 } } } }
 				assert.equal(encodingType(s, 'x'), 'temporal')
 			})
+		})
+		test('successfully creates charts with default encoding types', assert => {
+			const s = specificationFixture('circular')
+			delete s.encoding.color.type
+			delete s.encoding.theta.type
+			s.encoding.theta.scale = { type: 'linear' }
+			assert.equal(typeof chart(s), 'function', 'generates a chart function from default encoding types')
+			assert.equal(render(s).querySelectorAll('.chart').length, 1, 'chart function with default encoding types does not throw error')
 		})
 	})
 })
