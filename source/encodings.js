@@ -161,7 +161,7 @@ const encodingChannelCovariate = s => {
 		)
 
 		if (covariate.length !== 1) {
-			throw new Error('could not identify independent variable')
+			throw new Error(`could not identify independent variable between ${covariate.join(', ')}`)
 		}
 
 		return covariate.pop()[0]
