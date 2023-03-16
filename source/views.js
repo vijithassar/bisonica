@@ -161,9 +161,9 @@ const _layerPrimary = s => {
 		// linear
 		s => (s.encoding.x && !s.encoding.y) || (!s.encoding.x && s.encoding.y)
 	]
-	// add a wrapper to require encoding
+		// add a wrapper to require encoding
 		.map(heuristic => s => s.encoding && heuristic(s))
-	// add a wrapper to prohibit static text marks
+		// add a wrapper to prohibit static text marks
 		.map(heuristic => s => !feature(s).hasStaticText() && heuristic(s))
 
 	for (const heuristic of heuristics) {
