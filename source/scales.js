@@ -32,9 +32,19 @@ const explicitScale = (s, channel) => {
 	if (s.encoding[channel]?.scale === null) {
 		return null
 	} else {
-		const type = s.encoding[channel]?.scale.type
+		const type = scaleType(s, channel)
 		return `scale${type.slice(0, 1).toUpperCase() + type.slice(1)}`
 	}
+}
+
+/**
+ * scale type lookup
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {string} scale type
+ */
+const scaleType = (s, channel) => {
+	return s.encoding[channel]?.scale?.type
 }
 
 /**
@@ -45,7 +55,7 @@ const explicitScale = (s, channel) => {
  * @returns {string|null} d3 scale type
  */
 const scaleMethod = (s, channel) => {
-	if (s.encoding[channel]?.scale?.type || s.encoding[channel]?.scale === null) {
+	if (scaleType(s, channel) || s.encoding[channel]?.scale === null) {
 		return explicitScale(s, channel)
 	}
 	let methods = {
@@ -372,8 +382,7 @@ const _parseScales = (s, dimensions = defaultDimensions) => {
  * @returns {boolean}
  */
 const isTemporalScale = (s, channel) => {
-	const scale = s.encoding[channel].scale?.type
-	return ['time', 'utc'].includes(scale)
+	return ['time', 'utc'].includes(scaleType(s, channel))
 }
 
 /**
@@ -383,8 +392,7 @@ const isTemporalScale = (s, channel) => {
  * @returns {boolean}
  */
 const isOrdinalScale = (s, channel) => {
-	const scale = s.encoding[channel].scale?.type
-	return ['ordinal', 'point', 'band'].includes(scale)
+	return ['ordinal', 'point', 'band'].includes(scaleType(s, channel))
 }
 
 /**
@@ -394,8 +402,7 @@ const isOrdinalScale = (s, channel) => {
  * @returns {boolean}
  */
 const isQuantitativeScale = (s, channel) => {
-	const scale = s.encoding[channel].scale?.type
-	return ['linear', 'pow', 'sqrt', 'symlog', 'log'].includes(scale)
+	return ['linear', 'pow', 'sqrt', 'symlog', 'log'].includes(scaleType(s, channel))
 }
 
 /**
