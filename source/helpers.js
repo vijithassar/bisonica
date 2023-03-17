@@ -186,10 +186,16 @@ const polarToCartesian = (radius, angle) => {
 const detach = (fn, ...rest) => {
 	return selection => {
 		const tag = selection.node().tagName
-		const namespace = tag === 'g' ? 'svg' : 'html'
-		const detached = d3.create(`${namespace}:${tag}`)
-		detached.call(fn, ...rest)
-		selection.append(() => detached.node())
+		try {
+			const namespace = tag === 'g' ? 'svg' : 'html'
+			const detached = d3.create(`${namespace}:${tag}`)
+			detached.call(fn, ...rest)
+			selection.append(() => detached.node())
+		} catch (error) {
+			const identifier = fn.name ? `function ${fn.name}` : 'function'
+			error.message = `could not run ${identifier} with detached <${tag}> node - ${error.message}`
+			throw error
+		}
 	}
 }
 
