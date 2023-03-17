@@ -2,6 +2,14 @@
 
 bisonica is a minimalist and accessibility-first alternative renderer for the [Vega Lite](https://vega.github.io/vega-lite/) data visualization format, a replacement for the [original `vega-lite.js` library](https://github.com/vega/vega-lite) which reads in the same JSON configuration objects and outputs charts.
 
+# Install
+
+Install from [npm](https://www.npmjs.com/package/bisonica) using your tool of choice. For example:
+
+```bash
+npm install bisonica
+```
+
 # Quick Start
 
 The `chart()` function takes a Vega Lite JSON specification object and uses it to create a chart rendering function which can be run using [`d3-selection`](https://github.com/d3/d3-selection).
