@@ -117,7 +117,7 @@ const channelRoot = (s, channel) => {
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {number[]} domain
+ * @returns {number[]|string[]} domain
  */
 const domainBaseValues = (s, channel) => {
 	const type = encodingType(s, channel)
