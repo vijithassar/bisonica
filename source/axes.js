@@ -7,7 +7,7 @@ import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } f
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
-import { axisTitleStyles } from './style.js'
+import { axisTitleStyles, axisTickStyles } from './style.js'
 import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
 
@@ -349,8 +349,10 @@ const axisTicks = (s, dimensions) => {
 			.call(axisTicksExtensionY(s, dimensions))
 		selection.selectAll('.x .tick')
 			.call(axisTicksRotationX(s, dimensions))
+			.call(axisTickStyles(s, 'x'))
 		selection.selectAll('.y .tick')
 			.call(axisTicksRotationY(s, dimensions))
+			.call(axisTickStyles(s, 'y'))
 	}
 }
 

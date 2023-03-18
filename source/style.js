@@ -23,7 +23,7 @@ const tickStyles = {
  */
 const axisTitleStyles = (s, channel) => {
 	const axis = s.encoding[channel].axis
-	if (!axis) {
+	if (axis === undefined || axis === null) {
 		return noop
 	}
 
@@ -46,7 +46,7 @@ const axisTitleStyles = (s, channel) => {
  */
 const axisTickStyles = (s, channel) => {
 	const axis = s.encoding[channel].axis
-	if (!axis) {
+	if (axis === undefined || axis === null) {
 		return noop
 	}
 

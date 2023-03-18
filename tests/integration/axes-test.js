@@ -112,6 +112,14 @@ module('integration > axes', function() {
 		assert.equal(title.style.opacity, 0.5)
 	})
 
+	test('renders a chart with custom axis tick styling', assert => {
+		const spec = specificationFixture('line')
+		spec.encoding.x.axis.tickOpacity = 0.5
+		const element = render(spec)
+		const tick = element.querySelector(`${testSelector('axes-x')} .tick`)
+		assert.equal(tick.style.opacity, 0.5)
+	})
+
 	test('disables axes', assert => {
 		const spec = specificationFixture('categoricalBar')
 		spec.encoding.x.axis = null
