@@ -6,7 +6,7 @@ import { feature } from './feature.js'
 import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
-import { applyStyles } from './style.js'
+import { renderStyles } from './styles.js'
 
 /**
  * color scale legend item
@@ -89,16 +89,7 @@ const legendStyles = {
  * @param {object} s Vega Lite specification
  * @returns {function(object)} legend style renderer
  */
-const legendStyle = s => {
-	const renderer = selection => {
-		const legend = s.encoding?.color?.legend
-		if (legend === undefined || legend === null) {
-			return noop
-		}
-		selection.call(applyStyles(legendStyles, legend))
-	}
-	return renderer
-}
+const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
 /**
  * color scale legend
