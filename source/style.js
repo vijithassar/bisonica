@@ -9,6 +9,12 @@ const titleStyles = {
 	titleOpacity: 'opacity'
 }
 
+const tickStyles = {
+	tickColor: 'fill',
+	tickCap: 'stroke-linecap',
+	tickOpacity: 'opacity'
+}
+
 /**
  * render style instructions for an axis title
  * @param {object} s Vega Lite specification
@@ -32,4 +38,27 @@ const axisTitleStyles = (s, channel) => {
 	}
 }
 
-export { axisTitleStyles }
+/**
+ * render style instructions for axis ticks
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {function(object)} tick style rendering function
+ */
+const axisTickStyles = (s, channel) => {
+	const axis = s.encoding[channel].axis
+	if (!axis) {
+		return noop
+	}
+
+	return selection => {
+		Object.entries(tickStyles)
+			.forEach(([js, css]) => {
+				const value = axis[js]
+				if (value !== undefined) {
+					selection.style(css, value)
+				}
+			})
+	}
+}
+
+export { axisTitleStyles, axisTickStyles }
