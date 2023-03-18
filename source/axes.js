@@ -372,8 +372,7 @@ const titleStyles = {
  * @returns {function(object)} title style rendering function
  */
 const axisTitleStyles = (s, channel) => {
-	const axis = s.encoding[channel].axis
-	return renderStyles(titleStyles, axis)
+	return renderStyles(titleStyles, s.encoding[channel].axis)
 }
 
 const tickStyles = {
@@ -389,8 +388,7 @@ const tickStyles = {
  * @returns {function(object)} tick style rendering function
  */
 const axisTickStyles = (s, channel) => {
-	const axis = s.encoding[channel].axis
-	return renderStyles(tickStyles, axis)
+	return renderStyles(tickStyles, s.encoding[channel].axis)
 }
 
 /**

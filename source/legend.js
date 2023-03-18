@@ -91,8 +91,7 @@ const legendStyles = {
  */
 const legendStyle = s => {
 	const renderer = selection => {
-		const legend = s.encoding?.color?.legend
-		selection.call(renderStyles(legendStyles, legend))
+		selection.call(renderStyles(legendStyles, s.encoding?.color?.legend))
 	}
 	return renderer
 }
