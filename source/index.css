@@ -137,14 +137,6 @@ path.mark {
   text-anchor: middle;
 }
 
-.axes .x .axis .tick line {
-  stroke: var(--medium-grey);
-}
-
-.axes .y .axis .tick line {
-  stroke: var(--dark-grey);
-}
-
 .axes:not(.angled) .x .tick text {
   text-anchor: middle;
 }
