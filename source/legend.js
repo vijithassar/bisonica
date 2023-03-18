@@ -6,6 +6,7 @@ import { feature } from './feature.js'
 import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
+import { applyStyles } from './style.js'
 
 /**
  * color scale legend item
@@ -77,28 +78,24 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
 	return scrollHeight > clientHeight || scrollWidth > clientWidth
 }
 
+const legendStyles = {
+	cornerRadius: 'border-radius',
+	fillColor: 'background-color',
+	padding: 'padding'
+}
+
 /**
  * style the legend based on the specification
  * @param {object} s Vega Lite specification
  * @returns {function(object)} legend style renderer
  */
 const legendStyle = s => {
-	// map specification properties to styles
-	const styleMap = {
-		cornerRadius: 'border-radius',
-		fillColor: 'background-color',
-		padding: 'padding'
-	}
 	const renderer = selection => {
 		const legend = s.encoding?.color?.legend
-		if (!legend) {
-			return
+		if (legend === undefined || legend === null) {
+			return noop
 		}
-		Object.entries(styleMap).forEach(([property, style]) => {
-			if (legend[property]) {
-				selection.style(style, legend[property])
-			}
-		})
+		selection.call(applyStyles(legendStyles, legend))
 	}
 	return renderer
 }
