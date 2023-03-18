@@ -23,6 +23,14 @@ const style = style => {
 }
 
 /**
+ * filter known styles down to relevant styles as key/value pairs
+ * @returns {array[]} array of key/value pairs
+ */
+const filterStyles = filter => {
+	return Object.entries(styleMap).filter(filter)
+}
+
+/**
  * render style instructions for an axis title
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
@@ -34,16 +42,14 @@ const axisTitleStyles = (s, channel) => {
 		return noop
 	}
 
-	const key = 'title'
+	const filter = ([js]) => js.startsWith('title')
 
 	return selection => {
-		Object.keys(styleMap)
-			.filter(js => js.startsWith(key))
-			.forEach(js => {
+		filterStyles(filter)
+			.forEach(([js]) => {
 				const value = axis[js]
 				if (value !== undefined) {
-					const css = style(js)
-					selection.style(css, value)
+					selection.style(style(js), value)
 				}
 			})
 	}
