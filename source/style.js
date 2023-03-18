@@ -1,6 +1,6 @@
 import { noop } from './helpers.js'
 
-const styleMap = {
+const titleStyles = {
 	titleColor: 'fill',
 	titleFont: 'font-family',
 	titleFontSize: 'font-size',
@@ -9,25 +9,27 @@ const styleMap = {
 	titleOpacity: 'opacity'
 }
 
-/**
- * convert a style from JSON to CSS syntax
- * @param {string} style JavaScript style instruction in camelCase
- * @returns {string} CSS style property in kebab-case
- */
-const style = style => {
-	if (styleMap[style]) {
-		return styleMap[style]
-	} else {
-		throw new Error(`could not convert unknown style property ${style} to CSS equivalent`)
-	}
+const tickStyles = {
+	tickColor: 'fill',
+	tickCap: 'stroke-linecap',
+	tickOpacity: 'opacity'
 }
 
 /**
- * filter known styles down to relevant styles as key/value pairs
- * @returns {array[]} array of key/value pairs
+ * read styles from a JavaScript object and apply them as CSS properties
+ * @param {object} styles key/value pairs of JavaScript and CSS properties
+ * @param {object} source desired styles with JavaScript style keys
  */
-const filterStyles = filter => {
-	return Object.entries(styleMap).filter(filter)
+const applyStyles = (styles, source) => {
+	return selection => {
+		Object.entries(styles)
+			.forEach(([js, css]) => {
+				const value = source[js]
+				if (value !== undefined) {
+					selection.style(css, value)
+				}
+			})
+	}
 }
 
 /**
@@ -38,21 +40,24 @@ const filterStyles = filter => {
  */
 const axisTitleStyles = (s, channel) => {
 	const axis = s.encoding[channel].axis
-	if (!axis) {
+	if (axis === undefined || axis === null) {
 		return noop
 	}
-
-	const filter = ([js]) => js.startsWith('title')
-
-	return selection => {
-		filterStyles(filter)
-			.forEach(([js]) => {
-				const value = axis[js]
-				if (value !== undefined) {
-					selection.style(style(js), value)
-				}
-			})
-	}
+	return applyStyles(titleStyles, axis)
 }
 
-export { axisTitleStyles }
+/**
+ * render style instructions for axis ticks
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {function(object)} tick style rendering function
+ */
+const axisTickStyles = (s, channel) => {
+	const axis = s.encoding[channel].axis
+	if (axis === undefined || axis === null) {
+		return noop
+	}
+	return applyStyles(tickStyles, axis)
+}
+
+export { axisTitleStyles, axisTickStyles }
