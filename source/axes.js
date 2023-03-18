@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 
-import { axisTickLabelText, rotation, truncate } from './text.js'
+import { axisTicksLabelText, rotation, truncate } from './text.js'
 import { barWidth } from './marks.js'
 import { degrees, detach, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
@@ -102,7 +102,7 @@ const tickText = (s, channel) => {
 		const ticks = selection.selectAll('.tick').select('text')
 
 		if (hasLabels) {
-			ticks.call(axisTickLabelText(s, channel))
+			ticks.call(axisTicksLabelText(s, channel))
 		} else {
 			ticks.text('')
 		}
@@ -349,10 +349,10 @@ const axisTicks = (s, dimensions) => {
 			.call(axisTicksExtensionY(s, dimensions))
 		selection.selectAll('.x .tick')
 			.call(axisTicksRotationX(s, dimensions))
-			.call(axisTickStyles(s, 'x'))
+			.call(axisTicksStyles(s, 'x'))
 		selection.selectAll('.y .tick')
 			.call(axisTicksRotationY(s, dimensions))
-			.call(axisTickStyles(s, 'y'))
+			.call(axisTicksStyles(s, 'y'))
 	}
 }
 
@@ -385,7 +385,7 @@ const tickStyles = {
  * @param {string} channel encoding channel
  * @returns {function(object)} tick style rendering function
  */
-const axisTickStyles = (s, channel) => renderStyles(tickStyles, s.encoding[channel].axis)
+const axisTicksStyles = (s, channel) => renderStyles(tickStyles, s.encoding[channel].axis)
 
 /**
  * run functions that require a live DOM node

@@ -147,7 +147,7 @@ const truncate = memoize(_truncate)
  * @param {object} [styles] styles to incorporate when measuring text width
  * @returns {string} text processing function
  */
-const _axisTickLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
+const _axisTicksLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
 	let text = textContent
 
 	text = format(s, channel)(text)
@@ -160,7 +160,7 @@ const _axisTickLabelTextContent = (s, channel, textContent, styles = defaultStyl
 
 	return text
 }
-const axisTickLabelTextContent = memoize(_axisTickLabelTextContent)
+const axisTicksLabelTextContent = memoize(_axisTicksLabelTextContent)
 
 /**
  * compute margin values based on chart type
@@ -172,7 +172,7 @@ const _longestAxisTickLabelTextWidth = s => {
 
 	const channels = ['x', 'y']
 	const tickLabels = channels.map(channel => {
-		const processText = tick => axisTickLabelTextContent(s, channel, tick)
+		const processText = tick => axisTicksLabelTextContent(s, channel, tick)
 
 		if (isContinuous(s, channel)) {
 			return scales[channel].ticks(ticks(s, channel)).map(processText)
@@ -204,7 +204,7 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
  * @param {'x'|'y'} channel encoding channel
  * @returns {function} text processing function
  */
-const axisTickLabelText = (s, channel) => {
+const axisTicksLabelText = (s, channel) => {
 	let styles = {}
 
 	return selection => {
@@ -216,7 +216,7 @@ const axisTickLabelText = (s, channel) => {
 			styles[channel] = fontStyles(node)
 		}
 
-		selection.text(label => axisTickLabelTextContent(s, channel, label, styles[channel]))
+		selection.text(label => axisTicksLabelTextContent(s, channel, label, styles[channel]))
 	}
 }
 
@@ -225,7 +225,7 @@ export {
 	rotation,
 	format,
 	truncate,
-	axisTickLabelTextContent,
-	axisTickLabelText,
+	axisTicksLabelTextContent,
+	axisTicksLabelText,
 	longestAxisTickLabelTextWidth
 }
