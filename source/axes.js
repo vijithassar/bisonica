@@ -7,7 +7,7 @@ import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } f
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
-import { renderStyles } from './style.js'
+import { renderStyles } from './styles.js'
 import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
 

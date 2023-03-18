@@ -6,7 +6,7 @@ import { feature } from './feature.js'
 import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
-import { renderStyles } from './style.js'
+import { renderStyles } from './styles.js'
 
 /**
  * color scale legend item
