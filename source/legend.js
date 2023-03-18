@@ -89,12 +89,7 @@ const legendStyles = {
  * @param {object} s Vega Lite specification
  * @returns {function(object)} legend style renderer
  */
-const legendStyle = s => {
-	const renderer = selection => {
-		selection.call(renderStyles(legendStyles, s.encoding?.color?.legend))
-	}
-	return renderer
-}
+const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
 /**
  * color scale legend

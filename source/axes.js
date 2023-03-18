@@ -371,9 +371,7 @@ const titleStyles = {
  * @param {string} channel encoding channel
  * @returns {function(object)} title style rendering function
  */
-const axisTitleStyles = (s, channel) => {
-	return renderStyles(titleStyles, s.encoding[channel].axis)
-}
+const axisTitleStyles = (s, channel) => renderStyles(titleStyles, s.encoding[channel].axis)
 
 const tickStyles = {
 	tickColor: 'fill',
@@ -387,9 +385,7 @@ const tickStyles = {
  * @param {string} channel encoding channel
  * @returns {function(object)} tick style rendering function
  */
-const axisTickStyles = (s, channel) => {
-	return renderStyles(tickStyles, s.encoding[channel].axis)
-}
+const axisTickStyles = (s, channel) => renderStyles(tickStyles, s.encoding[channel].axis)
 
 /**
  * run functions that require a live DOM node
