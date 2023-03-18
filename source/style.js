@@ -1,12 +1,16 @@
 import { noop } from './helpers.js'
 
-const styleMap = {
+const titleStyles = {
 	titleColor: 'fill',
 	titleFont: 'font-family',
 	titleFontSize: 'font-size',
 	titleFontStyle: 'font-style',
 	titleFontWeight: 'font-weight',
 	titleOpacity: 'opacity'
+}
+
+const styleMap = {
+	...titleStyles
 }
 
 /**
@@ -23,14 +27,6 @@ const style = style => {
 }
 
 /**
- * filter known styles down to relevant styles as key/value pairs
- * @returns {array[]} array of key/value pairs
- */
-const filterStyles = filter => {
-	return Object.entries(styleMap).filter(filter)
-}
-
-/**
  * render style instructions for an axis title
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
@@ -42,11 +38,9 @@ const axisTitleStyles = (s, channel) => {
 		return noop
 	}
 
-	const filter = ([js]) => js.startsWith('title')
-
 	return selection => {
-		filterStyles(filter)
-			.forEach(([js]) => {
+		Object.keys(titleStyles)
+			.forEach(js => {
 				const value = axis[js]
 				if (value !== undefined) {
 					selection.style(style(js), value)
