@@ -6,7 +6,7 @@ import { feature } from './feature.js'
 import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
-import { applyStyles } from './style.js'
+import { renderStyles } from './style.js'
 
 /**
  * color scale legend item
@@ -95,7 +95,7 @@ const legendStyle = s => {
 		if (legend === undefined || legend === null) {
 			return noop
 		}
-		selection.call(applyStyles(legendStyles, legend))
+		selection.call(renderStyles(legendStyles, legend))
 	}
 	return renderer
 }

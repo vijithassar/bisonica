@@ -20,7 +20,7 @@ const tickStyles = {
  * @param {object} styles key/value pairs of JavaScript and CSS properties
  * @param {object} source desired styles with JavaScript style keys
  */
-const applyStyles = (styles, source) => {
+const renderStyles = (styles, source) => {
 	return selection => {
 		Object.entries(styles)
 			.forEach(([js, css]) => {
@@ -43,7 +43,7 @@ const axisTitleStyles = (s, channel) => {
 	if (axis === undefined || axis === null) {
 		return noop
 	}
-	return applyStyles(titleStyles, axis)
+	return renderStyles(titleStyles, axis)
 }
 
 /**
@@ -57,7 +57,7 @@ const axisTickStyles = (s, channel) => {
 	if (axis === undefined || axis === null) {
 		return noop
 	}
-	return applyStyles(tickStyles, axis)
+	return renderStyles(tickStyles, axis)
 }
 
-export { applyStyles, axisTitleStyles, axisTickStyles }
+export { renderStyles, axisTitleStyles, axisTickStyles }
