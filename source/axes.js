@@ -7,6 +7,7 @@ import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } f
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
+import { axisTitleStyles } from './style.js'
 import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
 
@@ -225,6 +226,7 @@ const axisTitleX = (s, dimensions) => {
 				})
 				.attr('transform', `translate(0,${axisOffsetY(s, dimensions).y})`)
 				.text(titleText(s, 'x'))
+				.call(axisTitleStyles(s, 'x'))
 		}
 	}
 }
@@ -252,6 +254,7 @@ const axisTitleY = (s, dimensions) => {
 				.attr('y', yTitlePosition.y)
 				.attr('transform', `rotate(270 ${yTitlePosition.x} ${yTitlePosition.y})`)
 				.text(titleText(s, 'y'))
+				.call(axisTitleStyles(s, 'y'))
 		}
 	}
 }
