@@ -60,4 +60,4 @@ const axisTickStyles = (s, channel) => {
 	return applyStyles(tickStyles, axis)
 }
 
-export { axisTitleStyles, axisTickStyles }
+export { applyStyles, axisTitleStyles, axisTickStyles }
