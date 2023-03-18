@@ -16,6 +16,23 @@ const tickStyles = {
 }
 
 /**
+ * read styles from a JavaScript object and apply them as CSS properties
+ * @param {object} styles key/value pairs of JavaScript and CSS properties
+ * @param {object} source desired styles with JavaScript style keys
+ */
+const applyStyles = (styles, source) => {
+	return selection => {
+		Object.entries(styles)
+			.forEach(([js, css]) => {
+				const value = source[js]
+				if (value !== undefined) {
+					selection.style(css, value)
+				}
+			})
+	}
+}
+
+/**
  * render style instructions for an axis title
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
@@ -26,16 +43,7 @@ const axisTitleStyles = (s, channel) => {
 	if (axis === undefined || axis === null) {
 		return noop
 	}
-
-	return selection => {
-		Object.entries(titleStyles)
-			.forEach(([js, css]) => {
-				const value = axis[js]
-				if (value !== undefined) {
-					selection.style(css, value)
-				}
-			})
-	}
+	return applyStyles(titleStyles, axis)
 }
 
 /**
@@ -49,16 +57,7 @@ const axisTickStyles = (s, channel) => {
 	if (axis === undefined || axis === null) {
 		return noop
 	}
-
-	return selection => {
-		Object.entries(tickStyles)
-			.forEach(([js, css]) => {
-				const value = axis[js]
-				if (value !== undefined) {
-					selection.style(css, value)
-				}
-			})
-	}
+	return applyStyles(tickStyles, axis)
 }
 
 export { axisTitleStyles, axisTickStyles }
