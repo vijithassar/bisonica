@@ -7,7 +7,7 @@ import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } f
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
-import { axisTitleStyles, axisTickStyles } from './style.js'
+import { renderStyles } from './style.js'
 import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
 
@@ -354,6 +354,43 @@ const axisTicks = (s, dimensions) => {
 			.call(axisTicksRotationY(s, dimensions))
 			.call(axisTickStyles(s, 'y'))
 	}
+}
+
+const titleStyles = {
+	titleColor: 'fill',
+	titleFont: 'font-family',
+	titleFontSize: 'font-size',
+	titleFontStyle: 'font-style',
+	titleFontWeight: 'font-weight',
+	titleOpacity: 'opacity'
+}
+
+/**
+ * render style instructions for an axis title
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {function(object)} title style rendering function
+ */
+const axisTitleStyles = (s, channel) => {
+	const axis = s.encoding[channel].axis
+	return renderStyles(titleStyles, axis)
+}
+
+const tickStyles = {
+	tickColor: 'fill',
+	tickCap: 'stroke-linecap',
+	tickOpacity: 'opacity'
+}
+
+/**
+ * render style instructions for axis ticks
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {function(object)} tick style rendering function
+ */
+const axisTickStyles = (s, channel) => {
+	const axis = s.encoding[channel].axis
+	return renderStyles(tickStyles, axis)
 }
 
 /**
