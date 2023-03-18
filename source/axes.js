@@ -291,7 +291,7 @@ const axisTicksRotationY = (s, dimensions) => {
 
 		if (angle) {
 			const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
-			const ticks = selection.selectAll('.tick text')
+			const ticks = selection.selectAll('text')
 			const textHeight = ticks.node().getBBox().height
 			const position = [textHeight * 0.5 * -1, temporalBarOffsetY * 0.5]
 			const transform = `translate(${position.join(', ')}) rotate(${angle})`
@@ -311,7 +311,7 @@ const axisTicksRotationX = (s, dimensions) => {
 		const angle = degrees(rotation(s, 'x'))
 
 		if (angle) {
-			const ticks = selection.selectAll('.tick text')
+			const ticks = selection.selectAll('text')
 			const textHeight = ticks.node().getBBox().height
 			const position = [textHeight * 0.5 * -1, 0]
 			const degrees = angle % 360
@@ -345,9 +345,12 @@ const axisTitles = (s, dimensions) => {
  */
 const axisTicks = (s, dimensions) => {
 	return selection => {
-		selection.select('.y').call(axisTicksExtensionY(s, dimensions))
-		selection.select('.x').call(axisTicksRotationX(s, dimensions))
-		selection.select('.y').call(axisTicksRotationY(s, dimensions))
+		selection.selectAll('.y .tick')
+			.call(axisTicksExtensionY(s, dimensions))
+		selection.selectAll('.x .tick')
+			.call(axisTicksRotationX(s, dimensions))
+		selection.selectAll('.y .tick')
+			.call(axisTicksRotationY(s, dimensions))
 	}
 }
 
