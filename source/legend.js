@@ -92,7 +92,7 @@ const legendStyle = s => {
 	const renderer = selection => {
 		const legend = s.encoding?.color?.legend
 		if (!legend) {
-			return
+			return noop
 		}
 		Object.entries(legendStyles).forEach(([property, style]) => {
 			if (legend[property]) {
