@@ -77,7 +77,7 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
 	return scrollHeight > clientHeight || scrollWidth > clientWidth
 }
 
-const styleMap = {
+const legendStyles = {
 	cornerRadius: 'border-radius',
 	fillColor: 'background-color',
 	padding: 'padding'
@@ -94,7 +94,7 @@ const legendStyle = s => {
 		if (!legend) {
 			return
 		}
-		Object.entries(styleMap).forEach(([property, style]) => {
+		Object.entries(legendStyles).forEach(([property, style]) => {
 			if (legend[property]) {
 				selection.style(style, legend[property])
 			}
