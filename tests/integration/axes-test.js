@@ -103,6 +103,15 @@ module('integration > axes', function() {
 			assert.ok(node.getBoundingClientRect().width <= max)
 		})
 	})
+
+	test('renders a chart with custom axis title styling', assert => {
+		const spec = specificationFixture('line')
+		spec.encoding.x.axis.titleOpacity = 0.5
+		const element = render(spec)
+		const title = element.querySelector(testSelector('axes-x-title'))
+		assert.equal(title.style.opacity, 0.5)
+	})
+
 	test('disables axes', assert => {
 		const spec = specificationFixture('categoricalBar')
 		spec.encoding.x.axis = null
