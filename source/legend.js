@@ -77,18 +77,18 @@ const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) =
 	return scrollHeight > clientHeight || scrollWidth > clientWidth
 }
 
+const styleMap = {
+	cornerRadius: 'border-radius',
+	fillColor: 'background-color',
+	padding: 'padding'
+}
+
 /**
  * style the legend based on the specification
  * @param {object} s Vega Lite specification
  * @returns {function(object)} legend style renderer
  */
 const legendStyle = s => {
-	// map specification properties to styles
-	const styleMap = {
-		cornerRadius: 'border-radius',
-		fillColor: 'background-color',
-		padding: 'padding'
-	}
 	const renderer = selection => {
 		const legend = s.encoding?.color?.legend
 		if (!legend) {
