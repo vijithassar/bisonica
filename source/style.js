@@ -21,6 +21,9 @@ const tickStyles = {
  * @param {object} source desired styles with JavaScript style keys
  */
 const renderStyles = (styles, source) => {
+	if (source === undefined || source === null) {
+		return noop
+	}
 	return selection => {
 		Object.entries(styles)
 			.forEach(([js, css]) => {
@@ -40,9 +43,6 @@ const renderStyles = (styles, source) => {
  */
 const axisTitleStyles = (s, channel) => {
 	const axis = s.encoding[channel].axis
-	if (axis === undefined || axis === null) {
-		return noop
-	}
 	return renderStyles(titleStyles, axis)
 }
 
@@ -54,9 +54,6 @@ const axisTitleStyles = (s, channel) => {
  */
 const axisTickStyles = (s, channel) => {
 	const axis = s.encoding[channel].axis
-	if (axis === undefined || axis === null) {
-		return noop
-	}
 	return renderStyles(tickStyles, axis)
 }
 

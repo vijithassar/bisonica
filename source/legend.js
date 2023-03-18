@@ -92,9 +92,6 @@ const legendStyles = {
 const legendStyle = s => {
 	const renderer = selection => {
 		const legend = s.encoding?.color?.legend
-		if (legend === undefined || legend === null) {
-			return noop
-		}
 		selection.call(renderStyles(legendStyles, legend))
 	}
 	return renderer
