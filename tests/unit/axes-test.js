@@ -52,19 +52,8 @@ module('unit > axes', () => {
 		assert.equal(format(s, 'y')(value), '1', 'casts numbers to strings')
 	})
 	test('truncates axis tick label text', assert => {
-		const s = {
-			encoding: {
-				x: {
-					field: 'label',
-					type: 'nominal',
-					axis: {
-						labelLimit: 15
-					}
-				}
-			}
-		}
 		const text = 'aaaaaaaaaaaaaaaaaaaaaaaaaa'
-		const truncated = truncate(s, 'x', text, [])
+		const truncated = truncate(text, 15, [])
 
 		assert.ok(truncated.length < text.length, 'truncated text is shorter than original text')
 		assert.ok(truncated.endsWith('…'), 'truncated text ends with ellipsis')

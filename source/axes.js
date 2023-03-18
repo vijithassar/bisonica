@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 
-import { axisTickLabelText, rotation } from './text.js'
+import { axisTickLabelText, rotation, truncate } from './text.js'
 import { barWidth } from './marks.js'
 import { degrees, detach, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
@@ -74,8 +74,19 @@ const ticks = (s, channel) => {
  */
 const title = (s, channel) => {
 	const encoding = s.encoding[channel]
-
 	return encoding.axis?.title || encoding.field
+}
+
+/**
+ * retrieve axis title and possibly truncate
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {string} title text, potentially truncated
+ */
+const titleText = (s, channel) => {
+	const limit = s.encoding[channel].axis?.titleLimit
+	const text = title(s, channel)
+	return limit ? truncate(text, limit) : text
 }
 
 /**
@@ -213,7 +224,7 @@ const axisTitleX = (s, dimensions) => {
 					return yPosition
 				})
 				.attr('transform', `translate(0,${axisOffsetY(s, dimensions).y})`)
-				.text(title(s, 'x'))
+				.text(titleText(s, 'x'))
 		}
 	}
 }
@@ -240,7 +251,7 @@ const axisTitleY = (s, dimensions) => {
 				.attr('x', yTitlePosition.x)
 				.attr('y', yTitlePosition.y)
 				.attr('transform', `rotate(270 ${yTitlePosition.x} ${yTitlePosition.y})`)
-				.text(title(s, 'y'))
+				.text(titleText(s, 'y'))
 		}
 	}
 }
