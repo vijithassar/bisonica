@@ -9,23 +9,6 @@ const titleStyles = {
 	titleOpacity: 'opacity'
 }
 
-const styleMap = {
-	...titleStyles
-}
-
-/**
- * convert a style from JSON to CSS syntax
- * @param {string} style JavaScript style instruction in camelCase
- * @returns {string} CSS style property in kebab-case
- */
-const style = style => {
-	if (styleMap[style]) {
-		return styleMap[style]
-	} else {
-		throw new Error(`could not convert unknown style property ${style} to CSS equivalent`)
-	}
-}
-
 /**
  * render style instructions for an axis title
  * @param {object} s Vega Lite specification
@@ -39,11 +22,11 @@ const axisTitleStyles = (s, channel) => {
 	}
 
 	return selection => {
-		Object.keys(titleStyles)
-			.forEach(js => {
+		Object.entries(titleStyles)
+			.forEach(([js, css]) => {
 				const value = axis[js]
 				if (value !== undefined) {
-					selection.style(style(js), value)
+					selection.style(css, value)
 				}
 			})
 	}
