@@ -74,12 +74,42 @@ const predicates = {
  * @param {object} config predicate definition
  * @returns {function(object)} predicate test function
  */
-const _predicate = config => {
+const single = config => {
 	const [key, create] = Object.entries(predicates).find(([key]) => config[key])
 	if (typeof create === 'function') {
 		return create(config)
 	} else {
 		throw new Error(`could not create ${key} predicate function for data field ${config.field}`)
+	}
+}
+
+/**
+ * compose a single predicate function based on multiple predicate definitions
+ * @param {object} config predicate definition
+ * @returns {function(object)} predicate test function
+ */
+const compose = config => {
+	const key = ['and', 'or', 'not'].find(key => config[key])
+	const functions = config[key].map(single)
+	const predicates = {
+		and: datum => functions.every(fn => fn(datum) === true),
+		not: datum => functions.every(fn => fn(datum) === false),
+		or: datum => functions.some(fn => fn(datum) === true)
+	}
+	return predicates[key]
+}
+
+/**
+ * generate a predicate test function
+ * @param {object} config predicate definition
+ * @returns {function(object)} predicate test function
+ */
+const _predicate = config => {
+	const multiple = config.and || config.or || config.not
+	if (multiple) {
+		return compose(config)
+	} else {
+		return single(config)
 	}
 }
 const predicate = memoize(_predicate)
