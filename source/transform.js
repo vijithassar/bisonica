@@ -1,6 +1,7 @@
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 import { predicate } from './predicate.js'
+import * as d3 from 'd3'
 
 /**
  * create a function to perform a single calculate expression
@@ -76,6 +77,25 @@ const transformDatum = s => {
 }
 
 /**
+ * randomly sample from a data set
+ * @param {object} s Vega Lite specification
+ * @returns {function(object[])} random sampling function
+ */
+const sample = s => {
+	if (!s.transform) {
+		return identity
+	}
+	const lookup = transform => transform.sample
+	return data => {
+		const n = +d3.min(s.transform.filter(lookup), lookup)
+		if (!n) {
+			return data
+		}
+		return d3.shuffle(data.slice()).slice(0, n)
+	}
+}
+
+/**
  * run all filter transforms
  * @param {object} s Vega Lite specification
  * @returns {function(object[])} filter transform function
@@ -105,7 +125,7 @@ const _transformValues = s => {
 	if (!s.transform) {
 		return identity
 	}
-	return data => filters(s)(data)
+	return data => filters(s)(sample(s)(data))
 }
 const transformValues = memoize(_transformValues)
 
