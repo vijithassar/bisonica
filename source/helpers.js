@@ -2,6 +2,8 @@ import * as d3 from 'd3'
 
 import { encodingField, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
+import { transformValues } from './transform.js'
+import { memoize } from './memoize.js'
 
 /**
  * round number based on significant digits
@@ -23,9 +25,10 @@ const abbreviateNumbers = number => {
  * @param {object} s Vega Lite specification
  * @returns {array}
  */
-const values = s => {
-	return s.data?.values.slice()
+const _values = s => {
+	return transformValues(s)(s.data?.values.slice())
 }
+const values = memoize(_values)
 
 /**
  * return the original data object if it has been nested

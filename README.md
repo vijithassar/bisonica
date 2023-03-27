@@ -82,6 +82,8 @@ Data must be supplied [inline](https://vega.github.io/vega-lite/docs/data.html#i
 
 Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
 
+[Predicates](https://vega.github.io/vega-lite/docs/predicate.html) do not support expressions.
+
 Escaping special characters in field names is not supported. Instead, you should mutate your data before rendering to clean up the affected field names.
 
 Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.

@@ -2,7 +2,7 @@ import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'
 import { parseTime } from './time.js'
-import { transform } from './transform.js'
+import { transformDatum } from './transform.js'
 import { isTextChannel, nested } from './helpers.js'
 
 /**
@@ -44,7 +44,7 @@ const encodingValue = (s, channel) => {
 		}
 
 		if (s.transform) {
-			return transform(s)(d)[key]
+			return transformDatum(s)(d)[key]
 		}
 	}
 }
