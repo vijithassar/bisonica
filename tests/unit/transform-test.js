@@ -146,6 +146,32 @@ module('unit > transform', () => {
 				s.transform = [{ filter: { field: 'group', oneOf: ['A', 'B', 'C'] } }]
 				assert.equal(data(s).length, 3)
 			})
+			test('filters change scale domains', assert => {
+				const s = specificationFixture('line')
+				const max = 8
+				s.transform = [{ filter: { lte: max, field: 'value' } }]
+				const { y } = parseScales(s)
+				assert.equal(y.domain()[1], max)
+			})
+		})
+		module('sample', () => {
+			test('randomly samples from data set', assert => {
+				const n = 50
+				const s = {
+					data: {
+						values: d3.range(n * 2).map(item => {
+							return { value: item }
+						})
+					},
+					encoding: {},
+					transform: [
+						{ sample: n }
+					]
+				}
+				assert.equal(data(s).length, n)
+			})
+		})
+		module('composition', () => {
 			test('applies multiple filters in sequence', assert => {
 				const s = specification()
 				s.transform = [
@@ -195,29 +221,25 @@ module('unit > transform', () => {
 				}
 				assert.equal(run(s), '2,3,4,5,6')
 			})
-			test('filters change scale domains', assert => {
-				const s = specificationFixture('line')
-				const max = 8
-				s.transform = [{ filter: { lte: max, field: 'value' } }]
-				const { y } = parseScales(s)
-				assert.equal(y.domain()[1], max)
-			})
-		})
-		module('sample', () => {
-			test('randomly samples from data set', assert => {
-				const n = 50
+			test('applies multiple transforms in sequence', assert => {
 				const s = {
 					data: {
-						values: d3.range(n * 2).map(item => {
-							return { value: item }
-						})
+						values: [
+							{ x: 1, _: '$' },
+							{ x: 1, _: '$' },
+							{ x: 2, _: '*' },
+							{ x: 2, _: '*' },
+							{ x: 3, _: '•' },
+							{ x: 3, _: '•' },
+							{ x: 3, _: '•' }
+						]
 					},
-					encoding: {},
 					transform: [
-						{ sample: n }
+						{ filter: { equal: 3, field: 'x' } },
+						{ sample: 2 }
 					]
 				}
-				assert.equal(data(s).length, n)
+				assert.equal(run(s), '3,3')
 			})
 		})
 	})
