@@ -132,7 +132,13 @@ const sort = data => {
  */
 const stackValue = (d, key) => d[key]?.value || 0
 
-const _stackData = s => {
+/**
+ * reorganize data from specification into array
+ * of values used to render a stacked bar chart
+ * @param {object} s Vega Lite specification
+ * @returns {array} stacked data series
+ */
+const stackData = s => {
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const group = encodingField(s, 'color')
@@ -163,27 +169,7 @@ const _stackData = s => {
 		})
 	}
 
-	return metadata(s, sort(stacked))
-}
-
-/**
- * reorganize data from specification into array
- * of values used to render a stacked bar chart
- * @param {object} s Vega Lite specification
- * @returns {array} stacked data series
- */
-const stackData = memoize(_stackData)
-
-const _circularData = s => {
-	const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
-		([key, values]) => ({ key, values })
-	)
-
-	const summed = grouped.map(({ key, values }) => {
-		return { key, value: d3.sum(values, encodingValue(s, 'theta')) }
-	})
-
-	return metadata(s, summed)
+	return sort(stacked)
 }
 
 /**
@@ -192,9 +178,25 @@ const _circularData = s => {
  * @param {object} s Vega Lite specification
  * @returns {array} totals by group
  */
-const circularData = memoize(_circularData)
+const circularData = s => {
+	const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
+		([key, values]) => ({ key, values })
+	)
 
-const _lineData = s => {
+	const summed = grouped.map(({ key, values }) => {
+		return { key, value: d3.sum(values, encodingValue(s, 'theta')) }
+	})
+
+	return summed
+}
+
+/**
+ * reorganize data from a specification into
+ * array of values used to render a line chart.
+ * @param {object} s Vega Lite specification
+ * @returns {array} summed values for line chart
+ */
+const lineData = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries()
 	const color = encodingField(s, 'color')
@@ -219,16 +221,8 @@ const _lineData = s => {
 		}
 	})
 
-	return metadata(s, results)
+	return results
 }
-
-/**
- * reorganize data from a specification into
- * array of values used to render a line chart.
- * @param {object} s Vega Lite specification
- * @returns {array} summed values for line chart
- */
-const lineData = memoize(_lineData)
 
 /**
  * retrieve data points used for point marks
@@ -245,11 +239,11 @@ const pointData = values
 const genericData = values
 
 /**
- * wrapper function around data preprocessing functionality
+ * wrapper function around chart-specific data preprocessing functionality
  * @param {object} s Vega Lite specification
  * @returns {array} sorted and aggregated data
  */
-const data = s => {
+const chartData = s => {
 	if (feature(s).isBar() || feature(s).isArea()) {
 		return stackData(s)
 	} else if (feature(s).isLine()) {
@@ -260,5 +254,15 @@ const data = s => {
 		return genericData(s)
 	}
 }
+
+/**
+ * wrapper function around data preprocessing functionality
+ * @param {object} s Vega Lite specification
+ * @returns {array} sorted and aggregated data
+ */
+const _data = s => {
+	return metadata(s, chartData(s))
+}
+const data = memoize(_data)
 
 export { data, pointData, sumByCovariates }
