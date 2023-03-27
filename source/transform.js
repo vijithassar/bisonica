@@ -66,12 +66,12 @@ const _composeCalculateTransforms = transforms => {
 const composeCalculateTransforms = memoize(_composeCalculateTransforms)
 
 /**
- * create a function to run transforms on a specification
+ * create a function to run transforms on a single datum
  * @param {object} s Vega Lite specification
- * @returns {function} transform function
+ * @returns {function(object)} transform function for a single datum
  */
-const transform = s => {
+const transformDatum = s => {
 	return composeCalculateTransforms(s.transform)
 }
 
-export { calculate, transform }
+export { calculate, transformDatum }

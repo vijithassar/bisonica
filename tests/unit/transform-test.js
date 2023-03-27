@@ -1,6 +1,6 @@
 import {
 	calculate,
-	transform
+	transformDatum
 } from '../../source/transform.js'
 import { encodingValue } from '../../source/encodings.js'
 import qunit from 'qunit'
@@ -14,11 +14,11 @@ const expressions = {
 }
 
 module('unit > transform', () => {
-	module('transform', () => {
+	module('calculate', () => {
 		test('adds derived fields to a data point', assert => {
 			const s = { transform: [{ calculate: expressions.naive, as: 'a' }] }
 
-			assert.equal(transform(s)({}).a, 'https://www.example.com/test')
+			assert.equal(transformDatum(s)({}).a, 'https://www.example.com/test')
 		})
 		test('runs multiple transforms', assert => {
 			const datum = {
@@ -33,9 +33,9 @@ module('unit > transform', () => {
 				]
 			}
 
-			assert.equal(transform(s)(datum).c, 'https://www.example.com/test')
-			assert.equal(transform(s)(datum).d, 'https://www.example.com/1')
-			assert.equal(transform(s)(datum).e, 'https://www.example.com/12')
+			assert.equal(transformDatum(s)(datum).c, 'https://www.example.com/test')
+			assert.equal(transformDatum(s)(datum).d, 'https://www.example.com/1')
+			assert.equal(transformDatum(s)(datum).e, 'https://www.example.com/12')
 		})
 		test('falls back to transform lookups', assert => {
 			const s = {

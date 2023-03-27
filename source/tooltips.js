@@ -8,7 +8,7 @@ import { getTimeFormatter } from './time.js'
 import { memoize } from './memoize.js'
 import { noop } from './helpers.js'
 import { parseScales } from './scales.js'
-import { transform } from './transform.js'
+import { transformDatum } from './transform.js'
 
 /**
  * format field description
@@ -148,7 +148,7 @@ const _getTooltipField = (s, type) => {
 
 		if (!key && !value) {
 			key = type // key may be a field, not a channel
-			value = transform(s)()(d)[key]
+			value = transformDatum(s)()(d)[key]
 		}
 
 		return { key, value }
