@@ -77,17 +77,12 @@ const transformDatum = s => {
 }
 
 /**
- * randomly sample from a data set
- * @param {object} s Vega Lite specification
+ * run a random sampling transform
+ * @param {number} n count
  * @returns {function(object[])} random sampling function
  */
-const sample = s => {
-	if (!s.transform) {
-		return identity
-	}
-	const lookup = transform => transform.sample
+const sample = n => {
 	return data => {
-		const n = +d3.min(s.transform.filter(lookup), lookup)
 		if (!n) {
 			return data
 		}
@@ -96,23 +91,30 @@ const sample = s => {
 }
 
 /**
- * run all filter transforms
+ * run a filter transform
  * @param {object} s Vega Lite specification
+ * @param {object} config transform configuration
  * @returns {function(object[])} filter transform function
  */
-const filters = s => {
-	const configs = s.transform
-		.filter(transform => transform.filter)
-		.map(item => item.filter)
-	const predicates = configs
-		.map(predicate)
-		.map(fn => {
-			return datum => fn(datum) || fn(transformDatum(s)(datum))
-		})
+const filter = (s, config) => {
 	return data => {
-		return predicates.reduce((accumulator, current) => {
-			return accumulator.filter(current)
-		}, data)
+		return data.filter(datum => {
+			return predicate(config)(datum) || predicate(config)(transformDatum(s)(datum))
+		})
+	}
+}
+
+/**
+ * apply a single transform
+ * @param {s} config transform configuration
+ * @param {object[]} data data set
+ * @returns {object[]} transformed data set
+ */
+const applyTransform = (s, config, data) => {
+	if (config.sample) {
+		return sample(config.sample)(data)
+	} else if (config.filter) {
+		return filter(s, config.filter)(data)
 	}
 }
 
@@ -125,7 +127,13 @@ const _transformValues = s => {
 	if (!s.transform) {
 		return identity
 	}
-	return data => filters(s)(sample(s)(data))
+	return data => {
+		return s.transform
+			.filter(transform => !transform.calculate)
+			.reduce((accumulator, current) => {
+				return applyTransform(s, current, accumulator)
+			}, data)
+	}
 }
 const transformValues = memoize(_transformValues)
 

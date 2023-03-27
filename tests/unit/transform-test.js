@@ -221,6 +221,26 @@ module('unit > transform', () => {
 				}
 				assert.equal(run(s), '2,3,4,5,6')
 			})
+			test('applies multiple transforms in sequence', assert => {
+				const s = {
+					data: {
+						values: [
+							{ x: 1, _: '$' },
+							{ x: 1, _: '$' },
+							{ x: 2, _: '*' },
+							{ x: 2, _: '*' },
+							{ x: 3, _: '•' },
+							{ x: 3, _: '•' },
+							{ x: 3, _: '•' }
+						]
+					},
+					transform: [
+						{ filter: { equal: 3, field: 'x' } },
+						{ sample: 2 }
+					]
+				}
+				assert.equal(run(s), '3,3')
+			})
 		})
 	})
 })
