@@ -196,7 +196,10 @@ const createY = (s, dimensions) => {
 
 		axis.ticks(ticks(s, 'y'))
 
-		const yAxis = selection.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
+		const yAxis = selection
+			.append('g')
+			.classed('axis', true)
+			.classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
 		selection.call(tickText(s, 'y'))
@@ -430,11 +433,15 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.select('.y').call(detach(createY(s, dimensions)))
+			axes
+				.select('.y')
+				.call(detach(createY(s, dimensions)))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.select('.x').call(detach(createX(s, dimensions)))
+			axes
+				.select('.x')
+				.call(detach(createX(s, dimensions)))
 		}
 
 		selection.call(postAxisRender(s, dimensions))
