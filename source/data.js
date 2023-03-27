@@ -245,11 +245,11 @@ const pointData = values
 const genericData = values
 
 /**
- * wrapper function around data preprocessing functionality
+ * wrapper function around chart-specific data preprocessing functionality
  * @param {object} s Vega Lite specification
  * @returns {array} sorted and aggregated data
  */
-const data = s => {
+const chartData = s => {
 	if (feature(s).isBar() || feature(s).isArea()) {
 		return stackData(s)
 	} else if (feature(s).isLine()) {
@@ -260,5 +260,15 @@ const data = s => {
 		return genericData(s)
 	}
 }
+
+/**
+ * wrapper function around data preprocessing functionality
+ * @param {object} s Vega Lite specification
+ * @returns {array} sorted and aggregated data
+ */
+const _data = s => {
+	return chartData(s)
+}
+const data = memoize(_data)
 
 export { data, pointData, sumByCovariates }
