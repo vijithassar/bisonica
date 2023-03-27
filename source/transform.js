@@ -42,12 +42,13 @@ const calculate = expression => {
  * @param {object[]} transforms
  * @returns {function(object)}
  */
-const _composeTransforms = transforms => {
+const _composeCalculateTransforms = transforms => {
+	if (!transforms) {
+		return () => identity
+	}
 	return d => {
-		if (!transforms?.length) {
-			return identity
-		}
 		return transforms
+			.filter(transform => transform.calculate)
 			.reduce((previous, current) => {
 				return {
 					...previous,
@@ -62,7 +63,7 @@ const _composeTransforms = transforms => {
  * @param {array} transforms an array of calculate expressions
  * @returns {function} transform function
  */
-const composeTransforms = memoize(_composeTransforms)
+const composeCalculateTransforms = memoize(_composeCalculateTransforms)
 
 /**
  * create a function to run transforms on a specification
@@ -70,7 +71,7 @@ const composeTransforms = memoize(_composeTransforms)
  * @returns {function} transform function
  */
 const transform = s => {
-	return composeTransforms(s.transform)
+	return composeCalculateTransforms(s.transform)
 }
 
 export { calculate, transform }

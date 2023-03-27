@@ -15,11 +15,6 @@ const expressions = {
 
 module('unit > transform', () => {
 	module('transform', () => {
-		test('requires a calculate transform', assert => {
-			const s = { transform: [{ filter: null }] }
-
-			assert.throws(() => transform(s)({}))
-		})
 		test('adds derived fields to a data point', assert => {
 			const s = { transform: [{ calculate: expressions.naive, as: 'a' }] }
 
