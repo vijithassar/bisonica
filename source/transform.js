@@ -84,10 +84,14 @@ const filters = s => {
 	const configs = s.transform
 		.filter(transform => transform.filter)
 		.map(item => item.filter)
-	const predicates = configs.map(predicate)
+	const predicates = configs
+		.map(predicate)
+		.map(fn => {
+			return datum => fn(datum) || fn(transformDatum(s)(datum))
+		})
 	return data => {
 		return predicates.reduce((accumulator, current) => {
-			return accumulator.map(transformDatum(s)).filter(current)
+			return accumulator.filter(current)
 		}, data)
 	}
 }
