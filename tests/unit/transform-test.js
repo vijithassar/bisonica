@@ -8,6 +8,7 @@ import { data } from '../../source/data.js'
 import { encodingValue } from '../../source/encodings.js'
 import qunit from 'qunit'
 import { specificationFixture } from '../test-helpers.js'
+import * as d3 from 'd3'
 
 const { module, test } = qunit
 
@@ -200,6 +201,23 @@ module('unit > transform', () => {
 				s.transform = [{ filter: { lte: max, field: 'value' } }]
 				const { y } = parseScales(s)
 				assert.equal(y.domain()[1], max)
+			})
+		})
+		module('sample', () => {
+			test('randomly samples from data set', assert => {
+				const n = 50
+				const s = {
+					data: {
+						values: d3.range(n * 2).map(item => {
+							return { value: item }
+						})
+					},
+					encoding: {},
+					transform: [
+						{ sample: n }
+					]
+				}
+				assert.equal(data(s).length, n)
 			})
 		})
 	})
