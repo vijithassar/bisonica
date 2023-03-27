@@ -307,10 +307,9 @@ const axisTicksRotationY = (s, dimensions) => {
 /**
  * adjust y axis tick rotation based on a live DOM node
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
  * @returns {function(object)} x axis tick rotation adjustment function
  */
-const axisTicksRotationX = (s, dimensions) => {
+const axisTicksRotationX = s => {
 	return selection => {
 		const angle = degrees(rotation(s, 'x'))
 
@@ -352,7 +351,7 @@ const axisTicks = (s, dimensions) => {
 		selection.selectAll('.y .tick')
 			.call(axisTicksExtensionY(s, dimensions))
 		selection.selectAll('.x .tick')
-			.call(axisTicksRotationX(s, dimensions))
+			.call(axisTicksRotationX(s))
 			.call(axisTicksStyles(s, 'x'))
 		selection.selectAll('.y .tick')
 			.call(axisTicksRotationY(s, dimensions))
