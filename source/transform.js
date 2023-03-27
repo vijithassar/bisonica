@@ -47,20 +47,13 @@ const _composeTransforms = transforms => {
 		if (!transforms?.length) {
 			return identity
 		}
-
-		return transforms.reduce(
-			(previous, current) => {
-				if (!current.calculate) {
-					throw new Error('only calculate transforms are currently supported')
-				}
-
+		return transforms
+			.reduce((previous, current) => {
 				return {
 					...previous,
 					[current.as]: calculate(current.calculate)({ ...d })
 				}
-			},
-			{ ...d }
-		)
+			}, { ...d })
 	}
 }
 
