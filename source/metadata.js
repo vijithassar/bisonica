@@ -241,10 +241,10 @@ const transplantFields = (s, aggregated, raw) => {
  * @returns {object[]} aggregated data with metadata
  */
 const metadata = (s, data) => {
-	if (!hasMetadata(s)) {
+	const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular() || feature(s).isLine()
+	if (!hasMetadata(s) || !aggregate) {
 		return data
 	}
-	const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular() || feature(s).isLine()
 	if (aggregate) {
 		return transplantFields(s, data, values(s))
 	}
