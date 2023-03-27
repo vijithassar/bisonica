@@ -1,11 +1,21 @@
 import * as d3 from 'd3'
-import { datum } from './helpers.js'
-import { encodingField, encodingType, encodingValue, encodingChannelQuantitative, encodingChannelCovariateCartesian } from './encodings.js'
+import { datum, identity, isContinuous } from './helpers.js'
+import {
+	encodingField,
+	encodingType,
+	encodingValue,
+	encodingChannelQuantitative,
+	encodingChannelCovariateCartesian
+} from './encodings.js'
 import { memoize } from './memoize.js'
 import { getTooltipField, tooltipContent } from './tooltips.js'
 import { data } from './data.js'
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
+import { axisTitle } from './axes.js'
+import { scaleType, parseScales } from './scales.js'
+import { getTimeFormatter } from './time.js'
+import { list } from './text.js'
 
 const delimiter = '; '
 
@@ -209,4 +219,66 @@ const chartLabel = s => {
 	}
 }
 
-export { markDescription, chartLabel, chartDescription }
+/**
+ * text description of axis values
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {string} values description
+ */
+const axisValuesText = (s, channel) => {
+	const values = parseScales(s)[channel].domain()
+	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : identity
+	if (isContinuous(s, channel)) {
+		return `with values from ${d3.extent(values).map(formatter).join(' to ')}`
+	} else {
+		return `with ${values.length} values: ${list(values.map(formatter))}`
+	}
+}
+
+const scaleDescriptions = {
+	pow: 'exponential',
+	sqrt: 'square root',
+	symlog: 'symmetric log',
+	log: 'logarithmic'
+}
+
+/**
+ * written description of a scale
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {string} scale description
+ */
+const scaleDescription = (s, channel) => {
+	if (encodingType(s, channel) !== 'quantitative') {
+		return ''
+	}
+	const type = scaleType(s, channel)
+	if (!type) {
+		return 'linear'
+	} else if (type && scaleDescriptions[type]) {
+		return scaleDescriptions[type]
+	} else if (type) {
+		return type
+	}
+}
+
+/**
+ * written description of an axis
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {string} axis description
+ */
+const axisDescription = (s, channel) => {
+	if (s.encoding[channel].axis?.description) {
+		return s.encoding[channel].axis?.description
+	}
+	const segments = [
+		`${channel} axis`,
+		`titled '${axisTitle(s, channel)}`,
+		`for ${[scaleDescription(s, channel), encodingType(s, channel)].filter(Boolean).join(' ')} scale`,
+		axisValuesText(s, channel)
+	]
+	return segments.join(' ')
+}
+
+export { markDescription, chartLabel, chartDescription, axisDescription }

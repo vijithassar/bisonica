@@ -10,6 +10,7 @@ import { parseScales } from './scales.js'
 import { renderStyles } from './styles.js'
 import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
+import { axisDescription } from './descriptions.js'
 
 /**
  * tick count specifier
@@ -73,7 +74,7 @@ const ticks = (s, channel) => {
  * @param {'x'|'y'} channel encoding channel
  * @returns {string} title
  */
-const title = (s, channel) => {
+const axisTitle = (s, channel) => {
 	const encoding = s.encoding[channel]
 	return encoding.axis?.title || encoding.field
 }
@@ -86,7 +87,7 @@ const title = (s, channel) => {
  */
 const titleText = (s, channel) => {
 	const limit = s.encoding[channel].axis?.titleLimit
-	const text = title(s, channel)
+	const text = axisTitle(s, channel)
 	return limit ? truncate(text, limit) : text
 }
 
@@ -196,7 +197,10 @@ const createY = (s, dimensions) => {
 
 		axis.ticks(ticks(s, 'y'))
 
-		const yAxis = selection.append('g').classed('axis', true).classed(encodingType(s, 'y'), true)
+		const yAxis = selection
+			.append('g')
+			.classed('axis', true)
+			.classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
 		selection.call(tickText(s, 'y'))
@@ -430,11 +434,17 @@ const axes = (_s, dimensions) => {
 		const axes = selection.select('g.axes')
 
 		if (feature(s).hasEncodingY()) {
-			axes.select('.y').call(detach(createY(s, dimensions)))
+			axes
+				.select('.y')
+				.attr('aria-label', s.encoding.y.axis?.aria !== false ? axisDescription(s, 'y') : null)
+				.call(detach(createY(s, dimensions)))
 		}
 
 		if (feature(s).hasEncodingX()) {
-			axes.select('.x').call(detach(createX(s, dimensions)))
+			axes
+				.select('.x')
+				.attr('aria-label', s.encoding.x.axis?.aria !== false ? axisDescription(s, 'x') : null)
+				.call(detach(createX(s, dimensions)))
 		}
 
 		selection.call(postAxisRender(s, dimensions))
@@ -443,4 +453,4 @@ const axes = (_s, dimensions) => {
 	return renderer
 }
 
-export { axes, ticks }
+export { axes, axisTitle, ticks }

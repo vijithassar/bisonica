@@ -7,6 +7,7 @@ import { key, mark, noop } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
 import { renderStyles } from './styles.js'
+import { list } from './text.js'
 
 /**
  * color scale legend item
@@ -29,21 +30,6 @@ function createLegendItem(config) {
 	item.append(() => label.node())
 
 	return item.node()
-}
-
-/**
- * format legend content as a readable string
- * @param {string[]|number[]} items domain
- * @returns {string} domain with string formatting
- */
-const list = items => {
-	if (items.length === 1) {
-		return `${items[0]}`
-	} else {
-		const rest = items.slice(0, -1)
-		const last = items.slice().pop()
-		return `${rest.join(', ')}, and ${last}`
-	}
 }
 
 /**
