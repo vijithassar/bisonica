@@ -220,6 +220,21 @@ const axisTicksLabelText = (s, channel) => {
 	}
 }
 
+/**
+ * format legend content as a readable string
+ * @param {string[]|number[]} items domain
+ * @returns {string} domain with string formatting
+ */
+const list = items => {
+	if (items.length === 1) {
+		return `${items[0]}`
+	} else {
+		const rest = items.slice(0, -1)
+		const last = items.slice().pop()
+		return `${rest.join(', ')}, and ${last}`
+	}
+}
+
 export {
 	abbreviate,
 	rotation,
@@ -227,5 +242,6 @@ export {
 	truncate,
 	axisTicksLabelTextContent,
 	axisTicksLabelText,
-	longestAxisTickLabelTextWidth
+	longestAxisTickLabelTextWidth,
+	list
 }
