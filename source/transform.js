@@ -1,5 +1,6 @@
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
+import { predicate } from './predicate.js'
 
 /**
  * create a function to perform a single calculate expression
@@ -74,4 +75,34 @@ const transformDatum = s => {
 	return composeCalculateTransforms(s.transform)
 }
 
-export { calculate, transformDatum }
+/**
+ * run all filter transforms
+ * @param {object} s Vega Lite specification
+ * @returns {function(object[])} filter transform function
+ */
+const filters = s => {
+	const configs = s.transform
+		.filter(transform => transform.filter)
+		.map(item => item.filter)
+	const predicates = configs.map(predicate)
+	return data => {
+		return predicates.reduce((accumulator, current) => {
+			return accumulator.filter(current)
+		}, data)
+	}
+}
+
+/**
+ * create a function to run transforms on a data set
+ * @param {object} s Vega Lite specification
+ * @returns {function(object[])} transform function for a data set
+ */
+const _transformValues = s => {
+	if (!s.transform) {
+		return identity
+	}
+	return data => filters(s)(data)
+}
+const transformValues = memoize(_transformValues)
+
+export { calculate, transformDatum, transformValues }
