@@ -4,8 +4,10 @@ import {
 	transformValues
 } from '../../source/transform.js'
 import { parseScales } from '../../source/scales.js'
+import { data } from '../../source/data.js'
 import { encodingValue } from '../../source/encodings.js'
 import qunit from 'qunit'
+import { specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
@@ -138,6 +140,11 @@ module('unit > transform', () => {
 			})
 		})
 		module('mechanics', () => {
+			test('data functions apply filters', assert => {
+				const s = specificationFixture('circular')
+				s.transform = [{ filter: { field: 'group', oneOf: ['A', 'B', 'C'] } }]
+				assert.equal(data(s).length, 3)
+			})
 			test('applies multiple filters in sequence', assert => {
 				const s = specification()
 				s.transform = [
