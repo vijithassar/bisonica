@@ -436,14 +436,14 @@ const axes = (_s, dimensions) => {
 		if (feature(s).hasEncodingY()) {
 			axes
 				.select('.y')
-				.attr('aria-label', axisDescription(s, 'y'))
+				.attr('aria-label', s.encoding.y.axis?.aria !== false ? axisDescription(s, 'y') : null)
 				.call(detach(createY(s, dimensions)))
 		}
 
 		if (feature(s).hasEncodingX()) {
 			axes
 				.select('.x')
-				.attr('aria-label', axisDescription(s, 'x'))
+				.attr('aria-label', s.encoding.x.axis?.aria !== false ? axisDescription(s, 'x') : null)
 				.call(detach(createX(s, dimensions)))
 		}
 
