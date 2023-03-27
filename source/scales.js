@@ -413,4 +413,4 @@ const isQuantitativeScale = (s, channel) => {
  */
 const parseScales = memoize(_parseScales)
 
-export { colors, isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales }
+export { colors, isTemporalScale, isOrdinalScale, isQuantitativeScale, scaleType, parseScales }

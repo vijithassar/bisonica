@@ -13,7 +13,7 @@ import { data } from './data.js'
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { axisTitle } from './axes.js'
-import { parseScales } from './scales.js'
+import { scaleType, parseScales } from './scales.js'
 import { getTimeFormatter } from './time.js'
 import { list } from './text.js'
 
@@ -235,6 +235,33 @@ const axisValuesText = (s, channel) => {
 	}
 }
 
+const scaleDescriptions = {
+	pow: 'exponential',
+	sqrt: 'square root',
+	symlog: 'symmetric log',
+	log: 'logarithmic'
+}
+
+/**
+ * written description of a scale
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {string} scale description
+ */
+const scaleDescription = (s, channel) => {
+	if (encodingType(s, channel) !== 'quantitative') {
+		return ''
+	}
+	const type = scaleType(s, channel)
+	if (!type) {
+		return 'linear'
+	} else if (type && scaleDescriptions[type]) {
+		return scaleDescriptions[type]
+	} else if (type) {
+		return type
+	}
+}
+
 /**
  * written description of an axis
  * @param {object} s Vega Lite specification
@@ -248,7 +275,7 @@ const axisDescription = (s, channel) => {
 	const segments = [
 		`${channel} axis`,
 		`titled '${axisTitle(s, channel)}`,
-		`for ${encodingType(s, channel)} scale`,
+		`for ${[scaleDescription(s, channel), encodingType(s, channel)].filter(Boolean).join(' ')} scale`,
 		axisValuesText(s, channel)
 	]
 	return segments.join(' ')
