@@ -169,7 +169,7 @@ const stackData = s => {
 		})
 	}
 
-	return metadata(s, sort(stacked))
+	return sort(stacked)
 }
 
 /**
@@ -187,7 +187,7 @@ const circularData = s => {
 		return { key, value: d3.sum(values, encodingValue(s, 'theta')) }
 	})
 
-	return metadata(s, summed)
+	return summed
 }
 
 /**
@@ -221,7 +221,7 @@ const lineData = s => {
 		}
 	})
 
-	return metadata(s, results)
+	return results
 }
 
 /**
@@ -261,7 +261,7 @@ const chartData = s => {
  * @returns {array} sorted and aggregated data
  */
 const _data = s => {
-	return chartData(s)
+	return metadata(s, chartData(s))
 }
 const data = memoize(_data)
 
