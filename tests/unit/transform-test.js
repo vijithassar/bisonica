@@ -174,6 +174,26 @@ module('unit > transform', () => {
 				}
 				assert.equal(run(s), '2,3,4')
 			})
+			test('filters on derived fields created with the calculate transform', assert => {
+				const s = {
+					data: {
+						values: [
+							{ x: 1, _: '$' },
+							{ x: 2, _: '•' },
+							{ x: 3, _: '*' },
+							{ x: 4, _: '•' },
+							{ x: 5, _: '*' },
+							{ x: 6, _: '•' },
+							{ x: 7, _: '$' }
+						]
+					},
+					transform: [
+						{ calculate: "'>' + datum._", as: '__' },
+						{ filter: { oneOf: ['>•', '>*'], field: '__' } }
+					]
+				}
+				assert.equal(run(s), '2,3,4,5,6')
+			})
 			test('filters change scale domains', assert => {
 				const s = specificationFixture('line')
 				const max = 8

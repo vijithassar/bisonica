@@ -87,7 +87,7 @@ const filters = s => {
 	const predicates = configs.map(predicate)
 	return data => {
 		return predicates.reduce((accumulator, current) => {
-			return accumulator.filter(current)
+			return accumulator.map(transformDatum(s)).filter(current)
 		}, data)
 	}
 }
