@@ -107,7 +107,7 @@ const tableOptions = s => {
  * @param {object} _s Vega Lite specification
  * @returns {function(object)} table renderer
  */
-const table = (_s, options) => {
+const table = (_s, options) => { // eslint-disable-line no-unused-vars
 	const s = layerPrimary(_s)
 	if (extension(s, 'table') === null) {
 		return noop
