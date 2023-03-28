@@ -8,8 +8,8 @@ import * as d3 from 'd3'
  * @param {string} expression a calculate expression describing string interpolation
  * @returns {function} string interpolation function
  */
-const calculate = expression => {
-	const segments = expression
+const calculate = str => {
+	const segments = str
 		.split('+')
 		.map(item => item.trim())
 		.map(item => {
