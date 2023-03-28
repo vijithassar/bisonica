@@ -1,3 +1,5 @@
+const datumPrefix = 'datum.'
+
 /**
  * create a function to perform a single calculate expression
  * @param {string} str a calculate expression describing string interpolation
@@ -8,7 +10,7 @@ const expression = str => {
 		.split('+')
 		.map(item => item.trim())
 		.map(item => {
-			const interpolate = typeof item === 'string' && item.startsWith('datum.')
+			const interpolate = typeof item === 'string' && item.startsWith(datumPrefix)
 			const literal = item.startsWith("'") && item.endsWith("'")
 
 			if (literal) {
@@ -22,8 +24,8 @@ const expression = str => {
 	return d =>
 		segments
 			.map(segment => {
-				if (segment.startsWith('datum.')) {
-					const key = segment.slice(6)
+				if (segment.startsWith(datumPrefix)) {
+					const key = segment.slice(datumPrefix.length)
 
 					return d[key]
 				} else {
