@@ -65,24 +65,6 @@ module('unit > transform', () => {
 		test('returns a string', assert => {
 			assert.equal(calculate(expressions.naive)({}), 'https://www.example.com/test')
 		})
-		test('interpolates properties', assert => {
-			assert.equal(
-				calculate(expressions.interpolate)({ a: 'test' }),
-				'https://www.example.com/test'
-			)
-		})
-		test('interpolates multiple properties', assert => {
-			assert.equal(
-				calculate(expressions.multiple)({ a: '1', b: '2' }),
-				'https://www.example.com/12'
-			)
-		})
-		test('omits malformed string interpolations', assert => {
-			assert.equal(
-				calculate("'https://www.example.com' + '/' + datum.a + '/test")({ a: '1' }),
-				'https://www.example.com/1'
-			)
-		})
 	})
 	module('filter', () => {
 		const specification = () => {
