@@ -1,5 +1,7 @@
 import { memoize } from './memoize.js'
 import { identity } from './helpers.js'
+import { encodingType } from './encodings.js'
+
 import * as d3 from 'd3'
 
 /**
@@ -61,4 +63,31 @@ const _format = config => {
 }
 const format = memoize(_format)
 
-export { format }
+/**
+ * get formatting function for an encoding channel
+ * @param {object} s Vega Lite specification
+ * @param {'text'|'tooltip'} channel encoding channel
+ */
+const formatChannel = (s, channel) => {
+	return format(s.encoding[channel])
+}
+
+/**
+ * get formatting function for an axis, and fall back
+ * to the encoding channel definition if necessary
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ */
+const formatAxis = (s, channel) => {
+	const config = s.encoding[channel].axis
+	// sidestep the format() wrapper function in cases where
+	// the time encoding is specified at the channel level
+	// instead of with axis.type
+	if (encodingType(s, channel) === 'temporal' && !config.formatType) {
+		return timeFormat(config)
+	} else {
+		return format(config)
+	}
+}
+
+export { format, formatChannel, formatAxis }
