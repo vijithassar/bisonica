@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { MINIMUM_TICK_COUNT } from './config.js'
 import { encodingType } from './encodings.js'
-import { getTimeFormatter } from './time.js'
+import { formatAxis } from './format.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
 import { ticks } from './axes.js'
@@ -95,7 +95,7 @@ const abbreviate = memoize(_abbreviate)
  * @returns {function} formatting function
  */
 const format = (s, channel) => {
-	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : label => label.toString()
+	const formatter = encodingType(s, channel) === 'temporal' ? formatAxis(s, channel) : label => label.toString()
 
 	return text => formatter(text)
 }
@@ -150,7 +150,7 @@ const truncate = memoize(_truncate)
 const _axisTicksLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
 	let text = textContent
 
-	text = format(s, channel)(text)
+	text = formatAxis(s, channel)(text)
 
 	text = abbreviate(s, channel)(text)
 

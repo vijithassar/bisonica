@@ -14,7 +14,7 @@ import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { axisTitle } from './axes.js'
 import { scaleType, parseScales } from './scales.js'
-import { getTimeFormatter } from './time.js'
+import { formatAxis } from './format.js'
 import { list } from './text.js'
 
 const delimiter = '; '
@@ -227,7 +227,7 @@ const chartLabel = s => {
  */
 const axisValuesText = (s, channel) => {
 	const values = parseScales(s)[channel].domain()
-	const formatter = encodingType(s, channel) === 'temporal' ? getTimeFormatter(s, channel) : identity
+	const formatter = encodingType(s, channel) === 'temporal' ? formatAxis(s, channel) : identity
 	if (isContinuous(s, channel)) {
 		return `with values from ${d3.extent(values).map(formatter).join(' to ')}`
 	} else {
