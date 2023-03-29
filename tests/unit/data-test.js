@@ -116,4 +116,18 @@ module('unit > data', () => {
 		}
 		assert.ok(data(s).every(item => typeof item.data === 'number'))
 	})
+	test('generates data sequences', assert => {
+		const s = {
+			data: { sequence: {
+				start: 0,
+				stop: 100,
+				step: 10,
+				as: '_'
+			} },
+			mark: { type: 'point' },
+			encoding: { x: { field: 'data', type: 'quantitative' } }
+		}
+		assert.ok(data(s).length, 10)
+		assert.ok(data(s).every(item => typeof item._ === 'number'))
+	})
 })
