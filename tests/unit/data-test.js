@@ -7,7 +7,7 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('unit > data', () => {
-	test('extracts values from s', assert => {
+	test('extracts values from specification', assert => {
 		const value = {}
 		const s = { data: { values: [value] } }
 
