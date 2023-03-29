@@ -1,11 +1,12 @@
 import * as d3 from 'd3'
 import { feature } from './feature.js'
 
-import { mark, noop, values } from './helpers.js'
+import { mark, noop } from './helpers.js'
 import { markSelector, marks } from './marks.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
 import { temporalBarDimensions } from './time.js'
+import { values } from './data.js'
 
 /**
  * determine whether encoding types can be shared

@@ -2,8 +2,9 @@ import { ascending, descending, min, sum } from 'd3'
 import { createAccessors } from './accessors.js'
 import { encodingField, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
-import { isContinuous, isDiscrete, values } from './helpers.js'
+import { isContinuous, isDiscrete } from './helpers.js'
 import { memoize } from './memoize.js'
+import { values } from './data.js'
 
 const orders = ['ascending', 'descending']
 

@@ -1,4 +1,4 @@
-import { data } from '../../source/data.js'
+import { data, values } from '../../source/data.js'
 import { encodingField } from '../../source/encodings.js'
 import { getTimeParser } from '../../source/time.js'
 import qunit from 'qunit'
@@ -7,6 +7,12 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('unit > data', () => {
+	test('extracts values from s', assert => {
+		const value = {}
+		const s = { data: { values: [value] } }
+
+		assert.equal(values(s).pop(), value)
+	})
 	test('compiles stacked bar data', assert => {
 		const stacked = data(specificationFixture('stackedBar'))
 

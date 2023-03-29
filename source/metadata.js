@@ -1,6 +1,7 @@
 import { encodingChannelCovariateCartesian, encodingField } from './encodings.js'
 import { feature } from './feature.js'
-import { missingSeries, values } from './helpers.js'
+import { missingSeries } from './helpers.js'
+import { values } from './data.js'
 
 const metadataChannels = ['description', 'tooltip', 'href']
 

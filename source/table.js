@@ -1,9 +1,10 @@
 import { extension } from './extensions.js'
-import { noop, values } from './helpers.js'
+import { noop } from './helpers.js'
 import { encodingField } from './encodings.js'
 import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
 import { parseScales } from './scales.js'
+import { values } from './data.js'
 
 /**
  *

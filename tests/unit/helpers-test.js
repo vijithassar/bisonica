@@ -5,12 +5,6 @@ import qunit from 'qunit'
 const { module, test } = qunit
 
 module('unit > helpers', () => {
-	test('extracts values from s', assert => {
-		const value = {}
-		const s = { data: { values: [value] } }
-
-		assert.equal(helpers.values(s).pop(), value)
-	})
 	test('converts polar coordinates to cartesian coordinates', assert => {
 		const radius = 10
 		const right = helpers.polarToCartesian(radius, 0)

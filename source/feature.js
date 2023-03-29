@@ -1,7 +1,8 @@
 import { encodingType, encodingValue } from './encodings.js'
 import { layerTestRecursive } from './views.js'
-import { mark, values } from './helpers.js'
+import { mark } from './helpers.js'
 import { memoize } from './memoize.js'
+import { values } from './data.js'
 
 // this is a mistake
 // import { isPresent } from '@ember/utils';
