@@ -23,7 +23,7 @@ const abbreviateNumbers = number => {
 /**
  * look up data values attached to specification
  * @param {object} s Vega Lite specification
- * @returns {array}
+ * @returns {object[]}
  */
 const _values = s => {
 	return transformValues(s)(s.data?.values.slice())
