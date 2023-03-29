@@ -102,4 +102,12 @@ module('unit > data', () => {
 		const valid = item => typeof item === 'object' && typeof item.key === 'string' && typeof item.value === 'number'
 		assert.ok(data(s).every(valid))
 	})
+	test('wraps primitives in objects', assert => {
+		const s = {
+			data: { values: [1, 2, 3] },
+			mark: { type: 'point' },
+			encoding: { x: { field: 'data', type: 'quantitative' } }
+		}
+		assert.ok(data(s).every(item => typeof item.data === 'number'))
+	})
 })
