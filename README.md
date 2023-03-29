@@ -84,6 +84,8 @@ Nested fields must be looked up using dot notation (e.g. `datum.field`), not bra
 
 [Predicates](https://vega.github.io/vega-lite/docs/predicate.html) do not support expressions.
 
+The [calculate transform](https://vega.github.io/vega-lite/docs/calculate.html) only supports deriving new fields with string concatenation and can't do arbitrary math. (If you need arbitrary math, do it in JavaScript and attach the results to your specification before rendering.)
+
 Escaping special characters in field names is not supported. Instead, you should mutate your data before rendering to clean up the affected field names.
 
 Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
