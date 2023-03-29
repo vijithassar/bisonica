@@ -84,6 +84,9 @@ const formatAxis = (s, channel) => {
 	if (config === null) {
 		return noop
 	}
+	if (config === undefined) {
+		return identity
+	}
 	// sidestep the format() wrapper function in cases where
 	// the time encoding is specified at the channel level
 	// instead of with axis.type
