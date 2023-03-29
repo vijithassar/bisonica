@@ -274,7 +274,7 @@ const axisDescription = (s, channel) => {
 	}
 	const segments = [
 		`${channel} axis`,
-		`titled '${axisTitle(s, channel)}`,
+		`titled '${axisTitle(s, channel)}'`,
 		`for ${[scaleDescription(s, channel), encodingType(s, channel)].filter(Boolean).join(' ')} scale`,
 		axisValuesText(s, channel)
 	]
