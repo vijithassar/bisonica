@@ -1,5 +1,5 @@
 import { memoize } from './memoize.js'
-import { identity } from './helpers.js'
+import { identity, noop } from './helpers.js'
 import { encodingType } from './encodings.js'
 
 import * as d3 from 'd3'
@@ -81,6 +81,9 @@ const formatChannel = (s, channel) => {
  */
 const formatAxis = (s, channel) => {
 	const config = s.encoding[channel].axis
+	if (config === null) {
+		return noop
+	}
 	// sidestep the format() wrapper function in cases where
 	// the time encoding is specified at the channel level
 	// instead of with axis.type
