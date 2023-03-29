@@ -36,7 +36,7 @@ module('unit > interactions', function() {
 			},
 			usermeta: {
 				customTooltipHandler: event => {
-					console.log(event)
+					alert(event)
 				}
 			},
 			layer: [
