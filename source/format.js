@@ -65,7 +65,11 @@ const _format = config => {
 const format = memoize(_format)
 
 /**
- * get formatting function for an encoding channel
+ * create a formatting function based on an encoding channel
+ * definition
+ *
+ * this is only valid for text and tooltip channels; most of
+ * the time the right choice is formatAxis
  * @param {object} s Vega Lite specification
  * @param {'text'|'tooltip'} channel encoding channel
  */
@@ -74,8 +78,11 @@ const formatChannel = (s, channel) => {
 }
 
 /**
- * get formatting function for an axis, and fall back
- * to the encoding channel definition if necessary
+ * create a formatting function based on an axis definition
+ *
+ * this doesn't mean you're necessarily formatting axis ticks;
+ * rather, it means the formatting instruction is taken from
+ * the axis object, which is the most common scenario
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
  */
