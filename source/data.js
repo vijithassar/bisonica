@@ -9,6 +9,7 @@ import {
 } from './encodings.js'
 import { metadata } from './metadata.js'
 import { feature } from './feature.js'
+import { fetch } from './fetch.js'
 import { missingSeries, nested } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime } from './time.js'
@@ -82,10 +83,23 @@ const wrap = arr => {
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const _values = s => {
+const _valuesStatic = s => {
 	return transformValues(s)(wrap(valuesBase(s)))
 }
-const values = memoize(_values)
+const valuesStatic = memoize(_valuesStatic)
+
+/**
+ * look up data values
+ * @param {object} s Vega Lite specification
+ * @returns {object[]} data set
+ */
+const values = s => {
+	if (s.data?.values) {
+		return valuesStatic(s)
+	} else if (s.data?.url) {
+		return fetch(s)
+	}
+}
 
 /**
  * nest data points in a hierarchy according to property name

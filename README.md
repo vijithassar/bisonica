@@ -78,7 +78,9 @@ On the other hand, the standard `vega-lite.js` renderer is definitely still the 
 
 bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`source/marks.js`](./source/marks.js).
 
-Data must be supplied inline as an array attached to [`specification.data.values`](https://vega.github.io/vega-lite/docs/data.html#inline) or [`specification.datasets`](https://vega.github.io/vega-lite/docs/data.html#datasets).
+Data loading will not [parse inline strings](https://vega.github.io/vega-lite/docs/data.html#inline).
+
+Remote data will be loaded as is after being fetched; `parse` and `property` are not yet supported.
 
 Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
 
