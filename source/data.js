@@ -59,10 +59,10 @@ const valuesBase = s => {
 
 /**
  * convert numbers to objects
- * @param {number[]} arr array of numbers
+ * @param {number[]} arr array of primitives
  * @returns {object[]} array of objects
  */
-const wrapNumbers = arr => {
+const wrap = arr => {
 	if (!arr || typeof arr[0] === 'object') {
 		return arr
 	} else {
@@ -71,7 +71,7 @@ const wrapNumbers = arr => {
 				return { data: item }
 			})
 		} catch (error) {
-			error.message = `could not convert raw numbers to objects - ${error.message}`
+			error.message = `could not convert primitives to objects - ${error.message}`
 			throw error
 		}
 	}
@@ -83,7 +83,7 @@ const wrapNumbers = arr => {
  * @returns {object[]}
  */
 const _values = s => {
-	return transformValues(s)(wrapNumbers(valuesBase(s)))
+	return transformValues(s)(wrap(valuesBase(s)))
 }
 const values = memoize(_values)
 
