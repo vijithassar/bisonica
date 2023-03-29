@@ -6,38 +6,38 @@ import * as d3 from 'd3'
 
 /**
  * create a time formatting function
- * @param {object} config encoding or axis definition object
+ * @param {object|undefined} format d3 time format string
  * @returns {function(Date)} date formatting function
  */
-const timeFormat = config => {
-	if (!config?.format) {
+const timeFormat = format => {
+	if (!format) {
 		return date => date.toString()
 	}
-	return d3.timeFormat(config.format)
+	return d3.timeFormat(format)
 }
 
 /**
  * create a time formatting function in UTC
- * @param {object} config encoding or axis definition object
+ * @param {object|undefined} format d3 time format string
  * @returns {function(Date)} UTC date formatting function
  */
-const utcFormat = config => {
-	if (!config?.format) {
+const utcFormat = format => {
+	if (!format) {
 		return date => date.toUTCString()
 	}
-	return d3.utcFormat(config.format)
+	return d3.utcFormat(format)
 }
 
 /**
  * create a number formatting function
- * @param {object} config encoding or axis definition object
+ * @param {object|undefined} format d3 number format string
  * @returns {function(number)} number formatting function
  */
-const numberFormat = config => {
-	if (!config?.format) {
+const numberFormat = format => {
+	if (!format) {
 		return number => number.toString()
 	}
-	return d3.format(config.format)
+	return d3.format(format)
 }
 
 /**
@@ -50,15 +50,16 @@ const _format = config => {
 		return identity
 	}
 	const time = config.type === 'temporal' || config.formatType === 'time' || config.timeUnit
+	const format = config.format || config.axis.format
 	if (time) {
 		const utc = !!config.timeUnit?.startsWith('utc')
 		if (utc) {
-			return utcFormat(config)
+			return utcFormat(format)
 		} else {
-			return timeFormat(config)
+			return timeFormat(format)
 		}
 	} else {
-		return numberFormat(config)
+		return numberFormat(format)
 	}
 }
 const format = memoize(_format)
@@ -84,7 +85,7 @@ const formatAxis = (s, channel) => {
 	// the time encoding is specified at the channel level
 	// instead of with axis.type
 	if (encodingType(s, channel) === 'temporal' && !config.formatType) {
-		return timeFormat(config)
+		return timeFormat(config.format)
 	} else {
 		return format(config)
 	}
