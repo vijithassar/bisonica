@@ -98,22 +98,29 @@ Errors inside the chart library are nested, and error handling typically appends
 
 ## Catching
 
-To set a custom error handler, pass a function to the `chart.error()` method.
+To set a custom error handler, pass a function to the `.error()` method.
 
 ```javascript
+// create a chart renderer
+const renderer = chart(specification, dimensions)
+
+// error handling function
 const errorHandler = (error) => alert(error.message);
 
-chart(specification).error(errorHandler);
+// attach the error handling function to the chart renderer
+renderer.error(errorHandler);
 ```
 
-By default, errors are handled at the top level with `console.error`, equivalent to `chart(s).error(console.error)`.
+By default, errors are handled at the top level with `console.error`, equivalent to `renderer.error(console.error)`.
 
 ## Disabling
 
 To disable default trapping of errors and instead surface the semantic stack traces to the consumer:
 
 ```javascript
-chart(specification).error(null);
+// disable catching and allow errors
+// to propagate up to the caller
+renderer.error(null);
 ```
 
 You'll then want to handle these in your page or application.
