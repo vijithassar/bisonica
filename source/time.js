@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { encodingChannelCovariateCartesian, encodingType, encodingValue } from './encodings.js'
+import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js'
 import { memoize } from './memoize.js'
 import { feature } from './feature.js'
 import { barWidth } from './marks.js'
@@ -127,36 +127,6 @@ const timePeriod = (s, channel) => {
 }
 
 /**
- * default date format
- * @param {object} date Date object
- * @returns {string} string representation
- */
-const defaultTimeFormatter = date => date.toUTCString()
-
-/**
- * string key for controlling date functionality
- * @param {object} s Vega Lite specification
- * @param {string} channel temporal channel
- * @returns {function} date string formatting function
- */
-const _getTimeFormatter = (s, channel) => {
-	const type = encodingType(s, channel)
-	const format = s.encoding?.[channel]?.axis?.format
-	const timeUnit = s.encoding?.[channel]?.timeUnit
-	const utc = !!timeUnit?.startsWith('utc')
-	if (type === 'temporal' && format) {
-		if (utc) {
-			return d3.utcFormat(format)
-		} else {
-			return d3.timeFormat(format)
-		}
-	}
-
-	return defaultTimeFormatter
-}
-const getTimeFormatter = memoize(_getTimeFormatter)
-
-/**
  * alter dimensions object to subtract the bar width
  * for a temporal bar chart
  * @param {object} s Vega Lite specification
@@ -172,4 +142,4 @@ const temporalBarDimensions = (s, dimensions) => {
 	}
 }
 
-export { getTimeParser, parseTime, timePeriod, getTimeFormatter, timeMethod, temporalBarDimensions }
+export { getTimeParser, parseTime, timePeriod, timeMethod, temporalBarDimensions }

@@ -4,7 +4,7 @@ import { category } from './marks.js'
 import { createAccessors } from './accessors.js'
 import { encodingChannelQuantitative, encodingField, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
-import { getTimeFormatter } from './time.js'
+import { formatAxis } from './format.js'
 import { memoize } from './memoize.js'
 import { noop } from './helpers.js'
 import { parseScales } from './scales.js'
@@ -143,7 +143,7 @@ const _getTooltipField = (s, type) => {
 		}
 
 		if (encodingType(s, channel) === 'temporal') {
-			value = getTimeFormatter(s, channel)(value)
+			value = formatAxis(s, channel)(value)
 		}
 
 		if (!key && !value) {
