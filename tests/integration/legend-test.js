@@ -14,7 +14,7 @@ module('integration > legend', function() {
 	test('renders a chart with legend automatically omitted', assert => {
 		const spec = specificationFixture('categoricalBar')
 		const element = render(spec)
-		assert.equal(element.querySelector(testSelector('legend')).textContent, '')
+		assert.notOk(element.querySelector(testSelector('legend')))
 	})
 
 	test('renders a chart with legend explicitly omitted', assert => {
