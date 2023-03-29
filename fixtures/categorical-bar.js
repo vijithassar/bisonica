@@ -13,8 +13,7 @@ const categoricalBarChartSpec = {
 	mark: { type: 'bar', tooltip: true },
 	encoding: {
 		x: { field: 'animal', type: 'nominal' },
-		y: { title: 'count', field: 'value', type: 'quantitative' },
-		color: { field: null, type: 'nominal' }
+		y: { title: 'count', field: 'value', type: 'quantitative' }
 	}
 }
 
