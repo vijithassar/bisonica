@@ -29,7 +29,7 @@ const valuesInline = s => s.data.values.slice()
 const valuesTopLevel = s => s.datasets[s.data.name]
 
 /**
- *
+ * generate a data set
  * @param {object} s Vega Lite specification
  * @returns {object[]} data
  */
@@ -43,7 +43,7 @@ const valuesSequence = s => {
 }
 
 /**
- * generate a set of objects
+ * switch between lookup options for raw values
  * @param {object} s Vega Lite specification
  * @returns {object[]} generated data set
  */
@@ -58,7 +58,7 @@ const valuesBase = s => {
 }
 
 /**
- * get values from datasets property based on name
+ * convert numbers to objects
  * @param {number[]} arr array of numbers
  * @returns {object[]} array of objects
  */
