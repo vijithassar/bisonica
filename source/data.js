@@ -19,14 +19,43 @@ import { transformValues } from './transform.js'
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const valuesInline = s => s.data?.values?.slice()
+const valuesInline = s => s.data.values.slice()
 
 /**
  * get values from datasets property based on name
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const valuesTopLevel = s => s.datasets?.[s.data?.name]
+const valuesTopLevel = s => s.datasets[s.data.name]
+
+/**
+ *
+ * @param {object} s Vega Lite specification
+ * @returns {object[]} data
+ */
+const valuesSequence = s => {
+	const { start, stop, step } = s.data.sequence
+	const values = d3.range(start, stop, (step || 1))
+	const key = s.data.sequence.as || 'data'
+	return values.map(item => {
+		return { [key]: item }
+	})
+}
+
+/**
+ * generate a set of objects
+ * @param {object} s Vega Lite specification
+ * @returns {object[]} generated data set
+ */
+const valuesBase = s => {
+	if (s.data?.values) {
+		return valuesInline(s)
+	} else if (s.data?.name) {
+		return valuesTopLevel(s)
+	} else if (s.data?.sequence) {
+		return valuesSequence(s)
+	}
+}
 
 /**
  * get values from datasets property based on name
@@ -54,7 +83,7 @@ const wrapNumbers = arr => {
  * @returns {object[]}
  */
 const _values = s => {
-	return transformValues(s)(wrapNumbers(s.data?.values ? valuesInline(s) : valuesTopLevel(s)))
+	return transformValues(s)(wrapNumbers(valuesBase(s)))
 }
 const values = memoize(_values)
 
