@@ -9,9 +9,9 @@ import {
 	encodingType,
 	encodingValue
 } from './encodings.js'
-import { data, pointData } from './data.js'
+import { data, pointData, values } from './data.js'
 import { markDescription } from './descriptions.js'
-import { detach, datum, isDiscrete, key, mark, missingSeries, values } from './helpers.js'
+import { detach, datum, isDiscrete, key, mark, missingSeries } from './helpers.js'
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'

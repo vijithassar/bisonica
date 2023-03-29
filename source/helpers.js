@@ -2,8 +2,6 @@ import * as d3 from 'd3'
 
 import { encodingField, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
-import { transformValues } from './transform.js'
-import { memoize } from './memoize.js'
 
 /**
  * round number based on significant digits
@@ -19,50 +17,6 @@ const abbreviateNumbers = number => {
 		return d3.format('.2s')(number)
 	}
 }
-
-/**
- * get values from values property
- * @param {object} s Vega Lite specification
- * @returns {object[]}
- */
-const valuesInline = s => s.data?.values?.slice()
-
-/**
- * get values from datasets property based on name
- * @param {object} s Vega Lite specification
- * @returns {object[]}
- */
-const valuesTopLevel = s => s.datasets?.[s.data?.name]
-
-/**
- * get values from datasets property based on name
- * @param {number[]} arr array of numbers
- * @returns {object[]} array of objects
- */
-const wrapNumbers = arr => {
-	if (!arr || typeof arr[0] === 'object') {
-		return arr
-	} else {
-		try {
-			return arr.map(item => {
-				return { data: item }
-			})
-		} catch (error) {
-			error.message = `could not convert raw numbers to objects - ${error.message}`
-			throw error
-		}
-	}
-}
-
-/**
- * look up data values attached to specification
- * @param {object} s Vega Lite specification
- * @returns {object[]}
- */
-const _values = s => {
-	return transformValues(s)(wrapNumbers(s.data?.values ? valuesInline(s) : valuesTopLevel(s)))
-}
-const values = memoize(_values)
 
 /**
  * return the original data object if it has been nested
@@ -239,7 +193,6 @@ const detach = (fn, ...rest) => {
 export {
 	abbreviateNumbers,
 	mark,
-	values,
 	datum,
 	nested,
 	missingSeries,

@@ -9,9 +9,54 @@ import {
 } from './encodings.js'
 import { metadata } from './metadata.js'
 import { feature } from './feature.js'
-import { missingSeries, nested, values } from './helpers.js'
+import { missingSeries, nested } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime } from './time.js'
+import { transformValues } from './transform.js'
+
+/**
+ * get values from values property
+ * @param {object} s Vega Lite specification
+ * @returns {object[]}
+ */
+const valuesInline = s => s.data?.values?.slice()
+
+/**
+ * get values from datasets property based on name
+ * @param {object} s Vega Lite specification
+ * @returns {object[]}
+ */
+const valuesTopLevel = s => s.datasets?.[s.data?.name]
+
+/**
+ * get values from datasets property based on name
+ * @param {number[]} arr array of numbers
+ * @returns {object[]} array of objects
+ */
+const wrapNumbers = arr => {
+	if (!arr || typeof arr[0] === 'object') {
+		return arr
+	} else {
+		try {
+			return arr.map(item => {
+				return { data: item }
+			})
+		} catch (error) {
+			error.message = `could not convert raw numbers to objects - ${error.message}`
+			throw error
+		}
+	}
+}
+
+/**
+ * look up data values attached to specification
+ * @param {object} s Vega Lite specification
+ * @returns {object[]}
+ */
+const _values = s => {
+	return transformValues(s)(wrapNumbers(s.data?.values ? valuesInline(s) : valuesTopLevel(s)))
+}
+const values = memoize(_values)
 
 /**
  * nest data points in a hierarchy according to property name
@@ -265,4 +310,4 @@ const _data = s => {
 }
 const data = memoize(_data)
 
-export { data, pointData, sumByCovariates }
+export { data, values, pointData, sumByCovariates }
