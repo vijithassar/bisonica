@@ -93,4 +93,13 @@ module('unit > data', () => {
 
 		assert.ok(values, 'every item includes a value')
 	})
+	test('retrieves values from top level datasets property', assert => {
+		const s = specificationFixture('circular')
+		const name = '_'
+		s.datasets = { [name]: s.data.values }
+		delete s.data.values
+		s.data.name = name
+		const valid = item => typeof item === 'object' && typeof item.key === 'string' && typeof item.value === 'number'
+		assert.ok(data(s).every(valid))
+	})
 })

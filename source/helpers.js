@@ -21,12 +21,26 @@ const abbreviateNumbers = number => {
 }
 
 /**
+ * get values from values property
+ * @param {object} s Vega Lite specification
+ * @returns {object[]}
+ */
+const valuesInline = s => s.data?.values?.slice()
+
+/**
+ * get values from datasets property based on name
+ * @param {object} s Vega Lite specification
+ * @returns {object[]}
+ */
+const valuesTopLevel = s => s.datasets?.[s.data?.name]
+
+/**
  * look up data values attached to specification
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
 const _values = s => {
-	return transformValues(s)(s.data?.values.slice())
+	return transformValues(s)(s.data?.values ? valuesInline(s) : valuesTopLevel(s))
 }
 const values = memoize(_values)
 
