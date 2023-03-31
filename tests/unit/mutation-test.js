@@ -1,5 +1,4 @@
 import { chart } from '../../source/chart.js'
-import { init } from '../../source/init.js'
 import qunit from 'qunit'
 import { select } from 'd3'
 import { specificationFixture } from '../test-helpers.js'
@@ -39,7 +38,7 @@ module('unit > mutation', () => {
 		const render = () => {
 			const node = document.createElement('div')
 
-			select(node).call(init(s, dimensions)).call(chart(s, dimensions))
+			select(node).call(chart(s, dimensions))
 		}
 
 		render()
