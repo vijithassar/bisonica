@@ -21,7 +21,7 @@ import { fetchAll } from './fetch.js'
  * @param {object} panelDimensions chart dimensions
  * @returns {function} renderer
  */
-const chart = (s, panelDimensions) => {
+const render = (s, panelDimensions) => {
 	let tooltipHandler
 	let errorHandler = console.error
 	let tableRenderer = table
@@ -112,6 +112,22 @@ const chart = (s, panelDimensions) => {
 	renderer.error = h => typeof h !== 'undefined' ? (errorHandler = h, renderer) : errorHandler
 
 	return renderer
+}
+
+/**
+ * optionally fetch remote data, then create and run
+ * a chart rendering function
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} renderer
+ */
+const chart = (s, dimensions) => {
+	return selection => {
+		fetchAll(s)
+			.then(() => {
+				selection.call(render(s, dimensions))
+			})
+	}
 }
 
 export { chart }
