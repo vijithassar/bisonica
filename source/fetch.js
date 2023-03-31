@@ -15,10 +15,10 @@ const cached = data => {
 
 /**
  * fetch remote data
- * @param {object} s Vega Lite specification
+ * @param {object} data data definition
  * @returns {Promise<object[]>} data set
  */
-const fetch = async s => await d3[s.data.format?.type || 'json'](s.data.url)
+const fetch = data => d3[data?.format?.type || 'json'](data.url)
 
 /**
  * fetch and cache all remote resources for a specification
