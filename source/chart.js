@@ -1,7 +1,7 @@
 import { WRAPPER_CLASS } from './config.js'
 import { audio } from './audio.js'
 import { axes } from './axes.js'
-import { init } from './lifecycle.js'
+import { setupNode } from './lifecycle.js'
 import { initializeInteractions, interactions } from './interactions.js'
 import { keyboard } from './keyboard.js'
 import { layerMarks } from './views.js'
@@ -29,7 +29,7 @@ const chart = (s, panelDimensions) => {
 		try {
 			selection.html('')
 
-			selection.call(init(s, panelDimensions))
+			selection.call(setupNode(s, panelDimensions))
 
 			initializeInteractions(selection.node(), s)
 

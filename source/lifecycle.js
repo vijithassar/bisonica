@@ -9,7 +9,7 @@ import { detach } from './helpers.js'
  * @param {object} s Vega Lite specification
  * @param {object} dimensions desired dimensions of the chart
  */
-const init = (s, dimensions) => {
+const setupNode = (s, dimensions) => {
 	const initializer = selection => {
 		selection.html('')
 
@@ -65,4 +65,4 @@ const init = (s, dimensions) => {
 	return detach(initializer)
 }
 
-export { init }
+export { setupNode }
