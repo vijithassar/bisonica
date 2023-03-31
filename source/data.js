@@ -93,20 +93,21 @@ const valuesStatic = memoize(_valuesStatic)
  * @param {object} s Vega Lite specification
  * @returns {array} data set
  */
-const valuesCached = data => cached(data)
+const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
 
 /**
  * look up data values
  * @param {object} s Vega Lite specification
  * @returns {object[]} data set
  */
-const values = s => {
+const _values = s => {
 	if (s.data?.values) {
 		return valuesStatic(s)
 	} else if (s.data?.url) {
 		return valuesCached(s.data)
 	}
 }
+const values = memoize(_values)
 
 /**
  * nest data points in a hierarchy according to property name
