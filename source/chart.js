@@ -1,7 +1,7 @@
 import { WRAPPER_CLASS } from './config.js'
 import { audio } from './audio.js'
 import { axes } from './axes.js'
-import { init } from './init.js'
+import { init } from './lifecycle.js'
 import { initializeInteractions, interactions } from './interactions.js'
 import { keyboard } from './keyboard.js'
 import { layerMarks } from './views.js'
