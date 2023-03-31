@@ -3,6 +3,7 @@ import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { chartLabel, chartDescription } from './descriptions.js'
 import { detach } from './helpers.js'
+import { fetchAll } from './fetch.js'
 
 /**
  * prepare the DOM of a specified element for rendering a chart
@@ -65,4 +66,8 @@ const setupNode = (s, dimensions) => {
 	return detach(initializer)
 }
 
-export { setupNode }
+const init = s => {
+	return fetchAll(s)
+}
+
+export { setupNode, init }

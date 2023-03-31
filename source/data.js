@@ -104,7 +104,7 @@ const values = s => {
 	if (s.data?.values) {
 		return valuesStatic(s)
 	} else if (s.data?.url) {
-		return valuesCached(s)
+		return valuesCached(s.data)
 	}
 }
 

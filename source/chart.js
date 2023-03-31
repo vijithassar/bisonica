@@ -12,6 +12,7 @@ import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
 import { feature } from './feature.js'
+import { fetchAll } from './fetch.js'
 
 /**
  * generate chart rendering function based on

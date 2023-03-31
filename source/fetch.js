@@ -20,4 +20,32 @@ const cached = data => {
  */
 const fetch = async s => await d3[s.data.format?.type || 'json'](s.data.url)
 
-export { cached }
+/**
+ * fetch and cache all remote resources for a specification
+ * @param {object} s Vega Lite specification
+ */
+const fetchAll = s => {
+	const resources = [
+		s.data,
+		...(s.layer ? s.layer.map(layer => layer.data) : [])
+	]
+		.filter(Boolean)
+		.filter(resource => resource.url)
+	const promises = resources.map(fetch)
+	promises.forEach((promise, index) => {
+		promise.then(result => {
+			const resource = resources[index]
+			cache.set(resource, result)
+		})
+	})
+	if (promises.length) {
+		const all = Promise.allSettled(promises)
+		return all
+	} else {
+		const resolver = resolve => resolve(true)
+		const promise = new Promise(resolver)
+		return promise
+	}
+}
+
+export { cached, fetchAll }
