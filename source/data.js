@@ -104,7 +104,9 @@ const _values = s => {
 	if (s.data?.values) {
 		return valuesStatic(s)
 	} else if (s.data?.url) {
-		return valuesCached(s.data)
+		return valuesCached(s)
+	} else {
+		return valuesBase(s)
 	}
 }
 const values = memoize(_values)
