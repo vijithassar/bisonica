@@ -116,13 +116,13 @@ const render = (s, panelDimensions) => {
 }
 
 /**
- * optionally fetch remote data, then create and run
- * a chart rendering function
+ * convert a synchronous rendering function
+ * into an asynchronous rendering function
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function(object)} renderer
+ * @returns {function(object)} asynchronous rendering function
  */
-const chart = (s, dimensions) => {
+const asyncRender = (s, dimensions) => {
 	const renderer = render(s, dimensions)
 	const fn = selection => {
 		fetchAll(s)
@@ -132,6 +132,21 @@ const chart = (s, dimensions) => {
 	}
 	copyMethods(['error', 'tooltip', 'table'], renderer, fn)
 	return fn
+}
+
+/**
+ * optionally fetch remote data, then create and run
+ * a chart rendering function
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} renderer
+ */
+const chart = (s, dimensions) => {
+	if (s.data?.url) {
+		return asyncRender(s, dimensions)
+	} else {
+		return render(s, dimensions)
+	}
 }
 
 export { chart }
