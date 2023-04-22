@@ -13,6 +13,7 @@ import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
 import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
+import { copyMethods } from './helpers.js'
 
 /**
  * generate chart rendering function based on
@@ -122,12 +123,15 @@ const render = (s, panelDimensions) => {
  * @returns {function(object)} renderer
  */
 const chart = (s, dimensions) => {
-	return selection => {
+	const renderer = render(s, dimensions)
+	const fn = selection => {
 		fetchAll(s)
 			.then(() => {
-				selection.call(render(s, dimensions))
+				selection.call(renderer)
 			})
 	}
+	copyMethods(['error', 'tooltip', 'table'], renderer, fn)
+	return fn
 }
 
 export { chart }
