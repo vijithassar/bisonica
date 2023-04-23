@@ -142,7 +142,7 @@ const asyncRender = (s, dimensions) => {
  * @returns {function} renderer
  */
 const chart = (s, dimensions) => {
-	if (s.data?.url) {
+	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {
 		return asyncRender(s, dimensions)
 	} else {
 		return render(s, dimensions)
