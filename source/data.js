@@ -20,7 +20,7 @@ import { transformValues } from './transform.js'
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const valuesInline = s => s.data.values.slice()
+const valuesInline = s => s.data.values
 
 /**
  * get values from datasets property based on name
@@ -100,7 +100,7 @@ const valuesCached = s => cached(s.data)
  */
 const dataUtilities = s => {
 	return data => {
-		return transformValues(s)(wrap(data))
+		return transformValues(s)(wrap(data)).slice()
 	}
 }
 
