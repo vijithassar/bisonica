@@ -49,12 +49,12 @@ const valuesSequence = s => {
  * @returns {object[]} generated data set
  */
 const valuesBase = s => {
-	if (s.data?.values) {
-		return valuesInline(s)
-	} else if (s.data?.name) {
+	if (s.data?.name) {
 		return valuesTopLevel(s)
 	} else if (s.data?.sequence) {
 		return valuesSequence(s)
+	} else {
+		return valuesInline(s)
 	}
 }
 
