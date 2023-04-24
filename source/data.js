@@ -44,11 +44,11 @@ const valuesSequence = s => {
 }
 
 /**
- * switch between lookup options for raw values
+ * look up data values attached to specification
  * @param {object} s Vega Lite specification
- * @returns {object[]} generated data set
+ * @returns {object[]|object}
  */
-const valuesBase = s => {
+const valuesStatic = s => {
 	if (s.data?.name) {
 		return valuesTopLevel(s)
 	} else if (s.data?.sequence) {
@@ -92,13 +92,6 @@ const lookup = s => {
 		return nested(data, s.data.format?.property)
 	}
 }
-
-/**
- * look up data values attached to specification
- * @param {object} s Vega Lite specification
- * @returns {object[]}
- */
-const valuesStatic = s => valuesBase(s)
 
 /**
  * get remote data from the cache
