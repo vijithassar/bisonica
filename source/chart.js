@@ -1,7 +1,7 @@
 import { WRAPPER_CLASS } from './config.js'
 import { audio } from './audio.js'
 import { axes } from './axes.js'
-import { init } from './init.js'
+import { setupNode } from './lifecycle.js'
 import { initializeInteractions, interactions } from './interactions.js'
 import { keyboard } from './keyboard.js'
 import { layerMarks } from './views.js'
@@ -12,6 +12,8 @@ import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
 import { feature } from './feature.js'
+import { fetchAll } from './fetch.js'
+import { copyMethods } from './helpers.js'
 
 /**
  * generate chart rendering function based on
@@ -20,7 +22,7 @@ import { feature } from './feature.js'
  * @param {object} panelDimensions chart dimensions
  * @returns {function} renderer
  */
-const chart = (s, panelDimensions) => {
+const render = (s, panelDimensions) => {
 	let tooltipHandler
 	let errorHandler = console.error
 	let tableRenderer = table
@@ -29,7 +31,7 @@ const chart = (s, panelDimensions) => {
 		try {
 			selection.html('')
 
-			selection.call(init(s, panelDimensions))
+			selection.call(setupNode(s, panelDimensions))
 
 			initializeInteractions(selection.node(), s)
 
@@ -111,6 +113,40 @@ const chart = (s, panelDimensions) => {
 	renderer.error = h => typeof h !== 'undefined' ? (errorHandler = h, renderer) : errorHandler
 
 	return renderer
+}
+
+/**
+ * convert a synchronous rendering function
+ * into an asynchronous rendering function
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} asynchronous rendering function
+ */
+const asyncRender = (s, dimensions) => {
+	const renderer = render(s, dimensions)
+	const fn = selection => {
+		fetchAll(s)
+			.then(() => {
+				selection.call(renderer)
+			})
+	}
+	copyMethods(['error', 'tooltip', 'table'], renderer, fn)
+	return fn
+}
+
+/**
+ * optionally fetch remote data, then create and run
+ * a chart rendering function
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function} renderer
+ */
+const chart = (s, dimensions) => {
+	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {
+		return asyncRender(s, dimensions)
+	} else {
+		return render(s, dimensions)
+	}
 }
 
 export { chart }

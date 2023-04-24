@@ -190,6 +190,18 @@ const detach = (fn, ...rest) => {
 	}
 }
 
+/**
+ * alias methods from a source onto a target
+ * @param {string[]} methods
+ * @param {object|function} source
+ * @param {object|function} target
+ */
+const copyMethods = (methods, source, target) => {
+	methods.forEach(method => {
+		target[method] = source[method]
+	})
+}
+
 export {
 	abbreviateNumbers,
 	mark,
@@ -205,5 +217,6 @@ export {
 	isDiscrete,
 	isTextChannel,
 	polarToCartesian,
-	detach
+	detach,
+	copyMethods
 }

@@ -9,6 +9,7 @@ import {
 } from './encodings.js'
 import { metadata } from './metadata.js'
 import { feature } from './feature.js'
+import { cached } from './fetch.js'
 import { missingSeries, nested } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime } from './time.js'
@@ -82,8 +83,31 @@ const wrap = arr => {
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const _values = s => {
+const _valuesStatic = s => {
 	return transformValues(s)(wrap(valuesBase(s)))
+}
+const valuesStatic = memoize(_valuesStatic)
+
+/**
+ * get remote data from the cache
+ * @param {object} s Vega Lite specification
+ * @returns {array} data set
+ */
+const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
+
+/**
+ * look up data values
+ * @param {object} s Vega Lite specification
+ * @returns {object[]} data set
+ */
+const _values = s => {
+	if (s.data?.values) {
+		return valuesStatic(s)
+	} else if (s.data?.url) {
+		return valuesCached(s)
+	} else {
+		return valuesBase(s)
+	}
 }
 const values = memoize(_values)
 

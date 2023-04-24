@@ -3,13 +3,14 @@ import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { chartLabel, chartDescription } from './descriptions.js'
 import { detach } from './helpers.js'
+import { fetchAll } from './fetch.js'
 
 /**
  * prepare the DOM of a specified element for rendering a chart
  * @param {object} s Vega Lite specification
  * @param {object} dimensions desired dimensions of the chart
  */
-const init = (s, dimensions) => {
+const setupNode = (s, dimensions) => {
 	const initializer = selection => {
 		selection.html('')
 
@@ -65,4 +66,8 @@ const init = (s, dimensions) => {
 	return detach(initializer)
 }
 
-export { init }
+const init = s => {
+	return fetchAll(s)
+}
+
+export { setupNode, init }
