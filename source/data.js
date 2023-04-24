@@ -101,12 +101,14 @@ const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
  * @returns {object[]} data set
  */
 const _values = s => {
-	if (s.data?.values) {
-		return valuesStatic(s)
-	} else if (s.data?.url) {
+	if (!s.data) {
+		return
+	}
+	const url = !!s.data.url
+	if (url) {
 		return valuesCached(s)
 	} else {
-		return valuesBase(s)
+		return valuesStatic(s)
 	}
 }
 const values = memoize(_values)
