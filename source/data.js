@@ -83,17 +83,26 @@ const wrap = arr => {
  * @param {object} s Vega Lite specification
  * @returns {object[]}
  */
-const _valuesStatic = s => {
-	return transformValues(s)(wrap(valuesBase(s)))
-}
-const valuesStatic = memoize(_valuesStatic)
+const valuesStatic = s => valuesBase(s)
 
 /**
  * get remote data from the cache
  * @param {object} s Vega Lite specification
  * @returns {array} data set
  */
-const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
+const valuesCached = s => cached(s.data)
+
+/**
+ * run all data transformation and utility functions
+ * on an input data set
+ * @param {object} s Vega Lite specification
+ * @returns {function(object[])} data processing function
+ */
+const dataUtilities = s => {
+	return data => {
+		return transformValues(s)(wrap(data))
+	}
+}
 
 /**
  * look up data values
@@ -105,11 +114,7 @@ const _values = s => {
 		return
 	}
 	const url = !!s.data.url
-	if (url) {
-		return valuesCached(s)
-	} else {
-		return valuesStatic(s)
-	}
+	return dataUtilities(s)(url ? valuesCached(s) : valuesStatic(s))
 }
 const values = memoize(_values)
 
