@@ -26,6 +26,24 @@ module('unit > data', () => {
 			assert.equal(data[0].a, 1)
 			assert.equal(data[0].b, 2)
 		})
+		test('parses field types', assert => {
+			const s = {
+				data: {
+					values: [{ a: null, b: 0, c: 2020 }],
+					format: {
+						parse: {
+							a: 'number',
+							b: 'boolean',
+							c: 'date'
+						}
+					}
+				}
+			}
+			const parsed = values(s)[0]
+			assert.strictEqual(parsed.a, 0)
+			assert.strictEqual(parsed.b, false)
+			assert.equal(typeof parsed.c.getFullYear, 'function')
+		})
 	})
 	module('sources', () => {
 		test('retrieves values from top level datasets property', assert => {
