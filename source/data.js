@@ -10,7 +10,7 @@ import {
 import { metadata } from './metadata.js'
 import { feature } from './feature.js'
 import { cached } from './fetch.js'
-import { missingSeries, nested } from './helpers.js'
+import { identity, missingSeries, nested } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime } from './time.js'
 import { transformValues } from './transform.js'
@@ -18,9 +18,9 @@ import { transformValues } from './transform.js'
 /**
  * get values from values property
  * @param {object} s Vega Lite specification
- * @returns {object[]}
+ * @returns {object[]|object}
  */
-const valuesInline = s => s.data.values.slice()
+const valuesInline = s => s.data.values || s.data
 
 /**
  * get values from datasets property based on name
@@ -44,17 +44,17 @@ const valuesSequence = s => {
 }
 
 /**
- * switch between lookup options for raw values
+ * look up data values attached to specification
  * @param {object} s Vega Lite specification
- * @returns {object[]} generated data set
+ * @returns {object[]|object}
  */
-const valuesBase = s => {
-	if (s.data?.values) {
-		return valuesInline(s)
-	} else if (s.data?.name) {
+const valuesStatic = s => {
+	if (s.data?.name) {
 		return valuesTopLevel(s)
 	} else if (s.data?.sequence) {
 		return valuesSequence(s)
+	} else {
+		return valuesInline(s)
 	}
 }
 
@@ -79,21 +79,38 @@ const wrap = arr => {
 }
 
 /**
- * look up data values attached to specification
+ * look up data from a nested object based on
+ * a string of properties
  * @param {object} s Vega Lite specification
- * @returns {object[]}
+ * @returns {function(object)}
  */
-const _valuesStatic = s => {
-	return transformValues(s)(wrap(valuesBase(s)))
+const lookup = s => {
+	if (s.data.format?.type !== 'json' || !s.data.format?.property) {
+		return identity
+	}
+	return data => {
+		return nested(data, s.data.format?.property)
+	}
 }
-const valuesStatic = memoize(_valuesStatic)
 
 /**
  * get remote data from the cache
  * @param {object} s Vega Lite specification
  * @returns {array} data set
  */
-const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
+const valuesCached = s => cached(s.data)
+
+/**
+ * run all data transformation and utility functions
+ * on an input data set
+ * @param {object} s Vega Lite specification
+ * @returns {function(object[])} data processing function
+ */
+const dataUtilities = s => {
+	return data => {
+		return transformValues(s)(wrap(lookup(s)(data))).slice()
+	}
+}
 
 /**
  * look up data values
@@ -101,13 +118,11 @@ const valuesCached = s => transformValues(s)(wrap(cached(s.data)))
  * @returns {object[]} data set
  */
 const _values = s => {
-	if (s.data?.values) {
-		return valuesStatic(s)
-	} else if (s.data?.url) {
-		return valuesCached(s)
-	} else {
-		return valuesBase(s)
+	if (!s.data) {
+		return
 	}
+	const url = !!s.data.url
+	return dataUtilities(s)(url ? valuesCached(s) : valuesStatic(s))
 }
 const values = memoize(_values)
 

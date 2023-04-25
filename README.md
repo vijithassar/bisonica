@@ -80,7 +80,7 @@ bisonica is still a work in progress and as such supports only a subset of Vega 
 
 Data loading will not [parse inline strings](https://vega.github.io/vega-lite/docs/data.html#inline).
 
-Remote data will be loaded as is after being fetched; `parse` and `property` are not yet supported.
+Remote data will be loaded as is after being fetched; `parse` is not supported.
 
 Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
 

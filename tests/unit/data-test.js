@@ -14,6 +14,18 @@ module('unit > data', () => {
 
 			assert.equal(values(s).pop(), value)
 		})
+		test('looks up nested data', assert => {
+			const nestedData = { first: { second: [{ a: 1, b: 2 }] } }
+			const s = {
+				data: nestedData
+			}
+			s.data.format = { property: 'first.second', type: 'json' }
+			const data = values(s)
+			assert.ok(Array.isArray(data))
+			assert.equal(data.length, 1)
+			assert.equal(data[0].a, 1)
+			assert.equal(data[0].b, 2)
+		})
 	})
 	module('sources', () => {
 		test('retrieves values from top level datasets property', assert => {
