@@ -4,6 +4,7 @@ import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } fro
 import { parseTime } from './time.js'
 import { transformDatum } from './transform.js'
 import { isTextChannel, nested } from './helpers.js'
+import { predicate } from './predicate.js'
 
 /**
  * look up the field used for a visual encoding
@@ -187,6 +188,27 @@ const encodingChannelCovariateCartesian = s => {
 }
 
 /**
+ * create a scale which only computes a value when a condition is met
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ */
+const _conditionalEncoder = (s, channel) => {
+	const test = predicate(s.encoding[channel].condition.test)
+	const encoder = d => {
+		const value = encodingValue(s, channel)(d)
+		if (test(d)) {
+			return value
+		} else {
+			if (s.encoding[channel].value) {
+				return s.encoding[channel].value
+			}
+		}
+	}
+	return encoder
+}
+const conditionalEncoder = memoize(_conditionalEncoder)
+
+/**
  * generate a set of complex encoders
  * @param {object} s Vega Lite specification
  * @param {object} dimensions desired dimensions of the chart
@@ -203,7 +225,14 @@ const createEncoders = (s, dimensions, accessors) => {
 		const encoder = d => {
 			const scale = scales[channel]
 
-			if (s.encoding[channel]?.value) {
+			const condition = s.encoding[channel]?.condition
+			const valueEncoding = s.encoding[channel]?.value
+
+			if (condition) {
+				return conditionalEncoder(s, channel)(d)
+			}
+
+			if (!condition && valueEncoding) {
 				return scale()
 			}
 
