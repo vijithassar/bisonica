@@ -100,6 +100,32 @@ const lookup = s => {
  */
 const valuesCached = s => cached(s.data)
 
+const parsers = {
+	number: d => +d,
+	boolean: d => !!d,
+	date: d => new Date(d),
+	null: identity
+}
+
+/**
+ * convert field types in an input datum object
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} datum field parsing function
+ */
+const parseFields = s => {
+	if (!s.data?.format?.parse) {
+		return identity
+	}
+	const parser = d => {
+		let result = { ...d }
+		for (const [key, type] of Object.entries(s.data.format.parse)) {
+			result[key] = parsers[`${type}`](d[key])
+		}
+		return result
+	}
+	return data => data.map(parser)
+}
+
 /**
  * run all data transformation and utility functions
  * on an input data set
@@ -108,7 +134,7 @@ const valuesCached = s => cached(s.data)
  */
 const dataUtilities = s => {
 	return data => {
-		return transformValues(s)(wrap(lookup(s)(data))).slice()
+		return transformValues(s)(wrap(parseFields(s)(lookup(s)(data)))).slice()
 	}
 }
 
