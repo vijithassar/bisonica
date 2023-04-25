@@ -18,7 +18,13 @@ const cached = data => {
  * @param {object} data data definition
  * @returns {Promise<object[]>} data set
  */
-const fetch = data => d3[data?.format?.type || 'json'](data.url)
+const fetch = data => {
+	const extensions = ['json', 'tsv', 'csv', 'dsv']
+	const extension = data?.format?.type ||
+		extensions.find(item => data.url.endsWith(`.${item}`)) ||
+		'json'
+	return d3[extension](data.url)
+}
 
 /**
  * fetch and cache all remote resources for a specification
