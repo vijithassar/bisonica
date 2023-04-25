@@ -23,7 +23,11 @@ const fetch = data => {
 	const extension = data?.format?.type ||
 		extensions.find(item => data.url.endsWith(`.${item}`)) ||
 		'json'
-	return d3[extension](data.url)
+	if (extension === 'dsv') {
+		return d3.dsv(data.format.delimiter, data.url)
+	} else {
+		return d3[extension](data.url)
+	}
 }
 
 /**
