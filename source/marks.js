@@ -24,7 +24,7 @@ const transparent = 0.001
 /**
  * aggregate and sort mark data
  * @param {object} s Vega Lite specification
- * @returns {array} aggregated and sorted data for data join
+ * @returns {object[]} aggregated and sorted data for data join
  */
 const markData = s => {
 	const series = Array.isArray(data(s)) && data(s).every(Array.isArray)

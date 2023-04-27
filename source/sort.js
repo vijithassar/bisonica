@@ -112,7 +112,7 @@ const isDescending = (s, channel) => {
  * extract the values to sort and resolve repeated values
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {array} array of data values to be sorted
+ * @returns {object[]} array of data values to be sorted
  */
 const valuesToSort = (s, channel) => {
 	const getValue = encodingValue(s, channel)

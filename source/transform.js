@@ -35,7 +35,7 @@ const _composeCalculateTransforms = transforms => {
 
 /**
  * create a function to augment a datum with multiple calculate expressions
- * @param {array} transforms an array of calculate expressions
+ * @param {object[]} transforms an array of calculate expressions
  * @returns {function(object[])} transform function
  */
 const composeCalculateTransforms = memoize(_composeCalculateTransforms)

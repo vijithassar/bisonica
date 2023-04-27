@@ -12,7 +12,7 @@ const charts = d3.local()
 /**
  * events to listen for
  * @param {object} s Vega Lite specification
- * @returns {array} list of event names
+ * @returns {string[]} list of event names
  */
 const events = s => {
 	if (

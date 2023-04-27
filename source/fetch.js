@@ -5,7 +5,7 @@ const cache = new WeakMap()
 /**
  * retrieve data from the cache
  * @param {object} data data definition
- * @returns {array} data set
+ * @returns {object[]} data set
  */
 const cached = data => {
 	if (data.url) {

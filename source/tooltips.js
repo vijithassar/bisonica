@@ -21,7 +21,7 @@ const formatField = field => {
 
 /**
  * format datum description
- * @param {array} content data fields to format
+ * @param {object[]|string} content data fields to format
  * @returns {string} datum description
  */
 const formatTooltipContent = content => {
@@ -45,7 +45,7 @@ const _includedChannels = s => {
 /**
  * determine which encoding channels to include in a description
  * @param {object} s Vega Lite specification
- * @returns {array} included channels
+ * @returns {string[]} included channels
  */
 const includedChannels = memoize(_includedChannels)
 
@@ -186,7 +186,7 @@ const _tooltipContentAll = s => {
  * retrieve all datum fields for tooltip
  * @param {object} s Vega Lite specification
  * @param {object} d datum
- * @returns {array} all field content
+ * @returns {object[]} all field content
  */
 const tooltipContentAll = memoize(_tooltipContentAll)
 
