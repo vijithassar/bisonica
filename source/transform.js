@@ -7,7 +7,7 @@ import * as d3 from 'd3'
 /**
  * create a function to perform a single calculate expression
  * @param {string} str a calculate expression describing string interpolation
- * @returns {function} string interpolation function
+ * @returns {function(string)} string interpolation function
  */
 const calculate = str => expression(str)
 
@@ -36,7 +36,7 @@ const _composeCalculateTransforms = transforms => {
 /**
  * create a function to augment a datum with multiple calculate expressions
  * @param {array} transforms an array of calculate expressions
- * @returns {function} transform function
+ * @returns {function(object[])} transform function
  */
 const composeCalculateTransforms = memoize(_composeCalculateTransforms)
 

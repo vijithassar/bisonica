@@ -96,7 +96,7 @@ const tooltip = (selection, s) => {
 /**
  * create a function to render all tooltips
  * @param {object} s Vega Lite specification
- * @returns {function} tooltip rendering function
+ * @returns {function(object)} tooltip rendering function
  */
 const tooltips = s => {
 	if (s.usermeta?.tooltipHandler) {
@@ -113,7 +113,7 @@ const tooltips = s => {
  * create a function to retrieve a tooltip field pair from a datum
  * @param {object} s Vega Lite specification
  * @param {string} type encoding parameter, field, or transform field
- * @returns {function} function
+ * @returns {function(object)} function
  */
 const _getTooltipField = (s, type) => {
 	let accessors
@@ -193,7 +193,7 @@ const tooltipContentAll = memoize(_tooltipContentAll)
 /**
  * create a function to retrieve tooltip content
  * @param {object} s Vega Lite specification
- * @returns {function} tooltip field data lookup function
+ * @returns {function(object)} tooltip field data lookup function
  */
 const tooltipContentData = s => {
 	return d => {

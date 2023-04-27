@@ -193,7 +193,7 @@ const encodingChannelCovariateCartesian = s => {
  * @param {string} channel encoding channel
  * @param {function} accessor accessor function
  * @param {object} dimensions chart dimensions
- * @returns {function} encoder function
+ * @returns {function(object)} encoder function
  */
 const _encoder = (s, channel, accessor, dimensions) => {
 	const scales = parseScales(s, dimensions)

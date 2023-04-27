@@ -3,7 +3,7 @@ const datumPrefix = 'datum.'
 /**
  * create a function to perform a single calculate expression
  * @param {string} str a calculate expression describing string interpolation
- * @returns {function} string interpolation function
+ * @returns {function(object)} string interpolation function
  */
 const expression = str => {
 	const segments = str

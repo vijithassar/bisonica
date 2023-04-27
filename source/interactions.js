@@ -94,7 +94,7 @@ const handleUrl = url => {
 /**
  * attach event listeners to a layer
  * @param {object} s Vega Lite specification
- * @returns {function} user interactions
+ * @returns {function(object)} user interactions
  */
 const _interactions = s => {
 	const fn = wrapper => {

@@ -46,7 +46,7 @@ const x = {
  * generate a listener for an arrow key
  * @param {object} s Vega Lite specification
  * @param {('up'|'right'|'down'|'left')} direction arrow direction
- * @returns {function} key listener
+ * @returns {function(object)} key listener
  */
 const key = (s, direction) => {
 	return (mark, state) => {
@@ -204,7 +204,7 @@ const keyMap = key => {
 /**
  * attach keyboard navigation to a chart DOM
  * @param {object} _s Vega Lite specification
- * @returns {function}
+ * @returns {function(object)}
  */
 const keyboard = _s => {
 	try {

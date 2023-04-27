@@ -193,7 +193,7 @@ const stackEncoders = (s, dimensions) => {
  * render a single bar chart mark
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} single mark renderer
+ * @returns {function(object)} single mark renderer
  */
 const barMark = (s, dimensions) => {
 	const encoders = stackEncoders(s, dimensions)
@@ -255,7 +255,7 @@ const barMarksTransform = (s, dimensions) => {
  * render bar chart marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} bar renderer
+ * @returns {function(object)} bar renderer
  */
 const barMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'))
@@ -325,7 +325,7 @@ const areaEncoders = (s, dimensions) => {
  * render area marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} area mark renderer
+ * @returns {function(object)} area mark renderer
  */
 const areaMarks = (s, dimensions) => {
 	const encoders = areaEncoders(s, dimensions)
@@ -433,7 +433,7 @@ const pointMark = (s, dimensions) => {
  * render image marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} image mark renderer
+ * @returns {function(object)} image mark renderer
  */
 const imageMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -466,7 +466,7 @@ const imageMarks = (s, dimensions) => {
  * render multiple point marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} points renderer
+ * @returns {function(object)} points renderer
  */
 const pointMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -521,7 +521,7 @@ const pointMarks = (s, dimensions) => {
  * render line chart marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} line renderer
+ * @returns {function(object)} line renderer
  */
 const lineMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -600,7 +600,7 @@ const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
  * render arc marks for a circular pie or donut chart
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} circular chart arc renderer
+ * @returns {function(object)} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
 	const outerRadius = radius(dimensions)
@@ -672,7 +672,7 @@ const ruleDirection = s => {
  * render rule marks
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} rule renderer
+ * @returns {function(object)} rule renderer
  */
 const ruleMarks = (s, dimensions) => {
 	const renderer = selection => {
@@ -788,7 +788,7 @@ const textMarks = (s, dimensions) => {
  * select an appropriate mark renderer
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} mark renderer
+ * @returns {function(object)} mark renderer
  */
 const _marks = (s, dimensions) => {
 	try {

@@ -52,7 +52,7 @@ const _getTimeParser = date => {
 /**
  * select a function that can parse a date format
  * @param {(string|number)} date date representation
- * @returns {function} date parsing function
+ * @returns {function(Date)} date parsing function
  */
 const getTimeParser = memoize(_getTimeParser)
 
