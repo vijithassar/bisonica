@@ -195,7 +195,7 @@ const encodingChannelCovariateCartesian = s => {
  * @param {object} dimensions chart dimensions
  * @returns {function} encoder function
  */
-const encoder = (s, channel, accessor, dimensions) => {
+const _encoder = (s, channel, accessor, dimensions) => {
 	const scales = parseScales(s, dimensions)
 	return d => {
 		const scale = scales[channel]
@@ -235,6 +235,7 @@ const encoder = (s, channel, accessor, dimensions) => {
 		return encoded
 	}
 }
+const encoder = memoize(_encoder)
 
 /**
  * generate a set of complex encoders
