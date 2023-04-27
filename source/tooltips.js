@@ -156,17 +156,16 @@ const _getTooltipField = (s, type) => {
 }
 const getTooltipField = memoize(_getTooltipField)
 
+/**
+ * retrieve default fields for tooltip
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} default field content retrieval function
+ */
 const _tooltipContentDefault = s => {
 	return d => {
 		return includedChannels(s).map(channel => getTooltipField(s, channel)(d))
 	}
 }
-/**
- * retrieve default fields for tooltip
- * @param {object} s Vega Lite specification
- * @param {object} d datum
- * @returns {array} default field content
- */
 const tooltipContentDefault = memoize(_tooltipContentDefault)
 
 const _tooltipContentAll = s => {
