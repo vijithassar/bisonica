@@ -225,7 +225,11 @@ const _encoder = (s, channel, accessor, dimensions) => {
 		const encoded = scale(value)
 
 		if (encoded === undefined) {
-			throw new Error(`encoded value for ${channel} is undefined`)
+			if (encodingType(s, channel) === 'quantitative') {
+				return 0
+			} else {
+				throw new Error(`encoded value for ${channel} is undefined`)
+			}
 		}
 
 		if (Number.isNaN(encoded)) {
