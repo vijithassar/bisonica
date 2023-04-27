@@ -187,6 +187,56 @@ const encodingChannelCovariateCartesian = s => {
 }
 
 /**
+ * bundle together an accessor and an encoder function
+ * into an encoder function
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @param {function} accessor accessor function
+ * @param {object} dimensions chart dimensions
+ * @returns {function} encoder function
+ */
+const encoder = (s, channel, accessor, dimensions) => {
+	const scales = parseScales(s, dimensions)
+	return d => {
+		const scale = scales[channel]
+
+		if (s.encoding[channel]?.value) {
+			return scale()
+		}
+
+		const value = encodingType(s, channel) === 'temporal' ? parseTime(accessor(d)) : accessor(d)
+
+		if (accessor && scale === undefined) {
+			throw new Error(`accessor function ${channel}() is missing corresponding scale function`)
+		}
+
+		if (d === undefined && value !== null) {
+			throw new Error(`datum for ${channel} is undefined`)
+		}
+
+		if (typeof scale !== 'function') {
+			throw new Error(`scale function for ${channel} is not available`)
+		}
+
+		if (value === undefined && feature(s).isMulticolor()) {
+			throw new Error(`data value for ${channel} is undefined`)
+		}
+
+		const encoded = scale(value)
+
+		if (encoded === undefined) {
+			throw new Error(`encoded value for ${channel} is undefined`)
+		}
+
+		if (Number.isNaN(encoded)) {
+			throw new Error(`encoded value for ${channel} is not a number (NaN)`)
+		}
+
+		return encoded
+	}
+}
+
+/**
  * generate a set of complex encoders
  * @param {object} s Vega Lite specification
  * @param {object} dimensions desired dimensions of the chart
@@ -196,49 +246,8 @@ const encodingChannelCovariateCartesian = s => {
  */
 const createEncoders = (s, dimensions, accessors) => {
 	const result = {}
-	const scales = parseScales(s, dimensions)
-
 	Object.keys(accessors).forEach(channel => {
-		const accessor = accessors[channel]
-		const encoder = d => {
-			const scale = scales[channel]
-
-			if (s.encoding[channel]?.value) {
-				return scale()
-			}
-
-			const value = encodingType(s, channel) === 'temporal' ? parseTime(accessor(d)) : accessor(d)
-
-			if (accessor && scale === undefined) {
-				throw new Error(`accessor function ${channel}() is missing corresponding scale function`)
-			}
-
-			if (d === undefined && value !== null) {
-				throw new Error(`datum for ${channel} is undefined`)
-			}
-
-			if (typeof scale !== 'function') {
-				throw new Error(`scale function for ${channel} is not available`)
-			}
-
-			if (value === undefined && feature(s).isMulticolor()) {
-				throw new Error(`data value for ${channel} is undefined`)
-			}
-
-			const encoded = scale(value)
-
-			if (encoded === undefined) {
-				throw new Error(`encoded value for ${channel} is undefined`)
-			}
-
-			if (Number.isNaN(encoded)) {
-				throw new Error(`encoded value for ${channel} is not a number (NaN)`)
-			}
-
-			return encoded
-		}
-
-		result[channel] = encoder
+		result[channel] = encoder(s, channel, accessors[channel], dimensions)
 	})
 
 	return result
