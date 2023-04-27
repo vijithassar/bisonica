@@ -63,7 +63,7 @@ const fontStyles = node => {
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @param {'x'|'y'} channel encoding channel
- * @returns {function} abbreviation function
+ * @returns {function(string)} abbreviation function
  */
 const _abbreviate = (s, dimensions, channel) => {
 	return tick => {
@@ -92,7 +92,7 @@ const abbreviate = memoize(_abbreviate)
  * format axis tick label text
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
- * @returns {function} formatting function
+ * @returns {function(string)} formatting function
  */
 const format = (s, channel) => {
 	const formatter = encodingType(s, channel) === 'temporal' ? formatAxis(s, channel) : label => label.toString()
@@ -202,7 +202,7 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
  * render axis tick text
  * @param {object} s Vega Lite specification
  * @param {'x'|'y'} channel encoding channel
- * @returns {function} text processing function
+ * @returns {function(object)} text processing function
  */
 const axisTicksLabelText = (s, channel) => {
 	let styles = {}

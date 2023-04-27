@@ -20,7 +20,7 @@ import { copyMethods } from './helpers.js'
  * a Vega Lite specification
  * @param {object} s Vega Lite specification
  * @param {object} panelDimensions chart dimensions
- * @returns {function} renderer
+ * @returns {function(object)} renderer
  */
 const render = (s, panelDimensions) => {
 	let tooltipHandler
@@ -139,7 +139,7 @@ const asyncRender = (s, dimensions) => {
  * a chart rendering function
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} renderer
+ * @returns {function(object, object)} renderer
  */
 const chart = (s, dimensions) => {
 	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {

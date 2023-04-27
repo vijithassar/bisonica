@@ -12,7 +12,7 @@ const charts = d3.local()
 /**
  * events to listen for
  * @param {object} s Vega Lite specification
- * @returns {array} list of event names
+ * @returns {string[]} list of event names
  */
 const events = s => {
 	if (
@@ -94,7 +94,7 @@ const handleUrl = url => {
 /**
  * attach event listeners to a layer
  * @param {object} s Vega Lite specification
- * @returns {function} user interactions
+ * @returns {function(object)} user interactions
  */
 const _interactions = s => {
 	const fn = wrapper => {

@@ -96,7 +96,7 @@ const lookup = s => {
 /**
  * get remote data from the cache
  * @param {object} s Vega Lite specification
- * @returns {array} data set
+ * @returns {object[]} data set
  */
 const valuesCached = s => cached(s.data)
 
@@ -154,9 +154,9 @@ const values = memoize(_values)
 
 /**
  * nest data points in a hierarchy according to property name
- * @param {array} data individual data points
+ * @param {object[]} data individual data points
  * @param {string} property property name under which to nest
- * @returns {array} nested data points
+ * @returns {object[]} nested data points
  */
 const groupByProperty = (data, property) => {
 	return Array.from(d3.group(data, d => d[property])).map(([key, values]) => ({ key, values }))
@@ -199,11 +199,11 @@ const sumByProperty = (datum, property, valueKey) => {
 
 /**
  * sum individual values into totals by group
- * @param {array} values individual data points
+ * @param {object[]} values individual data points
  * @param {string} groupBy property to group by
  * @param {string} sumBy property to sum by
  * @param {string} valueKey property to sum
- * @returns {array} nested group sums
+ * @returns {object[]} nested group sums
  */
 const groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
 	return groupByProperty(values, groupBy).map(item => sumByProperty(item, sumBy, valueKey))
@@ -211,8 +211,8 @@ const groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
 
 /**
  * string keys used to compute stack layout
- * @param {array} data data set
- * @returns {array} keys
+ * @param {object[]} data data set
+ * @returns {object[]} keys
  */
 const stackKeys = data => {
 	const keys = data
@@ -228,7 +228,7 @@ const stackKeys = data => {
 /**
  * sum values across the time period specified on the x axis
  * @param {object} s Vega Lite specification
- * @returns {array} values summed across time period
+ * @returns {object[]} values summed across time period
  */
 const sumByCovariates = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
@@ -246,8 +246,8 @@ const sumByCovariates = s => {
 
 /**
  * sort nested data by date and series category
- * @param {array} data unsorted data set
- * @returns {array} sorted data set
+ * @param {object[]} data unsorted data set
+ * @returns {object[]} sorted data set
  */
 const sort = data => {
 	const keys = stackKeys(data)
@@ -275,7 +275,7 @@ const stackValue = (d, key) => d[key]?.value || 0
  * reorganize data from specification into array
  * of values used to render a stacked bar chart
  * @param {object} s Vega Lite specification
- * @returns {array} stacked data series
+ * @returns {object[]} stacked data series
  */
 const stackData = s => {
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
@@ -315,7 +315,7 @@ const stackData = s => {
  * reorganize data from specification into totals
  * used to render a circular chart
  * @param {object} s Vega Lite specification
- * @returns {array} totals by group
+ * @returns {object[]} totals by group
  */
 const circularData = s => {
 	const grouped = Array.from(d3.group(values(s), encodingValue(s, 'color'))).map(
@@ -333,7 +333,7 @@ const circularData = s => {
  * reorganize data from a specification into
  * array of values used to render a line chart.
  * @param {object} s Vega Lite specification
- * @returns {array} summed values for line chart
+ * @returns {object[]} summed values for line chart
  */
 const lineData = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
@@ -366,21 +366,21 @@ const lineData = s => {
 /**
  * retrieve data points used for point marks
  * @param {object} s Vega Lite specification
- * @returns {array} data points for point marks
+ * @returns {object[]} data points for point marks
  */
 const pointData = values
 
 /**
  * retrieve data points used for generic marks
  * @param {object} s Vega Lite specification
- * @returns {array} data points for generic marks
+ * @returns {object[]} data points for generic marks
  */
 const genericData = values
 
 /**
  * wrapper function around chart-specific data preprocessing functionality
  * @param {object} s Vega Lite specification
- * @returns {array} sorted and aggregated data
+ * @returns {object[]} sorted and aggregated data
  */
 const chartData = s => {
 	if (feature(s).isBar() || feature(s).isArea()) {
@@ -397,7 +397,7 @@ const chartData = s => {
 /**
  * wrapper function around data preprocessing functionality
  * @param {object} s Vega Lite specification
- * @returns {array} sorted and aggregated data
+ * @returns {object[]} sorted and aggregated data
  */
 const _data = s => {
 	return metadata(s, chartData(s))

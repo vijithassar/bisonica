@@ -80,7 +80,7 @@ const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 /**
  * color scale legend
  * @param {object} _s Vega Lite specification
- * @returns {function} renderer
+ * @returns {function(object)} renderer
  */
 const color = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
@@ -177,7 +177,7 @@ const color = _s => {
 /**
  * render chart legend
  * @param {object} s Vega Lite specification
- * @returns {function} renderer
+ * @returns {function(object)} renderer
  */
 const legend = s => {
 	if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {

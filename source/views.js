@@ -287,7 +287,7 @@ const layerSpecification = (s, index) => {
  * render layers of a specification
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} layer renderer
+ * @returns {function(object)} layer renderer
  */
 const layerMarks = (s, dimensions) => {
 	if (!s.layer.length) {

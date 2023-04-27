@@ -107,7 +107,7 @@ const margin = memoize(_margin)
  * transform string for positioning charts
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function} positioning function
+ * @returns {function(object)} positioning function
  */
 const position = (s, dimensions) => {
 	const yOffsetCircular =

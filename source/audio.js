@@ -142,7 +142,7 @@ const notes = (values, dispatcher, s) => {
 /**
  * audio sonification
  * @param {object} s Vega Lite specification
- * @returns {function} audio sonification function
+ * @returns {function(object)} audio sonification function
  */
 const audio = s => {
 	if (s.layer) {

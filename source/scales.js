@@ -178,7 +178,7 @@ const domainBaseValues = (s, channel) => {
  * sort the domain
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {function}
+ * @returns {function(array)}
  */
 const domainSort = (s, channel) => {
 	if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {

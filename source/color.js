@@ -50,7 +50,7 @@ const accessibleColors = (count, variant) => {
  * create a standard color palette from the entire
  * available hue range for use as a categorical scale
  * @param {number} count number of colors
- * @returns {array} color palette
+ * @returns {string[]} color palette
  */
 const standardColors = count => {
 	if (!count || count === 1) {

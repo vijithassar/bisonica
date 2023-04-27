@@ -21,7 +21,7 @@ const formatField = field => {
 
 /**
  * format datum description
- * @param {array} content data fields to format
+ * @param {object[]|string} content data fields to format
  * @returns {string} datum description
  */
 const formatTooltipContent = content => {
@@ -45,7 +45,7 @@ const _includedChannels = s => {
 /**
  * determine which encoding channels to include in a description
  * @param {object} s Vega Lite specification
- * @returns {array} included channels
+ * @returns {string[]} included channels
  */
 const includedChannels = memoize(_includedChannels)
 
@@ -96,7 +96,7 @@ const tooltip = (selection, s) => {
 /**
  * create a function to render all tooltips
  * @param {object} s Vega Lite specification
- * @returns {function} tooltip rendering function
+ * @returns {function(object)} tooltip rendering function
  */
 const tooltips = s => {
 	if (s.usermeta?.tooltipHandler) {
@@ -113,7 +113,7 @@ const tooltips = s => {
  * create a function to retrieve a tooltip field pair from a datum
  * @param {object} s Vega Lite specification
  * @param {string} type encoding parameter, field, or transform field
- * @returns {function} function
+ * @returns {function(object)} function
  */
 const _getTooltipField = (s, type) => {
 	let accessors
@@ -156,17 +156,16 @@ const _getTooltipField = (s, type) => {
 }
 const getTooltipField = memoize(_getTooltipField)
 
+/**
+ * retrieve default fields for tooltip
+ * @param {object} s Vega Lite specification
+ * @returns {function(object)} default field content retrieval function
+ */
 const _tooltipContentDefault = s => {
 	return d => {
 		return includedChannels(s).map(channel => getTooltipField(s, channel)(d))
 	}
 }
-/**
- * retrieve default fields for tooltip
- * @param {object} s Vega Lite specification
- * @param {object} d datum
- * @returns {array} default field content
- */
 const tooltipContentDefault = memoize(_tooltipContentDefault)
 
 const _tooltipContentAll = s => {
@@ -186,14 +185,14 @@ const _tooltipContentAll = s => {
  * retrieve all datum fields for tooltip
  * @param {object} s Vega Lite specification
  * @param {object} d datum
- * @returns {array} all field content
+ * @returns {object[]} all field content
  */
 const tooltipContentAll = memoize(_tooltipContentAll)
 
 /**
  * create a function to retrieve tooltip content
  * @param {object} s Vega Lite specification
- * @returns {function} tooltip field data lookup function
+ * @returns {function(object)} tooltip field data lookup function
  */
 const tooltipContentData = s => {
 	return d => {
