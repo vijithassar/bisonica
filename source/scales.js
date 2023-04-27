@@ -150,7 +150,7 @@ const domainBaseValues = (s, channel) => {
 				.map(item => item.values)
 				.flat()
 			const nonzero = s.encoding.y.scale?.zero === false
-			const accessor = d => d.value
+			const accessor = d => +d.value
 			const periodMin = d3.min(byPeriod, accessor)
 			const positive = typeof periodMin === 'number' && periodMin > 0
 
