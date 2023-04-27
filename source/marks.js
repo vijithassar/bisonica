@@ -715,6 +715,12 @@ const ruleMarks = (s, dimensions) => {
 	return renderer
 }
 
+/**
+ * render text marks
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @returns {function(object)} text mark renderer
+ */
 const textMarks = (s, dimensions) => {
 	const defaultFontSize = 11
 	return selection => {
