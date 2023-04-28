@@ -531,7 +531,7 @@ const lineMarks = (s, dimensions) => {
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const markTransforms = ['x', 'y'].map(channel => {
-			const offset = ['nominal', 'ordinal'].includes(encodingType(s, channel)) && ticks(s, channel) <= 2
+			const offset = isDiscrete(s, channel) && ticks(s, channel) <= 2
 
 			if (offset) {
 				const scale = parseScales(s, dimensions)[channel]
