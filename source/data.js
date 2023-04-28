@@ -182,7 +182,7 @@ const sumByProperty = (datum, property, valueKey) => {
 
 		const value = valueKey && valueKey.includes('.') ? nested(item, valueKey) : item[valueKey]
 
-		result[key].value += value
+		result[key].value += +value
 
 		// this should be refactored
 		const field = ['url', 'description', 'tooltip']
