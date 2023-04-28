@@ -60,15 +60,11 @@ const standardColors = count => {
 		const hue = 360 / count * index
 		return hue
 	})
-	const swatch = hues
+	const swatches = hues
 		.map(hue => d3.hcl(hue, 100, 50))
 		.map((color, index) => alternateLuminance(color, index))
 		.map(item => item.toString())
-	const midpoint = Math.floor(count * 0.5)
-	const a = swatch.slice(0, midpoint)
-	const b = swatch.slice(midpoint)
-	const ordered = d3.zip(a, b).flat()
-	return ordered
+	return swatches
 }
 
 /**
@@ -85,6 +81,9 @@ const alternate = colors => {
 	const a = colors.slice(0, midpoint)
 	const b = colors.slice(midpoint)
 	const ordered = d3.zip(a, b).flat()
+	if (a.length < b.length) {
+		ordered.push(b.pop())
+	}
 	return ordered
 }
 
