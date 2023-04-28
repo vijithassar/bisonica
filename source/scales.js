@@ -107,6 +107,23 @@ const customDomain = (s, channel) => {
  * sanitize channel name
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
+ * @returns {number} number of data categories
+ */
+const categoryCount = (s, channel) => {
+	let rangeProcessor
+
+	if (feature(s).isRule()) {
+		rangeProcessor = identity
+	} else {
+		rangeProcessor = data
+	}
+	return (customDomain(s, channel) || rangeProcessor(s)).length
+}
+
+/**
+ * sanitize channel name
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding parameter
  * @returns {string} visual encoding channel
  */
 const channelRoot = (s, channel) => {
@@ -232,18 +249,7 @@ const range = (s, dimensions, _channel) => {
 		x: cartesian,
 		y: cartesian,
 		color: () => {
-			let colorRangeProcessor
-
-			if (feature(s).isRule()) {
-				colorRangeProcessor = identity
-			} else {
-				colorRangeProcessor = data
-			}
-
-			return (
-				s.encoding.color?.scale?.range ||
-        colors(s, (customDomain(s, channel) || colorRangeProcessor(s)).length)
-			)
+			return s.encoding.color?.scale?.range || colors(s, categoryCount(s, channel))
 		},
 		theta: () => [0, Math.PI * 2]
 	}
@@ -413,4 +419,4 @@ const isQuantitativeScale = (s, channel) => {
  */
 const parseScales = memoize(_parseScales)
 
-export { colors, isTemporalScale, isOrdinalScale, isQuantitativeScale, scaleType, parseScales }
+export { categoryCount, colors, isTemporalScale, isOrdinalScale, isQuantitativeScale, scaleType, parseScales }
