@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { data, sumByCovariates, values } from './data.js'
+import { data, stackOffset, sumByCovariates, values } from './data.js'
 import { colors } from './color.js'
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
@@ -161,7 +161,7 @@ const domainBaseValues = (s, channel) => {
 
 		if (feature(s).isBar() || feature(s).isArea()) {
 			min = 0
-			max = d3.max(sumByCovariates(s))
+			max = stackOffset(s) === 'normalize' ? 1 : d3.max(sumByCovariates(s))
 		} else if (feature(s).isLine()) {
 			const byPeriod = data(s)
 				.map(item => item.values)

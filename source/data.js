@@ -153,6 +153,13 @@ const _values = s => {
 const values = memoize(_values)
 
 /**
+ * stack offset configuration
+ * @param {object} s Vega Lite specification
+ * @returns {string} stack command
+ */
+const stackOffset = s => s.encoding[encodingChannelQuantitative(s)].stack
+
+/**
  * nest data points in a hierarchy according to property name
  * @param {object[]} data individual data points
  * @param {string} property property name under which to nest
@@ -284,6 +291,11 @@ const stackData = s => {
 
 	const summed = groupAndSumByProperties(values(s), covariate, group, quantitative)
 	const stacker = d3.stack().keys(stackKeys).value(stackValue)
+
+	if (stackOffset(s)) {
+		stacker.offset(d3.stackOffsetExpand)
+	}
+
 	const stacked = stacker(summed)
 	const single = stacked.length === 1
 
@@ -404,4 +416,4 @@ const _data = s => {
 }
 const data = memoize(_data)
 
-export { data, values, pointData, sumByCovariates }
+export { data, values, pointData, stackOffset, sumByCovariates }
