@@ -81,6 +81,9 @@ const alternate = colors => {
 	const a = colors.slice(0, midpoint)
 	const b = colors.slice(midpoint)
 	const ordered = d3.zip(a, b).flat()
+	if (a.length < b.length) {
+		ordered.push(b.pop())
+	}
 	return ordered
 }
 
