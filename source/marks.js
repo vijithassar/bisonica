@@ -18,6 +18,7 @@ import { parseScales } from './scales.js'
 import { parseTime, timePeriod } from './time.js'
 import { sortMarkData } from './sort.js'
 import { tooltips } from './tooltips.js'
+import { ticks } from './axes.js'
 
 const transparent = 0.001
 
@@ -530,7 +531,7 @@ const lineMarks = (s, dimensions) => {
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const markTransforms = ['x', 'y'].map(channel => {
-			const offset = ['nominal', 'ordinal'].includes(encodingType(s, channel))
+			const offset = ['nominal', 'ordinal'].includes(encodingType(s, channel)) && ticks(s, channel) <= 2
 
 			if (offset) {
 				const scale = parseScales(s, dimensions)[channel]
