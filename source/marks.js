@@ -11,7 +11,7 @@ import {
 } from './encodings.js'
 import { data, pointData, values } from './data.js'
 import { markDescription } from './descriptions.js'
-import { detach, datum, isDiscrete, key, mark, missingSeries } from './helpers.js'
+import { detach, datum, isDiscrete, kebabToCamel, key, mark, missingSeries } from './helpers.js'
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
@@ -102,6 +102,22 @@ const _barWidth = (s, dimensions) => {
 	}
 }
 const barWidth = memoize(_barWidth)
+
+/**
+ * retrieve the d3 curve factory function needed for the marks
+ * in a specification
+ * @param {object} s Vega Lite specification
+ */
+const curve = s => {
+	const { interpolate } = s.mark
+	if (interpolate === 'monotone') {
+		return d3.curveMonotoneY
+	} else if (interpolate) {
+		return d3[kebabToCamel(`curve-${s.mark.interpolate}`)]
+	} else {
+		return null
+	}
+}
 
 /**
  * point mark tagName
@@ -342,6 +358,10 @@ const areaMarks = (s, dimensions) => {
 			area[point](encoders[point])
 		})
 
+		if (s.mark.interpolate) {
+			area.curve(curve(s))
+		}
+
 		const layout = data(s)
 
 		marks
@@ -527,6 +547,9 @@ const pointMarks = (s, dimensions) => {
 const lineMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const line = d3.line().x(encoders.x).y(encoders.y)
+	if (s.mark.interpolate) {
+		line.curve(curve(s))
+	}
 
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')

@@ -202,6 +202,24 @@ const copyMethods = (methods, source, target) => {
 	})
 }
 
+/**
+ * convert kebab-case string to camelCase
+ * @param {string} kebab kebab case string
+ * @returns camelCase string
+ */
+const kebabToCamel = kebab => {
+	return kebab
+		.split('-')
+		.map((segment, index) => {
+			if (index === 0) {
+				return segment
+			} else {
+				return segment.slice(0, 1).toUpperCase() + segment.slice(1)
+			}
+		})
+		.join('')
+}
+
 export {
 	abbreviateNumbers,
 	mark,
@@ -218,5 +236,6 @@ export {
 	isTextChannel,
 	polarToCartesian,
 	detach,
-	copyMethods
+	copyMethods,
+	kebabToCamel
 }
