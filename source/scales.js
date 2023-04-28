@@ -245,13 +245,17 @@ const range = (s, dimensions, _channel) => {
 
 		return result
 	}
+
 	const ranges = {
 		x: cartesian,
 		y: cartesian,
 		color: () => {
 			return s.encoding.color?.scale?.range || colors(s, categoryCount(s, channel))
 		},
-		theta: () => [0, Math.PI * 2]
+		theta: () => [0, Math.PI * 2],
+		detail: () => {
+			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
+		}
 	}
 
 	return ranges[channel]()

@@ -240,7 +240,7 @@ const stackKeys = data => {
 const sumByCovariates = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
-	const group = encodingField(s, 'color')
+	const group = encodingField(s, 'color') || encodingField(s, 'detail')
 
 	const summedByGroup = groupAndSumByProperties(values(s), covariate, group, quantitative)
 	const keys = stackKeys(summedByGroup)
@@ -287,7 +287,7 @@ const stackValue = (d, key) => d[key]?.value || 0
 const stackData = s => {
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
-	const group = encodingField(s, 'color')
+	const group = encodingField(s, 'color') || encodingField(s, 'detail')
 
 	const summed = groupAndSumByProperties(values(s), covariate, group, quantitative)
 	const stacker = d3.stack().keys(stackKeys).value(stackValue)
@@ -350,7 +350,7 @@ const circularData = s => {
 const lineData = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries()
-	const color = encodingField(s, 'color')
+	const color = encodingField(s, 'color') || encodingField(s, 'detail')
 
 	const summed = groupAndSumByProperties(values(s), covariate, color, quantitative)
 	const results = stackKeys(summed).map(key => {
