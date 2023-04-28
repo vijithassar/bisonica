@@ -54,6 +54,16 @@ module('unit > encoders', () => {
 		assert.equal(encodingField(s, 'y'), 'b')
 	})
 
+	test('detail channel groups data without visual encoding', assert => {
+		const s = specificationFixture('multiline')
+		s.encoding.detail = s.encoding.color
+		delete s.encoding.color
+
+		const layout = data(s)
+
+		assert.equal(layout.length, 10)
+	})
+
 	test('accesses nested fields with encoding value lookup', assert => {
 		const datum = {
 			a: {
