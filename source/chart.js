@@ -139,7 +139,7 @@ const asyncRender = (s, dimensions) => {
  * a chart rendering function
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {function(object, object)} renderer
+ * @returns {function(object)} renderer
  */
 const chart = (s, dimensions) => {
 	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {
