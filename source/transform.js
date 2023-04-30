@@ -78,6 +78,23 @@ const filter = (s, config) => {
 }
 
 /**
+ * fold fields
+ * @param {object} config fold configuration
+ * @returns {function(object[])} fold transform function
+ */
+const fold = config => {
+	const fields = config.fold
+	const [key, value] = config.as || ['key', 'value']
+	return data => {
+		return fields.map(field => {
+			return data.map(item => {
+				return { ...item, [key]: field, [value]: item[field] }
+			})
+		}).flat()
+	}
+}
+
+/**
  * apply a single transform
  * @param {s} config transform configuration
  * @param {object[]} data data set
@@ -88,6 +105,8 @@ const applyTransform = (s, config, data) => {
 		return sample(config.sample)(data)
 	} else if (config.filter) {
 		return filter(s, config.filter)(data)
+	} else if (config.fold) {
+		return fold(config)(data)
 	}
 }
 
