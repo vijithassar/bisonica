@@ -9,7 +9,8 @@ import {
 	encodingType,
 	encodingValue
 } from './encodings.js'
-import { data, pointData, values } from './data.js'
+import { data, pointData } from './data.js'
+import { values } from './values.js'
 import { markDescription } from './descriptions.js'
 import { detach, datum, isDiscrete, kebabToCamel, key, mark, missingSeries } from './helpers.js'
 import { feature } from './feature.js'

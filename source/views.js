@@ -6,7 +6,7 @@ import { markSelector, marks } from './marks.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
 import { temporalBarDimensions } from './time.js'
-import { values } from './data.js'
+import { values } from './values.js'
 
 /**
  * determine whether encoding types can be shared
