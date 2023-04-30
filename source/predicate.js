@@ -105,6 +105,9 @@ const compose = config => {
  * @returns {function(object)} predicate test function
  */
 const _predicate = config => {
+	if (typeof config === 'string') {
+		throw new Error(`cannot evaluate string expression (${config}), predicates must use structured object syntax`)
+	}
 	const multiple = config.and || config.or || config.not
 	try {
 		if (multiple) {
