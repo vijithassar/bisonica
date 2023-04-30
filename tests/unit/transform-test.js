@@ -66,6 +66,43 @@ module('unit > transform', () => {
 			assert.equal(calculate(expressions.naive)({}), 'https://www.example.com/test')
 		})
 	})
+	module('fold', () => {
+		const specification = () => {
+			return {
+				data: { values: [
+					{ a: 1, b: 2 },
+					{ a: 3, b: 4 },
+					{ a: 5, b: 6 },
+					{ a: 7, b: 8 },
+					{ a: 9, b: 10 }
+				] }
+			}
+		}
+		test('folds fields with default keys', assert => {
+			const s = specification()
+			s.transform = [
+				{ fold: ['a', 'b'] }
+			]
+			const transformed = transformValues(s)(s.data.values)
+			const keys = ['key', 'value']
+			assert.equal(transformed.length, s.data.values.length * s.transform[0].fold.length)
+			keys.forEach(property => {
+				assert.ok(transformed.every(item => item[property]))
+			})
+		})
+		test('folds fields with custom keys', assert => {
+			const s = specification()
+			s.transform = [
+				{ fold: ['a', 'b'], as: ['_', '$'] }
+			]
+			const transformed = transformValues(s)(s.data.values)
+			const keys = s.transform[0].as
+			assert.equal(transformed.length, s.data.values.length * s.transform[0].fold.length)
+			keys.forEach(property => {
+				assert.ok(transformed.every(item => item[property]))
+			})
+		})
+	})
 	module('filter', () => {
 		const specification = () => {
 			return { data: { values: [
