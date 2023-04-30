@@ -105,11 +105,19 @@ const compose = config => {
  * @returns {function(object)} predicate test function
  */
 const _predicate = config => {
+	if (typeof config === 'string') {
+		throw new Error(`cannot evaluate string expression (${config}), predicates must use structured object syntax`)
+	}
 	const multiple = config.and || config.or || config.not
-	if (multiple) {
-		return compose(config)
-	} else {
-		return single(config)
+	try {
+		if (multiple) {
+			return compose(config)
+		} else {
+			return single(config)
+		}
+	} catch (error) {
+		error.message = `could not create predicate function - ${error.message}`
+		throw error
 	}
 }
 const predicate = memoize(_predicate)
