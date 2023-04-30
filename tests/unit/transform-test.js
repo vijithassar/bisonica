@@ -18,6 +18,12 @@ const expressions = {
 	multiple: "'https://www.example.com' + '/' + datum.a + datum.b"
 }
 
+const run = s => {
+	return transformValues(s)(s.data.values)
+		.map(item => item.x)
+		.join(',')
+}
+
 module('unit > transform', () => {
 	module('calculate', () => {
 		test('adds derived fields to a data point', assert => {
@@ -131,11 +137,6 @@ module('unit > transform', () => {
 				{ x: 6 },
 				{ x: 7 }
 			] } }
-		}
-		const run = s => {
-			return transformValues(s)(s.data.values)
-				.map(item => item.x)
-				.join(',')
 		}
 		const setup = (s, key, value) => {
 			s.transform = [{ filter: { [key]: value, field: 'x' } }]
