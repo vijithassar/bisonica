@@ -18,6 +18,12 @@ const expressions = {
 	multiple: "'https://www.example.com' + '/' + datum.a + datum.b"
 }
 
+const run = s => {
+	return transformValues(s)(s.data.values)
+		.map(item => item.x)
+		.join(',')
+}
+
 module('unit > transform', () => {
 	module('calculate', () => {
 		test('adds derived fields to a data point', assert => {
@@ -103,6 +109,23 @@ module('unit > transform', () => {
 			})
 		})
 	})
+	module('sample', () => {
+		test('randomly samples from data set', assert => {
+			const n = 50
+			const s = {
+				data: {
+					values: d3.range(n * 2).map(item => {
+						return { value: item }
+					})
+				},
+				encoding: {},
+				transform: [
+					{ sample: n }
+				]
+			}
+			assert.equal(data(s).length, n)
+		})
+	})
 	module('filter', () => {
 		const specification = () => {
 			return { data: { values: [
@@ -114,11 +137,6 @@ module('unit > transform', () => {
 				{ x: 6 },
 				{ x: 7 }
 			] } }
-		}
-		const run = s => {
-			return transformValues(s)(s.data.values)
-				.map(item => item.x)
-				.join(',')
 		}
 		const setup = (s, key, value) => {
 			s.transform = [{ filter: { [key]: value, field: 'x' } }]
@@ -173,24 +191,7 @@ module('unit > transform', () => {
 				assert.equal(y.domain()[1], max)
 			})
 		})
-		module('sample', () => {
-			test('randomly samples from data set', assert => {
-				const n = 50
-				const s = {
-					data: {
-						values: d3.range(n * 2).map(item => {
-							return { value: item }
-						})
-					},
-					encoding: {},
-					transform: [
-						{ sample: n }
-					]
-				}
-				assert.equal(data(s).length, n)
-			})
-		})
-		module('composition', () => {
+		module('filter composition', () => {
 			test('applies multiple filters in sequence', assert => {
 				const s = specification()
 				s.transform = [
@@ -240,26 +241,28 @@ module('unit > transform', () => {
 				}
 				assert.equal(run(s), '2,3,4,5,6')
 			})
-			test('applies multiple transforms in sequence', assert => {
-				const s = {
-					data: {
-						values: [
-							{ x: 1, _: '$' },
-							{ x: 1, _: '$' },
-							{ x: 2, _: '*' },
-							{ x: 2, _: '*' },
-							{ x: 3, _: '•' },
-							{ x: 3, _: '•' },
-							{ x: 3, _: '•' }
-						]
-					},
-					transform: [
-						{ filter: { equal: 3, field: 'x' } },
-						{ sample: 2 }
+		})
+	})
+	module('transform composition', () => {
+		test('applies multiple transforms in sequence', assert => {
+			const s = {
+				data: {
+					values: [
+						{ x: 1, _: '$' },
+						{ x: 1, _: '$' },
+						{ x: 2, _: '*' },
+						{ x: 2, _: '*' },
+						{ x: 3, _: '•' },
+						{ x: 3, _: '•' },
+						{ x: 3, _: '•' }
 					]
-				}
-				assert.equal(run(s), '3,3')
-			})
+				},
+				transform: [
+					{ filter: { equal: 3, field: 'x' } },
+					{ sample: 2 }
+				]
+			}
+			assert.equal(run(s), '3,3')
 		})
 	})
 })
