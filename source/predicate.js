@@ -106,10 +106,15 @@ const compose = config => {
  */
 const _predicate = config => {
 	const multiple = config.and || config.or || config.not
-	if (multiple) {
-		return compose(config)
-	} else {
-		return single(config)
+	try {
+		if (multiple) {
+			return compose(config)
+		} else {
+			return single(config)
+		}
+	} catch (error) {
+		error.message = `could not create predicate function - ${error.message}`
+		throw error
 	}
 }
 const predicate = memoize(_predicate)
