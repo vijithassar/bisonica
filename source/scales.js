@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
-import { data, stackOffset, sumByCovariates, values } from './data.js'
+import { data, stackOffset, sumByCovariates } from './data.js'
+import { values } from './values.js'
 import { colors } from './color.js'
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'

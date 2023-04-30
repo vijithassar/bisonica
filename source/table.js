@@ -4,7 +4,7 @@ import { encodingField } from './encodings.js'
 import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
 import { parseScales } from './scales.js'
-import { values } from './data.js'
+import { values } from './values.js'
 
 /**
  *

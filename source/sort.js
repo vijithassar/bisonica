@@ -4,7 +4,7 @@ import { encodingField, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
 import { isContinuous, isDiscrete } from './helpers.js'
 import { memoize } from './memoize.js'
-import { values } from './data.js'
+import { values } from './values.js'
 
 const orders = ['ascending', 'descending']
 

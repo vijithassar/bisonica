@@ -1,4 +1,4 @@
-import { data, values } from '../../source/data.js'
+import { data } from '../../source/data.js'
 import { encodingField } from '../../source/encodings.js'
 import { getTimeParser } from '../../source/time.js'
 import qunit from 'qunit'
@@ -7,44 +7,6 @@ import { specificationFixture } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('unit > data', () => {
-	module('utilities', () => {
-		test('extracts values from specification', assert => {
-			const value = {}
-			const s = { data: { values: [value] } }
-
-			assert.equal(values(s).pop(), value)
-		})
-		test('looks up nested data', assert => {
-			const nestedData = { first: { second: [{ a: 1, b: 2 }] } }
-			const s = {
-				data: nestedData
-			}
-			s.data.format = { property: 'first.second', type: 'json' }
-			const data = values(s)
-			assert.ok(Array.isArray(data))
-			assert.equal(data.length, 1)
-			assert.equal(data[0].a, 1)
-			assert.equal(data[0].b, 2)
-		})
-		test('parses field types', assert => {
-			const s = {
-				data: {
-					values: [{ a: null, b: 0, c: 2020 }],
-					format: {
-						parse: {
-							a: 'number',
-							b: 'boolean',
-							c: 'date'
-						}
-					}
-				}
-			}
-			const parsed = values(s)[0]
-			assert.strictEqual(parsed.a, 0)
-			assert.strictEqual(parsed.b, false)
-			assert.equal(typeof parsed.c.getFullYear, 'function')
-		})
-	})
 	module('sources', () => {
 		test('retrieves values from top level datasets property', assert => {
 			const s = specificationFixture('circular')
