@@ -95,6 +95,28 @@ const fold = config => {
 }
 
 /**
+ * flatten fields
+ * @param {object} config flatten configuration
+ * @returns {function(object[])} flatten transform function
+ */
+const flatten = config => {
+	const fields = config.flatten
+	return data => {
+		return data.map(item => {
+			const longest = +d3.max(fields, d => item[d]?.length)
+			return Array.from({ length: longest }).map((_, i) => {
+				let result = { ...item }
+				fields.forEach((field, index) => {
+					const key = config.as ? config.as[index] : field
+					result[key] = item[field][i] || null
+				})
+				return result
+			}).flat()
+		}).flat()
+	}
+}
+
+/**
  * apply a single transform
  * @param {s} config transform configuration
  * @param {object[]} data data set
@@ -107,6 +129,8 @@ const applyTransform = (s, config, data) => {
 		return filter(s, config.filter)(data)
 	} else if (config.fold) {
 		return fold(config)(data)
+	} else if (config.flatten) {
+		return flatten(config)(data)
 	}
 }
 

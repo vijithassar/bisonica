@@ -109,6 +109,54 @@ module('unit > transform', () => {
 			})
 		})
 	})
+	module('flatten', () => {
+		const flatten = ['foo', 'bar']
+		const specification = () => {
+			return {
+				data: { values: [
+					{ 'key': 'alpha', 'foo': [1, 2], 'bar': ['A', 'B'] },
+					{ 'key': 'beta', 'foo': [3, 4, 5], 'bar': ['C', 'D', 'E'] }
+				  ] }
+			}
+		}
+		test('flattens fields with default keys', assert => {
+			const s = specification()
+			s.transform = [{ flatten }]
+			const transformed = transformValues(s)(s.data.values)
+			const lengths = s.data.values.map(item => {
+				return d3.max(flatten.map(field => item[field].length))
+			})
+			const length = d3.sum(lengths)
+			const keys = flatten
+			assert.equal(transformed.length, length, `transformed data set has ${length} items`)
+			keys.forEach(key => {
+				assert.ok(transformed.every(item => item[key]))
+			})
+		})
+		test('flattens fields with custom keys', assert => {
+			const s = specification()
+			s.transform = [
+				{ flatten: ['foo', 'bar'], as: ['_', '$'] }
+			]
+			const transformed = transformValues(s)(s.data.values)
+			const lengths = s.data.values.map(item => {
+				return d3.max(flatten.map(field => item[field].length))
+			})
+			const length = d3.sum(lengths)
+			const keys = s.transform[0].as
+			assert.equal(transformed.length, length, `transformed data set has ${length} items`)
+			keys.forEach(key => {
+				assert.ok(transformed.every(item => item[key]))
+			})
+		})
+		test('fills in missing values with null', assert => {
+			const s = specification()
+			s.transform = [{ flatten }]
+			s.data.values[1].bar.pop()
+			const transformed = transformValues(s)(s.data.values)
+			assert.equal(transformed.pop().bar, null)
+		})
+	})
 	module('sample', () => {
 		test('randomly samples from data set', assert => {
 			const n = 50
