@@ -107,6 +107,18 @@ path.mark {
   color: var(--highlight);
 }
 
+.download h3,
+.download a {
+  display: inline;
+  font-size: small;
+  font-weight: normal;
+  padding-right: 1em;
+}
+
+.download a {
+  cursor: pointer;
+}
+
 .legend ul.items-more:hover h3 {
   border: 0;
   clip: rect(0 0 0 0);
