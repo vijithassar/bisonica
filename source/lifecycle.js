@@ -26,6 +26,10 @@ const setupNode = (s, dimensions) => {
 			chartNode.append('div').classed('table', true)
 		}
 
+		if (feature(s).hasDownload()) {
+			chartNode.append('div').classed('download', true)
+		}
+
 		const svg = graphic.append('svg')
 
 		svg.attr('tabindex', 0)
