@@ -7,24 +7,15 @@ import qunit from 'qunit'
 
 const { module, test } = qunit
 
-const dispatchEvents = {
-	left: new KeyboardEvent('keyup', {
-		key: 'ArrowLeft',
+const directions = ['up', 'right', 'down', 'left']
+const dispatchEvents = {}
+directions.forEach(direction => {
+	const options = {
+		key: `Arrow${direction.slice(0, 1).toUpperCase()}${direction.slice(1)}`,
 		bubbles: true
-	}),
-	right: new KeyboardEvent('keyup', {
-		key: 'ArrowRight',
-		bubbles: true
-	}),
-	up: new KeyboardEvent('keyup', {
-		key: 'ArrowUp',
-		bubbles: true
-	}),
-	down: new KeyboardEvent('keyup', {
-		key: 'ArrowDown',
-		bubbles: true
-	})
-}
+	}
+	dispatchEvents[direction] = new KeyboardEvent('keyup', options)
+})
 
 const testNavigation = (assert, s, steps) => {
 	const element = render(s)
