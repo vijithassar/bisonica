@@ -33,12 +33,13 @@ const testNavigation = (assert, s, steps) => {
 	element.addEventListener('keyup', () => {
 		current = element.querySelector('[data-highlight]')
 	})
-	for (let { key, content } of steps) {
+	for (let [index, { key, content }] of Object.entries(steps)) {
 		first.dispatchEvent(dispatchEvents[key])
 		if (content === null) {
-			assert.equal(current, null)
+			assert.equal(current, null, `step ${index} does not highlight a mark`)
 		} else {
-			assert.ok(current.getAttribute('aria-label').includes(content))
+			const aria = current.getAttribute('aria-label')
+			assert.ok(aria.includes(content), `step ${index} highlights mark with aria-label attribute "${aria}" including expected text "${content}"`)
 		}
 	}
 }
