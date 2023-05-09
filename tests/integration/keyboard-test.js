@@ -15,6 +15,14 @@ const dispatchEvents = {
 	right: new KeyboardEvent('keyup', {
 		key: 'ArrowRight',
 		bubbles: true
+	}),
+	up: new KeyboardEvent('keyup', {
+		key: 'ArrowUp',
+		bubbles: true
+	}),
+	down: new KeyboardEvent('keyup', {
+		key: 'ArrowDown',
+		bubbles: true
 	})
 }
 
@@ -45,6 +53,14 @@ module('integration > keyboard', function() {
 				{ key: 'right', content: 'value: 2; group: C' },
 				{ key: 'left', content: 'value: 4; group: B' },
 				{ key: 'right', content: 'value: 2; group: C' }
+			]
+			testNavigation(assert, s, steps)
+		})
+		test('vertical arrows are disabled', function(assert) {
+			const s = specificationFixture('circular')
+			const steps = [
+				{ key: 'up', content: null },
+				{ key: 'down', content: null }
 			]
 			testNavigation(assert, s, steps)
 		})
