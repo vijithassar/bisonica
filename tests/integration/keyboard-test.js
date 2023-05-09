@@ -114,4 +114,36 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 	})
+	module('stacked bar', () => {
+		test('horizontal arrows navigate covariate encoding', function(assert) {
+			const s = specificationFixture('stackedBar')
+			const steps = [
+				{ key: 'right', content: 'label: 05-19' },
+				{ key: 'right', content: 'label: 05-20' },
+				{ key: 'left', content: 'label: 05-19' },
+				{ key: 'right', content: 'label: 05-20' }
+			]
+			testNavigation(assert, s, steps)
+		})
+		test('vertical arrows navigate series', function(assert) {
+			const s = specificationFixture('stackedBar')
+			const steps = [
+				{ key: 'up', content: 'group: A' },
+				{ key: 'up', content: 'group: B' },
+				{ key: 'down', content: 'group: A' },
+				{ key: 'up', content: 'group: B' }
+			]
+			testNavigation(assert, s, steps)
+		})
+		test('missing marks are skipped', function(assert) {
+			const s = specificationFixture('stackedBar')
+			const steps = [
+				{ key: 'right', content: 'label: 05-19' },
+				{ key: 'right', content: 'label: 05-20' },
+				{ key: 'right', content: 'label: 05-22' },
+				{ key: 'right', content: 'label: 05-23' }
+			]
+			testNavigation(assert, s, steps)
+		})
+	})
 })
