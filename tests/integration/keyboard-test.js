@@ -65,4 +65,28 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 	})
+	module('temporal bar', () => {
+		test('horizontal arrows navigate adjacent bars', function(assert) {
+			const s = specificationFixture('temporalBar')
+			const steps = [
+				{ key: 'right', content: 'value: 10; date: 2009; minimum value of value field' },
+				{ key: 'right', content: 'value: 20; date: 2010' },
+				{ key: 'right', content: 'value: 10; date: 2011; minimum value of value field' },
+				{ key: 'left', content: 'value: 20; date: 2010' },
+				{ key: 'right', content: 'value: 10; date: 2011; minimum value of value field' },
+				{ key: 'right', content: 'value: 30; date: 2012' },
+				{ key: 'right', content: 'value: 50; date: 2013; maximum value of value field' },
+				{ key: 'right', content: 'value: 10; date: 2014; minimum value of value field' }
+			]
+			testNavigation(assert, s, steps)
+		})
+		test('vertical arrows are disabled', function(assert) {
+			const s = specificationFixture('temporalBar')
+			const steps = [
+				{ key: 'up', content: null },
+				{ key: 'down', content: null }
+			]
+			testNavigation(assert, s, steps)
+		})
+	})
 })
