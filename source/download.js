@@ -2,6 +2,7 @@ import { extension } from './extensions.js'
 import { noop } from './helpers.js'
 import { values } from './values.js'
 import { csvFormat } from 'd3'
+import { feature } from './feature.js'
 
 const formats = ['csv', 'json']
 
@@ -11,7 +12,7 @@ const formats = ['csv', 'json']
  * @returns {function(object)} download link renderer
  */
 const download = s => {
-	if (extension(s, 'download') === null) {
+	if (!feature(s).hasDownload()) {
 		return noop
 	}
 	const handler = event => {
