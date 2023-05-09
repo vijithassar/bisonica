@@ -35,11 +35,13 @@ const testNavigation = (assert, s, steps) => {
 	})
 	for (let [index, { key, content }] of Object.entries(steps)) {
 		first.dispatchEvent(dispatchEvents[key])
-		if (content === null) {
-			assert.equal(current, null, `step ${index} does not highlight a mark`)
-		} else {
-			const aria = current.getAttribute('aria-label')
-			assert.ok(aria.includes(content), `step ${index} highlights mark with aria-label attribute "${aria}" including expected text "${content}"`)
+		if (content !== undefined) {
+			if (content === null) {
+				assert.equal(current, null, `step ${index} does not highlight a mark`)
+			} else {
+				const aria = current.getAttribute('aria-label')
+				assert.ok(aria.includes(content), `step ${index} highlights mark with aria-label attribute "${aria}" including expected text "${content}"`)
+			}
 		}
 	}
 }
