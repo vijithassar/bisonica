@@ -89,4 +89,28 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 	})
+	module('categorical bar', () => {
+		test('horizontal arrows navigate adjacent bars', function(assert) {
+			const s = specificationFixture('categoricalBar')
+			const steps = [
+				{ key: 'right', content: 'animal: rabbit; value: 31; maximum value of value field' },
+				{ key: 'right', content: 'animal: cow; value: 25' },
+				{ key: 'right', content: 'animal: snake; value: 25' },
+				{ key: 'left', content: 'animal: cow; value: 25' },
+				{ key: 'right', content: 'animal: snake; value: 25' },
+				{ key: 'right', content: 'animal: elephant; value: 25' },
+				{ key: 'left', content: 'animal: snake; value: 25' },
+				{ key: 'right', content: 'animal: elephant; value: 25' }
+			]
+			testNavigation(assert, s, steps)
+		})
+		test('vertical arrows are disabled', function(assert) {
+			const s = specificationFixture('categoricalBar')
+			const steps = [
+				{ key: 'up', content: null },
+				{ key: 'down', content: null }
+			]
+			testNavigation(assert, s, steps)
+		})
+	})
 })
