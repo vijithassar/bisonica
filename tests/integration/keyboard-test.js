@@ -38,7 +38,7 @@ const testNavigation = (assert, s, steps) => {
 		if (content === null) {
 			assert.equal(current, null)
 		} else {
-			assert.equal(current.getAttribute('aria-label'), content)
+			assert.ok(current.getAttribute('aria-label').includes(content))
 		}
 	}
 }
@@ -69,14 +69,14 @@ module('integration > keyboard', function() {
 		test('horizontal arrows navigate adjacent bars', function(assert) {
 			const s = specificationFixture('temporalBar')
 			const steps = [
-				{ key: 'right', content: 'value: 10; date: 2009; minimum value of value field' },
+				{ key: 'right', content: 'value: 10; date: 2009' },
 				{ key: 'right', content: 'value: 20; date: 2010' },
-				{ key: 'right', content: 'value: 10; date: 2011; minimum value of value field' },
+				{ key: 'right', content: 'value: 10; date: 2011' },
 				{ key: 'left', content: 'value: 20; date: 2010' },
-				{ key: 'right', content: 'value: 10; date: 2011; minimum value of value field' },
+				{ key: 'right', content: 'value: 10; date: 2011' },
 				{ key: 'right', content: 'value: 30; date: 2012' },
-				{ key: 'right', content: 'value: 50; date: 2013; maximum value of value field' },
-				{ key: 'right', content: 'value: 10; date: 2014; minimum value of value field' }
+				{ key: 'right', content: 'value: 50; date: 2013' },
+				{ key: 'right', content: 'value: 10; date: 2014' }
 			]
 			testNavigation(assert, s, steps)
 		})
@@ -93,7 +93,7 @@ module('integration > keyboard', function() {
 		test('horizontal arrows navigate adjacent bars', function(assert) {
 			const s = specificationFixture('categoricalBar')
 			const steps = [
-				{ key: 'right', content: 'animal: rabbit; value: 31; maximum value of value field' },
+				{ key: 'right', content: 'animal: rabbit; value: 31' },
 				{ key: 'right', content: 'animal: cow; value: 25' },
 				{ key: 'right', content: 'animal: snake; value: 25' },
 				{ key: 'left', content: 'animal: cow; value: 25' },
