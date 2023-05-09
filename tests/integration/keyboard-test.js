@@ -19,9 +19,11 @@ directions.forEach(direction => {
 
 const testNavigation = (assert, s, steps) => {
 	const element = render(s)
+	const highlight = () => element.querySelector('[data-highlight]')
+	const aria = () => highlight()?.getAttribute('aria-label')
 	let current = element.querySelector(testSelector('mark'))
 	element.addEventListener('keyup', () => {
-		current = element.querySelector('[data-highlight]')
+		current = highlight()
 	})
 	for (let [index, { key, content }] of Object.entries(steps)) {
 		if (current) {
@@ -31,8 +33,7 @@ const testNavigation = (assert, s, steps) => {
 			if (content === null) {
 				assert.equal(current, null, `step ${index} does not highlight a mark`)
 			} else {
-				const aria = current.getAttribute('aria-label')
-				assert.ok(aria.includes(content), `step ${index} highlights mark with aria-label attribute "${aria}" including expected text "${content}"`)
+				assert.ok(aria().includes(content), `step ${index} highlights mark with aria-label attribute "${aria()}" including expected text "${content}"`)
 			}
 		}
 	}
