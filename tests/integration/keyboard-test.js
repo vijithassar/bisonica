@@ -19,13 +19,14 @@ directions.forEach(direction => {
 
 const testNavigation = (assert, s, steps) => {
 	const element = render(s)
-	const first = element.querySelector(testSelector('mark'))
-	let current
+	let current = element.querySelector(testSelector('mark'))
 	element.addEventListener('keyup', () => {
 		current = element.querySelector('[data-highlight]')
 	})
 	for (let [index, { key, content }] of Object.entries(steps)) {
-		first.dispatchEvent(dispatchEvents[key])
+		if (current) {
+			current.dispatchEvent(dispatchEvents[key])
+		}
 		if (content !== undefined) {
 			if (content === null) {
 				assert.equal(current, null, `step ${index} does not highlight a mark`)
