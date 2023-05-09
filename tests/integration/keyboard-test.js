@@ -32,15 +32,17 @@ const testNavigation = (assert, s, steps) => {
 }
 
 module('integration > keyboard', function() {
-	test('keyboard navigation works', function(assert) {
-	    const s = specificationFixture('circular')
-		const steps = [
-			{ key: 'right', content: 'value: 8; group: A' },
-			{ key: 'right', content: 'value: 4; group: B' },
-			{ key: 'right', content: 'value: 2; group: C' },
-			{ key: 'left', content: 'value: 4; group: B' },
-			{ key: 'right', content: 'value: 2; group: C' }
-		]
-		testNavigation(assert, s, steps)
+	module('circular', () => {
+		test('horizontal arrows navigate adjacent segments', function(assert) {
+			const s = specificationFixture('circular')
+			const steps = [
+				{ key: 'right', content: 'value: 8; group: A' },
+				{ key: 'right', content: 'value: 4; group: B' },
+				{ key: 'right', content: 'value: 2; group: C' },
+				{ key: 'left', content: 'value: 4; group: B' },
+				{ key: 'right', content: 'value: 2; group: C' }
+			]
+			testNavigation(assert, s, steps)
+		})
 	})
 })
