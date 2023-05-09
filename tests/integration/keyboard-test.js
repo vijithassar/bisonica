@@ -1,55 +1,44 @@
 import {
 	render,
 	specificationFixture,
-	tooltipContentUpdate
+	testSelector
 } from '../test-helpers.js'
 import qunit from 'qunit'
 
 const { module, test } = qunit
 
-const LEFT = 'ArrowLeft'
-const RIGHT = 'ArrowRight'
-
 module('integration > keyboard', function() {
-	test.skip('keyboard navigation works', async function(assert) {
-		const dispatchEvents = {
-			[LEFT]: new KeyboardEvent('keyup', {
-				key: LEFT
-			}),
-			[RIGHT]: new KeyboardEvent('keyup', {
-				key: RIGHT
-			})
-		}
-    const spec = specificationFixture('circular'); // eslint-disable-line
+	const dispatchEvents = {
+		left: new KeyboardEvent('keyup', {
+			key: 'ArrowLeft',
+			bubbles: true
+		}),
+		right: new KeyboardEvent('keyup', {
+			key: 'ArrowRight',
+			bubbles: true
+		})
+	}
+	test('keyboard navigation works', function(assert) {
+	    const s = specificationFixture('circular')
 
-		await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-      <div data-falcon-portal="tooltip"></div>
-    `)
+		const element = render(s)
+		const first = element.querySelector(testSelector('mark'))
+		let current
+		element.addEventListener('keyup', () => {
+			current = element.querySelector('[data-highlight]')
+		})
 
 		const steps = [
-			{ key: RIGHT, content: 'value 167\ngroup A' },
-			{ key: RIGHT, content: 'value 29\ngroup B' },
-			{ key: RIGHT, content: 'value 20\ngroup I' },
-			{ key: LEFT, content: 'value 29\ngroup B' },
-			{ key: RIGHT, content: 'value 20\ngroup I' }
+			{ key: 'right', content: 'value: 8; group: A' },
+			{ key: 'right', content: 'value: 4; group: B' },
+			{ key: 'right', content: 'value: 2; group: C' },
+			{ key: 'left', content: 'value: 4; group: B' },
+			{ key: 'right', content: 'value: 2; group: C' }
 		]
 
-		const assertions = steps.length
-
-		assert.expect(assertions)
-
 		for (let { key, content } of steps) {
-			this.page.mark()[0].dispatchEvent(dispatchEvents[key])
-
-			// eslint-disable-next-line no-await-in-loop
-			const toolTipText = await tooltipContentUpdate(this.element)
-
-			assert.ok(content === toolTipText, `'Tooltip text, ${toolTipText}, should match ${content}`)
+			first.dispatchEvent(dispatchEvents[key])
+			assert.equal(current.getAttribute('aria-label'), content)
 		}
 	})
 })
