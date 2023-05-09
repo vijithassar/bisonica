@@ -27,7 +27,11 @@ const testNavigation = (assert, s, steps) => {
 	})
 	for (let { key, content } of steps) {
 		first.dispatchEvent(dispatchEvents[key])
-		assert.equal(current.getAttribute('aria-label'), content)
+		if (content === null) {
+			assert.equal(current, null)
+		} else {
+			assert.equal(current.getAttribute('aria-label'), content)
+		}
 	}
 }
 
