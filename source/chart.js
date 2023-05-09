@@ -46,7 +46,7 @@ const render = (s, panelDimensions) => {
 				chartNode.select('.table').call(tableRenderer(s, tableOptions(s)))
 			}
 
-			if (feature(s).hasTable()) {
+			if (feature(s).hasDownload()) {
 				chartNode.select('.download').call(download(s))
 			}
 
