@@ -48,8 +48,8 @@ const testNavigation = (assert, s, steps) => {
 
 module('integration > keyboard', function() {
 	module('circular', () => {
+		const s = specificationFixture('circular')
 		test('horizontal arrows navigate adjacent segments', function(assert) {
-			const s = specificationFixture('circular')
 			const steps = [
 				{ key: 'right', content: 'value: 8; group: A' },
 				{ key: 'right', content: 'value: 4; group: B' },
@@ -60,7 +60,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('vertical arrows are disabled', function(assert) {
-			const s = specificationFixture('circular')
 			const steps = [
 				{ key: 'up', content: null },
 				{ key: 'down', content: null }
@@ -68,7 +67,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('keyboard navigation loops', function(assert) {
-			const s = specificationFixture('circular')
 			const steps = [
 				{ key: 'right', content: 'group: A' },
 				{ key: 'right' },
@@ -85,8 +83,8 @@ module('integration > keyboard', function() {
 		})
 	})
 	module('temporal bar', () => {
+		const s = specificationFixture('temporalBar')
 		test('horizontal arrows navigate adjacent bars', function(assert) {
-			const s = specificationFixture('temporalBar')
 			const steps = [
 				{ key: 'right', content: 'value: 10; date: 2009' },
 				{ key: 'right', content: 'value: 20; date: 2010' },
@@ -100,7 +98,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('vertical arrows are disabled', function(assert) {
-			const s = specificationFixture('temporalBar')
 			const steps = [
 				{ key: 'up', content: null },
 				{ key: 'down', content: null }
@@ -108,7 +105,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('keyboard navigation loops', function(assert) {
-			const s = specificationFixture('temporalBar')
 			const steps = [
 				{ key: 'right', content: 'date: 2009' },
 				{ key: 'right' },
@@ -123,8 +119,8 @@ module('integration > keyboard', function() {
 		})
 	})
 	module('categorical bar', () => {
+		const s = specificationFixture('categoricalBar')
 		test('horizontal arrows navigate adjacent bars', function(assert) {
-			const s = specificationFixture('categoricalBar')
 			const steps = [
 				{ key: 'right', content: 'animal: rabbit; value: 31' },
 				{ key: 'right', content: 'animal: cow; value: 25' },
@@ -138,7 +134,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('vertical arrows are disabled', function(assert) {
-			const s = specificationFixture('categoricalBar')
 			const steps = [
 				{ key: 'up', content: null },
 				{ key: 'down', content: null }
@@ -146,7 +141,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('keyboard navigation loops', function(assert) {
-			const s = specificationFixture('categoricalBar')
 			const steps = [
 				{ key: 'right', content: 'animal: rabbit' },
 				{ key: 'right' },
@@ -160,8 +154,8 @@ module('integration > keyboard', function() {
 		})
 	})
 	module('stacked bar', () => {
+		const s = specificationFixture('stackedBar')
 		test('horizontal arrows navigate covariate encoding', function(assert) {
-			const s = specificationFixture('stackedBar')
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right', content: 'label: 05-20' },
@@ -171,7 +165,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('horizontal arrows loop through covariate encoding', function(assert) {
-			const s = specificationFixture('stackedBar')
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right' },
@@ -203,7 +196,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('vertical arrows navigate series', function(assert) {
-			const s = specificationFixture('stackedBar')
 			const steps = [
 				{ key: 'up', content: 'group: A' },
 				{ key: 'up', content: 'group: B' },
@@ -213,7 +205,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('vertical arrows loop through series', function(assert) {
-			const s = specificationFixture('stackedBar')
 			const steps = [
 				{ key: 'up', content: 'group: A' },
 				{ key: 'up' },
@@ -230,7 +221,6 @@ module('integration > keyboard', function() {
 			testNavigation(assert, s, steps)
 		})
 		test('missing marks are skipped', function(assert) {
-			const s = specificationFixture('stackedBar')
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right', content: 'label: 05-20' },
