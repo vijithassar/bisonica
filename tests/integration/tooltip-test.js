@@ -40,13 +40,12 @@ module('integration > tooltips', function() {
 		assert.equal(element.querySelectorAll(testSelector('mark-title')).length, 0, 'mark nodes do not contain title nodes')
 	})
 
-	test.skip('disables tooltips from the encoding hash', assert => {
+	test('disables tooltips from the encoding hash', assert => {
 		const spec = specificationFixture('line')
-
 		spec.encoding.tooltip = null
-    const element = render(spec); // eslint-disable-line
-
-		assert.dom(testSelector('mark-title')).doesNotExist()
+	    const element = render(spec)
+		const title = element.querySelector(testSelector('mark-title'))
+		assert.equal(title, null, 'mark title node is not rendered')
 	})
 
 	test('renders a chart with encoding values in the SVG title tooltip', assert => {
