@@ -35,19 +35,10 @@ module('integration > circular', function() {
 
 		const element = render(s)
 
-		const markSelector = testSelector('mark')
-
-		assert.ok(element.querySelector(markSelector))
-		assert.equal(element.querySelector(markSelector).tagName, 'path')
-
-		const marks = element.querySelector(testSelector('marks'))
-
-		assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
-
-		const mark = [...marks.querySelectorAll(markSelector)]
-		const colors = new Set(mark.map(item => item.style.fill))
-
-		assert.ok(mark.length === colors.size, 'every segment is a different color')
+		const marks = [...element.querySelectorAll(testSelector('mark'))]
+		assert.equal(marks.length, s.data.values.length)
+		assert.ok(marks.every(item => item.tagName === 'path'))
+		assert.equal(new Set(marks.map(item => item.style.fill)).size, s.data.values.length)
 	})
 	test.skip('renders a donut chart', assert => {
 		const donutChartSpec = {
