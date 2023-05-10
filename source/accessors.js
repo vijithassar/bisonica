@@ -94,6 +94,9 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	Object.entries(s.encoding).forEach(([channel, encoding]) => {
+		if (encoding === null) {
+			return
+		}
 		if (encoding.datum) {
 			accessors[channel] = () => encoding.datum
 		}

@@ -1,8 +1,7 @@
 import {
 	render,
 	specificationFixture,
-	testSelector,
-	tooltipContentUpdate
+	testSelector
 } from '../test-helpers.js'
 import { chart } from '../../source/chart.js'
 import qunit from 'qunit'
@@ -40,13 +39,12 @@ module('integration > tooltips', function() {
 		assert.equal(element.querySelectorAll(testSelector('mark-title')).length, 0, 'mark nodes do not contain title nodes')
 	})
 
-	test.skip('disables tooltips from the encoding hash', assert => {
+	test('disables tooltips from the encoding hash', assert => {
 		const spec = specificationFixture('line')
-
 		spec.encoding.tooltip = null
-    const element = render(spec); // eslint-disable-line
-
-		assert.dom(testSelector('mark-title')).doesNotExist()
+	    const element = render(spec)
+		const title = element.querySelector(testSelector('mark-title'))
+		assert.equal(title, null, 'mark title node is not rendered')
 	})
 
 	test('renders a chart with encoding values in the SVG title tooltip', assert => {
@@ -261,30 +259,18 @@ module('integration > tooltips', function() {
 		assert.throws(() => renderer.tooltip(null), 'rejects invalid tooltip handler functions')
 	})
 
-	test.skip('displays a custom tooltip', async function(assert) {
-    const spec = specificationFixture('circular'); // eslint-disable-line
-
-		await render(`
-      <FalconCharts::Chart
-        @spec={{this.spec}}
-        @height=500
-        @width=1000
-      />
-      <div data-falcon-portal="tooltip"></div>
-    `)
-
+	test('emits a custom tooltip event', async function(assert) {
+	    const s = specificationFixture('circular')
+		const element = render(s)
 		const event = new MouseEvent('mouseover', { bubbles: true })
-
-		this.page.mark()[0].dispatchEvent(event)
-
-		let tooltipContent = await tooltipContentUpdate(this.element)
-
-		assert.ok(tooltipContent.includes('group'), 'tooltip content includes key "group"')
-		assert.ok(
-			tooltipContent.includes('A'),
-			'tooltip content includes value "A"'
-		)
-		assert.ok(tooltipContent.includes('value'), 'tooltip content includes key "label"')
-		assert.ok(tooltipContent.includes('167'), 'tooltip content includes value "167"')
+		let tooltipContent = ''
+		element.addEventListener('tooltip', event => {
+			tooltipContent = event.detail
+		})
+		element.querySelector(testSelector('mark')).dispatchEvent(event)
+		assert.ok(tooltipContent.content.find(item => item.key === 'group'), 'tooltip content includes key "group"')
+		assert.ok(tooltipContent.content.find(item => item.value === 'A'), 'tooltip content includes value "A"')
+		assert.ok(tooltipContent.content.find(item => item.key === 'value'), 'tooltip content includes key "value"')
+		assert.ok(tooltipContent.content.find(item => item.value === 8), 'tooltip content includes value 8')
 	})
 })
