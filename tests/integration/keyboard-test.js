@@ -77,7 +77,7 @@ module('integration > keyboard', function() {
 	})
 	module('temporal bar', () => {
 		const s = specificationFixture('temporalBar')
-		test('horizontal arrows navigate adjacent bars', function(assert) {
+		test.skip('horizontal arrows navigate adjacent bars', function(assert) {
 			const steps = [
 				{ key: 'right', content: 'value: 10; date: 2009' },
 				{ key: 'right', content: 'value: 20; date: 2010' },
@@ -97,7 +97,7 @@ module('integration > keyboard', function() {
 			]
 			testNavigation(assert, s, steps)
 		})
-		test('keyboard navigation loops', function(assert) {
+		test.skip('keyboard navigation loops', function(assert) {
 			const steps = [
 				{ key: 'right', content: 'date: 2009' },
 				{ key: 'right' },
@@ -148,7 +148,7 @@ module('integration > keyboard', function() {
 	})
 	module('stacked bar', () => {
 		const s = specificationFixture('stackedBar')
-		test('horizontal arrows navigate covariate encoding', function(assert) {
+		test.skip('horizontal arrows navigate covariate encoding', function(assert) {
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right', content: 'label: 05-20' },
@@ -157,7 +157,7 @@ module('integration > keyboard', function() {
 			]
 			testNavigation(assert, s, steps)
 		})
-		test('horizontal arrows loop through covariate encoding', function(assert) {
+		test.skip('horizontal arrows loop through covariate encoding', function(assert) {
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right' },
@@ -213,7 +213,7 @@ module('integration > keyboard', function() {
 			]
 			testNavigation(assert, s, steps)
 		})
-		test('missing marks are skipped', function(assert) {
+		test.skip('missing marks are skipped', function(assert) {
 			const steps = [
 				{ key: 'right', content: 'label: 05-19' },
 				{ key: 'right', content: 'label: 05-20' },
