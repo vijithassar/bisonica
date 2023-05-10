@@ -14,26 +14,26 @@ module('integration > circular', function() {
 	})
 
 	test('renders a circular chart with arbitrary field names', assert => {
-		const spec = specificationFixture('circular')
+		const s = specificationFixture('circular')
 		const keys = {
 			group: '•',
 			label: '-',
 			value: '+'
 		}
-		spec.data.values = spec.data.values.map(item => {
+		s.data.values = s.data.values.map(item => {
 			Object.entries(keys).forEach(([original, altered]) => {
 				item[altered] = item[original]
 				delete item[original]
 			})
 			return item
 		})
-		Object.entries(spec.encoding).forEach(([channel, definition]) => {
+		Object.entries(s.encoding).forEach(([channel, definition]) => {
 			const original = definition.field
 			const altered = keys[original]
-			spec.encoding[channel].field = altered
+			s.encoding[channel].field = altered
 		})
 
-		const element = render(spec)
+		const element = render(s)
 
 		const markSelector = testSelector('mark')
 
