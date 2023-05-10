@@ -277,6 +277,10 @@ const coreScales = (s, dimensions) => {
 	const scales = {}
 
 	Object.entries(s.encoding).forEach(([channel, definition]) => {
+		if (definition === null) {
+			return
+		}
+
 		if (definition !== null && definition.value) {
 			scales[channel] = () => definition.value
 		}
