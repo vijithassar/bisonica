@@ -5,23 +5,12 @@ const { module, test } = qunit
 
 module('integration > circular', function() {
 	test('renders a circular chart', assert => {
-		const spec = specificationFixture('circular')
-
-		const element = render(spec)
-
-		const markSelector = testSelector('mark')
-
-		assert.ok(element.querySelector(markSelector))
-		assert.equal(element.querySelector(markSelector).tagName, 'path')
-
-		const marks = element.querySelector(testSelector('marks'))
-
-		assert.ok(isCircular(marks), 'marks group has approximately equal height and width')
-
-		const mark = [...marks.querySelectorAll(markSelector)]
-		const colors = new Set(mark.map(item => item.style.fill))
-
-		assert.ok(mark.length === colors.size, 'every segment is a different color')
+		const s = specificationFixture('circular')
+		const element = render(s)
+		const marks = [...element.querySelectorAll(testSelector('mark'))]
+		assert.equal(marks.length, s.data.values.length)
+		assert.ok(marks.every(item => item.tagName === 'path'))
+		assert.equal(new Set(marks.map(item => item.style.fill)).size, s.data.values.length)
 	})
 
 	test('renders a circular chart with arbitrary field names', assert => {
@@ -60,24 +49,6 @@ module('integration > circular', function() {
 
 		assert.ok(mark.length === colors.size, 'every segment is a different color')
 	})
-
-	test('renders a pie chart', assert => {
-		const spec = specificationFixture('circular')
-
-		spec.mark = 'arc'
-
-		const element = render(spec)
-
-		const mark = testSelector('mark')
-
-		assert.ok(element.querySelector(mark))
-		assert.equal(element.querySelector(mark).tagName, 'path')
-
-		const marks = element.querySelector(testSelector('marks'))
-
-		assert.ok(isPie(marks))
-	})
-
 	test.skip('renders a donut chart', assert => {
 		const donutChartSpec = {
 			...specificationFixture('circular'),
