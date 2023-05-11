@@ -111,11 +111,11 @@ const noop = () => {
 const identity = x => x
 
 /**
- * convert a string to machine-friendly key
- * @param {string} string input string
+ * convert an identifier to machine-friendly key
+ * @param {string|number} id identifier
  * @returns {string} kebab case string
  */
-const key = string => string?.toLowerCase().replace(/ /g, '-')
+const key = id => `${id}`.toLowerCase().replace(/ /g, '-')
 
 /**
  * convert radians to degrees
