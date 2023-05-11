@@ -20,13 +20,14 @@ import { download } from './download.js'
  * generate chart rendering function based on
  * a Vega Lite specification
  * @param {object} s Vega Lite specification
- * @param {object} panelDimensions chart dimensions
+ * @param {object} [_panelDimensions] chart dimensions
  * @returns {function(object)} renderer
  */
-const render = (s, panelDimensions) => {
+const render = (s, _panelDimensions) => {
 	let tooltipHandler
 	let errorHandler = console.error
 	let tableRenderer = table
+	const panelDimensions = _panelDimensions || { x: s.width, y: s.height }
 
 	const renderer = selection => {
 		try {
