@@ -256,7 +256,9 @@ const range = (s, dimensions, _channel) => {
 		theta: () => [0, Math.PI * 2],
 		detail: () => {
 			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
-		}
+		},
+		yOffset: () => [dimensions.y, 0],
+		xOffset: () => [0, dimensions.x]
 	}
 
 	return ranges[channel]()
