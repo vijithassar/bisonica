@@ -5,7 +5,7 @@ const references = {
 
 const argumentKey = arg => {
 	const type = typeof arg
-	const primitive = type !== 'object' && type !== 'function'
+	const primitive = (type !== 'object' && type !== 'function') || arg === null || arg === undefined
 
 	if (primitive) {
 		return `${arg}`
