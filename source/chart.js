@@ -27,11 +27,20 @@ const render = (s, _panelDimensions) => {
 	let tooltipHandler
 	let errorHandler = console.error
 	let tableRenderer = table
-	const panelDimensions = _panelDimensions || { x: s.width, y: s.height }
 
 	const renderer = selection => {
 		try {
 			selection.html('')
+
+			let panelDimensions
+			if (_panelDimensions) {
+				panelDimensions = _panelDimensions
+			} else if (s.height && s.width) {
+				panelDimensions = {
+					x: s.width === 'container' ? selection.node().getBoundingClientRect().width : s.width,
+					y: s.height === 'container' ? selection.node().getBoundingClientRect().height : s.height
+				}
+			}
 
 			selection.call(setupNode(s, panelDimensions))
 
