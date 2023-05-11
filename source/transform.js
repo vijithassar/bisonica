@@ -6,8 +6,8 @@ import * as d3 from 'd3'
 
 /**
  * create a function to perform a single calculate expression
- * @param {string} str a calculate expression describing string interpolation
- * @returns {function(string)} string interpolation function
+ * @param {string} str calculate expression
+ * @returns {function} expression evaluation function
  */
 const calculate = str => expression(str)
 

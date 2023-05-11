@@ -19,4 +19,13 @@ module('expression', () => {
 		const datum = { a: '•' }
 		assert.equal(expression(exp)(datum), '>-•')
 	})
+	test('random()', assert => {
+		const exp = 'random()'
+		assert.equal(typeof expression(exp)(), 'number')
+	})
+	test('now()', assert => {
+		const exp = 'now()'
+		assert.equal(typeof expression(exp)(), 'number')
+		assert.equal(expression(exp)(), Date.now())
+	})
 })
