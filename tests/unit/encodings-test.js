@@ -166,6 +166,12 @@ module('unit > encoders', () => {
 		assert.equal(encodingChannelQuantitative(s), 'y')
 	})
 
+	test('identifies quantitative encoding base channels', assert => {
+		const s = { encoding: { x: { type: 'nominal' }, y: { type: 'quantitative' }, y2: { type: 'quantitative' } } }
+
+		assert.equal(encodingChannelQuantitative(s), 'y')
+	})
+
 	test('detects encoding types', assert => {
 		const s = { encoding: { x: { type: 'nominal' } } }
 

@@ -134,6 +134,13 @@ const _encodingTest = (s, test) => {
 		return encodings[0][0]
 	}
 
+	if (encodings.length === 2) {
+		const baseEncodings = new Set([0, 1].map(index => encodings[index][0].slice(0, 1)))
+		if (baseEncodings.size === 1) {
+			return [...baseEncodings.values()][0]
+		}
+	}
+
 	if (encodings.length === 0) {
 		throw new Error('no channels match test function')
 	}
