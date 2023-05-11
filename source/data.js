@@ -154,7 +154,7 @@ const stackData = s => {
 	const summed = groupAndSumByProperties(values(s), covariate, group, quantitative)
 	const stacker = d3.stack().keys(stackKeys).value(stackValue)
 
-	if (stackOffset(s)) {
+	if (stackOffset(s) === 'normalize') {
 		stacker.offset(d3.stackOffsetExpand)
 	}
 

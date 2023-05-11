@@ -370,10 +370,18 @@ const extendScales = (s, dimensions, scales) => {
 		}
 
 		extendedScales.start = d => {
-			if (channel === 'y') {
-				return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0])
-			} else if (channel === 'x') {
-				return extendedScales[channel](d[0])
+			if (feature(s).isStacked()) {
+				if (channel === 'y') {
+					return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0])
+				} else if (channel === 'x') {
+					return extendedScales[channel](d[0])
+				}
+			} else {
+				if (channel === 'y') {
+					return dimensions.y - extendedScales.length(d[1] - d[0])
+				} else if (channel === 'x') {
+					return 0
+				}
 			}
 		}
 	}
