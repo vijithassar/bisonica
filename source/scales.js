@@ -218,7 +218,7 @@ const domain = (s, channel) => {
 /**
  * compute scale range
  * @param {object} s Vega Lite specification
- * @param {string} dimensions chart dimensions
+ * @param {object} dimensions chart dimensions
  * @param {string} _channel visual encoding
  * @returns {number[]} range
  */
