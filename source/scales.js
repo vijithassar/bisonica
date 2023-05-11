@@ -33,6 +33,9 @@ const explicitScale = (s, channel) => {
 	if (s.encoding[channel]?.scale === null) {
 		return null
 	} else {
+		if (channel === 'size') {
+			return 'scaleSqrt'
+		}
 		const type = scaleType(s, channel)
 		return `scale${type.slice(0, 1).toUpperCase() + type.slice(1)}`
 	}
@@ -258,7 +261,23 @@ const range = (s, dimensions, _channel) => {
 			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
 		},
 		yOffset: () => [dimensions.y, 0],
-		xOffset: () => [0, dimensions.x]
+		xOffset: () => [0, dimensions.x],
+		size: () => {
+			let min = 0
+			let max
+			if (feature(s).isBar()) {
+				if (isDiscrete(s, channel)) {
+					max = 2
+				} else {
+					max = 5
+				}
+			} else if (feature(s).isText()) {
+				max = 11
+			} else {
+				max = 30
+			}
+			return [min, max]
+		}
 	}
 
 	return ranges[channel]()

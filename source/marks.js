@@ -388,8 +388,8 @@ const areaMarks = (s, dimensions) => {
  */
 const pointMarkCircle = (s, dimensions) => {
 	const size = s.mark.size || defaultSize
-	const radius = Math.sqrt(size / Math.PI)
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const radius = d => encoders.size ? encoders.size(d) : Math.sqrt(size / Math.PI)
 	const renderer = selection => {
 		selection
 			.attr('cx', encoders.x)
@@ -406,13 +406,13 @@ const pointMarkCircle = (s, dimensions) => {
  */
 const pointMarkSquare = (s, dimensions) => {
 	const size = s.mark.size || defaultSize
-	const side = Math.sqrt(size)
-	const offset = side * 0.5 * -1
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const side = d => encoders.size ? encoders.size(d) : Math.sqrt(size)
+	const offset = d => side(d) * 0.5 * -1
 	const renderer = selection => {
 		selection
-			.attr('x', d => encoders.x(d) + offset)
-			.attr('y', d => encoders.y(d) + offset)
+			.attr('x', d => encoders.x(d) + offset(d))
+			.attr('y', d => encoders.y(d) + offset(d))
 			.attr('height', side)
 			.attr('width', side)
 	}
@@ -762,7 +762,7 @@ const textMarks = (s, dimensions) => {
 		}
 
 		// default font size
-		text.style('font-size', defaultFontSize)
+		text.style('font-size', encoders.size ? encoders.size : defaultFontSize)
 
 		// text content
 		if (s.mark.text) {

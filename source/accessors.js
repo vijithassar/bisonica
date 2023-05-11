@@ -69,7 +69,7 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (['point', 'square', 'circle'].includes(key)) {
-		standard('x', 'y', 'color')
+		standard('x', 'y', 'color', 'size')
 	}
 
 	if (key === 'line') {
@@ -82,7 +82,7 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (key === 'text') {
-		standard('x', 'y', 'color', 'text')
+		standard('x', 'y', 'color', 'text', 'size')
 	}
 
 	if (key === 'image') {
