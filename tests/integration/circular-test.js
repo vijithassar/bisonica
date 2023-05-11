@@ -40,33 +40,4 @@ module('integration > circular', function() {
 		assert.ok(marks.every(item => item.tagName === 'path'))
 		assert.equal(new Set(marks.map(item => item.style.fill)).size, s.data.values.length)
 	})
-	test.skip('renders a donut chart', assert => {
-		const donutChartSpec = {
-			...specificationFixture('circular'),
-			mark: { type: 'arc', innerRadius: 50 },
-			data: {
-				// must have at least five segments to avoid
-				// bounds overlapping the center of the chart
-				values: [
-					{ group: 'a', value: 1 },
-					{ group: 'b', value: 1 },
-					{ group: 'c', value: 1 },
-					{ group: 'd', value: 1 },
-					{ group: 'e', value: 1 }
-				]
-			}
-		}
-
-		const element = render(donutChartSpec)
-
-		const marksSelector = testSelector('marks')
-		const markSelector = testSelector('mark')
-
-		assert.ok(element.querySelector(markSelector))
-		assert.equal(element.querySelector(markSelector).tagName, 'path')
-
-		const marks = element.querySelector(marksSelector)
-
-		assert.ok(isDonut(marks))
-	})
 })
