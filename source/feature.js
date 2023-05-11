@@ -39,7 +39,7 @@ const _feature = s => {
 		isImage: s => mark(s) === 'image',
 		hasColor: s => s.encoding?.color,
 		hasLinks: s => s.encoding?.href || s.mark?.href,
-		hasData: s => s.data?.values.length,
+		hasData: s => s.data?.values?.length || s.data?.url,
 		hasLegend: s => s.encoding?.color && s.encoding?.color?.legend !== null,
 		hasLegendTitle: s => isPresent(s.encoding?.color?.legend?.title),
 		hasTooltip: s => s.mark?.tooltip || s.encoding?.tooltip,
