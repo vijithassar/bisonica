@@ -64,7 +64,9 @@ const _feature = s => {
 		isStacked: s => {
 			return mark(s) === 'bar' &&
 				s.encoding?.y?.stack !== null &&
+				s.encoding?.y?.stack !== false &&
 				s.encoding?.x?.stack !== null &&
+				s.encoding?.x?.stack !== false &&
 				isMulticolor
 		}
 	}
