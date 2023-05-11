@@ -60,7 +60,13 @@ const _feature = s => {
 		isMulticolor: () => isMulticolor,
 		hasEncodingX: s => s.encoding?.x,
 		hasEncodingY: s => s.encoding?.y,
-		hasEncodingColor: s => s.encoding?.color
+		hasEncodingColor: s => s.encoding?.color,
+		isStacked: s => {
+			return mark(s) === 'bar' &&
+				s.encoding?.y?.stack !== null &&
+				s.encoding?.x?.stack !== null &&
+				isMulticolor
+		}
 	}
 
 	tests.hasAxis = s => tests.hasEncodingX(s) || tests.hasEncodingY(s)
