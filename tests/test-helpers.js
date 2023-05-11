@@ -13,9 +13,9 @@ import { singleBarChartSpec } from '../fixtures/single-bar.js';
 import { select } from 'd3';
 import { chart } from '../source/chart.js';
 
-export const testSelector = (string) => `[data-test-selector="${string}"]`;
+const testSelector = (string) => `[data-test-selector="${string}"]`;
 
-export const render = (specification, dimensions = { x: 500, y: 500 }) => {
+const render = (specification, dimensions = { x: 500, y: 500 }) => {
   const node = document.createElement('div');
   select(node).call(chart(specification, dimensions));
   return node;
@@ -27,13 +27,13 @@ const TEST_SELECTORS = {
   mark: 'mark',
 };
 
-export const marksWithUrls = (element) => {
+const marksWithUrls = (element) => {
   return [
     ...element.querySelectorAll(testSelector(TEST_SELECTORS.mark))
   ].filter((mark) => select(mark).datum().url)
 };
 
-export const tooltipContentUpdate = (page) => {
+const tooltipContentUpdate = (page) => {
   return new Promise((resolve) => {
     const observer = new MutationObserver((mutations) => {
       const toolTipText = ` ${mutations.pop().target.innerText}`.trim().replace(/\s*\n+\s*/g, '\n');
@@ -49,12 +49,12 @@ export const tooltipContentUpdate = (page) => {
   });
 };
 
-export const nodesHavePositiveHeights = (nodes) =>
+const nodesHavePositiveHeights = (nodes) =>
   nodes.every((node) => {
     return Number(node.getAttribute('height')) >= 0;
   });
 
-export function specificationFixture(type) {
+function specificationFixture(type) {
   let spec;
 
   if (type === 'stackedBar') {
@@ -89,3 +89,5 @@ export function specificationFixture(type) {
 
   return result;
 }
+
+export { render, testSelector, marksWithUrls, nodesHavePositiveHeights, specificationFixture }
