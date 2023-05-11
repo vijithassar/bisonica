@@ -218,7 +218,7 @@ const domain = (s, channel) => {
 /**
  * compute scale range
  * @param {object} s Vega Lite specification
- * @param {string} dimensions chart dimensions
+ * @param {object} dimensions chart dimensions
  * @param {string} _channel visual encoding
  * @returns {number[]} range
  */
@@ -256,7 +256,9 @@ const range = (s, dimensions, _channel) => {
 		theta: () => [0, Math.PI * 2],
 		detail: () => {
 			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
-		}
+		},
+		yOffset: () => [dimensions.y, 0],
+		xOffset: () => [0, dimensions.x]
 	}
 
 	return ranges[channel]()
