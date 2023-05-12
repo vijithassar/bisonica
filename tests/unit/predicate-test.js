@@ -5,13 +5,17 @@ const { module, test } = qunit
 
 const data = () => {
 	return [
-		{ x: 1 },
-		{ x: 2 },
-		{ x: 3 },
-		{ x: 4 },
-		{ x: 5 },
-		{ x: 6 }
+		{ x: 1, _: 'apple pie' },
+		{ x: 2, _: 'banana split' },
+		{ x: 3, _: 'cherry cobbler' },
+		{ x: 4, _: 'donut' },
+		{ x: 5, _: 'eclair' },
+		{ x: 6, _: 'flan' }
 	]
+}
+
+const run = config => {
+	return data().filter(predicate(config)).map(item => item.x).join(',')
 }
 
 module('unit > predicate', () => {
@@ -50,5 +54,26 @@ module('unit > predicate', () => {
 			] }
 			assert.equal(run(config), '5,6')
 		})
+	})
+	module('string expression predicates', () => {
+		const comparisons = {
+			'==': 'equal',
+			'===': 'equal',
+			'>': 'gt',
+			'>=': 'gte',
+			'<': 'lt',
+			'<=': 'lte'
+		}
+		Object.entries(comparisons).forEach(([symbol, key]) => {
+			test(`${key} (${symbol})`, assert => {
+				const string = `datum.x ${symbol} 1`
+				const object = { field: 'x', [key]: 1 }
+				assert.equal(run(string), run(object))
+			})
+		})
+	})
+	test('equal (===) with string comparison', assert => {
+		const string = 'datum._ === "apple pie"'
+		assert.equal(run(string), 1)
 	})
 })

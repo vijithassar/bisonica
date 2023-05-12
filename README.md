@@ -82,7 +82,7 @@ Data loading will not [parse inline strings](https://vega.github.io/vega-lite/do
 
 Nested fields must be looked up using dot notation (e.g. `datum.field`), not bracket notation (e.g. `datum['field']`).
 
-[Predicates](https://vega.github.io/vega-lite/docs/predicate.html) do not support expressions.
+[Predicates](https://vega.github.io/vega-lite/docs/predicate.html) defined with string expressions only support simple comparisons (e.g. `"datum.value < 100"` or `"datum.group === 'a'"`).
 
 The [calculate transform](https://vega.github.io/vega-lite/docs/calculate.html) only supports deriving new fields with string concatenation and static functions but can't do arbitrary math. (If you need arbitrary math, do it in JavaScript and attach the results to your specification before rendering.)
 
