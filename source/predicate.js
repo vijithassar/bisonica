@@ -1,3 +1,4 @@
+import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 
 const value = (config, datum) => datum[config.field]
@@ -58,6 +59,46 @@ const oneOf = config => datum => config.oneOf.includes(value(config, datum))
  */
 const valid = config => datum => config.valid ? !Number.isNaN(value(config, datum)) && value(config, datum) !== null : true
 
+/**
+ * determine whether a string starts and ends with quotes
+ * @param {string} string string, possibly a string literal
+ * @returns {boolean}
+ */
+const isStringLiteral = string => {
+	return ['"', "'"]
+		.some(character => {
+			return string.startsWith(character) &&
+				string.endsWith(character)
+		})
+}
+
+/**
+ * convert a predicate string expression to the equivalent object
+ * @param {object} config predicate config with string expression
+ * @returns {object} predicate config with object
+ */
+const stringPredicate = config => {
+	if (!config.includes(' ')) {
+		throw new Error('string predicates must use spaces')
+	}
+	const [a, b, ...rest] = config.split(' ')
+	const operators = {
+		'==': 'equal',
+		'===': 'equal',
+		'>': 'gt',
+		'>=': 'gte',
+		'<': 'lt',
+		'<=': 'lte'
+	}
+	const result = {}
+	const field = a.split('.').pop()
+	const operator = operators[b]
+	const value = rest.join(' ')
+	result.field = field
+	result[operator] = isStringLiteral(value) ? value.slice(1, -1) : +value
+	return result
+}
+
 const predicates = {
 	equal,
 	lt,
@@ -71,10 +112,12 @@ const predicates = {
 
 /**
  * generate a predicate test function
- * @param {object} config predicate definition
+ * @param {object|string} _config predicate definition
  * @returns {function(object)} predicate test function
  */
-const single = config => {
+const single = _config => {
+	const converter = typeof _config === 'string' ? stringPredicate : identity
+	const config = converter(_config)
 	const [key, create] = Object.entries(predicates).find(([key]) => config[key])
 	if (typeof create === 'function') {
 		return create(config)
@@ -105,9 +148,6 @@ const compose = config => {
  * @returns {function(object)} predicate test function
  */
 const _predicate = config => {
-	if (typeof config === 'string') {
-		throw new Error(`cannot evaluate string expression (${config}), predicates must use structured object syntax`)
-	}
 	const multiple = config.and || config.or || config.not
 	try {
 		if (multiple) {
