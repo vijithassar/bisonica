@@ -20,7 +20,7 @@ const functionExpression = str => {
  * @param {string} str a calculate expression describing string interpolation
  * @returns {function(object)} string interpolation function
  */
-const stringExpression = str => {
+const concatenate = str => {
 	const segments = str
 		.split('+')
 		.map(item => item.trim())
@@ -99,7 +99,7 @@ const expression = str => {
 	if (str.slice(-2) === '()') {
 		return functionExpression(str)
 	} else {
-		return stringExpression(str)
+		return concatenate(str)
 	}
 }
 
