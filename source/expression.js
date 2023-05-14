@@ -20,7 +20,7 @@ const functionExpression = str => {
  * @param {string} str a calculate expression describing string interpolation
  * @returns {function(object)} string interpolation function
  */
-const stringExpression = str => {
+const concatenate = str => {
 	const segments = str
 		.split('+')
 		.map(item => item.trim())
@@ -51,6 +51,46 @@ const stringExpression = str => {
 }
 
 /**
+ * determine whether a string starts and ends with quotes
+ * @param {string} string string, possibly a string literal
+ * @returns {boolean}
+ */
+const isStringLiteral = string => {
+	return ['"', "'"]
+		.some(character => {
+			return string.startsWith(character) &&
+				string.endsWith(character)
+		})
+}
+
+/**
+ * convert a predicate string expression to the equivalent object
+ * @param {object} config predicate config with string expression
+ * @returns {object} predicate config with object
+ */
+const expressionStringParse = config => {
+	if (!config.includes(' ')) {
+		throw new Error('string predicates must use spaces')
+	}
+	const [a, b, ...rest] = config.split(' ')
+	const operators = {
+		'==': 'equal',
+		'===': 'equal',
+		'>': 'gt',
+		'>=': 'gte',
+		'<': 'lt',
+		'<=': 'lte'
+	}
+	const result = {}
+	const field = a.split('.').pop()
+	const operator = operators[b]
+	const value = rest.join(' ')
+	result.field = field
+	result[operator] = isStringLiteral(value) ? value.slice(1, -1) : +value
+	return result
+}
+
+/**
  * create a function to perform a single calculate expression
  * @param {string} str expression
  * @returns {function} expression evaluation function
@@ -59,8 +99,8 @@ const expression = str => {
 	if (str.slice(-2) === '()') {
 		return functionExpression(str)
 	} else {
-		return stringExpression(str)
+		return concatenate(str)
 	}
 }
 
-export { expression }
+export { expression, expressionStringParse }
