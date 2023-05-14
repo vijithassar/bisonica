@@ -1,5 +1,5 @@
 import qunit from 'qunit'
-import { expression } from '../../source/expression.js'
+import { expression, expressionStringParse } from '../../source/expression.js'
 
 const { module, test } = qunit
 
@@ -30,6 +30,13 @@ module('expression', () => {
 			const exp = 'now()'
 			assert.equal(typeof expression(exp)(), 'number')
 			assert.equal(expression(exp)(), Date.now())
+		})
+	})
+	module('string expressions', () => {
+		test('converts string expressions to object form', assert => {
+			const string = 'datum.x === 1'
+			assert.equal(expressionStringParse(string).field, 'x')
+			assert.equal(expressionStringParse(string).equal, 1)
 		})
 	})
 })
