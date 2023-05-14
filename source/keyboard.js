@@ -5,6 +5,7 @@ import { dispatchers } from './interactions.js'
 import { feature } from './feature.js'
 import { getUrl, mark, noop } from './helpers.js'
 import { layerMatch, layerNode } from './views.js'
+import { createState } from './state.js'
 
 const UP = 'up'
 const RIGHT = 'right'
@@ -152,25 +153,6 @@ const key = (s, direction) => {
 			current().focus()
 			dispatcher.call('addMarkHighlight', current())
 			dispatcher.call('addLegendHighlight', null, category.get(current()))
-		}
-	}
-}
-
-/**
- * store current keyboard navigation position in a closure
- * @returns {object} methods for modifying keyboard position state
- */
-const createState = () => {
-	let index
-
-	return {
-		init() {
-			if (index === undefined) {
-				index = 0
-			}
-		},
-		index(n) {
-			return n === undefined ? index : ((index = n), true)
 		}
 	}
 }
