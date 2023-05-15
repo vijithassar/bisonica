@@ -32,7 +32,12 @@ const channels = s => Object.keys(s.encoding)
  * @param {object} s Vega Lite specification
  * @returns {string[]} array of column encoding fields
  */
-const fields = s => channels(s).map(channel => encodingField(s, channel))
+const fields = s => {
+	const encodings = channels(s).map(channel => encodingField(s, channel))
+	const first = values(s)[0]
+	const other = Object.keys(first).filter(item => !encodings.includes(item))
+	return [...encodings, ...other]
+}
 
 /**
  * create an ordered datum for data binding
