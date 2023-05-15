@@ -1,6 +1,7 @@
 import qunit from 'qunit'
 import { tooltipContent } from '../../source/tooltips.js'
 import { data } from '../../source/data.js'
+import { specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
@@ -109,6 +110,13 @@ module('unit > tooltips', () => {
 		const text = tooltipContent(transformField)(datum)
 
 		assert.equal(text, 'tooltip value is: 1')
+	})
+	test('normalizes stacked tooltip values', assert => {
+		const s = specificationFixture('circular')
+		s.encoding.theta.stack = 'normalize'
+		const datum = { data: { value: 9, group: 'a' } }
+		const text = tooltipContent(s)(datum)
+		assert.ok(text.includes('%;'), 'appends percent sign')
 	})
 	test('handles bidirectional cartesian encodings', assert => {
 		const length = { field: 'a', type: 'quantitative' }

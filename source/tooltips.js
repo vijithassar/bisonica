@@ -9,6 +9,7 @@ import { memoize } from './memoize.js'
 import { noop } from './helpers.js'
 import { parseScales } from './scales.js'
 import { transformDatum } from './transform.js'
+import { values } from './values.js'
 
 /**
  * format field description
@@ -133,6 +134,19 @@ const _getTooltipField = (s, type) => {
 
 	const getValue = accessors?.[channel] ? accessors[channel] : encodingValue(s, channel)
 
+	const stack = s.encoding[channel]?.stack
+	const normalize = stack === 'normalize'
+
+	const percentage = value => {
+		let total
+		if (feature(s).isCircular()) {
+			total = d3.sum(values(s).map(encodingValue(s, channel)))
+		} else if (feature(s).isCartesian()) {
+			total = 1
+		}
+		return Math.round(value / total * 100) + '%'
+	}
+
 	return d => {
 		let value
 
@@ -149,6 +163,10 @@ const _getTooltipField = (s, type) => {
 		if (!key && !value) {
 			key = type // key may be a field, not a channel
 			value = transformDatum(s)()(d)[key]
+		}
+
+		if (normalize) {
+			value = percentage(value)
 		}
 
 		return { key, value }
