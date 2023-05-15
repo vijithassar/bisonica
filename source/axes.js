@@ -215,7 +215,7 @@ const createY = (s, dimensions) => {
  */
 const axisTitleX = (s, dimensions) => {
 	return selection => {
-		if (feature(s).hasAxisTitleX()) {
+		if (feature(s).hasEncodingX() && feature(s).hasAxisTitleX()) {
 			const xTitle = selection.append('text').attr('class', 'title')
 			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
 
@@ -243,7 +243,7 @@ const axisTitleX = (s, dimensions) => {
  */
 const axisTitleY = (s, dimensions) => {
 	return selection => {
-		if (feature(s).hasAxisTitleY()) {
+		if (feature(s).hasEncodingY() && feature(s).hasAxisTitleY()) {
 			const yTitle = selection.append('text').attr('class', 'title')
 			const yTitlePadding = {
 				x: 0.2
@@ -388,7 +388,13 @@ const tickStyles = {
  * @param {string} channel encoding channel
  * @returns {function(object)} tick style rendering function
  */
-const axisTicksStyles = (s, channel) => renderStyles(tickStyles, s.encoding[channel].axis)
+const axisTicksStyles = (s, channel) => {
+	if (feature(s)[`hasEncoding${channel.toUpperCase()}`]()) {
+		return renderStyles(tickStyles, s.encoding[channel].axis)
+	} else {
+		return noop
+	}
+}
 
 /**
  * run functions that require a live DOM node
