@@ -416,7 +416,8 @@ const axes = (_s, dimensions) => {
 		if (feature(_s).hasLayers()) {
 			return s
 		} else {
-			return s.encoding?.x && s.encoding?.y
+			return (feature(s).hasEncodingX() && feature(s).hasEncodingY()) ||
+				(feature(s).hasEncodingX() || feature(s).hasEncodingY())
 		}
 	}
 	let s = layerMatch(_s, test)
