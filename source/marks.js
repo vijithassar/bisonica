@@ -619,7 +619,7 @@ const lineMarks = (s, dimensions) => {
  * @param {object} dimensions chart dimensions
  * @returns {number} radius
  */
-const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
+const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
 
 /**
  * render arc marks for a circular pie or donut chart
@@ -628,7 +628,7 @@ const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
  * @returns {function(object)} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
-	const outerRadius = radius(dimensions)
+	const outerRadius = maxRadius(dimensions)
 	const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0
 	const innerRadius = outerRadius * innerRadiusRatio
 	const { color } = parseScales(s)
@@ -849,4 +849,4 @@ const _marks = (s, dimensions) => {
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, radius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
+export { marks, maxRadius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
