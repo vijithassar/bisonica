@@ -61,6 +61,7 @@ const _feature = s => {
 		hasEncodingX: s => s.encoding?.x,
 		hasEncodingY: s => s.encoding?.y,
 		hasEncodingColor: s => s.encoding?.color,
+		hasRadius: s => s.encoding?.radius,
 		isStacked: s => {
 			return mark(s) === 'bar' &&
 				s.encoding?.y?.stack !== null &&
