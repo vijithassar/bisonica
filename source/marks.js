@@ -630,7 +630,7 @@ const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
 const circularMarks = (s, dimensions) => {
 	const outerRadius = maxRadius(dimensions)
 	const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0
-	const innerRadius = outerRadius * innerRadiusRatio
+	const innerRadius = maxRadius(dimensions) * innerRadiusRatio
 	const { color } = parseScales(s)
 	const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group)
 	const value = d => d.value
