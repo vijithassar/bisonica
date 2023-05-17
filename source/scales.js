@@ -290,7 +290,8 @@ const range = (s, dimensions, _channel) => {
 				max = 30
 			}
 			return [min, max]
-		}
+		},
+		radius: () => [0, 100]
 	}
 
 	let range
