@@ -4,7 +4,7 @@ import { values } from './values.js'
 import { colors } from './color.js'
 import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
-import { identity, isDiscrete, isTextChannel } from './helpers.js'
+import { identity, isContinuous, isDiscrete, isTextChannel } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime, temporalBarDimensions } from './time.js'
 import { sorter } from './sort.js'
@@ -280,7 +280,14 @@ const range = (s, dimensions, _channel) => {
 		}
 	}
 
-	return ranges[channel]()
+	const range = ranges[channel]()
+	if (s.encoding[channel].scale?.rangeMin && isContinuous(s, channel)) {
+		range[0] = s.encoding[channel].scale?.rangeMin
+	}
+	if (s.encoding[channel].scale?.rangeMax && isContinuous(s, channel)) {
+		range[0] = s.encoding[channel].scale?.rangeMax
+	}
+	return range
 }
 
 /**
