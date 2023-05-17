@@ -111,7 +111,10 @@ const extentDescription = memoize(_extentDescription)
 const encodingDescription = s => {
 	let segments = []
 	if (feature(s).isCircular()) {
-		segments.push(`${encodingField(s, encodingChannelQuantitative(s))}`)
+		segments.push(`${encodingField(s, 'theta')}`)
+		if (feature(s).hasRadius()) {
+			segments.push(`and ${encodingField(s, 'radius')}`)
+		}
 	} else if (feature(s).isCartesian()) {
 		const quantitative = quantitativeChannels(s).length
 		if (quantitative === 1) {
@@ -163,6 +166,9 @@ const chartType = s => {
 	} else if (feature(s).isBar()) {
 		return 'bar chart'
 	} else if (feature(s).isCircular()) {
+		if (feature(s).hasRadius()) {
+			return 'radial plot'
+		}
 		if (s.mark && s.mark.innerRadius) {
 			return 'donut chart'
 		} else {
