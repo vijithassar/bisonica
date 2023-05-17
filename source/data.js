@@ -197,7 +197,16 @@ const circularData = s => {
 	)
 
 	const summed = grouped.map(({ key, values }) => {
-		return { key, value: d3.sum(values, encodingValue(s, 'theta')) }
+		const result = { key }
+		const channels = ['theta', 'radius']
+		channels
+			.forEach(channel => {
+				const key = channel === 'theta' ? 'value' : encodingField(s, channel)
+				if (key) {
+					result[key] = d3.sum(values, encodingValue(s, channel))
+				}
+			})
+		return result
 	})
 
 	return summed
