@@ -358,6 +358,33 @@ module('unit > scales', hooks => {
 		)
 	})
 
+	test('sets scale range based on field', assert => {
+		const s = {
+			data: { values: [
+				{ a: 1, b: '-' },
+				{ a: 2, b: '+' },
+				{ a: 3, b: '•' },
+				{ a: 4, b: '.' },
+				{ a: 4, b: '_' }
+			] },
+			mark: { type: 'arc' },
+			encoding: {
+				color: {
+					scale: {
+						range: {
+							field: 'b'
+						}
+					},
+					type: 'nominal'
+				}
+			}
+		}
+
+		const { color } = parseScales(s, { x: 100, y: 100 })
+
+		assert.equal(color.range().join(''), '-+•._')
+	})
+
 	module('explicit scales', () => {
 		const scales = [
 			'sqrt',

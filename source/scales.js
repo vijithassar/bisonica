@@ -281,7 +281,14 @@ const range = (s, dimensions, _channel) => {
 		}
 	}
 
-	const range = ranges[channel]()
+	let range
+
+	if (scale?.range?.field) {
+		range = [...new Set(values(s).map(item => item[scale.range.field]))]
+	} else {
+		range = ranges[channel]()
+	}
+
 	if (scale?.rangeMin && isContinuous(s, channel)) {
 		range[0] = scale?.rangeMin
 	}
