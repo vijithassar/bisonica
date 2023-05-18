@@ -227,6 +227,7 @@ const domain = (s, channel) => {
  */
 const range = (s, dimensions, _channel) => {
 	const channel = channelRoot(s, _channel)
+	const scale = s.encoding[channel].scale
 	const cartesian = () => {
 		let result
 
@@ -280,12 +281,19 @@ const range = (s, dimensions, _channel) => {
 		}
 	}
 
-	const range = ranges[channel]()
-	if (s.encoding[channel].scale?.rangeMin && isContinuous(s, channel)) {
-		range[0] = s.encoding[channel].scale?.rangeMin
+	let range
+
+	if (scale?.range?.field) {
+		range = [...new Set(values(s).map(item => item[scale.range.field]))]
+	} else {
+		range = ranges[channel]()
 	}
-	if (s.encoding[channel].scale?.rangeMax && isContinuous(s, channel)) {
-		range[0] = s.encoding[channel].scale?.rangeMax
+
+	if (scale?.rangeMin && isContinuous(s, channel)) {
+		range[0] = scale?.rangeMin
+	}
+	if (scale?.rangeMax && isContinuous(s, channel)) {
+		range[0] = scale?.rangeMax
 	}
 	return range
 }
