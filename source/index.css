@@ -39,7 +39,7 @@ svg .wrapper text.mark:not([data-highlight]) {
 }
 
 .axes text {
-  fill: var(--light-grey);
+  fill: var(--light);
 }
 
 .axes path {
@@ -58,7 +58,7 @@ path.mark {
 }
 
 .chart .legend {
-  color: var(--body-and-labels);
+  color: var(--primary);
   text-align: center;
 }
 
@@ -83,7 +83,7 @@ path.mark {
 }
 
 .legend ul.items-more {
-  background-color: var(--surface-2xl);
+  background-color: var(--background);
   bottom: 0.2em;
   padding: 0.5em;
   position: absolute;
