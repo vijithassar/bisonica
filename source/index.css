@@ -2,6 +2,7 @@
   max-height: 6em;
   overflow: hidden;
   text-align: center;
+  position: relative;
 }
 
 .legend h3 {
