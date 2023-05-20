@@ -178,6 +178,7 @@ path.mark {
 
 table {
   font-family: monospace;
+  margin: auto;
 }
 
 table thead {
