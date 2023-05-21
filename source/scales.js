@@ -135,6 +135,22 @@ const channelRoot = (s, channel) => {
 }
 
 /**
+ * determine whether a scale starts at zero
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding parameter
+ * @returns {boolean} whether to start the scale at zero
+ */
+const zero = (s, channel) => {
+	if (encodingType(s, channel) === 'temporal' || scaleType(s, channel) === 'log') {
+		return false
+	}
+	if (s.encoding[channel]?.scale?.zero) {
+		return !!s.encoding[channel].scale.zero
+	}
+	return ['x', 'y'].includes(channel) && !!customDomain(s, channel)
+}
+
+/**
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
