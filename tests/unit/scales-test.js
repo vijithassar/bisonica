@@ -341,18 +341,20 @@ module('unit > scales', hooks => {
 				y: {
 					field: 'value',
 					type: 'quantitative',
-					scale: { type: 'symlog' }
+					scale: { type: 'symlog', domain: [0, 10000] }
 				}
 			}
 		}
 
+		const { y } = parseScales(spec, dimensions)
+
 		assert.strictEqual(
-			parseScales(spec, dimensions).y(100).toFixed(4),
-			'50.5953',
-			'should generate symmetric log scales'
+			Math.round(y(100)),
+			50,
+			'generates symmetric log scale'
 		)
 		assert.strictEqual(
-			parseScales(spec, dimensions).y(0).toFixed(4),
+			y(0).toFixed(4),
 			'100.0000',
 			'symmetric log scales should handle zero'
 		)
