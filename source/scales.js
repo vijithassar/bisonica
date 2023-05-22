@@ -302,11 +302,13 @@ const range = (s, dimensions, _channel) => {
 		range = ranges[channel]()
 	}
 
-	if (scale?.rangeMin && isContinuous(s, channel)) {
-		range[0] = scale?.rangeMin
-	}
-	if (scale?.rangeMax && isContinuous(s, channel)) {
-		range[0] = scale?.rangeMax
+	if (isContinuous(s, channel)) {
+		if (scale?.rangeMin) {
+			range[0] = scale?.rangeMin
+		}
+		if (scale?.rangeMax) {
+			range[1] = scale?.rangeMax
+		}
 	}
 	return range
 }
