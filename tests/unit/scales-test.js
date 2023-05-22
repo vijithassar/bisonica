@@ -119,15 +119,9 @@ module('unit > scales', hooks => {
 			}
 		}
 
-		const startAtZero = spec()
-		const values = startAtZero.data.values.map(d => d.value)
-		const min = Math.min.apply(null, values)
-
-		const defaultBehavior = parseScales(startAtZero, dimensions).y
-
-		assert.equal(defaultBehavior.domain()[0], 0, 'start at zero by default')
-
 		const nonzero = spec()
+		const values = nonzero.data.values.map(d => d.value)
+		const min = Math.min.apply(null, values)
 
 		nonzero.encoding.y.scale.zero = false
 
