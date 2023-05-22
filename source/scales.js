@@ -208,6 +208,29 @@ const domainBaseValues = (s, channel) => {
 }
 
 /**
+ * adjust a domain by substituting explicit values
+ * if they are included in the specification
+ * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
+ * @returns {function(array)} domain adjustment function
+ */
+const adjustDomain = (s, channel) => {
+	const scale = s.encoding?.[channel]?.scale
+	if (!scale || !isContinuous(s, channel)) {
+		return identity
+	}
+	return domain => {
+		if (scale?.domainMin) {
+			domain[0] = scale?.domainMin
+		}
+		if (scale?.domainMax) {
+			domain[1] = scale?.domainMax
+		}
+		return domain
+	}
+}
+
+/**
  * sort the domain
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
@@ -227,7 +250,7 @@ const domainSort = (s, channel) => {
  * @param {string} channel visual encoding
  */
 const domain = (s, channel) => {
-	return customDomain(s, channel) || domainSort(s, channel)(domainBaseValues(s, channel))
+	return customDomain(s, channel) || domainSort(s, channel)(adjustDomain(s, channel)(domainBaseValues(s, channel)))
 }
 
 /**
