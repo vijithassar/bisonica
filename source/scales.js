@@ -306,7 +306,7 @@ const range = (s, dimensions, _channel) => {
 		range[0] = scale?.rangeMin
 	}
 	if (scale?.rangeMax && isContinuous(s, channel)) {
-		range[0] = scale?.rangeMax
+		range[1] = scale?.rangeMax
 	}
 	return range
 }
