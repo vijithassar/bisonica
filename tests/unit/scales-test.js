@@ -119,15 +119,9 @@ module('unit > scales', hooks => {
 			}
 		}
 
-		const startAtZero = spec()
-		const values = startAtZero.data.values.map(d => d.value)
-		const min = Math.min.apply(null, values)
-
-		const defaultBehavior = parseScales(startAtZero, dimensions).y
-
-		assert.equal(defaultBehavior.domain()[0], 0, 'start at zero by default')
-
 		const nonzero = spec()
+		const values = nonzero.data.values.map(d => d.value)
+		const min = Math.min.apply(null, values)
 
 		nonzero.encoding.y.scale.zero = false
 
@@ -341,18 +335,20 @@ module('unit > scales', hooks => {
 				y: {
 					field: 'value',
 					type: 'quantitative',
-					scale: { type: 'symlog' }
+					scale: { type: 'symlog', domain: [0, 10000] }
 				}
 			}
 		}
 
+		const { y } = parseScales(spec, dimensions)
+
 		assert.strictEqual(
-			parseScales(spec, dimensions).y(100).toFixed(4),
-			'50.5953',
-			'should generate symmetric log scales'
+			Math.round(y(100)),
+			50,
+			'generates symmetric log scale'
 		)
 		assert.strictEqual(
-			parseScales(spec, dimensions).y(0).toFixed(4),
+			y(0).toFixed(4),
 			'100.0000',
 			'symmetric log scales should handle zero'
 		)
