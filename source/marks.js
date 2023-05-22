@@ -619,7 +619,7 @@ const lineMarks = (s, dimensions) => {
  * @param {object} dimensions chart dimensions
  * @returns {number} radius
  */
-const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
+const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
 
 /**
  * render arc marks for a circular pie or donut chart
@@ -628,14 +628,27 @@ const radius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
  * @returns {function(object)} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
-	const outerRadius = radius(dimensions)
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const { radius } = encoders
 	const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0
-	const innerRadius = outerRadius * innerRadiusRatio
 	const { color } = parseScales(s)
+	const outerRadius = d => {
+		if (radius) {
+			return radius(d)
+		} else {
+			return maxRadius(dimensions)
+		}
+	}
+	const innerRadius = () => {
+		if (radius) {
+			return innerRadiusRatio * 100
+		} else {
+			return maxRadius(dimensions) * innerRadiusRatio
+		}
+	}
 	const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group)
 	const value = d => d.value
 	const layout = d3.pie().value(value).sort(sort)
-	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const mark = marks
@@ -849,4 +862,4 @@ const _marks = (s, dimensions) => {
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, radius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
+export { marks, maxRadius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }

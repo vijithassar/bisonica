@@ -101,6 +101,25 @@ module('unit > data', () => {
 			assert.ok(values, 'every segment has a value')
 		})
 
+		test('computes radial chart data', assert => {
+			const s = specificationFixture('circular')
+			s.data.values = s.data.values.map(item => {
+				return {
+					...item,
+					_: item.value
+				}
+			})
+			s.encoding.radius = { field: '_', type: 'quantitative' }
+			const segments = data(s)
+			const keys = segments.every(item => typeof item.key === 'string')
+
+			assert.ok(keys, 'every segment has a key')
+
+			assert.ok(segments.every(item => typeof item._ === 'number'), 'every segment has a radius value')
+
+			assert.ok(segments.every(item => typeof item.value === 'number'), 'every segment has a theta value')
+		})
+
 		test('compiles line chart data', assert => {
 			const spec = specificationFixture('multiline')
 			const dailyTotals = data(spec, encodingField(spec, 'x'))

@@ -3,7 +3,7 @@ import { feature } from './feature.js'
 import { longestAxisTickLabelTextWidth, rotation } from './text.js'
 import { memoize } from './memoize.js'
 import { polarToCartesian } from './helpers.js'
-import { radius } from './marks.js'
+import { maxRadius } from './marks.js'
 import { layerPrimary } from './views.js'
 
 const TITLE_MARGIN = GRID * 5
@@ -111,7 +111,7 @@ const margin = memoize(_margin)
  */
 const position = (s, dimensions) => {
 	const yOffsetCircular =
-    dimensions.x > dimensions.y ? (dimensions.y - radius(dimensions) * 2) * 0.5 : 0
+    dimensions.x > dimensions.y ? (dimensions.y - maxRadius(dimensions) * 2) * 0.5 : 0
 	const middle = {
 		x: dimensions.x * 0.5,
 		y: dimensions.y * 0.5 + yOffsetCircular

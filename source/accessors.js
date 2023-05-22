@@ -62,6 +62,11 @@ const _createAccessors = (s, type = null) => {
 	if (key === 'arc') {
 		accessors.theta = d => d.data.value
 		accessors.color = d => d.data.key
+		if (feature(s).hasRadius()) {
+			accessors.radius = d => {
+				return encodingValue(s, 'radius')(d.data)
+			}
+		}
 	}
 
 	if (key === 'rule') {

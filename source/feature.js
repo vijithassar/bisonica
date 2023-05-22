@@ -55,12 +55,12 @@ const _feature = s => {
 		hasDownload: s => s.usermeta?.download !== null,
 		isCartesian: s => (s.encoding?.x && s.encoding?.y),
 		isLinear: s => (s.encoding?.x && !s.encoding?.y) || (s.encoding?.y && !s.encoding?.x),
-		isRadial: s => s.encoding?.theta,
 		isTemporal: () => isTemporal,
 		isMulticolor: () => isMulticolor,
 		hasEncodingX: s => s.encoding?.x,
 		hasEncodingY: s => s.encoding?.y,
 		hasEncodingColor: s => s.encoding?.color,
+		hasRadius: s => s.encoding?.radius,
 		isStacked: s => {
 			return mark(s) === 'bar' &&
 				s.encoding?.y?.stack !== null &&
