@@ -628,14 +628,27 @@ const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
  * @returns {function(object)} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
-	const outerRadius = maxRadius(dimensions)
+	const encoders = createEncoders(s, dimensions, createAccessors(s))
+	const { radius } = encoders
 	const innerRadiusRatio = s.mark?.innerRadius ? s.mark.innerRadius / 100 : 0
-	const innerRadius = maxRadius(dimensions) * innerRadiusRatio
 	const { color } = parseScales(s)
+	const outerRadius = d => {
+		if (radius) {
+			return radius(d)
+		} else {
+			return maxRadius(dimensions)
+		}
+	}
+	const innerRadius = () => {
+		if (radius) {
+			return innerRadiusRatio * 100
+		} else {
+			return maxRadius(dimensions) * innerRadiusRatio
+		}
+	}
 	const sort = (a, b) => color.domain().indexOf(a.group) - color.domain().indexOf(b.group)
 	const value = d => d.value
 	const layout = d3.pie().value(value).sort(sort)
-	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const renderer = selection => {
 		const marks = selection.append('g').attr('class', 'marks')
 		const mark = marks
