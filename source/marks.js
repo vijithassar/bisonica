@@ -227,12 +227,23 @@ const stackEncoders = (s, dimensions) => {
 	const length = encoders.length
 	const width = () => feature(s).isBar() ? barWidth(s, dimensions) : step(s, dimensions)
 
-	return {
+	const result = {
 		x: vertical ? lane : start,
 		y: vertical ? start : lane,
 		height: vertical ? length : width,
 		width: vertical ? width : length
 	}
+
+	const channels = ['x', 'y']
+	channels.forEach(channel => {
+		const key = `${channel}Offset`
+		const encoder = encoders[key]
+		if (encoder) {
+			result[key] = encoder
+		}
+	})
+
+	return result
 }
 
 /**
