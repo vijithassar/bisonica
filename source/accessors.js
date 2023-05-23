@@ -44,6 +44,8 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (['bar', 'area'].includes(key)) {
+		standard('xOffset', 'yOffset')
+
 		const start = d => d[0]
 		const lane = d => d.data.key
 
@@ -77,11 +79,11 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (key === 'rule') {
-		standard('x', 'y', 'color')
+		standard('x', 'y', 'color', 'xOffset', 'yOffset')
 	}
 
 	if (['point', 'square', 'circle'].includes(key)) {
-		standard('x', 'y', 'color', 'size')
+		standard('x', 'y', 'color', 'size', 'xOffset', 'yOffset')
 	}
 
 	if (key === 'line') {
@@ -98,7 +100,7 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (key === 'image') {
-		standard('x', 'y', 'url')
+		standard('x', 'y', 'url', 'xOffset', 'yOffset')
 	}
 
 	if (!s.encoding) {
