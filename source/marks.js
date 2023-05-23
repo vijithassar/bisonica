@@ -59,12 +59,12 @@ const stroke = 3
 const defaultSize = 30
 
 /**
- * bar chart bar width
+ * partition dimensions into categorical steps
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {number} bar width
+ * @returns {number} step size in pixels
  */
-const _barWidth = (s, dimensions) => {
+const _step = (s, dimensions) => {
 	const channel = encodingChannelCovariateCartesian(s)
 
 	const min = 2
@@ -104,7 +104,8 @@ const _barWidth = (s, dimensions) => {
 		return max
 	}
 }
-const barWidth = memoize(_barWidth)
+const step = memoize(_step)
+const barWidth = step
 
 /**
  * retrieve the d3 curve factory function needed for the marks
@@ -199,7 +200,7 @@ const stackEncoders = (s, dimensions) => {
 	const lane = encoders[encodingChannelCovariateCartesian(s)]
 	const start = encoders.start
 	const length = encoders.length
-	const width = () => barWidth(s, dimensions)
+	const width = () => step(s, dimensions)
 
 	return {
 		x: vertical ? lane : start,
@@ -864,4 +865,4 @@ const _marks = (s, dimensions) => {
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, maxRadius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
+export { marks, maxRadius, step, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
