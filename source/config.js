@@ -1,7 +1,5 @@
 const WRAPPER_CLASS = 'wrapper'
 
-const BAR_WIDTH_MINIMUM = 2
-
 const GRID = 10
 
 const MINIMUM_TICK_COUNT = 3
@@ -12,6 +10,5 @@ export {
 	WRAPPER_CLASS,
 	GRID,
 	MINIMUM_TICK_COUNT,
-	BAR_WIDTH_MINIMUM,
 	RENDER_FREQUENCY
 }

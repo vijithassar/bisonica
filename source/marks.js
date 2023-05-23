@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
 
-import { BAR_WIDTH_MINIMUM } from './config.js'
 import { createAccessors } from './accessors.js'
 import {
 	createEncoders,
@@ -67,7 +66,10 @@ const defaultSize = 30
  */
 const _barWidth = (s, dimensions) => {
 	const channel = encodingChannelCovariateCartesian(s)
-	const barWidthMaximum = dimensions[channel] / 3
+
+	const min = 2
+	const max = dimensions[channel] / 3
+
 	const stacked = markData(s)
 	const type = encodingType(s, channel)
 	const temporal = type === 'temporal'
@@ -94,12 +96,12 @@ const _barWidth = (s, dimensions) => {
 
 	const dynamic = (dimensions[channel] / count) * 0.5
 
-	if (dynamic > BAR_WIDTH_MINIMUM && dynamic < barWidthMaximum) {
+	if (dynamic > min && dynamic < max) {
 		return dynamic
-	} else if (dynamic < BAR_WIDTH_MINIMUM) {
-		return BAR_WIDTH_MINIMUM
-	} else if (dynamic > barWidthMaximum) {
-		return barWidthMaximum
+	} else if (dynamic < min) {
+		return min
+	} else if (dynamic > max) {
+		return max
 	}
 }
 const barWidth = memoize(_barWidth)
