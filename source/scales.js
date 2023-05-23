@@ -317,23 +317,28 @@ const range = (s, dimensions, _channel) => {
 		radius: () => [0, 100]
 	}
 
-	let range
+	try {
+		let range
 
-	if (scale?.range?.field) {
-		range = [...new Set(values(s).map(item => item[scale.range.field]))]
-	} else {
-		range = ranges[channel]()
-	}
+		if (scale?.range?.field) {
+			range = [...new Set(values(s).map(item => item[scale.range.field]))]
+		} else {
+			range = ranges[channel]()
+		}
 
-	if (isContinuous(s, channel)) {
-		if (scale?.rangeMin) {
-			range[0] = scale?.rangeMin
+		if (isContinuous(s, channel)) {
+			if (scale?.rangeMin) {
+				range[0] = scale?.rangeMin
+			}
+			if (scale?.rangeMax) {
+				range[1] = scale?.rangeMax
+			}
 		}
-		if (scale?.rangeMax) {
-			range[1] = scale?.rangeMax
-		}
+		return range
+	} catch (error) {
+		error.message = `could not determine scale range for ${channel} channel - ${error.message}`
+		throw error
 	}
-	return range
 }
 
 /**
