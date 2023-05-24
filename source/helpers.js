@@ -61,6 +61,33 @@ const nested = function(d, key, newValue) {
 }
 
 /**
+ * create a function which ensures channels have
+ * unique fields
+ * @param {object} s Vega Lite specification
+ * @returns {function(array)} deduplication function
+ */
+const deduplicateByField = s => {
+	const fields = Object.entries(s.encoding).map(([_, definition]) => definition.field).filter(Boolean)
+	const unique = [...new Set(fields).values()]
+	return channels => {
+		const allowed = unique.reduce((accumulator, current) => {
+			accumulator[current] = true
+			return accumulator
+		}, {})
+		let result = []
+		channels
+			.forEach(channel => {
+				const field = s.encoding[channel].field
+				if (allowed[field]) {
+					result.push(channel)
+					allowed[field] = false
+				}
+			})
+		return result
+	}
+}
+
+/**
  * get the string used when there's no appropriate name for a series
  * @returns {string} series name
  */
@@ -225,6 +252,7 @@ export {
 	mark,
 	datum,
 	nested,
+	deduplicateByField,
 	missingSeries,
 	getUrl,
 	noop,

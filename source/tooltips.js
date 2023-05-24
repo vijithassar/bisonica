@@ -6,7 +6,7 @@ import { encodingChannelQuantitative, encodingField, encodingType, encodingValue
 import { feature } from './feature.js'
 import { formatAxis } from './format.js'
 import { memoize } from './memoize.js'
-import { noop } from './helpers.js'
+import { deduplicateByField, noop } from './helpers.js'
 import { parseScales } from './scales.js'
 import { transformDatum } from './transform.js'
 import { values } from './values.js'
@@ -40,7 +40,10 @@ const _includedChannels = s => {
 		excluded.push('color')
 	}
 
-	return Object.keys(s.encoding).filter(channel => excluded.includes(channel) === false)
+	const included = Object.keys(s.encoding)
+		.filter(channel => excluded.includes(channel) === false)
+
+	return deduplicateByField(s)(included)
 }
 
 /**
