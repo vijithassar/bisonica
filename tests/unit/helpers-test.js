@@ -28,4 +28,13 @@ module('unit > helpers', () => {
 		assert.ok(selection.select('g.test').size(), 1)
 		assert.ok(selection.select('circle').size(), 1)
 	})
+	test('deduplicates channels by field', assert => {
+		const s = {
+			encoding: {
+				'x': { field: 'a' },
+				'y': { field: 'a' }
+			}
+		}
+		assert.equal(helpers.deduplicateByField(s)(Object.keys(s.encoding)).length, 1)
+	})
 })

@@ -1,5 +1,5 @@
 import { extension } from './extensions.js'
-import { noop } from './helpers.js'
+import { deduplicateByField, noop } from './helpers.js'
 import { encodingField } from './encodings.js'
 import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
@@ -25,7 +25,7 @@ const setup = s => {
  * @param {object} s Vega Lite specification
  * @returns {string[]} array of column names
  */
-const channels = s => Object.keys(s.encoding)
+const channels = s => deduplicateByField(s)(Object.keys(s.encoding))
 
 /**
  * column encoding fields
