@@ -67,7 +67,7 @@ const nested = function(d, key, newValue) {
  * @returns {function(array)} deduplication function
  */
 const deduplicateByField = s => {
-	const fields = Object.entries(s.encoding).map(([_, definition]) => definition.field).filter(Boolean)
+	const fields = Object.entries(s.encoding).map(([_, definition]) => definition?.field).filter(Boolean)
 	const unique = [...new Set(fields).values()]
 	return channels => {
 		const allowed = unique.reduce((accumulator, current) => {
@@ -77,7 +77,7 @@ const deduplicateByField = s => {
 		let result = []
 		channels
 			.forEach(channel => {
-				const field = s.encoding[channel].field
+				const field = s.encoding[channel]?.field
 				if (allowed[field]) {
 					result.push(channel)
 					allowed[field] = false
