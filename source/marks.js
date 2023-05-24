@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
 
-import { BAR_WIDTH_MINIMUM } from './config.js'
 import { createAccessors } from './accessors.js'
 import {
 	createEncoders,
@@ -60,14 +59,17 @@ const stroke = 3
 const defaultSize = 30
 
 /**
- * bar chart bar width
+ * partition dimensions into categorical steps
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
- * @returns {number} bar width
+ * @returns {number} step size in pixels
  */
-const _barWidth = (s, dimensions) => {
+const _step = (s, dimensions) => {
 	const channel = encodingChannelCovariateCartesian(s)
-	const barWidthMaximum = dimensions[channel] / 3
+
+	const min = 2
+	const max = dimensions[channel] / 3
+
 	const stacked = markData(s)
 	const type = encodingType(s, channel)
 	const temporal = type === 'temporal'
@@ -94,15 +96,16 @@ const _barWidth = (s, dimensions) => {
 
 	const dynamic = (dimensions[channel] / count) * 0.5
 
-	if (dynamic > BAR_WIDTH_MINIMUM && dynamic < barWidthMaximum) {
+	if (dynamic > min && dynamic < max) {
 		return dynamic
-	} else if (dynamic < BAR_WIDTH_MINIMUM) {
-		return BAR_WIDTH_MINIMUM
-	} else if (dynamic > barWidthMaximum) {
-		return barWidthMaximum
+	} else if (dynamic < min) {
+		return min
+	} else if (dynamic > max) {
+		return max
 	}
 }
-const barWidth = memoize(_barWidth)
+const step = memoize(_step)
+const barWidth = step
 
 /**
  * retrieve the d3 curve factory function needed for the marks
@@ -197,7 +200,7 @@ const stackEncoders = (s, dimensions) => {
 	const lane = encoders[encodingChannelCovariateCartesian(s)]
 	const start = encoders.start
 	const length = encoders.length
-	const width = () => barWidth(s, dimensions)
+	const width = () => step(s, dimensions)
 
 	return {
 		x: vertical ? lane : start,
@@ -862,4 +865,4 @@ const _marks = (s, dimensions) => {
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))
 
-export { marks, maxRadius, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }
+export { marks, maxRadius, step, barWidth, layoutDirection, markData, markSelector, markInteractionSelector, category }

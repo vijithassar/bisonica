@@ -8,6 +8,7 @@ import { identity, isContinuous, isDiscrete, isTextChannel } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime, temporalBarDimensions } from './time.js'
 import { sorter } from './sort.js'
+import { step } from './marks.js'
 
 const defaultDimensions = { x: 0, y: 0 }
 
@@ -296,8 +297,8 @@ const range = (s, dimensions, _channel) => {
 		detail: () => {
 			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
 		},
-		yOffset: () => [dimensions.y, 0],
-		xOffset: () => [0, dimensions.x],
+		yOffset: () => [step(s, dimensions).y, 0],
+		xOffset: () => [0, step(s, dimensions).x],
 		size: () => {
 			let min = 0
 			let max
