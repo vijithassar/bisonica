@@ -146,6 +146,15 @@ module('unit > scales', hooks => {
 		assert.equal(negativeScales.domain()[0], -100, 'overridden by negative numbers')
 	})
 
+	test('reverses scale ranges', assert => {
+		const forward = specificationFixture('circular')
+		const forwardRange = parseScales(forward).color.range()
+		const reverse = specificationFixture('circular')
+		reverse.encoding.color.reverse = true
+		const reverseRange = parseScales(reverse).color.range()
+		assert.equal(forwardRange.join(' '), reverseRange.reverse().join(' '))
+	})
+
 	test('uses custom domains', assert => {
 		const s = {
 			data: {

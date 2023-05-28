@@ -339,6 +339,11 @@ const range = (s, dimensions, _channel) => {
 				range[1] = scale?.rangeMax
 			}
 		}
+
+		if (s.encoding[channel].reverse) {
+			range.reverse()
+		}
+
 		return range
 	} catch (error) {
 		error.message = `could not determine scale range for ${channel} channel - ${error.message}`
