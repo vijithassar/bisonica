@@ -27,4 +27,12 @@ module('unit > color', () => {
 			assert.notEqual(range(s), standard, variant)
 		})
 	})
+	test('supports named color schemes', assert => {
+		const normal = specificationFixture('circular')
+		const normalRange = parseScales(normal).color.range()
+		const accent = specificationFixture('circular')
+		accent.encoding.color.scheme = 'accent'
+		const accentRange = parseScales(accent).color.range()
+		assert.notEqual(normalRange.join(' '), accentRange.join(' '))
+	})
 })
