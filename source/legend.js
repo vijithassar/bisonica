@@ -38,7 +38,7 @@ function createLegendItem(config) {
  * @returns {string} legend title
  */
 const legendTitle = s => {
-	return s.encoding.color.legend?.title || encodingField(s, 'color')
+	return s.encoding.color.legend?.title || s.encoding.color.title || encodingField(s, 'color')
 }
 
 /**
