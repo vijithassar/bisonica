@@ -88,6 +88,34 @@ const alternate = colors => {
 }
 
 /**
+ * look up an array of colors for a named color scheme
+ * @param {number} _count number of colors
+ * @param {string|object} config color scheme name or configuration object
+ * @returns {string[]} color scheme array
+ */
+const scheme = (_count, config) => {
+	const object = typeof config === 'object'
+	const name = object ? config.name : config
+	const count = object ? config.count : _count
+	const key = name.slice(0, 1).toUpperCase() + name.slice(1)
+	const scheme = d3[`scheme${key}`]
+	if (!scheme) {
+		throw new Error(`unknown color scheme ${name}`)
+	}
+	const nested = Array.isArray([...scheme].pop())
+	if (!nested) {
+		return scheme.slice(0, count)
+	} else {
+		const index = d3.min([count, scheme.length])
+		const palette = scheme[index]
+		if (!palette) {
+			throw new Error(`color scheme ${name} does not provide a range with swatch count ${count}`)
+		}
+		return palette
+	}
+}
+
+/**
  * generate a categorical color scale
  * @param {object} s Vega Lite specification
  * @param {number} count number of colors
@@ -96,6 +124,8 @@ const colors = (s, count) => {
 	const variant = extension(s, 'color')?.variant
 	if (variant) {
 		return alternate(accessibleColors(count, variant))
+	} else if (s.encoding.color?.scheme) {
+		return scheme(count, s.encoding.color.scheme)
 	} else {
 		return alternate(standardColors(count))
 	}

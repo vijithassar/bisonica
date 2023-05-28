@@ -291,7 +291,11 @@ const range = (s, dimensions, _channel) => {
 		x: cartesian,
 		y: cartesian,
 		color: () => {
-			return s.encoding.color?.scale?.range || colors(s, categoryCount(s, channel))
+			if (s.encoding.color?.scale?.range) {
+				return s.encoding.color.scale.range
+			} else {
+				return colors(s, categoryCount(s, channel))
+			}
 		},
 		theta: () => [0, Math.PI * 2],
 		detail: () => {
