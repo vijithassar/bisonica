@@ -76,7 +76,7 @@ const ticks = (s, channel) => {
  */
 const axisTitle = (s, channel) => {
 	const encoding = s.encoding[channel]
-	return encoding.axis?.title || encoding.field
+	return encoding.axis?.title || encoding.title || encoding.field
 }
 
 /**
