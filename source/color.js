@@ -128,8 +128,8 @@ const colors = (s, count) => {
 	const variant = extension(s, 'color')?.variant
 	if (variant) {
 		return alternate(accessibleColors(count, variant))
-	} else if (s.encoding.color?.scheme) {
-		return scheme(count, s.encoding.color.scheme)
+	} else if (s.encoding.color?.scale?.scheme) {
+		return scheme(count, s.encoding.color.scale.scheme)
 	} else {
 		return alternate(standardColors(count))
 	}
