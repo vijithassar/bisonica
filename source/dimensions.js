@@ -1,6 +1,11 @@
 import { feature } from './feature.js'
 import { markData } from './marks.js'
 
+const channels = {
+	x: 'width',
+	y: 'height'
+}
+
 /**
  * determine rendering size for chart
  * @param {object} s Vega Lite specification
@@ -10,34 +15,20 @@ import { markData } from './marks.js'
  */
 const dimensions = (s, node, explicitDimensions) => {
 	let result = { x: null, y: null }
-	if (_panelDimensions) {
-		result.x = _panelDimensions.x
-		result.y = _panelDimensions.y
-	} else {
-		const marks = feature(s).isBar() ? markData(s)[0].length : 1
-		if (s.width) {
-			if (s.width === 'container') {
-				result.x = node.getBoundingClientRect().width
-			} else if (s.width.step) {
-				result.x = s.width.step * marks
-			} else if (typeof s.width === 'number') {
-				result.x = s.width
-			} else if (_panelDimensions.x) {
-				result.x = _panelDimensions.x
+	const marks = feature(s).isBar() ? markData(s)[0].length : 1
+	Object.entries(channels).forEach(([channel, dimension]) => {
+		if (explicitDimensions?.[channel]) {
+			result[channel] = explicitDimensions[channel]
+		} else if (s[dimension]) {
+			if (s[dimension] === 'container') {
+				result[channel] = node.getBoundingClientRect()[dimension]
+			} else if (s[dimension].step) {
+				result[channel] = s[dimension].step * marks
+			} else if (typeof s[dimension] === 'number') {
+				result[channel] = s[dimension]
 			}
 		}
-		if (s.height) {
-			if (s.height === 'container') {
-				result.y = node.getBoundingClientRect().height
-			} else if (s.height.step) {
-				result.y = s.height.step * marks
-			} else if (typeof s.height === 'number') {
-				result.y = s.height
-			} else if (_panelDimensions.y) {
-				result.y = _panelDimensions.y
-			}
-		}
-	}
+	})
 	return result
 }
 
