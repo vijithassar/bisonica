@@ -31,7 +31,7 @@ module('unit > color', () => {
 		const normal = specificationFixture('circular')
 		const normalRange = parseScales(normal).color.range()
 		const accent = specificationFixture('circular')
-		accent.encoding.color.scheme = 'accent'
+		accent.encoding.color.scale = { scheme: 'accent' }
 		const accentRange = parseScales(accent).color.range()
 		assert.notEqual(normalRange.join(' '), accentRange.join(' '))
 	})
