@@ -1,4 +1,5 @@
 import { feature } from './feature.js'
+import { isContinuous } from './helpers.js'
 import { markData } from './marks.js'
 
 const channels = {
@@ -26,6 +27,15 @@ const dimensions = (s, node, explicitDimensions) => {
 				result[channel] = s[dimension].step * marks
 			} else if (typeof s[dimension] === 'number') {
 				result[channel] = s[dimension]
+			}
+		}
+		if (feature(s).isCartesian() || feature(s).isLinear()) {
+			if (!result[channel]) {
+				if (isContinuous(s, channel)) {
+					result[channel] = 200
+				} else {
+					result[channel] = marks * 20
+				}
 			}
 		}
 	})
