@@ -5,10 +5,10 @@ import { markData } from './marks.js'
  * determine rendering size for chart
  * @param {object} s Vega Lite specification
  * @param {HTMLElement} node DOM node
- * @param {object} [_panelDimensions] chart dimensions
+ * @param {object} [explicitDimensions] chart dimensions
  * @returns {object} chart dimensions
  */
-const dimensions = (s, node, _panelDimensions) => {
+const dimensions = (s, node, explicitDimensions) => {
 	let result = { x: null, y: null }
 	if (_panelDimensions) {
 		result.x = _panelDimensions.x
