@@ -7,7 +7,7 @@ import { keyboard } from './keyboard.js'
 import { layerMarks } from './views.js'
 import { legend } from './legend.js'
 import { margin, position } from './position.js'
-import { markData, marks } from './marks.js'
+import { marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
@@ -15,6 +15,7 @@ import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
 import { copyMethods } from './helpers.js'
 import { download } from './download.js'
+import { dimensions } from './dimensions.js'
 
 /**
  * generate chart rendering function based on
@@ -32,35 +33,7 @@ const render = (s, _panelDimensions) => {
 		try {
 			selection.html('')
 
-			let panelDimensions = { x: null, y: null }
-			if (_panelDimensions) {
-				panelDimensions.x = _panelDimensions.x
-				panelDimensions.y = _panelDimensions.y
-			} else {
-				const marks = feature(s).isBar() ? markData(s)[0].length : 1
-				if (s.width) {
-					if (s.width === 'container') {
-						panelDimensions.x = selection.node().getBoundingClientRect().width
-					} else if (s.width.step) {
-						panelDimensions.x = s.width.step * marks
-					} else if (typeof s.width === 'number') {
-						panelDimensions.x = s.width
-					} else if (_panelDimensions.x) {
-						panelDimensions.x = _panelDimensions.x
-					}
-				}
-				if (s.height) {
-					if (s.height === 'container') {
-						panelDimensions.y = selection.node().getBoundingClientRect().height
-					} else if (s.height.step) {
-						panelDimensions.y = s.height.step * marks
-					} else if (typeof s.height === 'number') {
-						panelDimensions.y = s.height
-					} else if (_panelDimensions.y) {
-						panelDimensions.y = _panelDimensions.y
-					}
-				}
-			}
+			let panelDimensions = dimensions(s, selection.node(), _panelDimensions)
 
 			selection.call(setupNode(s, panelDimensions))
 
@@ -94,12 +67,12 @@ const render = (s, _panelDimensions) => {
 			const { top, right, bottom, left } = margin(s, panelDimensions)
 
 			// subtract rendered height of legend from dimensions
-			const dimensions = {
+			const graphicDimensions = {
 				x: panelDimensions.x - left - right,
 				y: imageHeight - top - bottom
 			}
 
-			if (dimensions.y > 0) {
+			if (graphicDimensions.y > 0) {
 				const wrapper = chartNode
 					.select('.graphic')
 					.select('svg')
@@ -107,8 +80,8 @@ const render = (s, _panelDimensions) => {
 					.select(`g.${WRAPPER_CLASS}`)
 
 				wrapper
-					.call(axes(s, dimensions))
-					.call((s.layer ? layerMarks : marks)(s, dimensions))
+					.call(axes(s, graphicDimensions))
+					.call((s.layer ? layerMarks : marks)(s, graphicDimensions))
 					.call(keyboard(s))
 					.call(interactions(s))
 				selection.call(testAttributes)
