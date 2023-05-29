@@ -15,6 +15,7 @@ import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
 import { copyMethods } from './helpers.js'
 import { download } from './download.js'
+import { dimensions } from './dimensions.js'
 
 /**
  * generate chart rendering function based on
@@ -32,15 +33,7 @@ const render = (s, _panelDimensions) => {
 		try {
 			selection.html('')
 
-			let panelDimensions
-			if (_panelDimensions) {
-				panelDimensions = _panelDimensions
-			} else if (s.height && s.width) {
-				panelDimensions = {
-					x: s.width === 'container' ? selection.node().getBoundingClientRect().width : s.width,
-					y: s.height === 'container' ? selection.node().getBoundingClientRect().height : s.height
-				}
-			}
+			let panelDimensions = dimensions(s, selection.node(), _panelDimensions)
 
 			selection.call(setupNode(s, panelDimensions))
 
@@ -74,12 +67,12 @@ const render = (s, _panelDimensions) => {
 			const { top, right, bottom, left } = margin(s, panelDimensions)
 
 			// subtract rendered height of legend from dimensions
-			const dimensions = {
+			const graphicDimensions = {
 				x: panelDimensions.x - left - right,
 				y: imageHeight - top - bottom
 			}
 
-			if (dimensions.y > 0) {
+			if (graphicDimensions.y > 0) {
 				const wrapper = chartNode
 					.select('.graphic')
 					.select('svg')
@@ -87,8 +80,8 @@ const render = (s, _panelDimensions) => {
 					.select(`g.${WRAPPER_CLASS}`)
 
 				wrapper
-					.call(axes(s, dimensions))
-					.call((s.layer ? layerMarks : marks)(s, dimensions))
+					.call(axes(s, graphicDimensions))
+					.call((s.layer ? layerMarks : marks)(s, graphicDimensions))
 					.call(keyboard(s))
 					.call(interactions(s))
 				selection.call(testAttributes)
