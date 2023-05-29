@@ -98,9 +98,13 @@ const scheme = (_count, config) => {
 	const name = object ? config.name : config
 	const count = object ? config.count : _count
 	const key = name.slice(0, 1).toUpperCase() + name.slice(1)
-	const scheme = d3[`scheme${key}`]
+	const scheme = d3[`scheme${key}`] || d3[`interpolate${key}`]
 	if (!scheme) {
 		throw new Error(`unknown color scheme ${name}`)
+	}
+	const callable = typeof scheme === 'function'
+	if (callable) {
+		return Array.from({ length: count }).map((_, index) => scheme(1 / count * index))
 	}
 	const nested = Array.isArray([...scheme].pop())
 	if (!nested) {
