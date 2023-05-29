@@ -7,7 +7,7 @@ import { keyboard } from './keyboard.js'
 import { layerMarks } from './views.js'
 import { legend } from './legend.js'
 import { margin, position } from './position.js'
-import { marks } from './marks.js'
+import { markData, marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
 import { table, tableOptions } from './table.js'
@@ -32,13 +32,33 @@ const render = (s, _panelDimensions) => {
 		try {
 			selection.html('')
 
-			let panelDimensions
+			let panelDimensions = { x: null, y: null }
 			if (_panelDimensions) {
-				panelDimensions = _panelDimensions
-			} else if (s.height && s.width) {
-				panelDimensions = {
-					x: s.width === 'container' ? selection.node().getBoundingClientRect().width : s.width,
-					y: s.height === 'container' ? selection.node().getBoundingClientRect().height : s.height
+				panelDimensions.x = _panelDimensions.x
+				panelDimensions.y = _panelDimensions.y
+			} else {
+				const marks = feature(s).isBar() ? markData(s)[0].length : 1
+				if (s.width) {
+					if (s.width === 'container') {
+						panelDimensions.x = selection.node().getBoundingClientRect().width
+					} else if (s.width.step) {
+						panelDimensions.x = s.width.step * marks
+					} else if (typeof s.width === 'number') {
+						panelDimensions.x = s.width
+					} else if (_panelDimensions.x) {
+						panelDimensions.x = _panelDimensions.x
+					}
+				}
+				if (s.height) {
+					if (s.height === 'container') {
+						panelDimensions.y = selection.node().getBoundingClientRect().height
+					} else if (s.height.step) {
+						panelDimensions.y = s.height.step * marks
+					} else if (typeof s.height === 'number') {
+						panelDimensions.y = s.height
+					} else if (_panelDimensions.y) {
+						panelDimensions.y = _panelDimensions.y
+					}
 				}
 			}
 

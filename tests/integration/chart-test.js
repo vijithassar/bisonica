@@ -25,4 +25,14 @@ module('unit > chart', () => {
 		const marks = selection.selectAll(testSelector('mark'))
 		assert.equal(marks.size(), s.data.values.length)
 	})
+	test('creates a chart function with step dimension in specification', assert => {
+		const s = specificationFixture('categoricalBar')
+		s.width = { step: 50 }
+		s.height = dimensions.y
+		const selection = d3.create('svg:svg').append('svg:g')
+		const renderer = chart(s)
+		selection.call(renderer)
+		const marks = selection.selectAll(testSelector('mark'))
+		assert.equal(marks.size(), s.data.values.length)
+	})
 })
