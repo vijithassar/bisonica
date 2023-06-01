@@ -62,7 +62,7 @@ const _feature = s => {
 		hasEncodingColor: s => s.encoding?.color,
 		hasRadius: s => s.encoding?.radius,
 		isStacked: s => {
-			return mark(s) === 'bar' &&
+			return ['bar', 'area'].includes(mark(s)) &&
 				s.encoding?.y?.stack !== null &&
 				s.encoding?.y?.stack !== false &&
 				s.encoding?.x?.stack !== null &&
