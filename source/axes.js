@@ -220,7 +220,9 @@ const axisTitleX = (s, dimensions) => {
 			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
 
 			xTitle
-				.attr('x', dimensions.x * 0.5 - bar * 0.5 + margin(s, dimensions).left)
+				.attr('x', () => {
+					return (dimensions.x - margin(s, dimensions).left + bar) * 0.5
+				})
 				.attr('y', () => {
 					const axisHeight = selection.node().getBBox().height * 2
 					const tickHeight = tickMargin(s).bottom
