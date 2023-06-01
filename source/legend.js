@@ -78,19 +78,51 @@ const legendStyles = {
 const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
 /**
- * color scale legend
+ * legend item configuration
+ * @param {object} s Vega Lite specification
+ * @param {number} index item in legend
+ * @returns {object} object describing the legend item
+ */
+const itemConfig = (s, index) => {
+	const scales = parseScales(s)
+	const label = scales.color.domain()[index]
+	const color = scales.color.range()[index]
+	const itemConfig = {
+		group: label,
+		color
+	}
+	return itemConfig
+}
+
+/**
+ * items to plot in swatch legend
+ * @param {object} s Vega Lite specification
+ * @returns {string[]} domain for legend
+ */
+const swatches = s => {
+	return parseScales(s).color.domain()
+		.filter(item => {
+			return s.encoding.color?.legend?.values ? s.encoding.color.legend.values.includes(item) : true
+		})
+}
+
+/**
+ * discrete swatch legend
  * @param {object} _s Vega Lite specification
  * @returns {function(object)} renderer
  */
-const color = _s => {
+const swatch = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
 
 	const renderer = selection => {
 		try {
-			const { color } = parseScales(s)
 			const dispatcher = dispatchers.get(selection.node())
 
-			if (s.encoding.color.legend?.aria !== false) {
+			const channels = [
+				'color'
+			]
+
+			if (channels.every(channel => s.encoding[channel].legend?.aria !== false)) {
 				selection.attr('aria-description', legendDescription(s))
 			} else {
 				selection.attr('aria-hidden', true)
@@ -108,18 +140,7 @@ const color = _s => {
 
 			let target = main
 
-			const items = color.domain()
-				.filter(item => {
-					return s.encoding.color?.legend?.values ? s.encoding.color.legend.values.includes(item) : true
-				})
-				.map((label, index) => {
-					const itemConfig = {
-						group: label,
-						color: color.range()[index]
-					}
-
-					return createLegendItem(itemConfig)
-				})
+			const items = swatches(s).map((_, index) => createLegendItem(itemConfig(s, index)))
 
 			target.node().append(...items)
 
@@ -181,7 +202,7 @@ const color = _s => {
  */
 const legend = s => {
 	if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
-		return color(s)
+		return swatch(s)
 	} else {
 		return noop
 	}
