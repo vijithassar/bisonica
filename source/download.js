@@ -15,25 +15,23 @@ const download = s => {
 	if (!feature(s).hasDownload()) {
 		return noop
 	}
-	const handler = event => {
-		const format = event.target.innerText
-		let file
-		if (format === 'csv') {
-			file = new Blob([csvFormat(values(s))], { type: 'text/csv' })
-		} else if (format === 'json') {
-			file = new Blob([JSON.stringify(s)], { type: 'text/json' })
-		}
-		window.open(URL.createObjectURL(file))
-	}
 	return selection => {
 		selection.append('h3').text('download')
 		formats.forEach(format => {
-			if (extension(s, 'download')?.[format] !== false) {
-				selection
-					.append('a')
-					.text(format)
-					.on('click', handler)
+			if (extension(s, 'download')?.[format] === false || !values(s)) {
+				return
 			}
+			let file
+			if (format === 'csv') {
+				file = new Blob([csvFormat(values(s))], { type: 'text/csv' })
+			} else if (format === 'json') {
+				file = new Blob([JSON.stringify(s)], { type: 'text/json' })
+			}
+			const url = URL.createObjectURL(file)
+			selection
+				.append('a')
+				.text(format)
+				.attr('href', url)
 		})
 	}
 }

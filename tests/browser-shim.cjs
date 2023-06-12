@@ -15,6 +15,16 @@ const svg = () => {
     getBBox();
 };
 
+const url = () => {
+    let counter = 0
+    if (!window.URL?.createObjectURL) {
+        window.URL.createObjectURL = (content) => {
+            counter++
+            return `https://test/${counter}`
+        }
+    }
+}
+
 const context = () => {
     const pixelsPerCharacter = 5;
     window.HTMLCanvasElement.prototype.getContext = () => {
@@ -39,3 +49,4 @@ const audio = () => {
 svg();
 canvas();
 audio();
+url();
