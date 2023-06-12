@@ -18,7 +18,7 @@ const svg = () => {
 const url = () => {
     let counter = 0
     if (!window.URL?.createObjectURL) {
-        window.URL.createObjectURL = (content) => {
+        window.URL.createObjectURL = () => {
             counter++
             return `https://test/${counter}`
         }
