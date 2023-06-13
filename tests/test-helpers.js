@@ -33,22 +33,6 @@ const marksWithUrls = element => {
 	].filter(mark => select(mark).datum().url)
 }
 
-const tooltipContentUpdate = page => {
-	return new Promise(resolve => {
-		const observer = new MutationObserver(mutations => {
-			const toolTipText = ` ${mutations.pop().target.innerText}`.trim().replace(/\s*\n+\s*/g, '\n')
-
-			observer.disconnect()
-			resolve(toolTipText)
-		})
-
-		observer.observe(page.querySelector('[data-falcon-portal="tooltip"]'), {
-			childList: true,
-			subtree: true
-		})
-	})
-}
-
 const nodesHavePositiveHeights = nodes =>
 	nodes.every(node => {
 		return Number(node.getAttribute('height')) >= 0
