@@ -27,7 +27,7 @@ const setupNode = (s, dimensions) => {
 		}
 
 		if (feature(s).hasDownload()) {
-			chartNode.append('div').classed('download', true)
+			chartNode.append('div').classed('menu', true)
 		}
 
 		const svg = graphic.append('svg')

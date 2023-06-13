@@ -14,8 +14,8 @@ import { table, tableOptions } from './table.js'
 import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
 import { copyMethods } from './helpers.js'
-import { download } from './download.js'
 import { dimensions } from './dimensions.js'
+import { menu } from './menu.js'
 
 /**
  * generate chart rendering function based on
@@ -49,9 +49,7 @@ const render = (s, _panelDimensions) => {
 				chartNode.select('.table').call(tableRenderer(s, tableOptions(s)))
 			}
 
-			if (feature(s).hasDownload()) {
-				chartNode.select('.download').call(download(s))
-			}
+			chartNode.call(menu(s))
 
 			// render legend
 			if (feature(s).hasLegend()) {
