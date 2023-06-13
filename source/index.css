@@ -113,16 +113,22 @@ path.mark {
   color: var(--highlight);
 }
 
-.download h3,
-.download a {
+.menu a {
   display: inline;
   font-size: small;
   font-weight: normal;
   padding-right: 1em;
+  cursor: pointer;
 }
 
-.download a {
-  cursor: pointer;
+.menu ul {
+  padding: 0;
+}
+
+.menu li {
+  list-style: none;
+  display: inline;
+  margin-right: 1rem;
 }
 
 .legend ul.items-more:hover h3 {
