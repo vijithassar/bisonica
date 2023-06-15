@@ -1,17 +1,29 @@
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
+import { key } from './helpers.js'
 import { download } from './download.js'
+
+/**
+ * create a menu configuration object for a data download
+ * @param {object} s Vega Lite specification
+ * @param {'csv'|'json'} format data format
+ * @returns {object} menu item configuration object
+ */
+const item = (s, format) => {
+	return { text: format, href: download(s, format) }
+}
 
 /**
  * determine menu content
  * @param {object} s Vega Lite specification
- * @returns {string[]} menu items
+ * @returns {object[]} menu item configuration objects
  */
 const items = s => {
 	const download = feature(s).hasDownload() && extension(s, 'download')
 	return [
-		download?.csv !== false ? 'csv' : null,
-		download?.json !== false ? 'json' : null
+		download?.csv !== false ? item(s, 'csv') : null,
+		download?.json !== false ? item(s, 'json') : null,
+		...(extension(s, 'menu')?.items ? extension(s, 'menu')?.items : [])
 	].filter(Boolean)
 }
 
@@ -29,11 +41,11 @@ const menu = s => {
 			.data(items(s))
 			.enter()
 			.append('li')
-			.attr('data-menu', item => item)
+			.attr('data-menu', item => key(item.text))
 			.classed('item', true)
 			.append('a')
-			.text(item => item)
-			.attr('href', item => download(s, item))
+			.text(item => item.text)
+			.attr('href', item => item.href)
 	}
 }
 
