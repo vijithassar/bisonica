@@ -30,6 +30,7 @@ const menu = s => {
 			.enter()
 			.append('li')
 			.attr('data-menu', item => item)
+			.classed('item', true)
 			.append('a')
 			.text(item => item)
 			.attr('href', item => download(s, item))
