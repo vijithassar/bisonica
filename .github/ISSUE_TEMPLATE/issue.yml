@@ -1,0 +1,28 @@
+name: Issue
+description: Report a new issue.
+assignees:
+  - vijithassar
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain the problem.
+  - type: textarea
+    id: specification
+    attributes:
+      label: Vega Lite specification
+      description: Include a JSON object that can be used to replicate the problem.
+      render: json
+  - type: input
+    id: documentation
+    attributes:
+      label: Documentation
+      description: Link to relevant Vega Lite documentation.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Existing issues
+      options:
+        - label: I have searched existing issues and this has not yet been reported.
+          required: true
