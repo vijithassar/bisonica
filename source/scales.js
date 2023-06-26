@@ -151,6 +151,16 @@ const zero = (s, channel) => {
 }
 
 /**
+ * baseline for an axis
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel visual encoding
+ * @returns {number[]}
+ */
+const baseline = (s, channel) => {
+	return d3.min([0, ...values(s).map(encodingValue(s, channel))])
+}
+
+/**
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
@@ -271,7 +281,7 @@ const cartesianRange = (s, channel) => {
 
 			result = positions
 		} else {
-			const start = d3.min([0, ...values(s).map(encodingValue(s, channel))])
+			const start = baseline(s, channel)
 			const end = feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel]
 			result = [start, end]
 		}
