@@ -254,16 +254,13 @@ const domain = (s, channel) => {
 }
 
 /**
- * compute scale range
+ * compute cartesian range
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
- * @param {string} _channel visual encoding
- * @returns {number[]} range
+ * @param {'x'|'y'} channel encoding channel
+ * @returns {function(object)} Cartsian range
  */
-const range = (s, dimensions, _channel) => {
-	const channel = channelRoot(_channel)
-	const scale = s.encoding[channel].scale
-	const cartesian = () => {
+const cartesianRange = (s, channel) => {
+	return dimensions => {
 		let result
 
 		if (isDiscrete(s, channel) && !['scaleBand', 'scalePoint'].includes(scaleMethod(s, channel))) {
@@ -285,10 +282,22 @@ const range = (s, dimensions, _channel) => {
 
 		return result
 	}
+}
+
+/**
+ * compute scale range
+ * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
+ * @param {string} _channel visual encoding
+ * @returns {number[]} range
+ */
+const range = (s, dimensions, _channel) => {
+	const channel = channelRoot(_channel)
+	const scale = s.encoding[channel].scale
 
 	const ranges = {
-		x: cartesian,
-		y: cartesian,
+		x: () => cartesianRange(s, 'x')(dimensions),
+		y: () => cartesianRange(s, 'y')(dimensions),
 		color: () => {
 			if (s.encoding.color?.scale?.range) {
 				return s.encoding.color.scale.range
