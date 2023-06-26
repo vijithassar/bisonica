@@ -428,6 +428,7 @@ const detectScaleExtensions = s => {
 
 	if (feature(s).isBar() || feature(s).isArea()) {
 		extensions.push('length')
+		extensions.push('start')
 	}
 
 	if (feature(s).isText() && !s.mark.text && s.encoding.text.field) {
@@ -450,9 +451,8 @@ const extendScales = (s, dimensions, scales) => {
 	const extensions = detectScaleExtensions(s)
 
 	if (extensions.includes('length')) {
-		const channel = encodingChannelQuantitative(s)
-
 		extendedScales.length = d => {
+			const channel = encodingChannelQuantitative(s)
 			if (extendedScales[channel].domain().every(endpoint => endpoint === 0)) {
 				return 0
 			}
@@ -463,8 +463,11 @@ const extendScales = (s, dimensions, scales) => {
 				return extendedScales[channel](d)
 			}
 		}
+	}
 
+	if (extensions.includes('start')) {
 		extendedScales.start = d => {
+			const channel = encodingChannelQuantitative(s)
 			if (feature(s).isStacked()) {
 				if (channel === 'y') {
 					return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0])
