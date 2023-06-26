@@ -271,7 +271,7 @@ const cartesianRange = (s, channel) => {
 
 			result = positions
 		} else {
-			const start = 0
+			const start = d3.min([0, ...values(s).map(encodingValue(s, channel))])
 			const end = feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel]
 			result = [start, end]
 		}
