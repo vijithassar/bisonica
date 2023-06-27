@@ -4,7 +4,6 @@
  * @see {@link module:state}
  */
 
-
 import * as d3 from 'd3'
 
 import { category, markInteractionSelector } from './marks.js'
