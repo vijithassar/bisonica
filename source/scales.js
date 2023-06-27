@@ -469,11 +469,21 @@ const extendScales = (s, dimensions, scales) => {
 				return 0
 			}
 
+			const positive = d > 0
+			const value = extendedScales[channel](d)
+			const zero = extendedScales[channel](0)
 			if (channel === 'y') {
-				const start = d > 0 ? extendedScales[channel](0) : dimensions[channel]
-				return start - extendedScales[channel](d)
+				if (positive) {
+					return zero - value
+				} else {
+					return Math.abs(value) - zero
+				}
 			} else if (channel === 'x') {
-				return extendedScales[channel](d)
+				if (positive) {
+					return value - zero
+				} else {
+					return Math.abs(value)
+				}
 			}
 		}
 	}
@@ -488,13 +498,14 @@ const extendScales = (s, dimensions, scales) => {
 					return extendedScales[channel](d[0])
 				}
 			} else {
+				const length = extendedScales.length(d[1] - d[0])
 				if (channel === 'y') {
-					const length = extendedScales.length(d[1] - d[0])
 					const flip = d[1] > d[0] ? 1 : 0
 					const offset = length * flip
 					return extendedScales.y(0) - offset
 				} else if (channel === 'x') {
-					return extendedScales.x(0)
+					const offset = d[1] > d[0] ? 0 : length
+					return extendedScales.x(0) - offset
 				}
 			}
 		}
