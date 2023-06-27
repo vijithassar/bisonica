@@ -1,4 +1,7 @@
-/** @module expression */
+/**
+ * evaluate string expressions
+ * @module expression
+ */
 
 const datumPrefix = 'datum.'
 

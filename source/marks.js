@@ -1,4 +1,7 @@
-/** @module marks */
+/**
+ * render marks
+ * @module marks
+ */
 
 import * as d3 from 'd3'
 

@@ -1,4 +1,8 @@
-/** @module feature */
+/**
+ * collect conditional tests based on object lookups into reusable functions
+ * @module feature
+ */
+
 
 import { encodingType, encodingValue } from './encodings.js'
 import { layerTestRecursive } from './views.js'

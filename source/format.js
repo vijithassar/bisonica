@@ -1,4 +1,7 @@
-/** @module format */
+/**
+ * format numbers and timestamps
+ * @module format
+ */
 
 import { memoize } from './memoize.js'
 import { identity, noop } from './helpers.js'

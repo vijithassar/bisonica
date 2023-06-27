@@ -1,4 +1,7 @@
-/** @module lifecycle */
+/**
+ * add structure to initialization
+ * @module lifecycle
+ */
 
 import { WRAPPER_CLASS } from './config.js'
 import { feature } from './feature.js'

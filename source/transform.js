@@ -1,4 +1,7 @@
-/** @module transform */
+/**
+ * modify data before rendering
+ * @module transform
+ */
 
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'

@@ -1,4 +1,7 @@
-/** @module legend */
+/**
+ * legend rendering
+ * @module legend
+ */
 
 import * as d3 from 'd3'
 

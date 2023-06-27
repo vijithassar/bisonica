@@ -1,4 +1,7 @@
-/** @module download */
+/**
+ * convert values into files containing raw data which the user can then download
+ * @module download
+ */
 
 import { extension } from './extensions.js'
 import { values } from './values.js'

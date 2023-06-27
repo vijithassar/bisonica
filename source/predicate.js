@@ -1,4 +1,7 @@
-/** @module predicate */
+/**
+ * generate functions which test features of the data points
+ * @module predicate
+ */
 
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'

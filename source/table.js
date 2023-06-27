@@ -1,4 +1,7 @@
-/** @module table */
+/**
+ * render a table of data values to accompany the graphic
+ * @module table
+ */
 
 import { extension } from './extensions.js'
 import { deduplicateByField, noop } from './helpers.js'

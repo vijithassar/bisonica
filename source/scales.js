@@ -1,4 +1,7 @@
-/** @module scales */
+/**
+ * convert data values to visual attributes
+ * @module scales
+ */
 
 import * as d3 from 'd3'
 import { data, stackOffset, sumByCovariates } from './data.js'

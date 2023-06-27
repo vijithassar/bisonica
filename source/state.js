@@ -1,4 +1,7 @@
-/** @module state */
+/**
+ * store the current state of a chart
+ * @module state
+ */
 
 /**
  * store current keyboard navigation position in a closure

@@ -1,4 +1,7 @@
-/** @module interactions */
+/**
+ * interactive behaviors such as mouseovers and links
+ * @module interactions
+ */
 
 import * as d3 from 'd3'
 

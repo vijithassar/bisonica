@@ -1,4 +1,7 @@
-/** @module values */
+/**
+ * fetch, cache, and transform raw data
+ * @module values
+ */
 
 import * as d3 from 'd3'
 import { cached } from './fetch.js'

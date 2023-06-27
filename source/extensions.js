@@ -1,4 +1,7 @@
-/** @module extensions */
+/**
+ * organize extended metadata stored under the usermeta property
+ * @module extensions
+ */
 
 /**
  * retrieve information from usermeta

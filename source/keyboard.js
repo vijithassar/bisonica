@@ -1,4 +1,8 @@
-/** @module keyboard */
+/**
+ * keyboard navigation
+ * @module keyboard
+ */
+
 
 import * as d3 from 'd3'
 

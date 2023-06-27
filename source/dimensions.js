@@ -1,4 +1,7 @@
-/** @module dimensions */
+/**
+ * determine rendering dimensions for a chart
+ * @module dimensions
+ */
 
 import { feature } from './feature.js'
 import { isContinuous } from './helpers.js'

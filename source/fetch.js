@@ -1,4 +1,7 @@
-/** @module fetch */
+/**
+ * retrieve data from remote servers
+ * @module fetch
+ */
 
 import * as d3 from 'd3'
 

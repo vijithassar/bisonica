@@ -1,4 +1,7 @@
-/** @module views */
+/**
+ * render multiple charts in tandem
+ * @module views
+ */
 
 import * as d3 from 'd3'
 import { feature } from './feature.js'

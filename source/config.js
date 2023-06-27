@@ -1,4 +1,7 @@
-/** @module config */
+/**
+ * static configuration values
+ * @module config
+ */
 
 const WRAPPER_CLASS = 'wrapper'
 

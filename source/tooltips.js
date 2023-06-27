@@ -1,4 +1,7 @@
-/** @module tooltips */
+/**
+ * collect data to be rendered into a tooltip
+ * @module tooltips
+ */
 
 import * as d3 from 'd3'
 

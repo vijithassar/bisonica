@@ -1,4 +1,7 @@
-/** @module axes */
+/**
+ * render x and y axes for a chart
+ * @module axes
+ */
 
 import * as d3 from 'd3'
 

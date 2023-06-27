@@ -1,4 +1,7 @@
-/** @module color */
+/**
+ * generate color palettes
+ * @module color
+ */
 
 import * as d3 from 'd3'
 import { extension } from './extensions.js'

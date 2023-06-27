@@ -1,4 +1,7 @@
-/** @module helpers */
+/**
+ * general utilities
+ * @module helpers
+ */
 
 import * as d3 from 'd3'
 

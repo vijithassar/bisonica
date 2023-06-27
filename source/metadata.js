@@ -1,4 +1,7 @@
-/** @module metadata */
+/**
+ * transfer additional properties from raw input data to aggregated data
+ * @module metadata
+ */
 
 import { encodingChannelCovariateCartesian, encodingField } from './encodings.js'
 import { feature } from './feature.js'

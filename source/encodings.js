@@ -1,4 +1,7 @@
-/** @module encodings */
+/**
+ * test properties of the encoding descriptions and compose accessor functions with the corresponding scale functions
+ * @module encodings
+ */
 
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'

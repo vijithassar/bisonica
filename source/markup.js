@@ -1,4 +1,7 @@
-/** @module markup */
+/**
+ * generate additional data attributes to be used in tests for DOM nodes
+ * @module markup
+ */
 
 const selectors = [
 	'.graphic',

@@ -1,4 +1,7 @@
-/** @module memoize */
+/**
+ * cache function return values
+ * @module memoize
+ */
 
 const references = {
 	count: 0,
