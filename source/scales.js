@@ -1,3 +1,11 @@
+/**
+ * convert data values to visual attributes
+ * @module scales
+ * @see {@link module:accessors}
+ * @see {@link module:encodings}
+ * @see {@link https://vega.github.io/vega-lite/docs/scale.html|vega-lite:scale}
+ */
+
 import * as d3 from 'd3'
 import { data, stackOffset, sumByCovariates } from './data.js'
 import { values } from './values.js'

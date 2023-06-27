@@ -1,3 +1,10 @@
+/**
+ * sort data before rendering
+ * @module sort
+ * @see {@link module:marks}
+ * @see {@link https://vega.github.io/vega-lite/docs/sort.html|vega-lite:sort}
+ */
+
 import { ascending, descending, min, sum } from 'd3'
 import { createAccessors } from './accessors.js'
 import { encodingField, encodingValue } from './encodings.js'

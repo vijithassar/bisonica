@@ -1,3 +1,9 @@
+/**
+ * render multiple charts in tandem
+ * @module views
+ * @see {@link https://vega.github.io/vega-lite/docs/composition.html|vega-lite:composition}
+ */
+
 import * as d3 from 'd3'
 import { feature } from './feature.js'
 

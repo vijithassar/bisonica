@@ -1,3 +1,10 @@
+/**
+ * collect data to be rendered into a tooltip
+ * @module tooltips
+ * @see {@link module:interactions}
+ * @see {@link https://vega.github.io/vega-lite/docs/tooltip.html|vega-lite:tooltip}
+ */
+
 import * as d3 from 'd3'
 
 import { category } from './marks.js'

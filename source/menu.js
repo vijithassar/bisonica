@@ -1,3 +1,9 @@
+/**
+ * render a menu alongside the chart content
+ * @module menu
+ * @see {@link module:download}
+ */
+
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { key } from './helpers.js'

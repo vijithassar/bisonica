@@ -1,3 +1,8 @@
+/**
+ * generate written descriptions of data
+ * @module descriptions
+ */
+
 import * as d3 from 'd3'
 import { datum, identity, isContinuous } from './helpers.js'
 import {

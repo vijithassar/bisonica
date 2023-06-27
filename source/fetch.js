@@ -1,3 +1,10 @@
+/**
+ * retrieve data from remote servers
+ * @module fetch
+ * @see {@link module:data}
+ * @see {@link https://vega.github.io/vega-lite/docs/data.html|vega-lite:data}
+ */
+
 import * as d3 from 'd3'
 
 const cache = new WeakMap()

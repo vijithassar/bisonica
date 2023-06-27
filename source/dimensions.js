@@ -1,3 +1,9 @@
+/**
+ * determine rendering dimensions for a chart
+ * @module dimensions
+ * @see {@link module:chart}
+ */
+
 import { feature } from './feature.js'
 import { isContinuous } from './helpers.js'
 import { markData } from './marks.js'

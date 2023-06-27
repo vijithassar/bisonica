@@ -1,4 +1,10 @@
 /**
+ * organize extended metadata stored under the usermeta property
+ * @module extensions
+ * @see {@link https://vega.github.io/vega-lite/docs/spec.html|vega-lite:spec}
+ */
+
+/**
  * retrieve information from usermeta
  * @param {object} s Vega Lite specification
  * @param {string} key usermeta key

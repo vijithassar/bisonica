@@ -1,3 +1,8 @@
+/**
+ * format numbers and timestamps
+ * @module format
+ */
+
 import { memoize } from './memoize.js'
 import { identity, noop } from './helpers.js'
 import { encodingType } from './encodings.js'
@@ -43,7 +48,7 @@ const numberFormat = format => {
 /**
  * create a formatting function
  * @param {object} config encoding or axis definition object
- * @returns {function(string|number|Date)} formatting function
+ * @returns {function} formatting function
  */
 const _format = config => {
 	if (!config || (!config.format && !config.axis?.format)) {

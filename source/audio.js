@@ -1,3 +1,8 @@
+/**
+ * convert data values to audio frequencies and play them with a synthesizer
+ * @module audio
+ */
+
 import * as d3 from 'd3'
 import { data } from './data.js'
 import { dispatchers } from './interactions.js'

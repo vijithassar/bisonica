@@ -2,6 +2,10 @@
 
 bisonica follows the API for [Vega Lite](https://vega.github.io/vega-lite/). Not all Vega Lite features are implemented. If there's one you like, please feel free to add it!
 
+# Documentation
+
+Internals are thoroughly documented with [JSDoc](https://jsdoc.app/). To build the documentation locally, run `yarn run documentation` and then view the generated HTML files in your web browser.
+
 # Architecture
 
 Library architecture relies on the principles outlined by the [Grammar of Graphics](https://link.springer.com/book/10.1007/0-387-28695-0).

@@ -1,3 +1,8 @@
+/**
+ * general utilities
+ * @module helpers
+ */
+
 import * as d3 from 'd3'
 
 import { encodingField, encodingType, encodingValue } from './encodings.js'

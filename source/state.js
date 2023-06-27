@@ -1,4 +1,10 @@
 /**
+ * store the current state of a chart
+ * @module state
+ * @see {@link module:interactions}
+ */
+
+/**
  * store current keyboard navigation position in a closure
  * @returns {object} methods for modifying keyboard position state
  */

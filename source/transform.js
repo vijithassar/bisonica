@@ -1,3 +1,12 @@
+/**
+ * modify data before rendering
+ * @module transform
+ * @see {@link module:data}
+ * @see {@link module:predicate}
+ * @see {@link module:expression}
+ * @see {@link https://vega.github.io/vega-lite/docs/transform.html|vega-lite:transform}
+ */
+
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 import { predicate } from './predicate.js'

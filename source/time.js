@@ -1,3 +1,8 @@
+/**
+ * timestamp computations
+ * @module time
+ */
+
 import * as d3 from 'd3'
 import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js'
 import { memoize } from './memoize.js'

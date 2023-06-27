@@ -1,3 +1,12 @@
+/**
+ * general data processing utilities and preprocessing specific to particular chart forms
+ * @module data
+ * @see {@link module:metadata}
+ * @see {@link module:fetch}
+ * @see {@link module:transform}
+ * @see {@link https://vega.github.io/vega-lite/docs/data.html|vega-lite:data}
+ */
+
 import * as d3 from 'd3'
 
 import {

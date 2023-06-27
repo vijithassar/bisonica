@@ -1,3 +1,12 @@
+/**
+ * interactive behaviors such as mouseovers and links
+ * @module interactions
+ * @see {@link module:lifecycle}
+ * @see {@link module:legend}
+ * @see {@link module:tooltip}
+ * @see {@link module:state}
+ */
+
 import * as d3 from 'd3'
 
 import { category, markInteractionSelector, markSelector } from './marks.js'

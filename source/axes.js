@@ -1,3 +1,9 @@
+/**
+ * render x and y axes for a chart
+ * @module axes
+ * @see {@link https://vega.github.io/vega-lite/docs/axis.html|vega-lite:axis}
+ */
+
 import * as d3 from 'd3'
 
 import { axisTicksLabelText, rotation, truncate } from './text.js'

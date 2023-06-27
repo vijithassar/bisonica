@@ -1,3 +1,8 @@
+/**
+ * render CSS in the DOM
+ * @module styles
+ */
+
 import { noop } from './helpers.js'
 
 /**

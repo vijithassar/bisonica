@@ -1,3 +1,9 @@
+/**
+ * generate color palettes
+ * @module color
+ * @see {@link module:scales}
+ */
+
 import * as d3 from 'd3'
 import { extension } from './extensions.js'
 
