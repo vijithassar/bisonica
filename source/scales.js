@@ -196,7 +196,7 @@ const domainBaseValues = (s, channel) => {
 			if (stackOffset(s) === 'normalize') {
 				max = 1
 			} else if (stackOffset(s) === 'center') {
-				max = d3.max(d3.extent(sumByCovariates(s)).map(Math.abs))
+				max = d3.max(d3.extent(sumByCovariates(s)).map(Math.abs)) * 0.5
 				min = max * -1
 			} else {
 				max = d3.max(sumByCovariates(s))
