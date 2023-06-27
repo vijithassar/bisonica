@@ -42,6 +42,7 @@
     "eslint": "^8.17.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^46.4.2",
     "eslint-plugin-n": "^15.5.1",
     "eslint-plugin-promise": "^6.1.1",
     "esm": "^3.2.25",
