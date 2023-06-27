@@ -158,6 +158,10 @@ const stackData = s => {
 		stacker.offset(d3.stackOffsetExpand)
 	}
 
+	if (stackOffset(s) === 'center') {
+		stacker.offset(d3.stackOffsetSilhouette)
+	}
+
 	const stacked = stacker(summed)
 	const single = stacked.length === 1
 

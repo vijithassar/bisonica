@@ -193,7 +193,14 @@ const domainBaseValues = (s, channel) => {
 			if (channel === 'x' || channel === 'y') {
 				min = baseline(s, channel)
 			}
-			max = stackOffset(s) === 'normalize' ? 1 : d3.max(sumByCovariates(s))
+			if (stackOffset(s) === 'normalize') {
+				max = 1
+			} else if (stackOffset(s) === 'center') {
+				max = d3.max(d3.extent(sumByCovariates(s)).map(Math.abs))
+				min = max * -1
+			} else {
+				max = d3.max(sumByCovariates(s))
+			}
 		} else if (feature(s).isLine()) {
 			const byPeriod = data(s)
 				.map(item => item.values)
