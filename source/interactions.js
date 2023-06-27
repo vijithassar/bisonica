@@ -1,3 +1,5 @@
+/** @module interactions */
+
 import * as d3 from 'd3'
 
 import { category, markInteractionSelector, markSelector } from './marks.js'

@@ -1,3 +1,5 @@
+/** @module chart */
+
 import { WRAPPER_CLASS } from './config.js'
 import { audio } from './audio.js'
 import { axes } from './axes.js'

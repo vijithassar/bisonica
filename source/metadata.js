@@ -1,3 +1,5 @@
+/** @module metadata */
+
 import { encodingChannelCovariateCartesian, encodingField } from './encodings.js'
 import { feature } from './feature.js'
 import { missingSeries } from './helpers.js'

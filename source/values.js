@@ -1,3 +1,5 @@
+/** @module values */
+
 import * as d3 from 'd3'
 import { cached } from './fetch.js'
 import { identity, nested } from './helpers.js'

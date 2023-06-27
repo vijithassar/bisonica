@@ -1,3 +1,5 @@
+/** @module download */
+
 import { extension } from './extensions.js'
 import { values } from './values.js'
 import { csvFormat } from 'd3'

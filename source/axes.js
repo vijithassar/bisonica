@@ -1,3 +1,5 @@
+/** @module axes */
+
 import * as d3 from 'd3'
 
 import { axisTicksLabelText, rotation, truncate } from './text.js'

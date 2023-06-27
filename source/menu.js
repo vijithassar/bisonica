@@ -1,3 +1,5 @@
+/** @module menu */
+
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { key } from './helpers.js'

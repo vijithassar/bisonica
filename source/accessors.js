@@ -1,3 +1,5 @@
+/** @module accessors */
+
 import { layoutDirection } from './marks.js'
 import { encodingChannelCovariateCartesian, encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'

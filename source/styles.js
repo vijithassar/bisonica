@@ -1,3 +1,5 @@
+/** @module styles */
+
 import { noop } from './helpers.js'
 
 /**

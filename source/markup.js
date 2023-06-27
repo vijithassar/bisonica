@@ -1,3 +1,5 @@
+/** @module markup */
+
 const selectors = [
 	'.graphic',
 	'svg',

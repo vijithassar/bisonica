@@ -1,3 +1,5 @@
+/** @module extensions */
+
 /**
  * retrieve information from usermeta
  * @param {object} s Vega Lite specification

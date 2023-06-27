@@ -1,3 +1,5 @@
+/** @module memoize */
+
 const references = {
 	count: 0,
 	map: new WeakMap()

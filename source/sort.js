@@ -1,3 +1,5 @@
+/** @module sort */
+
 import { ascending, descending, min, sum } from 'd3'
 import { createAccessors } from './accessors.js'
 import { encodingField, encodingValue } from './encodings.js'

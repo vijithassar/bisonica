@@ -1,3 +1,5 @@
+/** @module legend */
+
 import * as d3 from 'd3'
 
 import { dispatchers } from './interactions.js'

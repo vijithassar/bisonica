@@ -1,3 +1,5 @@
+/** @module marks */
+
 import * as d3 from 'd3'
 
 import { createAccessors } from './accessors.js'

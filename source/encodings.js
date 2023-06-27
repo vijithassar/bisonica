@@ -1,3 +1,5 @@
+/** @module encodings */
+
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'

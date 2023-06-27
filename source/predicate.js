@@ -1,3 +1,5 @@
+/** @module predicate */
+
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 import { expressionStringParse } from './expression.js'

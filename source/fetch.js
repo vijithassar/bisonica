@@ -1,3 +1,5 @@
+/** @module fetch */
+
 import * as d3 from 'd3'
 
 const cache = new WeakMap()

@@ -1,3 +1,5 @@
+/** @module config */
+
 const WRAPPER_CLASS = 'wrapper'
 
 const GRID = 10

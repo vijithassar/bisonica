@@ -1,3 +1,5 @@
+/** @module position */
+
 import { GRID, WRAPPER_CLASS } from './config.js'
 import { feature } from './feature.js'
 import { longestAxisTickLabelTextWidth, rotation } from './text.js'

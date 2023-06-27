@@ -1,3 +1,5 @@
+/** @module feature */
+
 import { encodingType, encodingValue } from './encodings.js'
 import { layerTestRecursive } from './views.js'
 import { mark } from './helpers.js'

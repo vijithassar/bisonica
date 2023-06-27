@@ -1,3 +1,5 @@
+/** @module text */
+
 import * as d3 from 'd3'
 import { MINIMUM_TICK_COUNT } from './config.js'
 import { encodingType } from './encodings.js'

@@ -1,3 +1,5 @@
+/** @module lifecycle */
+
 import { WRAPPER_CLASS } from './config.js'
 import { feature } from './feature.js'
 import { extension } from './extensions.js'

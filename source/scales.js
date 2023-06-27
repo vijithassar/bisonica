@@ -1,3 +1,5 @@
+/** @module scales */
+
 import * as d3 from 'd3'
 import { data, stackOffset, sumByCovariates } from './data.js'
 import { values } from './values.js'

@@ -1,3 +1,5 @@
+/** @module format */
+
 import { memoize } from './memoize.js'
 import { identity, noop } from './helpers.js'
 import { encodingType } from './encodings.js'

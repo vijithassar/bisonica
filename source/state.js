@@ -1,3 +1,5 @@
+/** @module state */
+
 /**
  * store current keyboard navigation position in a closure
  * @returns {object} methods for modifying keyboard position state

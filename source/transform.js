@@ -1,3 +1,5 @@
+/** @module transform */
+
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 import { predicate } from './predicate.js'

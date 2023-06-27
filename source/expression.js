@@ -1,3 +1,5 @@
+/** @module expression */
+
 const datumPrefix = 'datum.'
 
 /**
