@@ -1,6 +1,8 @@
 /**
  * generate functions which look up a field from an input object for a data point
  * @module accessors
+ * @see {@link module:encodings}
+ * @see {@link module:scales}
  */
 
 import { layoutDirection } from './marks.js'

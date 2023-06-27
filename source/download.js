@@ -1,6 +1,7 @@
 /**
  * convert values into files containing raw data which the user can then download
  * @module download
+ * @see {@link module:menu}
  */
 
 import { extension } from './extensions.js'

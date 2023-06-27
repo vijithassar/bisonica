@@ -1,6 +1,7 @@
 /**
  * evaluate string expressions
  * @module expression
+ * @see {@link module:transform}
  */
 
 const datumPrefix = 'datum.'

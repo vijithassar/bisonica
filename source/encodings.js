@@ -1,6 +1,8 @@
 /**
  * test properties of the encoding descriptions and compose accessor functions with the corresponding scale functions
  * @module encodings
+ * @see {@link module:accessors}
+ * @see {@link module:scales}
  */
 
 import { feature } from './feature.js'

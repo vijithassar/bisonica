@@ -1,6 +1,7 @@
 /**
  * store the current state of a chart
  * @module state
+ * @see {@link module:interactions}
  */
 
 /**

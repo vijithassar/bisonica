@@ -1,6 +1,7 @@
 /**
  * keyboard navigation
  * @module keyboard
+ * @see {@link module:state}
  */
 
 

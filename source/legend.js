@@ -1,6 +1,7 @@
 /**
  * legend rendering
  * @module legend
+ * @see {@link module:interactions}
  */
 
 import * as d3 from 'd3'

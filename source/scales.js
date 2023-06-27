@@ -1,6 +1,8 @@
 /**
  * convert data values to visual attributes
  * @module scales
+ * @see {@link module:accessors}
+ * @see {@link module:encodings}
  */
 
 import * as d3 from 'd3'

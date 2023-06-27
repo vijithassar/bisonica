@@ -1,6 +1,9 @@
 /**
  * general data processing utilities and preprocessing specific to particular chart forms
  * @module data
+ * @see {@link module:metadata}
+ * @see {@link module:fetch}
+ * @see {@link module:transform}
  */
 
 import * as d3 from 'd3'

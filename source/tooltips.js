@@ -1,6 +1,7 @@
 /**
  * collect data to be rendered into a tooltip
  * @module tooltips
+ * @see {@link module:interactions}
  */
 
 import * as d3 from 'd3'

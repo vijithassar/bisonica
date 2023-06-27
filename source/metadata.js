@@ -1,6 +1,7 @@
 /**
  * transfer additional properties from raw input data to aggregated data
  * @module metadata
+ * @see {@link module:data}
  */
 
 import { encodingChannelCovariateCartesian, encodingField } from './encodings.js'

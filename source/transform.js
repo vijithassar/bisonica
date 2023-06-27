@@ -1,6 +1,9 @@
 /**
  * modify data before rendering
  * @module transform
+ * @see {@link module:data}
+ * @see {@link module:predicate}
+ * @see {@link module:expression}
  */
 
 import { identity } from './helpers.js'

@@ -1,6 +1,7 @@
 /**
  * retrieve data from remote servers
  * @module fetch
+ * @see {@link module:data}
  */
 
 import * as d3 from 'd3'

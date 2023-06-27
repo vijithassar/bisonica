@@ -1,6 +1,7 @@
 /**
  * determine rendering dimensions for a chart
  * @module dimensions
+ * @see {@link module:chart}
  */
 
 import { feature } from './feature.js'

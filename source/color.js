@@ -1,6 +1,7 @@
 /**
  * generate color palettes
  * @module color
+ * @see {@link module:scales}
  */
 
 import * as d3 from 'd3'

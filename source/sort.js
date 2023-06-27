@@ -1,6 +1,7 @@
 /**
  * sort data before rendering
  * @module sort
+ * @see {@link module:marks}
  */
 
 import { ascending, descending, min, sum } from 'd3'

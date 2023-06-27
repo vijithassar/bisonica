@@ -1,6 +1,8 @@
 /**
  * add structure to initialization
  * @module lifecycle
+ * @see {@link module:chart}
+ * @see {@link module:interactions}
  */
 
 import { WRAPPER_CLASS } from './config.js'

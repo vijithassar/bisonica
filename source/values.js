@@ -1,6 +1,9 @@
 /**
  * fetch, cache, and transform raw data
  * @module values
+ * @see {@link module:data}
+ * @see {@link module:fetch}
+ * @see {@link module:transform}
  */
 
 import * as d3 from 'd3'

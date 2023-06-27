@@ -1,6 +1,7 @@
 /**
  * generate functions which test features of the data points
  * @module predicate
+ * @see {@link module:transform}
  */
 
 import { identity } from './helpers.js'
