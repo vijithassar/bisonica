@@ -2,6 +2,7 @@
  * generate functions which test features of the data points
  * @module predicate
  * @see {@link module:transform}
+ * @see {@link https://vega.github.io/vega-lite/docs/predicate.html|vega-lite:predicate}
  */
 
 import { identity } from './helpers.js'

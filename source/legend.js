@@ -2,6 +2,7 @@
  * legend rendering
  * @module legend
  * @see {@link module:interactions}
+ * @see {@link https://vega.github.io/vega-lite/docs/legend.html|vega-lite:legend}
  */
 
 import * as d3 from 'd3'

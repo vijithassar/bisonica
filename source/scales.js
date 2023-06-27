@@ -3,6 +3,7 @@
  * @module scales
  * @see {@link module:accessors}
  * @see {@link module:encodings}
+ * @see {@link https://vega.github.io/vega-lite/docs/scale.html|vega-lite:scale}
  */
 
 import * as d3 from 'd3'

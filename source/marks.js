@@ -1,6 +1,7 @@
 /**
  * render marks
  * @module marks
+ * @see {@link https://vega.github.io/vega-lite/docs/mark.html|vega-lite:mark}
  */
 
 import * as d3 from 'd3'

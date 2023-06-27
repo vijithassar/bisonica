@@ -3,6 +3,7 @@
  * @module encodings
  * @see {@link module:accessors}
  * @see {@link module:scales}
+ * @see {@link https://vega.github.io/vega-lite/docs/encoding.html|vega-lite:encoding}
  */
 
 import { feature } from './feature.js'

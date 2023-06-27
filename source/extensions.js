@@ -1,6 +1,7 @@
 /**
  * organize extended metadata stored under the usermeta property
  * @module extensions
+ * @see {@link https://vega.github.io/vega-lite/docs/spec.html|vega-lite:spec}
  */
 
 /**

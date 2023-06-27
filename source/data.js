@@ -4,6 +4,7 @@
  * @see {@link module:metadata}
  * @see {@link module:fetch}
  * @see {@link module:transform}
+ * @see {@link https://vega.github.io/vega-lite/docs/data.html|vega-lite:data}
  */
 
 import * as d3 from 'd3'
