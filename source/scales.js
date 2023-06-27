@@ -190,7 +190,9 @@ const domainBaseValues = (s, channel) => {
 		let max
 
 		if (feature(s).isBar() || feature(s).isArea()) {
-			min = 0
+			if (channel === 'x' || channel === 'y') {
+				min = baseline(s, channel)
+			}
 			max = stackOffset(s) === 'normalize' ? 1 : d3.max(sumByCovariates(s))
 		} else if (feature(s).isLine()) {
 			const byPeriod = data(s)
