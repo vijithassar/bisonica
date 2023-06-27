@@ -43,7 +43,7 @@ const numberFormat = format => {
 /**
  * create a formatting function
  * @param {object} config encoding or axis definition object
- * @returns {function(string|number|Date)} formatting function
+ * @returns {function} formatting function
  */
 const _format = config => {
 	if (!config || (!config.format && !config.axis?.format)) {
