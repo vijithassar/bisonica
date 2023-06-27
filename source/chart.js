@@ -17,7 +17,7 @@ import { margin, position } from './position.js'
 import { marks } from './marks.js'
 import { testAttributes } from './markup.js'
 import { usermeta } from './extensions.js'
-import { table, tableOptions } from './table.js'
+import { table, tableToggle } from './table.js'
 import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
 import { copyMethods } from './helpers.js'
@@ -52,11 +52,9 @@ const render = (s, _panelDimensions) => {
 
 			initializeInteractions(chartNode.node(), s)
 
-			if (feature(s).hasTable()) {
-				chartNode.select('.table').call(tableRenderer(s, tableOptions(s)))
-			}
-
 			chartNode.call(menu(s))
+
+			chartNode.call(tableToggle(s, tableRenderer))
 
 			// render legend
 			if (feature(s).hasLegend()) {

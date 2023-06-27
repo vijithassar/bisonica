@@ -148,6 +148,18 @@ const noop = () => {
 const identity = x => x
 
 /**
+ * show a node
+ * @param {object} selection selection
+ */
+const show = selection => selection.style('display', null)
+
+/**
+ * hide a node
+ * @param {object} selection selection
+ */
+const hide = selection => selection.style('display', 'none')
+
+/**
  * convert an identifier to machine-friendly key
  * @param {string|number} id identifier
  * @return {string} kebab case string
@@ -269,6 +281,8 @@ export {
 	getUrl,
 	noop,
 	identity,
+	show,
+	hide,
 	key,
 	degrees,
 	isContinuous,

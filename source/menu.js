@@ -29,6 +29,7 @@ const items = s => {
 	return [
 		download?.csv !== false ? item(s, 'csv') : null,
 		download?.json !== false ? item(s, 'json') : null,
+		feature(s).hasTable() ? { text: 'table', href: '#toggle-view' } : null,
 		...(extension(s, 'menu')?.items ? extension(s, 'menu')?.items : [])
 	].filter(Boolean)
 }

@@ -4,12 +4,18 @@
  */
 
 import { extension } from './extensions.js'
-import { deduplicateByField, noop } from './helpers.js'
+import { deduplicateByField, noop, show, hide } from './helpers.js'
 import { encodingField } from './encodings.js'
 import { layerPrimary } from './views.js'
 import { markData } from './marks.js'
 import { parseScales } from './scales.js'
 import { values } from './values.js'
+import { feature } from './feature.js'
+
+const tableSelector = '.chart > .table'
+const legendSelector = '.chart .legend'
+const graphicSelector = '.chart .graphic'
+const toggleSelector = '.menu [data-menu="table"] a'
 
 /**
  * create the outer DOM for the table
@@ -132,4 +138,40 @@ const table = (_s, options) => { // eslint-disable-line no-unused-vars
 	}
 }
 
-export { table, tableOptions }
+/**
+ * toggle the content from a graphic to a table
+ * @param {object} s Vega Lite specification
+ * @param {function} renderer custom table rendering function
+ * @return {function(object)} table toggle interaction function
+ */
+const tableToggle = (s, renderer) => {
+	// input selection must be the outer chart wrapper
+	// which includes both menu and content
+	return selection => {
+		if (!feature(s).hasTable()) {
+			return
+		}
+		const toggle = selection.select(toggleSelector)
+		const table = selection.select(tableSelector)
+		const graphic = selection.select(graphicSelector)
+		const legend = selection.select(legendSelector)
+		toggle.on('click', function(event) {
+			event.preventDefault()
+			table.html('')
+			const values = ['table', 'graphic']
+			const previous = toggle.text()
+			const next = values.filter(value => value !== previous).pop()
+			if (previous === 'table') {
+				table.call(renderer(s, tableOptions(s)))
+				graphic.call(hide)
+				legend.call(hide)
+			} else if (previous === 'graphic') {
+				graphic.call(show)
+				legend.call(show)
+			}
+			toggle.text(next)
+		})
+	}
+}
+
+export { table, tableToggle }
