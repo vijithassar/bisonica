@@ -37,7 +37,6 @@ Or the equivalent syntax with `selection.call()`:
 select('div').call(renderer);
 ```
 
-
 You'll probably want to load the included stylesheet? Feel free to use your own alternative if you want, though.
 
 You can load it directly:
