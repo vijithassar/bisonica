@@ -151,6 +151,16 @@ const zero = (s, channel) => {
 }
 
 /**
+ * baseline for an axis
+ * @param {object} s Vega Lite specification
+ * @param {'x'|'y'} channel visual encoding
+ * @returns {number[]}
+ */
+const baseline = (s, channel) => {
+	return d3.min([0, ...values(s).map(encodingValue(s, channel))])
+}
+
+/**
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
@@ -180,7 +190,9 @@ const domainBaseValues = (s, channel) => {
 		let max
 
 		if (feature(s).isBar() || feature(s).isArea()) {
-			min = 0
+			if (channel === 'x' || channel === 'y') {
+				min = baseline(s, channel)
+			}
 			max = stackOffset(s) === 'normalize' ? 1 : d3.max(sumByCovariates(s))
 		} else if (feature(s).isLine()) {
 			const byPeriod = data(s)
@@ -271,7 +283,7 @@ const cartesianRange = (s, channel) => {
 
 			result = positions
 		} else {
-			const start = 0
+			const start = baseline(s, channel)
 			const end = feature(s).isTemporalBar() ? temporalBarDimensions(s, dimensions)[channel] : dimensions[channel]
 			result = [start, end]
 		}
@@ -457,10 +469,21 @@ const extendScales = (s, dimensions, scales) => {
 				return 0
 			}
 
+			const positive = d > 0
+			const value = extendedScales[channel](d)
+			const zero = extendedScales[channel](0)
 			if (channel === 'y') {
-				return dimensions[channel] - extendedScales[channel](d)
+				if (positive) {
+					return zero - value
+				} else {
+					return Math.abs(value) - zero
+				}
 			} else if (channel === 'x') {
-				return extendedScales[channel](d)
+				if (positive) {
+					return value - zero
+				} else {
+					return Math.abs(value)
+				}
 			}
 		}
 	}
@@ -475,10 +498,14 @@ const extendScales = (s, dimensions, scales) => {
 					return extendedScales[channel](d[0])
 				}
 			} else {
+				const length = extendedScales.length(d[1] - d[0])
 				if (channel === 'y') {
-					return dimensions.y - extendedScales.length(d[1] - d[0])
+					const flip = d[1] > d[0] ? 1 : 0
+					const offset = length * flip
+					return extendedScales.y(0) - offset
 				} else if (channel === 'x') {
-					return 0
+					const offset = d[1] > d[0] ? 0 : length
+					return extendedScales.x(0) - offset
 				}
 			}
 		}
