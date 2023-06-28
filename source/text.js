@@ -108,6 +108,7 @@ const format = (s, channel) => {
 /**
  * rotate axis tick label text
  * @param {object} s Vega Lite specification
+ * @param {string} channel encoding channel
  * @returns {number} axis tick text rotation
  */
 const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math.PI) / 180 || 0

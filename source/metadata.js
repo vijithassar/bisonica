@@ -89,11 +89,11 @@ const coreEncodingChannels = s => {
 }
 
 /**
-  * fields used to represent core
-  * encoding channels
-  * @param {object} s Vega Lite specification
-  * @returns {string[]} encoding fields
-  */
+ * fields used to represent core
+ * encoding channels
+ * @param {object} s Vega Lite specification
+ * @returns {string[]} encoding fields
+ */
 const coreEncodingFields = s => {
 	return coreEncodingChannels(s).map(channel => encodingField(s, channel)).filter(Boolean)
 }

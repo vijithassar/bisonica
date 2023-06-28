@@ -95,6 +95,7 @@ function tooltipEvent(s, node, interaction) {
 /**
  * render a tooltip
  * @param {object} selection D3 selection with a mark
+ * @param {object} s Vega Lite specification
  */
 const tooltip = (selection, s) => {
 	if (!s.mark.tooltip || s.encoding.tooltip === null) {

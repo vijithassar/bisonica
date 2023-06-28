@@ -12,7 +12,7 @@ import { parseScales } from './scales.js'
 import { values } from './values.js'
 
 /**
- *
+ * create the outer DOM for the table
  * @param {object} s Vega Lite specification
  * @returns {function(object)} table setup function
  */
@@ -116,6 +116,7 @@ const tableOptions = s => {
 /**
  * render table
  * @param {object} _s Vega Lite specification
+ * @param {object} options table options
  * @returns {function(object)} table renderer
  */
 const table = (_s, options) => { // eslint-disable-line no-unused-vars
