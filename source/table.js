@@ -15,7 +15,7 @@ import { feature } from './feature.js'
 const tableSelector = '.chart > .table'
 const legendSelector = '.chart .legend'
 const graphicSelector = '.chart .graphic'
-const toggleSelector = '.menu [data-menu="table"] a'
+const toggleSelector = '.menu [data-menu="table"] button'
 
 /**
  * create the outer DOM for the table

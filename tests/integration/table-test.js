@@ -4,7 +4,7 @@ import { render, specificationFixture, testSelector } from '../test-helpers.js'
 const { module, test } = qunit
 
 module('integration > table', function() {
-	const selector = `${testSelector('menu-item')}[data-menu="table"] a`
+	const selector = `${testSelector('menu-item')}[data-menu="table"] button`
 	const event = () => new MouseEvent('click')
 	test('renders a chart with a table item in the menu', assert => {
 		const element = render(specificationFixture('circular'))
