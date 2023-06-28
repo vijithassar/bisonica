@@ -12,7 +12,7 @@ import { parseScales } from './scales.js'
 import { values } from './values.js'
 
 /**
- *
+ * create the outer DOM for the table
  * @param {object} s Vega Lite specification
  * @returns {function(object)} table setup function
  */
