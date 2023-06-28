@@ -127,7 +127,8 @@ const flatten = config => {
 
 /**
  * apply a single transform
- * @param {s} config transform configuration
+ * @param {object} s Vega Lite specification
+ * @param {object} config transform configuration
  * @param {object[]} data data set
  * @returns {object[]} transformed data set
  */
