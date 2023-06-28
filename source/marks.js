@@ -393,6 +393,7 @@ const areaMarks = (s, dimensions) => {
 /**
  * render a circular point mark
  * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
  * @returns {function(object)} circular point mark rendering function
  */
 const pointMarkCircle = (s, dimensions) => {
@@ -411,6 +412,7 @@ const pointMarkCircle = (s, dimensions) => {
 /**
  * render a square point mark
  * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
  * @returns {function(object)} square point mark rendering function
  */
 const pointMarkSquare = (s, dimensions) => {
@@ -431,6 +433,7 @@ const pointMarkSquare = (s, dimensions) => {
 /**
  * render a single point mark
  * @param {object} s Vega Lite specification
+ * @param {object} dimensions chart dimensions
  * @returns {function(object)} point rendering function
  */
 const pointMark = (s, dimensions) => {
