@@ -116,6 +116,7 @@ const tableOptions = s => {
 /**
  * render table
  * @param {object} _s Vega Lite specification
+ * @param {object} options table options
  * @returns {function(object)} table renderer
  */
 const table = (_s, options) => { // eslint-disable-line no-unused-vars
