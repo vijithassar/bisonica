@@ -242,7 +242,7 @@ const copyMethods = (methods, source, target) => {
 /**
  * convert kebab-case string to camelCase
  * @param {string} kebab kebab case string
- * @return camelCase string
+ * @return {string} camelCase string
  */
 const kebabToCamel = kebab => {
 	return kebab
