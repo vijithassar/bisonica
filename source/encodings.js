@@ -259,7 +259,7 @@ const encoder = memoize(_encoder)
 /**
  * generate a set of complex encoders
  * @param {object} s Vega Lite specification
- * @param {object} dimensions desired dimensions of the chart
+ * @param {object} dimensions chart dimensions
  * @param {object} accessors hash of data accessor functions
  * @returns {object} hash of encoder functions with complex data
  * lookup suitable for use as d3 callbacks
