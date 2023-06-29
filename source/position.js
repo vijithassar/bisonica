@@ -20,7 +20,7 @@ const axes = { x: 'bottom', y: 'left' }
 
 /**
  * compute margin for a circular chart
- * @returns {object} margin convention object
+ * @returns {margin} margin convention object
  */
 const marginCircular = () => {
 	return {
@@ -70,7 +70,7 @@ const titleMargin = s => {
 /**
  * compute margin for Cartesian chart
  * @param {object} s Vega Lite specification
- * @returns {object} margin convention object
+ * @returns {margin} margin convention object
  */
 const marginCartesian = s => {
 	const defaultMargin = {
@@ -106,7 +106,7 @@ const _margin = s => {
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
- * @returns {object} margin convention object
+ * @returns {margin} margin convention object
  */
 const margin = memoize(_margin)
 
