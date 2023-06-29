@@ -4,3 +4,7 @@
 * @prop {number} x horizontal dimension
 * @prop {number} y vertical dimension
 */
+
+/**
+* @typedef {'x'|'y'} cartesian
+*/
