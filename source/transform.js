@@ -16,7 +16,7 @@ import * as d3 from 'd3'
 /**
  * create a function to perform a single calculate expression
  * @param {string} str calculate expression
- * @returns {function} expression evaluation function
+ * @return {function} expression evaluation function
  */
 const calculate = str => expression(str)
 
@@ -24,7 +24,7 @@ const calculate = str => expression(str)
  * compose all calculate transforms
  * into a single function
  * @param {object[]} transforms
- * @returns {function(object)}
+ * @return {function(object)}
  */
 const _composeCalculateTransforms = transforms => {
 	if (!transforms) {
@@ -45,14 +45,14 @@ const _composeCalculateTransforms = transforms => {
 /**
  * create a function to augment a datum with multiple calculate expressions
  * @param {object[]} transforms an array of calculate expressions
- * @returns {function(object[])} transform function
+ * @return {function(object[])} transform function
  */
 const composeCalculateTransforms = memoize(_composeCalculateTransforms)
 
 /**
  * create a function to run transforms on a single datum
  * @param {object} s Vega Lite specification
- * @returns {function(object)} transform function for a single datum
+ * @return {function(object)} transform function for a single datum
  */
 const transformDatum = s => {
 	return composeCalculateTransforms(s.transform)
@@ -61,7 +61,7 @@ const transformDatum = s => {
 /**
  * run a random sampling transform
  * @param {number} n count
- * @returns {function(object[])} random sampling function
+ * @return {function(object[])} random sampling function
  */
 const sample = n => {
 	return data => {
@@ -76,7 +76,7 @@ const sample = n => {
  * run a filter transform
  * @param {object} s Vega Lite specification
  * @param {object} config transform configuration
- * @returns {function(object[])} filter transform function
+ * @return {function(object[])} filter transform function
  */
 const filter = (s, config) => {
 	return data => {
@@ -89,7 +89,7 @@ const filter = (s, config) => {
 /**
  * fold fields
  * @param {object} config fold configuration
- * @returns {function(object[])} fold transform function
+ * @return {function(object[])} fold transform function
  */
 const fold = config => {
 	const fields = config.fold
@@ -106,7 +106,7 @@ const fold = config => {
 /**
  * flatten fields
  * @param {object} config flatten configuration
- * @returns {function(object[])} flatten transform function
+ * @return {function(object[])} flatten transform function
  */
 const flatten = config => {
 	const fields = config.flatten
@@ -130,7 +130,7 @@ const flatten = config => {
  * @param {object} s Vega Lite specification
  * @param {object} config transform configuration
  * @param {object[]} data data set
- * @returns {object[]} transformed data set
+ * @return {object[]} transformed data set
  */
 const applyTransform = (s, config, data) => {
 	if (config.sample) {
@@ -147,7 +147,7 @@ const applyTransform = (s, config, data) => {
 /**
  * create a function to run transforms on a data set
  * @param {object} s Vega Lite specification
- * @returns {function(object[])} transform function for a data set
+ * @return {function(object[])} transform function for a data set
  */
 const _transformValues = s => {
 	if (!s.transform) {

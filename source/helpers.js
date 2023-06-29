@@ -11,7 +11,7 @@ import { feature } from './feature.js'
 /**
  * round number based on significant digits
  * @param {number} number number
- * @returns {string} rounded number as string with SI suffix
+ * @return {string} rounded number as string with SI suffix
  */
 const abbreviateNumbers = number => {
 	if (number < 10 && Number.isInteger(number)) {
@@ -28,7 +28,7 @@ const abbreviateNumbers = number => {
  * by a layout generator
  * @param {object} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
- * @returns {object} datum
+ * @return {object} datum
  */
 const datum = (s, d) => {
 	if (feature(s).isCircular() && d.data) {
@@ -69,7 +69,7 @@ const nested = function(d, key, newValue) {
  * create a function which ensures channels have
  * unique fields
  * @param {object} s Vega Lite specification
- * @returns {function(array)} deduplication function
+ * @return {function(array)} deduplication function
  */
 const deduplicateByField = s => {
 	const fields = Object.entries(s.encoding).map(([_, definition]) => definition?.field).filter(Boolean)
@@ -94,7 +94,7 @@ const deduplicateByField = s => {
 
 /**
  * get the string used when there's no appropriate name for a series
- * @returns {string} series name
+ * @return {string} series name
  */
 const missingSeries = () => '_'
 
@@ -102,7 +102,7 @@ const missingSeries = () => '_'
  * look up the URL attached to a datum
  * @param {object} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
- * @returns {string} url
+ * @return {string} url
  */
 const getUrl = (s, d) => {
 	if (s.mark.href) {
@@ -119,7 +119,7 @@ const getUrl = (s, d) => {
  * look up the mark name from either a simple string
  * or the type property of a mark specification object
  * @param {object} s Vega Lite specification
- * @returns {string} mark name
+ * @return {string} mark name
  */
 const mark = s => {
 	if (typeof s.mark === 'string') {
@@ -145,14 +145,14 @@ const identity = x => x
 /**
  * convert an identifier to machine-friendly key
  * @param {string|number} id identifier
- * @returns {string} kebab case string
+ * @return {string} kebab case string
  */
 const key = id => `${id}`.toLowerCase().replace(/ /g, '-')
 
 /**
  * convert radians to degrees
  * @param {number} radians angle in radians
- * @returns {number} angle in degrees
+ * @return {number} angle in degrees
  */
 const degrees = radians => (radians * 180) / Math.PI
 
@@ -160,7 +160,7 @@ const degrees = radians => (radians * 180) / Math.PI
  * test whether a channel is continuous
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean}
+ * @return {boolean}
  */
 const isContinuous = (s, channel) => {
 	return ['temporal', 'quantitative'].includes(encodingType(s, channel))
@@ -170,7 +170,7 @@ const isContinuous = (s, channel) => {
  * test whether a channel is discrete
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean}
+ * @return {boolean}
  */
 const isDiscrete = (s, channel) => {
 	return ['nominal', 'ordinal'].includes(encodingType(s, channel))
@@ -179,7 +179,7 @@ const isDiscrete = (s, channel) => {
 /**
  * determine whether a given channel is text based
  * @param {string} channel encoding parameter
- * @returns {boolean} whether the field is text based
+ * @return {boolean} whether the field is text based
  */
 const isTextChannel = channel => {
 	return ['href', 'text', 'tooltip', 'description', 'url'].includes(channel)
@@ -189,7 +189,7 @@ const isTextChannel = channel => {
  * convert polar coordinates to Cartesian
  * @param {number} radius radius
  * @param {number} angle angle in radians
- * @returns {object} equivalent Cartesian coordinates
+ * @return {object} equivalent Cartesian coordinates
  */
 const polarToCartesian = (radius, angle) => {
 	return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) }
@@ -203,8 +203,7 @@ const polarToCartesian = (radius, angle) => {
  * this will not work properly if the rendering function
  * depends on accurate DOM measurements or reflow, such as
  * by using scrollTop or .getBoundingClientRect()
- *
- * @returns {function(object)} rendering function which uses detached node
+ * @return {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {
 	return selection => {
@@ -237,7 +236,7 @@ const copyMethods = (methods, source, target) => {
 /**
  * convert kebab-case string to camelCase
  * @param {string} kebab kebab case string
- * @returns camelCase string
+ * @return camelCase string
  */
 const kebabToCamel = kebab => {
 	return kebab

@@ -29,7 +29,7 @@ import { menu } from './menu.js'
  * a Vega Lite specification
  * @param {object} s Vega Lite specification
  * @param {dimensions} [_panelDimensions] chart dimensions
- * @returns {function(object)} renderer
+ * @return {function(object)} renderer
  */
 const render = (s, _panelDimensions) => {
 	let tooltipHandler
@@ -133,7 +133,7 @@ const render = (s, _panelDimensions) => {
  * into an asynchronous rendering function
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} asynchronous rendering function
+ * @return {function(object)} asynchronous rendering function
  */
 const asyncRender = (s, dimensions) => {
 	const renderer = render(s, dimensions)
@@ -152,7 +152,7 @@ const asyncRender = (s, dimensions) => {
  * a chart rendering function
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} renderer
+ * @return {function(object)} renderer
  */
 const chart = (s, dimensions) => {
 	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {

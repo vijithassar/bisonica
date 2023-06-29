@@ -23,7 +23,7 @@ const temperament = Math.pow(2, 1 / 12)
 /**
  * gneerate frequencies for a chromatic scale
  * @param {number} root root frequency
- * @returns {number[]} chromatic audio scale
+ * @return {number[]} chromatic audio scale
  */
 const chromatic = root => {
 	return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index))
@@ -33,7 +33,7 @@ const chromatic = root => {
  * linear division of a data range into a minor scale
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @returns {number[]} minor scale in linear data space
+ * @return {number[]} minor scale in linear data space
  */
 const minorLinear = (min, max) => {
 	const h = (max - min) / 12
@@ -48,7 +48,7 @@ const minorLinear = (min, max) => {
 /**
  * minor scale
  * @param {number} root root frequency
- * @returns {number[]} minor audio scale
+ * @return {number[]} minor audio scale
  */
 const minorExponential = root => {
 	const semitones = [0, 2, 3, 5, 7, 8, 10, 12]
@@ -85,7 +85,7 @@ const note = (frequency, start) => {
  * repeat a scale across octaves in linear data space
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @returns {number[]} multiple octave data scale
+ * @return {number[]} multiple octave data scale
  */
 const repeatLinear = (min, max) => {
 	const spread = max - min
@@ -106,7 +106,7 @@ const repeatLinear = (min, max) => {
  * repeat a scale across octaves in audio space
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @returns {number[]} multiple octave audio scale
+ * @return {number[]} multiple octave audio scale
  */
 const repeatExponential = (min, max) => {
 	if (max % min !== 0) {
@@ -147,7 +147,7 @@ const notes = (values, dispatcher, s) => {
 /**
  * audio sonification
  * @param {object} s Vega Lite specification
- * @returns {function(object)} audio sonification function
+ * @return {function(object)} audio sonification function
  */
 const audio = s => {
 	if (s.layer) {

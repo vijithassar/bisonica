@@ -14,7 +14,7 @@ const defaultColor = 'steelblue'
  * @param {object} color color
  * @param {number} index position of the color in the palette
  * @param {number} k severity of luminance adjustment
- * @returns {object} color
+ * @return {object} color
  */
 const alternateLuminance = (color, index, k = 1) => color[index % 2 ? 'brighter' : 'darker'](k)
 
@@ -29,7 +29,7 @@ const stops = {
  * as a categorical scale
  * @param {number} count number of colors
  * @param {string} variant palette variant
- * @returns {string[]} color palette
+ * @return {string[]} color palette
  */
 const accessibleColors = (count, variant) => {
 	if (!stops[variant]) {
@@ -56,7 +56,7 @@ const accessibleColors = (count, variant) => {
  * create a standard color palette from the entire
  * available hue range for use as a categorical scale
  * @param {number} count number of colors
- * @returns {string[]} color palette
+ * @return {string[]} color palette
  */
 const standardColors = count => {
 	if (!count || count === 1) {
@@ -76,7 +76,7 @@ const standardColors = count => {
 /**
  * alternate colors
  * @param {string[]} colors color palette
- * @returns {string[]} alternating color palette
+ * @return {string[]} alternating color palette
  */
 const alternate = colors => {
 	if (colors.length === 1) {
@@ -97,7 +97,7 @@ const alternate = colors => {
  * look up an array of colors for a named color scheme
  * @param {number} _count number of colors
  * @param {string|object} config color scheme name or configuration object
- * @returns {string[]} color scheme array
+ * @return {string[]} color scheme array
  */
 const scheme = (_count, config) => {
 	const object = typeof config === 'object'

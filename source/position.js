@@ -20,7 +20,7 @@ const axes = { x: 'bottom', y: 'left' }
 
 /**
  * compute margin for a circular chart
- * @returns {margin} margin convention object
+ * @return {margin} margin convention object
  */
 const marginCircular = () => {
 	return {
@@ -34,7 +34,7 @@ const marginCircular = () => {
 /**
  * compute margin for Cartesian chart axis ticks
  * @param {object} s Vega Lite specification
- * @returns {object} partial margin convention object
+ * @return {object} partial margin convention object
  */
 const tickMargin = s => {
 	const textLabels = longestAxisTickLabelTextWidth(s)
@@ -58,7 +58,7 @@ const tickMargin = s => {
 /**
  * compute margin for Cartesian chart axis title
  * @param {object} s Vega Lite specification
- * @returns {{bottom: number, left: number}} partial margin convention object
+ * @return {{bottom: number, left: number}} partial margin convention object
  */
 const titleMargin = s => {
 	return {
@@ -70,7 +70,7 @@ const titleMargin = s => {
 /**
  * compute margin for Cartesian chart
  * @param {object} s Vega Lite specification
- * @returns {margin} margin convention object
+ * @return {margin} margin convention object
  */
 const marginCartesian = s => {
 	const defaultMargin = {
@@ -106,7 +106,7 @@ const _margin = s => {
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
- * @returns {margin} margin convention object
+ * @return {margin} margin convention object
  */
 const margin = memoize(_margin)
 
@@ -114,7 +114,7 @@ const margin = memoize(_margin)
  * transform string for positioning charts
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} positioning function
+ * @return {function(object)} positioning function
  */
 const position = (s, dimensions) => {
 	const yOffsetCircular =

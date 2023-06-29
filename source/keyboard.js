@@ -53,7 +53,7 @@ const x = {
  * generate a listener for an arrow key
  * @param {object} s Vega Lite specification
  * @param {('up'|'right'|'down'|'left')} direction arrow direction
- * @returns {function(object)} key listener
+ * @return {function(object)} key listener
  */
 const key = (s, direction) => {
 	return (mark, state) => {
@@ -165,7 +165,7 @@ const key = (s, direction) => {
 
 /**
  * prevent page from scrolling
- * @returns {object} key event
+ * @return {object} key event
  */
 const stopScroll = event => {
 	if (event.key !== 'Tab') {
@@ -176,7 +176,7 @@ const stopScroll = event => {
 /**
  * convert a key name into a simpler and shorter handle
  * @param {string} key key name from the event
- * @returns {('up'|'right'|'down'|'left')} shorter key name
+ * @return {('up'|'right'|'down'|'left')} shorter key name
  */
 const keyMap = key => {
 	const map = {
@@ -192,7 +192,7 @@ const keyMap = key => {
 /**
  * attach keyboard navigation to a chart DOM
  * @param {object} _s Vega Lite specification
- * @returns {function(object)}
+ * @return {function(object)}
  */
 const keyboard = _s => {
 	try {

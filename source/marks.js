@@ -33,7 +33,7 @@ const transparent = 0.001
 /**
  * aggregate and sort mark data
  * @param {object} s Vega Lite specification
- * @returns {object[]} aggregated and sorted data for data join
+ * @return {object[]} aggregated and sorted data for data join
  */
 const markData = s => {
 	const series = Array.isArray(data(s)) && data(s).every(Array.isArray)
@@ -70,7 +70,7 @@ const defaultSize = 30
  * partition dimensions into categorical steps
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {number} step size in pixels
+ * @return {number} step size in pixels
  */
 const _step = (s, dimensions) => {
 	const channel = encodingChannelCovariateCartesian(s)
@@ -134,7 +134,7 @@ const curve = s => {
 /**
  * point mark tagName
  * @param {object} s Vega Lite specification
- * @returns {'circle'|'rect'} point mark tag name
+ * @return {'circle'|'rect'} point mark tag name
  */
 const pointMarkSelector = s => {
 	const defaultPointMark = 'circle'
@@ -150,7 +150,7 @@ const pointMarkSelector = s => {
 /**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @returns {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} tagName to use in DOM for mark
+ * @return {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {
@@ -171,7 +171,7 @@ const markSelector = s => {
 /**
  * determine the selector string used for interactions
  * @param {object} _s Vega Lite specification
- * @returns {string} DOM selector string
+ * @return {string} DOM selector string
  */
 const markInteractionSelector = _s => {
 	const s = !feature(_s).hasLayers() ? _s : _s.layer.find(layer => !feature(layer).isRule())
@@ -200,7 +200,7 @@ const layoutDirection = s => {
  * facilitate bidirectional layout
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {object} bar encoder methods
+ * @return {object} bar encoder methods
  */
 const stackEncoders = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -222,7 +222,7 @@ const stackEncoders = (s, dimensions) => {
  * render a single bar chart mark
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} single mark renderer
+ * @return {function(object)} single mark renderer
  */
 const barMark = (s, dimensions) => {
 	const encoders = stackEncoders(s, dimensions)
@@ -257,7 +257,7 @@ const barMark = (s, dimensions) => {
  * lane transform for all bar marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {string} transform
+ * @return {string} transform
  */
 const barMarksTransform = (s, dimensions) => {
 	let x = 0
@@ -284,7 +284,7 @@ const barMarksTransform = (s, dimensions) => {
  * render bar chart marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} bar renderer
+ * @return {function(object)} bar renderer
  */
 const barMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s, 'series'))
@@ -328,7 +328,7 @@ const barMarks = (s, dimensions) => {
  * assign encoders to area mark methods
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {object} area encoders
+ * @return {object} area encoders
  */
 const areaEncoders = (s, dimensions) => {
 	const { x, y, width, height } = stackEncoders(s, dimensions)
@@ -354,7 +354,7 @@ const areaEncoders = (s, dimensions) => {
  * render area marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} area mark renderer
+ * @return {function(object)} area mark renderer
  */
 const areaMarks = (s, dimensions) => {
 	const encoders = areaEncoders(s, dimensions)
@@ -396,7 +396,7 @@ const areaMarks = (s, dimensions) => {
  * render a circular point mark
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} circular point mark rendering function
+ * @return {function(object)} circular point mark rendering function
  */
 const pointMarkCircle = (s, dimensions) => {
 	const size = s.mark.size || defaultSize
@@ -415,7 +415,7 @@ const pointMarkCircle = (s, dimensions) => {
  * render a square point mark
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} square point mark rendering function
+ * @return {function(object)} square point mark rendering function
  */
 const pointMarkSquare = (s, dimensions) => {
 	const size = s.mark.size || defaultSize
@@ -436,7 +436,7 @@ const pointMarkSquare = (s, dimensions) => {
  * render a single point mark
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} point rendering function
+ * @return {function(object)} point rendering function
  */
 const pointMark = (s, dimensions) => {
 	const pointMarkRenderer = mark(s) === 'square' ? pointMarkSquare : pointMarkCircle
@@ -469,7 +469,7 @@ const pointMark = (s, dimensions) => {
  * render image marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} image mark renderer
+ * @return {function(object)} image mark renderer
  */
 const imageMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -502,7 +502,7 @@ const imageMarks = (s, dimensions) => {
  * render multiple point marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} points renderer
+ * @return {function(object)} points renderer
  */
 const pointMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -557,7 +557,7 @@ const pointMarks = (s, dimensions) => {
  * render line chart marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} line renderer
+ * @return {function(object)} line renderer
  */
 const lineMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -631,7 +631,7 @@ const lineMarks = (s, dimensions) => {
 /**
  * maximum viable radius for a given set of dimensions
  * @param {dimensions} dimensions chart dimensions
- * @returns {number} radius
+ * @return {number} radius
  */
 const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
 
@@ -639,7 +639,7 @@ const maxRadius = dimensions => Math.min(dimensions.x, dimensions.y) * 0.5
  * render arc marks for a circular pie or donut chart
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} circular chart arc renderer
+ * @return {function(object)} circular chart arc renderer
  */
 const circularMarks = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
@@ -694,7 +694,7 @@ const circularMarks = (s, dimensions) => {
 /**
  * determine orientation of rule marks
  * @param {object} s Vega Lite specification
- * @returns {('diagonal'|'horizontal'|'vertical')} rule orientation
+ * @return {('diagonal'|'horizontal'|'vertical')} rule orientation
  */
 const ruleDirection = s => {
 	if (s.encoding.x && s.encoding.x2 && s.encoding.y && s.encoding.y2) {
@@ -724,7 +724,7 @@ const ruleDirection = s => {
  * render rule marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} rule renderer
+ * @return {function(object)} rule renderer
  */
 const ruleMarks = (s, dimensions) => {
 	const renderer = selection => {
@@ -771,7 +771,7 @@ const ruleMarks = (s, dimensions) => {
  * render text marks
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} text mark renderer
+ * @return {function(object)} text mark renderer
  */
 const textMarks = (s, dimensions) => {
 	const defaultFontSize = 11
@@ -846,7 +846,7 @@ const textMarks = (s, dimensions) => {
  * select an appropriate mark renderer
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} mark renderer
+ * @return {function(object)} mark renderer
  */
 const _marks = (s, dimensions) => {
 	try {

@@ -19,7 +19,7 @@ import { isTextChannel, nested } from './helpers.js'
  * look up the field used for a visual encoding
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string} encoding field
+ * @return {string} encoding field
  */
 const encodingField = (s, channel) => {
 	return s.encoding?.[channel]?.field || s.facet?.[channel]?.field
@@ -30,7 +30,7 @@ const encodingField = (s, channel) => {
  * (these are types of data sets, not JavaScript primitive types)
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
+ * @return {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
  */
 const encodingType = (s, channel) => {
 	return s.encoding?.[channel]?.type || encodingTypeDefault(s, channel)
@@ -41,7 +41,7 @@ const encodingType = (s, channel) => {
  * a visual encoding
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function(object)}
+ * @return {function(object)}
  */
 const encodingValue = (s, channel) => {
 	const key = encodingField(s, channel)
@@ -62,7 +62,7 @@ const encodingValue = (s, channel) => {
 /**
  * determine which channel is used for quantitative encoding
  * @param {object} s Vega Lite specification
- * @returns {string} visual encoding channel
+ * @return {string} visual encoding channel
  */
 const encodingChannelQuantitative = s => {
 	const test = channel => encodingType(s, channel) === 'quantitative'
@@ -74,7 +74,7 @@ const encodingChannelQuantitative = s => {
  * create a function which looks up the data value used for
  * the quantitative visual encoding
  * @param {object} s Vega Lite specification
- * @returns {function(object)}
+ * @return {function(object)}
  */
 const encodingValueQuantitative = s => {
 	return encodingValue(s, encodingChannelQuantitative(s))
@@ -84,7 +84,7 @@ const encodingValueQuantitative = s => {
  * default encoding types
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string} default encoding type
+ * @return {string} default encoding type
  */
 const _encodingTypeDefault = (s, channel) => {
 	const channelDefinition = s.encoding?.[channel]
@@ -133,7 +133,7 @@ const encodingTypeDefault = memoize(_encodingTypeDefault)
  * determine which channel matches a predicate function
  * @param {object} s Vega Lite specification
  * @param {function} test test
- * @returns {string} visual encoding channel
+ * @return {string} visual encoding channel
  */
 const _encodingTest = (s, test) => {
 	const encodings = Object.entries(s.encoding).filter(([channel, definition]) => {
@@ -166,7 +166,7 @@ const encodingTest = memoize(_encodingTest)
 /**
  * determine which channel is used for the independent variable
  * @param {object} s Vega Lite specification
- * @returns {string} visual encoding channel
+ * @return {string} visual encoding channel
  */
 const encodingChannelCovariate = s => {
 	if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
@@ -191,7 +191,7 @@ const encodingChannelCovariate = s => {
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
  * @param {object} s Vega Lite specification
- * @returns {string} visual encoding chanel
+ * @return {string} visual encoding chanel
  */
 const encodingChannelCovariateCartesian = s => {
 	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
@@ -210,7 +210,7 @@ const encodingChannelCovariateCartesian = s => {
  * @param {string} channel encoding channel
  * @param {function} accessor accessor function
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} encoder function
+ * @return {function(object)} encoder function
  */
 const _encoder = (s, channel, accessor, dimensions) => {
 	const scales = parseScales(s, dimensions)
@@ -263,7 +263,7 @@ const encoder = memoize(_encoder)
  * @param {object} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @param {object} accessors hash of data accessor functions
- * @returns {object} hash of encoder functions with complex data
+ * @return {object} hash of encoder functions with complex data
  * lookup suitable for use as d3 callbacks
  */
 const createEncoders = (s, dimensions, accessors) => {

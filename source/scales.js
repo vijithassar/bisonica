@@ -28,7 +28,7 @@ const defaultDimensions = { x: 0, y: 0 }
  * @param {function} scale scale function
  * @param {array} domain scale domain
  * @param {array} range scale range
- * @returns {function} scale function with mocked domain and range
+ * @return {function} scale function with mocked domain and range
  */
 const syntheticScale = (scale, domain, range) => {
 	return Object.assign(scale, { domain: () => domain, range: () => range })
@@ -38,7 +38,7 @@ const syntheticScale = (scale, domain, range) => {
  * parse scale types which have been explicitly specified
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {string|null}
+ * @return {string|null}
  */
 const explicitScale = (s, channel) => {
 	if (s.encoding[channel]?.scale === null) {
@@ -56,7 +56,7 @@ const explicitScale = (s, channel) => {
  * scale type lookup
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string} scale type
+ * @return {string} scale type
  */
 const scaleType = (s, channel) => {
 	return s.encoding[channel]?.scale?.type
@@ -67,7 +67,7 @@ const scaleType = (s, channel) => {
  * generate for a given dimension of visual encoding
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {string|null} d3 scale type
+ * @return {string|null} d3 scale type
  */
 const scaleMethod = (s, channel) => {
 	if (scaleType(s, channel) || s.encoding[channel]?.scale === null) {
@@ -104,7 +104,7 @@ const scaleMethod = (s, channel) => {
  * get the specified domain from a specification
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {array} domain
+ * @return {array} domain
  */
 const customDomain = (s, channel) => {
 	const domain = s.encoding[channel]?.scale?.domain
@@ -122,7 +122,7 @@ const customDomain = (s, channel) => {
  * sanitize channel name
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {number} number of data categories
+ * @return {number} number of data categories
  */
 const categoryCount = (s, channel) => {
 	let rangeProcessor
@@ -138,7 +138,7 @@ const categoryCount = (s, channel) => {
 /**
  * sanitize channel name
  * @param {string} channel encoding parameter
- * @returns {string} visual encoding channel
+ * @return {string} visual encoding channel
  */
 const channelRoot = channel => {
 	return channel.endsWith('2') ? channel.slice(0, -1) : channel
@@ -148,7 +148,7 @@ const channelRoot = channel => {
  * determine whether a scale starts at zero
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {boolean} whether to start the scale at zero
+ * @return {boolean} whether to start the scale at zero
  */
 const zero = (s, channel) => {
 	if (encodingType(s, channel) === 'temporal' || scaleType(s, channel) === 'log') {
@@ -164,7 +164,7 @@ const zero = (s, channel) => {
  * baseline for an axis
  * @param {object} s Vega Lite specification
  * @param {cartesian} channel visual encoding
- * @returns {number[]}
+ * @return {number[]}
  */
 const baseline = (s, channel) => {
 	return d3.min([0, ...values(s).map(encodingValue(s, channel))])
@@ -174,7 +174,7 @@ const baseline = (s, channel) => {
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {number[]|string[]} domain
+ * @return {number[]|string[]} domain
  */
 const domainBaseValues = (s, channel) => {
 	const type = encodingType(s, channel)
@@ -241,7 +241,7 @@ const domainBaseValues = (s, channel) => {
  * if they are included in the specification
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function(array)} domain adjustment function
+ * @return {function(array)} domain adjustment function
  */
 const adjustDomain = (s, channel) => {
 	const scale = s.encoding?.[channel]?.scale
@@ -263,7 +263,7 @@ const adjustDomain = (s, channel) => {
  * sort the domain
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {function(array)}
+ * @return {function(array)}
  */
 const domainSort = (s, channel) => {
 	if (!s.encoding[channel].sort || s.encoding[channel].sort === null) {
@@ -286,7 +286,7 @@ const domain = (s, channel) => {
  * compute cartesian range
  * @param {object} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @returns {function(object)} function which computes Cartesian range
+ * @return {function(object)} function which computes Cartesian range
  */
 const cartesianRange = (s, channel) => {
 	return dimensions => {
@@ -318,7 +318,7 @@ const cartesianRange = (s, channel) => {
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {string} _channel visual encoding
- * @returns {number[]} range
+ * @return {number[]} range
  */
 const range = (s, dimensions, _channel) => {
 	const channel = channelRoot(_channel)
@@ -393,7 +393,7 @@ const range = (s, dimensions, _channel) => {
  * specification's encoding section
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {object} hash of d3 scale functions
+ * @return {object} hash of d3 scale functions
  */
 const coreScales = (s, dimensions) => {
 	if (typeof s.encoding !== 'object') {
@@ -450,7 +450,7 @@ const coreScales = (s, dimensions) => {
  * will require scale functions beyond the ones listed directly
  * in the s's encoding section
  * @param {object} s Vega Lite specification
- * @returns {string[]} additional scale functions required
+ * @return {string[]} additional scale functions required
  */
 const detectScaleExtensions = s => {
 	const extensions = []
@@ -473,7 +473,7 @@ const detectScaleExtensions = s => {
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {object} scales a hash of the core scale functions
- * @returns {object} hash of extended d3 scale functions
+ * @return {object} hash of extended d3 scale functions
  */
 const extendScales = (s, dimensions, scales) => {
 	const extendedScales = { ...scales }
@@ -546,7 +546,7 @@ const _parseScales = (s, dimensions = defaultDimensions) => {
  * determine whether an encoding uses a time scale
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean}
+ * @return {boolean}
  */
 const isTemporalScale = (s, channel) => {
 	return ['time', 'utc'].includes(scaleType(s, channel))
@@ -556,7 +556,7 @@ const isTemporalScale = (s, channel) => {
  * determine whether an encoding uses an ordinal scale
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean}
+ * @return {boolean}
  */
 const isOrdinalScale = (s, channel) => {
 	return ['ordinal', 'point', 'band'].includes(scaleType(s, channel))
@@ -566,7 +566,7 @@ const isOrdinalScale = (s, channel) => {
  * determine whether an encoding uses an ordinal scale
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean}
+ * @return {boolean}
  */
 const isQuantitativeScale = (s, channel) => {
 	return ['linear', 'pow', 'sqrt', 'symlog', 'log'].includes(scaleType(s, channel))
@@ -576,7 +576,7 @@ const isQuantitativeScale = (s, channel) => {
  * generate all scale functions necessary to render a s
  * @param {object} s Vega Lite specification
  * @param {object} [dimensions] chart dimensions
- * @returns {object} hash of all necessary d3 scale functions
+ * @return {object} hash of all necessary d3 scale functions
  */
 const parseScales = memoize(_parseScales)
 

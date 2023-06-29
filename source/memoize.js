@@ -35,7 +35,7 @@ const memoizeKey = args => {
 /**
  * cache function results to avoid recomputation
  * @param {function} fn pure function to be cached
- * @returns {function} memoized function which caches return values
+ * @return {function} memoized function which caches return values
  */
 const memoize = fn => {
 	const cache = new Map()

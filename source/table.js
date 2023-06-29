@@ -14,7 +14,7 @@ import { values } from './values.js'
 /**
  * create the outer DOM for the table
  * @param {object} s Vega Lite specification
- * @returns {function(object)} table setup function
+ * @return {function(object)} table setup function
  */
 const setup = s => {
 	return selection => {
@@ -28,14 +28,14 @@ const setup = s => {
 /**
  * column headers
  * @param {object} s Vega Lite specification
- * @returns {string[]} array of column names
+ * @return {string[]} array of column names
  */
 const channels = s => deduplicateByField(s)(Object.keys(s.encoding))
 
 /**
  * column encoding fields
  * @param {object} s Vega Lite specification
- * @returns {string[]} array of column encoding fields
+ * @return {string[]} array of column encoding fields
  */
 const fields = s => {
 	const encodings = channels(s).map(channel => encodingField(s, channel))
@@ -47,7 +47,7 @@ const fields = s => {
 /**
  * create an ordered datum for data binding
  * @param {object} s datum
- * @returns {function(object)} function to convert a datum into key/value pairs
+ * @return {function(object)} function to convert a datum into key/value pairs
  */
 const columnEntries = s => {
 	return d => Object.entries(d)
@@ -57,7 +57,7 @@ const columnEntries = s => {
 /**
  * render table header
  * @param {object} s Vega Lite specification
- * @returns {function(object)} header renderer
+ * @return {function(object)} header renderer
  */
 const header = s => {
 	return selection => {
@@ -78,7 +78,7 @@ const header = s => {
 /**
  * render table rows
  * @param {object} s Vega Lite specification
- * @returns {function(object)} rows renderer
+ * @return {function(object)} rows renderer
  */
 const rows = s => {
 	return selection => {
@@ -107,7 +107,7 @@ const rows = s => {
 /**
  * compile options to pass to an external table renderer
  * @param {object} s Vega Lite specification
- * @returns {object} options for table rendering
+ * @return {object} options for table rendering
  */
 const tableOptions = s => {
 	return { data: { marks: markData(layerPrimary(s)) } }
@@ -117,7 +117,7 @@ const tableOptions = s => {
  * render table
  * @param {object} _s Vega Lite specification
  * @param {object} options table options
- * @returns {function(object)} table renderer
+ * @return {function(object)} table renderer
  */
 const table = (_s, options) => { // eslint-disable-line no-unused-vars
 	const s = layerPrimary(_s)
