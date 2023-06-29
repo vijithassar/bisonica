@@ -9,7 +9,7 @@ const datumPrefix = 'datum.'
 /**
  * create a function to perform a function execution
  * @param {string} str a calculate expression calling a single function
- * @returns {function} static function
+ * @return {function} static function
  */
 const functionExpression = str => {
 	const fns = {
@@ -24,7 +24,7 @@ const functionExpression = str => {
 /**
  * create a function to perform a single string interpolation
  * @param {string} str a calculate expression describing string interpolation
- * @returns {function(object)} string interpolation function
+ * @return {function(object)} string interpolation function
  */
 const concatenate = str => {
 	const segments = str
@@ -59,7 +59,7 @@ const concatenate = str => {
 /**
  * determine whether a string starts and ends with quotes
  * @param {string} string string, possibly a string literal
- * @returns {boolean}
+ * @return {boolean}
  */
 const isStringLiteral = string => {
 	return ['"', "'"]
@@ -72,7 +72,7 @@ const isStringLiteral = string => {
 /**
  * convert a predicate string expression to the equivalent object
  * @param {object} config predicate config with string expression
- * @returns {object} predicate config with object
+ * @return {object} predicate config with object
  */
 const expressionStringParse = config => {
 	if (!config.includes(' ')) {
@@ -99,7 +99,7 @@ const expressionStringParse = config => {
 /**
  * create a function to perform a single calculate expression
  * @param {string} str expression
- * @returns {function} expression evaluation function
+ * @return {function} expression evaluation function
  */
 const expression = str => {
 	if (str.slice(-2) === '()') {

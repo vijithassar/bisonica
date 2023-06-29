@@ -25,7 +25,7 @@ const defaultStyles = {}
  * measure the width of a text string
  * @param {string} text text string
  * @param {object} [styles] styles
- * @returns {number} string width
+ * @return {number} string width
  */
 const _measureText = (text, styles = defaultStyles) => {
 	// set styles
@@ -47,7 +47,7 @@ const measureText = memoize(_measureText)
  * extract font styles relevant to string width
  * from a DOM node
  * @param {object} node DOM node
- * @returns {object} hashmap of styles
+ * @return {object} hashmap of styles
  */
 const fontStyles = node => {
 	const fontStyleProperties = ['letter-spacing', 'font-size', 'font', 'font-weight']
@@ -70,7 +70,7 @@ const fontStyles = node => {
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {cartesian} channel encoding channel
- * @returns {function(string)} abbreviation function
+ * @return {function(string)} abbreviation function
  */
 const _abbreviate = (s, dimensions, channel) => {
 	return tick => {
@@ -99,7 +99,7 @@ const abbreviate = memoize(_abbreviate)
  * format axis tick label text
  * @param {object} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @returns {function(string)} formatting function
+ * @return {function(string)} formatting function
  */
 const format = (s, channel) => {
 	const formatter = encodingType(s, channel) === 'temporal' ? formatAxis(s, channel) : label => label.toString()
@@ -111,7 +111,7 @@ const format = (s, channel) => {
  * rotate axis tick label text
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {number} axis tick text rotation
+ * @return {number} axis tick text rotation
  */
 const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math.PI) / 180 || 0
 
@@ -126,7 +126,7 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * @param {string} text text to truncate
  * @param {number} limit maximum width
  * @param {object} [styles] styles to incorporate when measuring text width
- * @returns {string} truncated string
+ * @return {string} truncated string
  */
 const _truncate = (text, limit, styles = defaultStyles) => {
 	if (limit === 0) {
@@ -153,7 +153,7 @@ const truncate = memoize(_truncate)
  * @param {cartesian} channel axis dimension
  * @param {string} textContent text to process
  * @param {object} [styles] styles to incorporate when measuring text width
- * @returns {string} text processing function
+ * @return {string} text processing function
  */
 const _axisTicksLabelTextContent = (s, channel, textContent, styles = defaultStyles) => {
 	let text = textContent
@@ -173,7 +173,7 @@ const axisTicksLabelTextContent = memoize(_axisTicksLabelTextContent)
 /**
  * compute margin values based on chart type
  * @param {object} s Vega Lite specification
- * @returns {object} longest axis tick label text length in pixels
+ * @return {object} longest axis tick label text length in pixels
  */
 const _longestAxisTickLabelTextWidth = s => {
 	const scales = parseScales(s)
@@ -210,7 +210,7 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
  * render axis tick text
  * @param {object} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @returns {function(object)} text processing function
+ * @return {function(object)} text processing function
  */
 const axisTicksLabelText = (s, channel) => {
 	let styles = {}
@@ -231,7 +231,7 @@ const axisTicksLabelText = (s, channel) => {
 /**
  * format legend content as a readable string
  * @param {string[]|number[]} items domain
- * @returns {string} domain with string formatting
+ * @return {string} domain with string formatting
  */
 const list = items => {
 	if (items.length === 1) {

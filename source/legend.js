@@ -19,7 +19,7 @@ import { list } from './text.js'
 /**
  * color scale legend item
  * @param {object} config name and color
- * @returns {object} DOM node
+ * @return {object} DOM node
  */
 function createLegendItem(config) {
 	const item = d3.create('li')
@@ -42,7 +42,7 @@ function createLegendItem(config) {
 /**
  * look up the title of the legend
  * @param {object} s Vega Lite specification
- * @returns {string} legend title
+ * @return {string} legend title
  */
 const legendTitle = s => {
 	return s.encoding.color.legend?.title || s.encoding.color.title || encodingField(s, 'color')
@@ -51,7 +51,7 @@ const legendTitle = s => {
 /**
  * generate a written description for the legend
  * @param {object} s Vega Lite specification
- * @returns {string} legend description
+ * @return {string} legend description
  */
 const legendDescription = s => {
 	const description = s.encoding.color.legend?.description
@@ -65,7 +65,7 @@ const legendDescription = s => {
 /**
  * test whether a node is overflowing
  * @param {object} node DOM node
- * @returns {boolean}
+ * @return {boolean}
  */
 const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) => {
 	return scrollHeight > clientHeight || scrollWidth > clientWidth
@@ -80,7 +80,7 @@ const legendStyles = {
 /**
  * style the legend based on the specification
  * @param {object} s Vega Lite specification
- * @returns {function(object)} legend style renderer
+ * @return {function(object)} legend style renderer
  */
 const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
@@ -88,7 +88,7 @@ const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
  * legend item configuration
  * @param {object} s Vega Lite specification
  * @param {number} index item in legend
- * @returns {object} object describing the legend item
+ * @return {object} object describing the legend item
  */
 const itemConfig = (s, index) => {
 	const scales = parseScales(s)
@@ -104,7 +104,7 @@ const itemConfig = (s, index) => {
 /**
  * items to plot in swatch legend
  * @param {object} s Vega Lite specification
- * @returns {string[]} domain for legend
+ * @return {string[]} domain for legend
  */
 const swatches = s => {
 	return parseScales(s).color.domain()
@@ -116,7 +116,7 @@ const swatches = s => {
 /**
  * discrete swatch legend
  * @param {object} _s Vega Lite specification
- * @returns {function(object)} renderer
+ * @return {function(object)} renderer
  */
 const swatch = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
@@ -205,7 +205,7 @@ const swatch = _s => {
 /**
  * render chart legend
  * @param {object} s Vega Lite specification
- * @returns {function(object)} renderer
+ * @return {function(object)} renderer
  */
 const legend = s => {
 	if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {

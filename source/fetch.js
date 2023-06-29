@@ -12,7 +12,7 @@ const cache = new WeakMap()
 /**
  * retrieve data from the cache
  * @param {object} data data definition
- * @returns {object[]} data set
+ * @return {object[]} data set
  */
 const cached = data => {
 	if (data.url) {
@@ -23,7 +23,7 @@ const cached = data => {
 /**
  * fetch remote data
  * @param {object} data data definition
- * @returns {Promise<object[]>} data set
+ * @return {Promise<object[]>} data set
  */
 const fetch = data => {
 	const extensions = ['json', 'tsv', 'csv', 'dsv']

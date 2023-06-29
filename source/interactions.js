@@ -21,7 +21,7 @@ const charts = d3.local()
 /**
  * events to listen for
  * @param {object} s Vega Lite specification
- * @returns {string[]} list of event names
+ * @return {string[]} list of event names
  */
 const events = s => {
 	if (
@@ -64,7 +64,7 @@ const initializeInteractions = (node, s) => {
  * @param {object} s Vega Lite specification
  * @param {object} wrapper chart wrapper selection
  * @param {object} node current mark node
- * @returns {object} nodes
+ * @return {object} nodes
  */
 const interactionTargets = (s, wrapper, node) => {
 	const series = wrapper.select('.marks').selectAll('.series')
@@ -84,7 +84,7 @@ const interactionTargets = (s, wrapper, node) => {
 /**
  * determine selectors to which interactions are attached
  * @param {object} s Vega Lite specification
- * @returns {string} selector
+ * @return {string} selector
  */
 const markMouseoverSelector = s => {
 	return feature(s).isLine()
@@ -103,7 +103,7 @@ const handleUrl = url => {
 /**
  * attach event listeners to a layer
  * @param {object} s Vega Lite specification
- * @returns {function(object)} user interactions
+ * @return {function(object)} user interactions
  */
 const _interactions = s => {
 	const fn = wrapper => {

@@ -94,7 +94,7 @@ const _feature = s => {
 /**
  * use simple heuristics to determine features the chart type
  * @param {object} s Vega Lite specification
- * @returns {object} methods for boolean feature tests
+ * @return {object} methods for boolean feature tests
  */
 const feature = memoize(_feature)
 

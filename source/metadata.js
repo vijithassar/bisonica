@@ -14,7 +14,7 @@ const metadataChannels = ['description', 'tooltip', 'href']
 /**
  * test whether a specification has metadata
  * @param {object} s Vega Lite specification
- * @returns {boolean}
+ * @return {boolean}
  */
 const hasMetadata = s => {
 	return Object.keys(s.encoding).some(key => metadataChannels.includes(key))
@@ -25,7 +25,7 @@ const hasMetadata = s => {
  * @param {object} a object to compare
  * @param {object} b object to compare
  * @param {string[]} fields list of fields to compare
- * @returns {string[]} matching fields
+ * @return {string[]} matching fields
  */
 const matchingFields = (a, b, fields) => {
 	return fields.filter(field => a[field] === b[field])
@@ -35,7 +35,7 @@ const matchingFields = (a, b, fields) => {
  * create a function for looking up core encoding channels
  * and returning them as a string key suitable for indexing
  * @param {object} s Vega Lite specification
- * @returns {function(object)} convert datum to string key
+ * @return {function(object)} convert datum to string key
  */
 const createKeyBuilder = s => {
 	const delimiter = ' + '
@@ -59,7 +59,7 @@ const metadataFields = s => {
  * copy desired properties to a sanitized object
  * @param {object} object object with properties
  * @param {string[]} fields desired properties
- * @returns {object} object with only the desired properties
+ * @return {object} object with only the desired properties
  */
 const pick = (object, fields) => {
 	let result = {}
@@ -75,7 +75,7 @@ const pick = (object, fields) => {
  * determine which core encoding channels are
  * represented in a Vega Lite specification
  * @param {object} s Vega Lite specification
- * @returns {string[]} encoding channels
+ * @return {string[]} encoding channels
  */
 const coreEncodingChannels = s => {
 	let channels = []
@@ -92,7 +92,7 @@ const coreEncodingChannels = s => {
  * fields used to represent core
  * encoding channels
  * @param {object} s Vega Lite specification
- * @returns {string[]} encoding fields
+ * @return {string[]} encoding fields
  */
 const coreEncodingFields = s => {
 	return coreEncodingChannels(s).map(channel => encodingField(s, channel)).filter(Boolean)
@@ -103,7 +103,7 @@ const coreEncodingFields = s => {
  * @param {object} s Vega Lite specification
  * @param {object[]} data data set to count fields in
  * @param {function} createKey function to create a unique key per datum
- * @returns {object} metadata fields indexed by core field values
+ * @return {object} metadata fields indexed by core field values
  */
 const countFields = (s, data, createKey) => {
 	const counter = {}
@@ -133,7 +133,7 @@ const countFields = (s, data, createKey) => {
  * the data fields of interest for comparison
  * @param {object} s Vega Lite specification
  * @param {object} item datum
- * @returns {object} object with lookup fields at the top level
+ * @return {object} object with lookup fields at the top level
  */
 const lookupCircular = (s, item) => {
 	let result = {}
@@ -161,7 +161,7 @@ const lookupCircular = (s, item) => {
  * @param {string} series series key
  * @param {string} covariate covariate
  * @param {object} item datum
- * @returns {object} object with lookup fields at the top level
+ * @return {object} object with lookup fields at the top level
  */
 const lookupStack = (s, series, covariate, item) => {
 	let result = {}
@@ -187,7 +187,7 @@ const lookupStack = (s, series, covariate, item) => {
  * @param {string} series series key
  * @param {string} covariate covariate
  * @param {object} item datum
- * @returns {object} object with lookup fields at the top level
+ * @return {object} object with lookup fields at the top level
  */
 const lookupLine = (s, series, covariate, item) => {
 	let result = []
@@ -205,7 +205,7 @@ const lookupLine = (s, series, covariate, item) => {
  * @param {object} s Vega Lite specification
  * @param {object[]} aggregated aggregated data points
  * @param {object[]} raw individual data points
- * @returns {object[]} aggregated data points with transplanted field attached
+ * @return {object[]} aggregated data points with transplanted field attached
  */
 const transplantFields = (s, aggregated, raw) => {
 	const createKey = createKeyBuilder(s)
@@ -245,7 +245,7 @@ const transplantFields = (s, aggregated, raw) => {
  * transfer metadata from raw data points to aggregated data
  * @param {object} s Vega Lite specification
  * @param {object[]} data aggregated data for data join
- * @returns {object[]} aggregated data with metadata
+ * @return {object[]} aggregated data with metadata
  */
 const metadata = (s, data) => {
 	const aggregate = feature(s).isBar() || feature(s).isArea() || feature(s).isCircular() || feature(s).isLine()

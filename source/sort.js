@@ -18,7 +18,7 @@ const orders = ['ascending', 'descending']
 /**
  * determine whether a sort field is inverted
  * @param {string} sort field
- * @returns {boolean}
+ * @return {boolean}
  */
 const isInverted = sort => {
 	return sort[0] === '-'
@@ -28,7 +28,7 @@ const isInverted = sort => {
  * look up sorting field
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string} encoding parameter
+ * @return {string} encoding parameter
  */
 const _sortField = (s, channel) => {
 	const sort = s.encoding[channel]?.sort
@@ -59,7 +59,7 @@ const sortField = memoize(_sortField)
  * look up sorting direction
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string|null} sorting direction
+ * @return {string|null} sorting direction
  */
 const _sortOrder = (s, channel) => {
 	const sort = s.encoding[channel]?.sort
@@ -88,7 +88,7 @@ const sortOrder = memoize(_sortOrder)
  * look up the channel used for sorting
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {string} visual encoding channel used for sorting
+ * @return {string} visual encoding channel used for sorting
  */
 const _sortChannel = (s, channel) => {
 	return Object.entries(s.encoding).find(item => item[1].field === sortField(s, channel))[0]
@@ -99,7 +99,7 @@ const sortChannel = memoize(_sortChannel)
  * determine whether sort is ascending
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean} sorting direction is ascending
+ * @return {boolean} sorting direction is ascending
  */
 const isAscending = (s, channel) => {
 	return sortOrder(s, channel) === 'ascending'
@@ -109,7 +109,7 @@ const isAscending = (s, channel) => {
  * determine whether sort is descending
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {boolean} sorting direction is descending
+ * @return {boolean} sorting direction is descending
  */
 const isDescending = (s, channel) => {
 	return sortOrder(s, channel) === 'descending'
@@ -119,7 +119,7 @@ const isDescending = (s, channel) => {
  * extract the values to sort and resolve repeated values
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {object[]} array of data values to be sorted
+ * @return {object[]} array of data values to be sorted
  */
 const valuesToSort = (s, channel) => {
 	const getValue = encodingValue(s, channel)
@@ -175,7 +175,7 @@ const valuesToSort = (s, channel) => {
 /**
  * sort aggregated data for mark rendering
  * @param {object} s Vega Lite specification
- * @returns {function} sort comparator function
+ * @return {function} sort comparator function
  */
 const _sortMarkData = s => {
 	// just select the first matching encoding because
@@ -200,7 +200,7 @@ const sortMarkData = memoize(_sortMarkData)
  * select sort comparator function
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {string} sort comparator type
+ * @return {string} sort comparator type
  */
 const selectSorter = (s, channel) => {
 	const sort = s.encoding[channel]?.sort
@@ -227,7 +227,7 @@ const selectSorter = (s, channel) => {
  * of more elaborate sort functions
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} sort comparator function
+ * @return {function} sort comparator function
  */
 const selectComparator = (s, channel) => {
 	if (isAscending(s, channel)) {
@@ -243,7 +243,7 @@ const selectComparator = (s, channel) => {
  * wrapper for natural sort comparator
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} natural sort comparator function
+ * @return {function} natural sort comparator function
  */
 const sortNatural = (s, channel) => {
 	const comparator = selectComparator(s, channel)
@@ -257,7 +257,7 @@ const sortNatural = (s, channel) => {
  * field sort comparator
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} field sort comparator function
+ * @return {function} field sort comparator function
  */
 const sortByField = (s, channel) => {
 	const comparator = selectComparator(s, channel)
@@ -277,7 +277,7 @@ const sortByField = (s, channel) => {
  * encoding channel sort comparator
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} encoding channel sort comparator function
+ * @return {function} encoding channel sort comparator function
  */
 const sortByChannel = (s, channel) => {
 	const { sort } = s.encoding[channel]
@@ -307,7 +307,7 @@ const sortByChannel = (s, channel) => {
  * array sort comparator
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} array sort comparator function
+ * @return {function} array sort comparator function
  */
 const sortByArray = (s, channel) => {
 	const order = s.encoding[channel].sort
@@ -325,7 +325,7 @@ const sortByArray = (s, channel) => {
 
 /**
  * null sort comparator
- * @returns {function} noop sort comparator function
+ * @return {function} noop sort comparator function
  */
 const sortNone = () => () => 0
 
@@ -333,7 +333,7 @@ const sortNone = () => () => 0
  * create sort comparator function
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @returns {function} sort comparator
+ * @return {function} sort comparator
  */
 const _sorter = (s, channel) => {
 	try {

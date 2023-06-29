@@ -12,7 +12,7 @@ import * as d3 from 'd3'
 /**
  * create a time formatting function
  * @param {object|undefined} format d3 time format string
- * @returns {function(Date)} date formatting function
+ * @return {function(Date)} date formatting function
  */
 const timeFormat = format => {
 	if (!format) {
@@ -24,7 +24,7 @@ const timeFormat = format => {
 /**
  * create a time formatting function in UTC
  * @param {object|undefined} format d3 time format string
- * @returns {function(Date)} UTC date formatting function
+ * @return {function(Date)} UTC date formatting function
  */
 const utcFormat = format => {
 	if (!format) {
@@ -36,7 +36,7 @@ const utcFormat = format => {
 /**
  * create a number formatting function
  * @param {object|undefined} format d3 number format string
- * @returns {function(number)} number formatting function
+ * @return {function(number)} number formatting function
  */
 const numberFormat = format => {
 	if (!format) {
@@ -48,7 +48,7 @@ const numberFormat = format => {
 /**
  * create a formatting function
  * @param {object} config encoding or axis definition object
- * @returns {function} formatting function
+ * @return {function} formatting function
  */
 const _format = config => {
 	if (!config || (!config.format && !config.axis?.format)) {

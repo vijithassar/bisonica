@@ -21,7 +21,7 @@ import { values } from './values.js'
  * across layers
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding parameter
- * @returns {string} encoding type
+ * @return {string} encoding type
  */
 const unionEncodingTypes = (s, channel) => {
 	const types = s.layer.map(layer => layer.encoding?.[channel]?.type).filter(type => !!type)
@@ -34,7 +34,7 @@ const unionEncodingTypes = (s, channel) => {
 /**
  * determine whether a data set is empty
  * @param {object} data data set
- * @returns {boolean} empty
+ * @return {boolean} empty
  */
 const emptyData = data => {
 	if (!data) {
@@ -49,7 +49,7 @@ const emptyData = data => {
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
  * @param {'domain'|'range'} valueType value type
- * @returns {array} unified set of scale values
+ * @return {array} unified set of scale values
  */
 const unionScaleValues = (s, channel, valueType) => {
 	const layers = s.layer
@@ -101,7 +101,7 @@ const unionScaleValues = (s, channel, valueType) => {
  * compute a unified data domain across all layers
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {array} unified domain
+ * @return {array} unified domain
  */
 const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain')
 
@@ -109,7 +109,7 @@ const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain')
  * compute a unified data range across all layers
  * @param {object} s Vega Lite specification
  * @param {string} channel visual encoding
- * @returns {array} unified range
+ * @return {array} unified range
  */
 const unionRanges = (s, channel) => unionScaleValues(s, channel, 'range')
 
@@ -117,7 +117,7 @@ const unionRanges = (s, channel) => unionScaleValues(s, channel, 'range')
  * test all layers with a predicate function
  * @param {object} s Vega Lite specification
  * @param {function} test predicate function
- * @returns {boolean} recursive test result
+ * @return {boolean} recursive test result
  */
 const layerTest = (s, test) => {
 	if (!s.layer) {
@@ -134,7 +134,7 @@ const layerTest = (s, test) => {
  * which matches a predicate function return it
  * @param {object} s Vega Lite specification
  * @param {function} test predicate function
- * @returns {object} Vega Lite specification for a single layer
+ * @return {object} Vega Lite specification for a single layer
  */
 const layerMatch = (s, test) => {
 	if (!s.layer && test(s)) {
@@ -154,7 +154,7 @@ const layerMatch = (s, test) => {
  * for global functionality like axes and margins across the
  * entire chart
  * @param {object} s Vega Lite specification
- * @returns {object} layer specification
+ * @return {object} layer specification
  */
 const _layerPrimary = s => {
 	if (!s.layer) {
@@ -203,7 +203,7 @@ const layerPrimary = memoize(_layerPrimary)
  * specification
  * @param {object} s Vega Lite layer specification
  * @param {object} wrapper chart wrapper node
- * @returns {object} DOM element
+ * @return {object} DOM element
  */
 const layerNode = (s, wrapper) => {
 	const layers = d3.select(wrapper).selectAll('g.layer')
@@ -223,7 +223,7 @@ const layerNode = (s, wrapper) => {
  * single layer of a multilayer specification
  * @param {object} s Vega Lite specification
  * @param {number} index index of the target layer
- * @returns {object} Vega Lite specification for a single layer
+ * @return {object} Vega Lite specification for a single layer
  */
 const layerSpecification = (s, index) => {
 	if (index === undefined) {
@@ -295,7 +295,7 @@ const layerSpecification = (s, index) => {
  * render layers of a specification
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @returns {function(object)} layer renderer
+ * @return {function(object)} layer renderer
  */
 const layerMarks = (s, dimensions) => {
 	if (!s.layer.length) {
@@ -327,7 +327,7 @@ const layerMarks = (s, dimensions) => {
  * level specification and any layers it contains
  * @param {object} s Vega Lite specification
  * @param {function} test predicate function
- * @returns {boolean} recursive test result
+ * @return {boolean} recursive test result
  */
 const layerTestRecursive = (s, test) => {
 	return test(s) || layerTest(s, test)
@@ -337,7 +337,7 @@ const layerTestRecursive = (s, test) => {
  * run a function with selection.call() across multiple layers
  * @param {object} s Vega Lite specification
  * @param {function} fn function
- * @returns {function(object)}
+ * @return {function(object)}
  */
 const layerCall = (s, fn) => {
 	const layers = s.layer ? s.layer.map((_, index) => layerSpecification(s, index)) : [s]

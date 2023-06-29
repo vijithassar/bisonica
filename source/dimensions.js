@@ -18,7 +18,7 @@ const channels = {
  * @param {object} s Vega Lite specification
  * @param {HTMLElement} node DOM node
  * @param {object} [explicitDimensions] chart dimensions
- * @returns {object} chart dimensions
+ * @return {object} chart dimensions
  */
 const dimensions = (s, node, explicitDimensions) => {
 	let result = { x: null, y: null }

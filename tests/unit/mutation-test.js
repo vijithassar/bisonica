@@ -8,7 +8,7 @@ const { module, test } = qunit
 /**
  * recursively freeze a nested object
  * @param {object} object object to be frozen
- * @returns {object} frozen object
+ * @return {object} frozen object
  */
 const freeze = object => {
 	const propNames = Object.getOwnPropertyNames(object)
