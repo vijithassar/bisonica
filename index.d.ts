@@ -1,1 +1,1 @@
-export function chart(s: object, panelDimensions?: {x: number, y: number}): Function;
+export function chart(s: object, dimensions?: {x: number, y: number}): Function;
