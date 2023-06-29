@@ -203,7 +203,6 @@ const polarToCartesian = (radius, angle) => {
  * this will not work properly if the rendering function
  * depends on accurate DOM measurements or reflow, such as
  * by using scrollTop or .getBoundingClientRect()
- *
  * @return {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {

@@ -122,7 +122,6 @@ const rotation = (s, channel) => (s.encoding?.[channel]?.axis?.labelAngle * Math
  * because the string length computation is expensive
  * so it's particularly helpful to be able to memoize
  * all the arguments at once.
- *
  * @param {string} text text to truncate
  * @param {number} limit maximum width
  * @param {object} [styles] styles to incorporate when measuring text width
