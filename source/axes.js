@@ -163,9 +163,7 @@ const createX = (s, dimensions) => {
 
 		axis.ticks(ticks(s, 'x'))
 
-		// removing axis ticks for bar charts makes the text labels
-		// appear to label the bars directly
-		if (feature(s).isBar()) {
+		if (feature(s).isBar() && isDiscrete(s, 'x')) {
 			axis.tickSize(0)
 		}
 
@@ -204,6 +202,10 @@ const createY = (s, dimensions) => {
 		const axis = d3.axisLeft(scales.y)
 
 		axis.ticks(ticks(s, 'y'))
+
+		if (feature(s).isBar() && isDiscrete(s, 'y')) {
+			axis.tickSize(0)
+		}
 
 		const yAxis = selection
 			.append('g')
