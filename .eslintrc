@@ -28,7 +28,10 @@
         "no-return-assign": "off",
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "no-unused-vars": ["error", {"destructuredArrayIgnorePattern": "^_"}],
-        "no-prototype-builtins": "off"
+        "no-prototype-builtins": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
+        "jsdoc/require-returns-description": "off"
     },
     "settings": {
         "jsdoc": {
