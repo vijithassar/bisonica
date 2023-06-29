@@ -228,9 +228,10 @@ const detach = (fn, ...rest) => {
 
 /**
  * alias methods from a source onto a target
- * @param {string[]} methods
- * @param {object|function} source
- * @param {object|function} target
+ * @param {string[]} methods list of method names
+ * @param {object|function} source object or function providing methods to copy
+ * @param {object|function} target object or function receiving copied methods
+ * @return {object|function} object or function with copied methods
  */
 const copyMethods = (methods, source, target) => {
 	methods.forEach(method => {
