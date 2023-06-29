@@ -1,9 +1,12 @@
 {
-    "extends": "standard",
+    "extends": ["standard", "plugin:jsdoc/recommended-error"],
     "parserOptions": {
         "ecmaVersion": 2022,
         "sourceType": "module"
     },
+    "plugins": [
+        "jsdoc"
+    ],
     "env": {
         "browser": true,
         "es6": true
@@ -25,6 +28,17 @@
         "no-return-assign": "off",
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "no-unused-vars": ["error", {"destructuredArrayIgnorePattern": "^_"}],
-        "no-prototype-builtins": "off"
+        "no-prototype-builtins": "off",
+        "jsdoc/require-returns": "off",
+        "jsdoc/require-returns-check": "off",
+        "jsdoc/require-returns-description": "off",
+        "jsdoc/check-types": "off",
+        "jsdoc/valid-types": "off",
+        "jsdoc/no-undefined-types": "off"
+    },
+    "settings": {
+        "jsdoc": {
+            "mode": "permissive"
+        }
     }
 }
