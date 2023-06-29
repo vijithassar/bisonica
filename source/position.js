@@ -34,7 +34,7 @@ const marginCircular = () => {
 /**
  * compute margin for Cartesian chart axis ticks
  * @param {object} s Vega Lite specification
- * @returns {object} D3 margin convention object
+ * @returns {object} partial margin convention object
  */
 const tickMargin = s => {
 	const textLabels = longestAxisTickLabelTextWidth(s)
@@ -58,7 +58,7 @@ const tickMargin = s => {
 /**
  * compute margin for Cartesian chart axis title
  * @param {object} s Vega Lite specification
- * @returns {object} D3 margin convention object
+ * @returns {{bottom: number, left: number}} partial margin convention object
  */
 const titleMargin = s => {
 	return {
