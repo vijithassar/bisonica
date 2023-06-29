@@ -119,31 +119,36 @@ const tickText = (s, channel) => {
 }
 
 /**
- * y axis positions
+ * axis positions
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {{x: number, y: number}} y axis positions
+ * @return {function('x'|'y')} y axis positions
  */
-const axisOffsetY = (s, dimensions) => {
-	const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
-	const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
-	const x = shift ? bar * 0.5 : 0
-
-	let y
-	const scales = parseScales(s, dimensions)
-	const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
-	if (scales.y) {
-		y = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
-		y += temporalBarOffsetY
-	} else {
-		if (feature(s).isBar() && !feature(s).hasEncodingY()) {
-			y = barWidth(s, dimensions)
-		} else {
-			y = 0
+const axisOffset = (s, dimensions) => {
+	return channel => {
+		if (channel !== 'y') {
+			throw new Error(`cannot compute axis offset for channel ${channel}`)
 		}
-	}
+		const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
+		const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
+		const x = shift ? bar * 0.5 : 0
 
-	return { x, y }
+		let y
+		const scales = parseScales(s, dimensions)
+		const temporalBarOffsetY = feature(s).isTemporalBar() && encodingChannelCovariate(s) === 'y' ? barWidth(s, dimensions) : 0
+		if (scales.y) {
+			y = isDiscrete(s, 'y') || encodingType(s, 'y') === 'temporal' ? scales.y.range().pop() : scales.y.range()[0]
+			y += temporalBarOffsetY
+		} else {
+			if (feature(s).isBar() && !feature(s).hasEncodingY()) {
+				y = barWidth(s, dimensions)
+			} else {
+				y = 0
+			}
+		}
+
+		return { x, y }
+	}
 }
 
 /**
@@ -184,7 +189,7 @@ const createX = (s, dimensions) => {
 		selection.call(tickText(s, 'x'))
 
 		selection.attr('transform', () => {
-			const { x, y } = axisOffsetY(s, dimensions)
+			const { x, y } = axisOffset(s, dimensions)('y')
 			return `translate(${x},${y})`
 		})
 
@@ -254,7 +259,7 @@ const axisTitleX = (s, dimensions) => {
 
 					return yPosition
 				})
-				.attr('transform', `translate(0,${axisOffsetY(s, dimensions).y})`)
+				.attr('transform', `translate(0,${axisOffset(s, dimensions)('y').y})`)
 				.text(titleText(s, 'x'))
 				.call(axisTitleStyles(s, 'x'))
 		}
