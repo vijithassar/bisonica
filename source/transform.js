@@ -23,7 +23,7 @@ const calculate = str => expression(str)
 /**
  * compose all calculate transforms
  * into a single function
- * @param {object[]} transforms
+ * @param {object[]} transforms transform configuration objects
  * @return {function(object)}
  */
 const _composeCalculateTransforms = transforms => {

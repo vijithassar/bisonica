@@ -65,6 +65,7 @@ const convertToTestSelector = selector => {
 
 /**
  * add test selector attributes
+ * @param {object} selection d3 selection
  */
 const testAttributes = selection => {
 	selectors.forEach(selector => {

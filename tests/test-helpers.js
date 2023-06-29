@@ -38,6 +38,13 @@ const nodesHavePositiveHeights = nodes =>
 		return Number(node.getAttribute('height')) >= 0
 	})
 
+/**
+ * retrieve a static prefabricated
+ * Vega Lite specification to use
+ * for tests
+ * @param {string} type chart type
+ * @return {object} Vega Lite specification
+ */
 function specificationFixture(type) {
 	let spec
 

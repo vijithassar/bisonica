@@ -58,7 +58,7 @@ const minorExponential = root => {
 
 /**
  * play a note
- * @param {number} frequency
+ * @param {number} frequency audio frequency
  * @param {number} start start time
  */
 const note = (frequency, start) => {

@@ -165,7 +165,7 @@ const key = (s, direction) => {
 
 /**
  * prevent page from scrolling
- * @return {object} key event
+ * @param {object} event event
  */
 const stopScroll = event => {
 	if (event.key !== 'Tab') {

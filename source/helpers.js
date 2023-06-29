@@ -39,9 +39,11 @@ const datum = (s, d) => {
 }
 
 /**
- * look up a value from an object using dot notation
+ * look up a value from an object using dot notation or
+ * set to a new value
  * @param {object} d datum
  * @param {string} key multiple dot-delimited lookup keys
+ * @param {string|number|null|object} [newValue] new value to set
  */
 const nested = function(d, key, newValue) {
 	let keys = key.split('.').reverse()
@@ -139,6 +141,9 @@ const noop = () => {
 
 /**
  * returns the input; occasionally useful for composition
+ * @template T
+ * @param {T} x input
+ * @return {T} output
  */
 const identity = x => x
 
@@ -203,6 +208,8 @@ const polarToCartesian = (radius, angle) => {
  * this will not work properly if the rendering function
  * depends on accurate DOM measurements or reflow, such as
  * by using scrollTop or .getBoundingClientRect()
+ * @param {function(object): void} fn rendering function
+ * @param {array} [rest] additional arguments to rendering function
  * @return {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {
@@ -223,9 +230,10 @@ const detach = (fn, ...rest) => {
 
 /**
  * alias methods from a source onto a target
- * @param {string[]} methods
- * @param {object|function} source
- * @param {object|function} target
+ * @param {string[]} methods list of method names
+ * @param {object|function} source object or function providing methods to copy
+ * @param {object|function} target object or function receiving copied methods
+ * @return {object|function} object or function with copied methods
  */
 const copyMethods = (methods, source, target) => {
 	methods.forEach(method => {
@@ -236,7 +244,7 @@ const copyMethods = (methods, source, target) => {
 /**
  * convert kebab-case string to camelCase
  * @param {string} kebab kebab case string
- * @return camelCase string
+ * @return {string} camelCase string
  */
 const kebabToCamel = kebab => {
 	return kebab
