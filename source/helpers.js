@@ -43,6 +43,7 @@ const datum = (s, d) => {
  * set to a new value
  * @param {object} d datum
  * @param {string} key multiple dot-delimited lookup keys
+ * @param {string|number|null|object} [newValue] new value to set
  */
 const nested = function(d, key, newValue) {
 	let keys = key.split('.').reverse()
