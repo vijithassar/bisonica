@@ -6,6 +6,8 @@
  * @see {@link https://vega.github.io/vega-lite/docs/scale.html|vega-lite:scale}
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 import { data, stackOffset, sumByCovariates } from './data.js'
 import { values } from './values.js'
@@ -314,7 +316,7 @@ const cartesianRange = (s, channel) => {
 /**
  * compute scale range
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @param {string} _channel visual encoding
  * @returns {number[]} range
  */
@@ -390,7 +392,7 @@ const range = (s, dimensions, _channel) => {
  * generate scale functions described by the
  * specification's encoding section
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {object} hash of d3 scale functions
  */
 const coreScales = (s, dimensions) => {
@@ -469,7 +471,7 @@ const detectScaleExtensions = s => {
  * generate additional necessary scale functions beyond those
  * described in the s's encoding section
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @param {object} scales a hash of the core scale functions
  * @returns {object} hash of extended d3 scale functions
  */

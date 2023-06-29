@@ -3,6 +3,8 @@
  * @module position
  */
 
+import './types.d.js'
+
 import { GRID, WRAPPER_CLASS } from './config.js'
 import { feature } from './feature.js'
 import { longestAxisTickLabelTextWidth, rotation } from './text.js'
@@ -111,7 +113,7 @@ const margin = memoize(_margin)
 /**
  * transform string for positioning charts
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} positioning function
  */
 const position = (s, dimensions) => {

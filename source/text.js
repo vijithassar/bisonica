@@ -3,6 +3,8 @@
  * @module text
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 import { MINIMUM_TICK_COUNT } from './config.js'
 import { encodingType } from './encodings.js'
@@ -66,7 +68,7 @@ const fontStyles = node => {
 /**
  * abbreviate axis tick label text
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @param {'x'|'y'} channel encoding channel
  * @returns {function(string)} abbreviation function
  */

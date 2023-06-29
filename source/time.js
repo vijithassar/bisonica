@@ -3,6 +3,8 @@
  * @module time
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js'
 import { memoize } from './memoize.js'
@@ -135,7 +137,7 @@ const timePeriod = (s, channel) => {
  * alter dimensions object to subtract the bar width
  * for a temporal bar chart
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {object} chart dimensions with bar width offset
  */
 const temporalBarDimensions = (s, dimensions) => {

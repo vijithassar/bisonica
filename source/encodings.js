@@ -6,6 +6,8 @@
  * @see {@link https://vega.github.io/vega-lite/docs/encoding.html|vega-lite:encoding}
  */
 
+import './types.d.js'
+
 import { feature } from './feature.js'
 import { memoize } from './memoize.js'
 import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'
@@ -207,7 +209,7 @@ const encodingChannelCovariateCartesian = s => {
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
  * @param {function} accessor accessor function
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} encoder function
  */
 const _encoder = (s, channel, accessor, dimensions) => {

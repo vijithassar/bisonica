@@ -4,6 +4,8 @@
  * @see {@link https://vega.github.io/vega-lite/docs/axis.html|vega-lite:axis}
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 
 import { axisTicksLabelText, rotation, truncate } from './text.js'
@@ -119,7 +121,7 @@ const tickText = (s, channel) => {
 /**
  * y axis positions
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {object} y axis positions
  */
 const axisOffsetY = (s, dimensions) => {
@@ -147,7 +149,7 @@ const axisOffsetY = (s, dimensions) => {
 /**
  * create x axis
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} x axis creator
  */
 const createX = (s, dimensions) => {
@@ -189,7 +191,7 @@ const createX = (s, dimensions) => {
 /**
  * create y axis
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} y axis creator
  */
 const createY = (s, dimensions) => {
@@ -216,7 +218,7 @@ const createY = (s, dimensions) => {
 /**
  * render x axis title
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} x axis title renderer
  */
 const axisTitleX = (s, dimensions) => {
@@ -246,7 +248,7 @@ const axisTitleX = (s, dimensions) => {
 /**
  * render y axis title
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} y axis title renderer
  */
 const axisTitleY = (s, dimensions) => {
@@ -274,7 +276,7 @@ const axisTitleY = (s, dimensions) => {
 /**
  * extend ticks across the chart
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} y axis tick extension adjustment function
  */
 const axisTicksExtensionY = (s, dimensions) => {
@@ -294,7 +296,7 @@ const axisTicksExtensionY = (s, dimensions) => {
 /**
  * adjust y axis tick rotation based on a live DOM node
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} y axis tick rotation adjustment function
  */
 const axisTicksRotationY = (s, dimensions) => {
@@ -338,7 +340,7 @@ const axisTicksRotationX = s => {
 /**
  * adjust axis titles based on a live DOM node
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} axis title adjustment function
  */
 const axisTitles = (s, dimensions) => {
@@ -351,7 +353,7 @@ const axisTitles = (s, dimensions) => {
 /**
  * adjust axis ticks based on a live DOM node
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} axis tick adjustment function
  */
 const axisTicks = (s, dimensions) => {
@@ -407,7 +409,7 @@ const axisTicksStyles = (s, channel) => {
 /**
  * run functions that require a live DOM node
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} axis adjustment function
  */
 const postAxisRender = (s, dimensions) => {
@@ -422,7 +424,7 @@ const postAxisRender = (s, dimensions) => {
 /**
  * render chart axes
  * @param {object} _s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} renderer
  */
 const axes = (_s, dimensions) => {
