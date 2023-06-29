@@ -3,6 +3,8 @@
  * @module chart
  */
 
+import './types.d.js'
+
 import { WRAPPER_CLASS } from './config.js'
 import { audio } from './audio.js'
 import { axes } from './axes.js'
@@ -26,7 +28,7 @@ import { menu } from './menu.js'
  * generate chart rendering function based on
  * a Vega Lite specification
  * @param {object} s Vega Lite specification
- * @param {object} [_panelDimensions] chart dimensions
+ * @param {dimensions} [_panelDimensions] chart dimensions
  * @returns {function(object)} renderer
  */
 const render = (s, _panelDimensions) => {
@@ -130,7 +132,7 @@ const render = (s, _panelDimensions) => {
  * convert a synchronous rendering function
  * into an asynchronous rendering function
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} asynchronous rendering function
  */
 const asyncRender = (s, dimensions) => {
@@ -149,7 +151,7 @@ const asyncRender = (s, dimensions) => {
  * optionally fetch remote data, then create and run
  * a chart rendering function
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} renderer
  */
 const chart = (s, dimensions) => {

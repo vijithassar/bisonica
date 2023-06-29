@@ -4,6 +4,8 @@
  * @see {@link https://vega.github.io/vega-lite/docs/composition.html|vega-lite:composition}
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 import { feature } from './feature.js'
 
@@ -292,7 +294,7 @@ const layerSpecification = (s, index) => {
 /**
  * render layers of a specification
  * @param {object} s Vega Lite specification
- * @param {object} dimensions chart dimensions
+ * @param {dimensions} dimensions chart dimensions
  * @returns {function(object)} layer renderer
  */
 const layerMarks = (s, dimensions) => {
