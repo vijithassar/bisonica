@@ -151,7 +151,7 @@ const asyncRender = (s, dimensions) => {
  * optionally fetch remote data, then create and run
  * a chart rendering function
  * @param {object} s Vega Lite specification
- * @param {dimensions} dimensions chart dimensions
+ * @param {dimensions} [dimensions] chart dimensions
  * @return {function(object)} renderer
  */
 const chart = (s, dimensions) => {
