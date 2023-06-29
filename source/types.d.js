@@ -6,5 +6,6 @@
 */
 
 /**
+* encoding channel in cartesian space
 * @typedef {'x'|'y'} cartesian
 */

@@ -3,6 +3,8 @@
  * @module descriptions
  */
 
+import './types.d.js'
+
 import * as d3 from 'd3'
 import { datum, identity, isContinuous } from './helpers.js'
 import {
@@ -233,7 +235,7 @@ const chartLabel = s => {
 /**
  * text description of axis values
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {string} values description
  */
 const axisValuesText = (s, channel) => {
@@ -256,7 +258,7 @@ const scaleDescriptions = {
 /**
  * written description of a scale
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {string} scale description
  */
 const scaleDescription = (s, channel) => {
@@ -276,7 +278,7 @@ const scaleDescription = (s, channel) => {
 /**
  * written description of an axis
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {string} axis description
  */
 const axisDescription = (s, channel) => {

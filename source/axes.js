@@ -79,7 +79,7 @@ const ticks = (s, channel) => {
 /**
  * retrieve axis title
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {string} title
  */
 const axisTitle = (s, channel) => {
@@ -90,7 +90,7 @@ const axisTitle = (s, channel) => {
 /**
  * retrieve axis title and possibly truncate
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {string} title text, potentially truncated
  */
 const titleText = (s, channel) => {
@@ -102,7 +102,7 @@ const titleText = (s, channel) => {
 /**
  * render axis tick text content
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {function(object)} tick text renderer
  */
 const tickText = (s, channel) => {

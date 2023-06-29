@@ -163,7 +163,7 @@ const zero = (s, channel) => {
 /**
  * baseline for an axis
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel visual encoding
+ * @param {cartesian} channel visual encoding
  * @returns {number[]}
  */
 const baseline = (s, channel) => {
@@ -285,7 +285,7 @@ const domain = (s, channel) => {
 /**
  * compute cartesian range
  * @param {object} s Vega Lite specification
- * @param {'x'|'y'} channel encoding channel
+ * @param {cartesian} channel encoding channel
  * @returns {function(object)} Cartsian range
  */
 const cartesianRange = (s, channel) => {
