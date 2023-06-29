@@ -65,6 +65,10 @@ const legendDescription = s => {
 /**
  * test whether a node is overflowing
  * @param {object} node DOM node
+ * @param {number} node.clientWidth client width
+ * @param {number} node.clientHeight client height
+ * @param {number} node.scrollWidth scroll width
+ * @param {number} node.scrollHeight scroll height
  * @return {boolean}
  */
 const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) => {
