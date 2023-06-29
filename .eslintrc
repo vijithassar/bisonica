@@ -29,5 +29,10 @@
         "no-console": ["error", { "allow": ["warn", "error"] }],
         "no-unused-vars": ["error", {"destructuredArrayIgnorePattern": "^_"}],
         "no-prototype-builtins": "off"
+    },
+    "settings": {
+        "jsdoc": {
+            "mode": "permissive"
+        }
     }
 }
