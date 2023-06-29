@@ -141,6 +141,9 @@ const noop = () => {
 
 /**
  * returns the input; occasionally useful for composition
+ * @template T
+ * @param {T} x input
+ * @return {T} output
  */
 const identity = x => x
 
