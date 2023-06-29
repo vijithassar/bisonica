@@ -286,7 +286,7 @@ const domain = (s, channel) => {
  * compute cartesian range
  * @param {object} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @returns {function(object)} Cartsian range
+ * @returns {function(object)} function which computes Cartesian range
  */
 const cartesianRange = (s, channel) => {
 	return dimensions => {
