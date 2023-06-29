@@ -39,7 +39,8 @@ const datum = (s, d) => {
 }
 
 /**
- * look up a value from an object using dot notation
+ * look up a value from an object using dot notation or
+ * set to a new value
  * @param {object} d datum
  * @param {string} key multiple dot-delimited lookup keys
  */
