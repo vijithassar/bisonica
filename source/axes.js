@@ -11,7 +11,7 @@ import * as d3 from 'd3'
 import { axisTicksLabelText, rotation, truncate } from './text.js'
 import { barWidth } from './marks.js'
 import { degrees, detach, isDiscrete, noop } from './helpers.js'
-import { encodingChannelCovariate, encodingChannelQuantitative, encodingType } from './encodings.js'
+import { encodingChannelCovariate, encodingType } from './encodings.js'
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
@@ -283,12 +283,10 @@ const axisTitleY = (s, dimensions) => {
  */
 const axisTicksExtensionY = (s, dimensions) => {
 	return selection => {
-		if ((feature(s).isBar() || feature(s).isLine()) && encodingChannelQuantitative(s) === 'y' && feature(s).hasEncodingX()) {
+		if (encodingType(s, 'y') === 'quantitative' && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
 			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
 			selection
-				.select('.y .axis')
-				.selectAll('.tick')
 				.select('line')
 				.attr('x1', tickEnd)
 		}

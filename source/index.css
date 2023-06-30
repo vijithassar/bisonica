@@ -159,6 +159,8 @@ path.mark {
 
 .axes .title {
   text-anchor: middle;
+  font-weight: bold;
+  fill: var(--dark);
 }
 
 .axes:not(.angled) .x .tick text {
@@ -167,6 +169,10 @@ path.mark {
 
 .axes .axis.nominal.angled .tick text {
   text-anchor: end;
+}
+
+.axis.quantitative .tick line {
+  stroke: var(--light);
 }
 
 .play {
