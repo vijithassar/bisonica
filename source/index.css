@@ -58,7 +58,6 @@ path.mark {
 }
 
 .chart .legend {
-  color: var(--primary);
   text-align: center;
 }
 
@@ -69,7 +68,6 @@ path.mark {
 }
 
 .mark.rule {
-  stroke: var(--annotation);
   stroke-width: 1px;
 }
 
@@ -83,7 +81,6 @@ path.mark {
 }
 
 .legend ul.items-more {
-  background-color: var(--background);
   bottom: 0.2em;
   padding: 0.5em;
   position: absolute;
