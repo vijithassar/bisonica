@@ -169,6 +169,10 @@ path.mark {
   text-anchor: end;
 }
 
+.axis.quantitative .tick line {
+  stroke: var(--light);
+}
+
 .play {
   font-size: x-small;
   padding: 0.1em 0.3em;
