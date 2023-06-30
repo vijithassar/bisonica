@@ -159,6 +159,8 @@ path.mark {
 
 .axes .title {
   text-anchor: middle;
+  font-weight: bold;
+  fill: var(--dark);
 }
 
 .axes:not(.angled) .x .tick text {
