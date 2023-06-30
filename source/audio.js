@@ -21,7 +21,7 @@ const duration = 60 / tempo / 2
 const temperament = Math.pow(2, 1 / 12)
 
 /**
- * gneerate frequencies for a chromatic scale
+ * generate frequencies for a chromatic scale
  * @param {number} root root frequency
  * @return {number[]} chromatic audio scale
  */
