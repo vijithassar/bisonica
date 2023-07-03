@@ -4,6 +4,7 @@
  * @see {@link module:download}
  */
 
+import * as d3 from 'd3'
 import { feature } from './feature.js'
 import { extension } from './extensions.js'
 import { key } from './helpers.js'
@@ -29,6 +30,7 @@ const items = s => {
 	return [
 		download?.csv !== false ? item(s, 'csv') : null,
 		download?.json !== false ? item(s, 'json') : null,
+		feature(s).hasTable() ? { text: 'table' } : null,
 		...(extension(s, 'menu')?.items ? extension(s, 'menu')?.items : [])
 	].filter(Boolean)
 }
@@ -47,11 +49,15 @@ const menu = s => {
 			.data(items(s))
 			.enter()
 			.append('li')
-			.attr('data-menu', item => key(item.text))
+			.attr('data-menu', item => item ? key(item.text) : null)
 			.classed('item', true)
-			.append('a')
-			.text(item => item.text)
-			.attr('href', item => item.href)
+			.each(function(item) {
+				const tag = item.href ? 'a' : 'button'
+				d3.select(this)
+					.append(tag)
+					.text(item => item.text)
+					.attr('href', item.href ? item.href : null)
+			})
 	}
 }
 
