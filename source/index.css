@@ -1,3 +1,11 @@
+.chart {
+  --border: white;
+  --highlight: red;
+  --light: #ccc;
+  --medium: #888;
+  --dark: #444;
+}
+
 .legend {
   max-height: 12em;
   overflow: hidden;
