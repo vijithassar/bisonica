@@ -210,3 +210,7 @@ table td div {
   margin-left: 0.5rem;
   display: inline-block;
 }
+
+[data-highlight] {
+  stroke: var(--highlight);
+}
