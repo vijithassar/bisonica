@@ -40,6 +40,7 @@ svg .wrapper text.mark:not([data-highlight]) {
 
 .axes text {
   fill: var(--medium);
+  stroke: none;
 }
 
 .axes path {
