@@ -1,9 +1,9 @@
 .chart {
-  --border: white;
-  --highlight: red;
-  --light: #ccc;
-  --medium: #888;
-  --dark: #444;
+  --border-private: var(--border, white);
+  --highlight-private: var(--highlight, red);
+  --light-private: var(--light, #ccc);
+  --medium-private: var(--medium, #888);
+  --dark-private: var(--dark, #444);
 }
 
 .legend {
@@ -33,12 +33,12 @@ svg .wrapper .mark:focus {
 }
 
 svg .wrapper .mark:not([data-highlight]) {
-  stroke: var(--border);
+  stroke: var(--border-private);
   stroke-width: 1px;
 }
 
 .chart-donut svg text.mark {
-  fill: var(--text);
+  fill: var(--text-private);
   font-weight: 100;
 }
 
@@ -47,7 +47,7 @@ svg .wrapper text.mark:not([data-highlight]) {
 }
 
 .axes text {
-  fill: var(--medium);
+  fill: var(--medium-private);
   stroke: none;
 }
 
@@ -72,7 +72,7 @@ path.mark {
 
 .mark[data-highlight],
 .point[data-highlight] {
-  stroke: var(--highlight);
+  stroke: var(--highlight-private);
   stroke-width: 2px;
 }
 
@@ -116,7 +116,7 @@ path.mark {
 }
 
 .legend li.category[data-highlight] {
-  color: var(--highlight);
+  color: var(--highlight-private);
 }
 
 .menu a {
@@ -166,7 +166,7 @@ path.mark {
 .axes .title {
   text-anchor: middle;
   font-weight: bold;
-  fill: var(--dark);
+  fill: var(--dark-private);
 }
 
 .axes:not(.angled) .x .tick text {
@@ -178,7 +178,7 @@ path.mark {
 }
 
 .axis.quantitative .tick line {
-  stroke: var(--light);
+  stroke: var(--light-private);
 }
 
 .play {
@@ -191,7 +191,7 @@ path.mark {
 }
 
 .play:hover {
-  color: var(--highlight);
+  color: var(--highlight-private);
 }
 
 table {
@@ -220,5 +220,5 @@ table td div {
 }
 
 [data-highlight] {
-  stroke: var(--highlight);
+  stroke: var(--highlight-private);
 }
