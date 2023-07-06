@@ -1,3 +1,11 @@
+.chart {
+  --border: white;
+  --highlight: red;
+  --light: #ccc;
+  --medium: #888;
+  --dark: #444;
+}
+
 .legend {
   max-height: 12em;
   overflow: hidden;
@@ -39,7 +47,8 @@ svg .wrapper text.mark:not([data-highlight]) {
 }
 
 .axes text {
-  fill: var(--light);
+  fill: var(--medium);
+  stroke: none;
 }
 
 .axes path {
@@ -208,4 +217,8 @@ table td div {
   height: 0.5rem;
   margin-left: 0.5rem;
   display: inline-block;
+}
+
+[data-highlight] {
+  stroke: var(--highlight);
 }
