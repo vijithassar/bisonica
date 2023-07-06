@@ -39,7 +39,7 @@ svg .wrapper text.mark:not([data-highlight]) {
 }
 
 .axes text {
-  fill: var(--light);
+  fill: var(--medium);
 }
 
 .axes path {
