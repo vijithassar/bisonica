@@ -150,7 +150,7 @@ const pointMarkSelector = s => {
 /**
  * mark tagName
  * @param {object} s Vega Lite specification
- * @return {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} tagName to use in DOM for mark
+ * @return {mark} tagName to use in DOM for mark
  */
 const markSelector = s => {
 	if (feature(s).isBar()) {

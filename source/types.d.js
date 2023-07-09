@@ -19,3 +19,7 @@
  * @property {number} left left margin
  * @see {@link https://observablehq.com/@d3/margin-convention|margin convention}
  */
+
+/**
+ * @typedef {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} mark
+ */
