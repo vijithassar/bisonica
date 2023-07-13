@@ -294,6 +294,26 @@ const axisTicksExtensionY = (s, dimensions) => {
 }
 
 /**
+ * extend ticks across the chart
+ * @param {object} s Vega Lite specification
+ * @param {dimensions} dimensions chart dimensions
+ * @return {function(object)} x axis tick extension adjustment function
+ */
+const axisTicksExtensionX = (s, dimensions) => {
+	return selection => {
+		if (encodingType(s, 'x') === 'quantitative' && feature(s).hasEncodingY()) {
+			const offset = feature(s).isTemporalBar() && encodingType(s, 'y') === 'temporal' ? barWidth(s, dimensions) : 0
+			const tickLength = parseScales(s, dimensions).y.range()[1] + offset
+			const tickEnd = tickLength * -1
+			selection
+				.select('line')
+				.attr('y1', tickEnd)
+				.attr('y2', 0)
+		}
+	}
+}
+
+/**
  * adjust y axis tick rotation based on a live DOM node
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
@@ -361,6 +381,7 @@ const axisTicks = (s, dimensions) => {
 		selection.selectAll('.y .tick')
 			.call(axisTicksExtensionY(s, dimensions))
 		selection.selectAll('.x .tick')
+			.call(axisTicksExtensionX(s, dimensions))
 			.call(axisTicksRotationX(s))
 			.call(axisTicksStyles(s, 'x'))
 		selection.selectAll('.y .tick')
