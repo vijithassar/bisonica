@@ -202,6 +202,14 @@ const createY = (s, dimensions) => {
 	if (!feature(s).hasAxisY()) {
 		return noop
 	}
+	const classes = [
+		'axis',
+		encodingType(s, 'x'),
+		isContinuous(s, 'x') ? 'continuous' : null,
+		isDiscrete(s, 'x') ? 'continuous' : null,
+		rotation(s, 'x') ? 'angled' : ''
+	].filter(Boolean).join(' ')
+
 	return selection => {
 		const scales = parseScales(s, dimensions)
 
@@ -215,7 +223,7 @@ const createY = (s, dimensions) => {
 
 		const yAxis = selection
 			.append('g')
-			.classed('axis', true)
+			.attr('class', classes)
 			.classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
@@ -289,7 +297,7 @@ const axisTitleY = (s, dimensions) => {
  */
 const axisTicksExtensionY = (s, dimensions) => {
 	return selection => {
-		if (encodingType(s, 'y') === 'quantitative' && feature(s).hasEncodingX()) {
+		if (isContinuous(s, 'y') && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
 			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
 			selection
