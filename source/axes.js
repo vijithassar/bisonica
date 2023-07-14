@@ -10,7 +10,7 @@ import * as d3 from 'd3'
 
 import { axisTicksLabelText, rotation, truncate } from './text.js'
 import { barWidth } from './marks.js'
-import { degrees, detach, isDiscrete, noop } from './helpers.js'
+import { degrees, detach, isContinuous, isDiscrete, noop } from './helpers.js'
 import { encodingChannelCovariate, encodingType } from './encodings.js'
 import { feature } from './feature.js'
 import { layerMatch } from './views.js'
@@ -167,7 +167,13 @@ const createX = (s, dimensions) => {
 			axis.tickSize(0)
 		}
 
-		const classes = ['axis', encodingType(s, 'x'), rotation(s, 'x') ? 'angled' : ''].join(' ')
+		const classes = [
+			'axis',
+			encodingType(s, 'x'),
+			isContinuous(s, 'x') ? 'continuous' : null,
+			isDiscrete(s, 'x') ? 'continuous' : null,
+			rotation(s, 'x') ? 'angled' : ''
+		].filter(Boolean).join(' ')
 
 		const xAxis = selection
 			.append('g')
@@ -196,6 +202,14 @@ const createY = (s, dimensions) => {
 	if (!feature(s).hasAxisY()) {
 		return noop
 	}
+	const classes = [
+		'axis',
+		encodingType(s, 'x'),
+		isContinuous(s, 'x') ? 'continuous' : null,
+		isDiscrete(s, 'x') ? 'continuous' : null,
+		rotation(s, 'x') ? 'angled' : ''
+	].filter(Boolean).join(' ')
+
 	return selection => {
 		const scales = parseScales(s, dimensions)
 
@@ -209,7 +223,7 @@ const createY = (s, dimensions) => {
 
 		const yAxis = selection
 			.append('g')
-			.classed('axis', true)
+			.attr('class', classes)
 			.classed(encodingType(s, 'y'), true)
 
 		yAxis.call(axis).select('.domain').attr('stroke-width', 0)
@@ -283,7 +297,7 @@ const axisTitleY = (s, dimensions) => {
  */
 const axisTicksExtensionY = (s, dimensions) => {
 	return selection => {
-		if (encodingType(s, 'y') === 'quantitative' && feature(s).hasEncodingX()) {
+		if (isContinuous(s, 'y') && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
 			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
 			selection
@@ -301,9 +315,9 @@ const axisTicksExtensionY = (s, dimensions) => {
  */
 const axisTicksExtensionX = (s, dimensions) => {
 	return selection => {
-		if (encodingType(s, 'x') === 'quantitative' && feature(s).hasEncodingY()) {
+		if (isContinuous(s, 'x') && feature(s).hasEncodingY()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'y') === 'temporal' ? barWidth(s, dimensions) : 0
-			const tickLength = parseScales(s, dimensions).y.range()[1] + offset
+			const tickLength = parseScales(s, dimensions).y.range()[0] + offset
 			const tickEnd = tickLength * -1
 			selection
 				.select('line')
