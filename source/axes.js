@@ -290,6 +290,22 @@ const axisTitleY = (s, dimensions) => {
 }
 
 /**
+ * determine whether a given axis should have axis
+ * ticks that extend across the full data rectangle
+ * to serve as grid lines
+ * @param {object} s Vega Lite specification
+ * @param {cartesian} channel visual encoding channel
+ */
+const hasGridLines = (s, channel) => {
+	if (isContinuous(s, channel)) {
+		if (feature(s).isBar() && encodingType(s, channel) !== 'quantitative') {
+			return false
+		}
+		return true
+	}
+}
+
+/**
  * extend ticks across the chart
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
@@ -297,6 +313,9 @@ const axisTitleY = (s, dimensions) => {
  */
 const axisTicksExtensionY = (s, dimensions) => {
 	return selection => {
+		if (!hasGridLines(s, 'y')) {
+			return
+		}
 		if (isContinuous(s, 'y') && feature(s).hasEncodingX()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'x') === 'temporal' ? barWidth(s, dimensions) : 0
 			const tickEnd = parseScales(s, dimensions).x.range()[1] + offset
@@ -315,6 +334,9 @@ const axisTicksExtensionY = (s, dimensions) => {
  */
 const axisTicksExtensionX = (s, dimensions) => {
 	return selection => {
+		if (!hasGridLines(s, 'x')) {
+			return
+		}
 		if (isContinuous(s, 'x') && feature(s).hasEncodingY()) {
 			const offset = feature(s).isTemporalBar() && encodingType(s, 'y') === 'temporal' ? barWidth(s, dimensions) : 0
 			const tickLength = parseScales(s, dimensions).y.range()[0] + offset
