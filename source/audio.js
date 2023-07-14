@@ -14,10 +14,41 @@ import { extension } from './extensions.js'
 const context = new window.AudioContext()
 
 const tuning = 440
-const root = tuning / 2
-const octaves = 2
-const tempo = 160
-const duration = 60 / tempo / 2
+
+const defaults = {
+	root: tuning / 2,
+	octaves: 2,
+	tempo: 160
+}
+
+/**
+ * root note for the musical scale
+ * @param {object} s Vega Lite specification
+ * @return {number} root frequency
+ */
+const root = s => extension(s, 'audio')?.root || defaults.root
+
+/**
+ * octaves spread which repeats the musical scale
+ * @param {object} s Vega Lite specification
+ * @return {number} number of octaves
+ */
+const octaves = s => extension(s, 'audio')?.octaves || defaults.octaves
+
+/**
+ * tempo
+ * @param {object} s Vega Lite specification
+ * @return {number} tempo in beats per minute
+ */
+const tempo = s => extension(s, 'audio')?.tempo || defaults.tempo
+
+/**
+ * note duration
+ * @param {object} s Vega Lite specification
+ * @return {number} note duration
+ */
+const duration = s => 60 / tempo(s) / 2
+
 const temperament = Math.pow(2, 1 / 12)
 
 /**
@@ -58,16 +89,17 @@ const minorExponential = root => {
 
 /**
  * play a note
+ * @param {object} s Vega Lite specification
  * @param {number} frequency audio frequency
  * @param {number} start start time
  */
-const note = (frequency, start) => {
+const note = (s, frequency, start) => {
 	const oscillator = context.createOscillator()
 	const gainNode = context.createGain()
 
 	gainNode.gain.setValueAtTime(1.0, context.currentTime + start)
 
-	const end = context.currentTime + start + duration
+	const end = context.currentTime + start + duration(s)
 
 	oscillator.connect(gainNode)
 	gainNode.connect(context.destination)
@@ -83,15 +115,16 @@ const note = (frequency, start) => {
 
 /**
  * repeat a scale across octaves in linear data space
+ * @param {object} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
  * @return {number[]} multiple octave data scale
  */
-const repeatLinear = (min, max) => {
+const repeatLinear = (s, min, max) => {
 	const spread = max - min
-	const slice = spread / octaves
+	const slice = spread / octaves(s)
 
-	return Array.from({ length: octaves })
+	return Array.from({ length: octaves(s) })
 		.map((_, index) => {
 			const start = slice * index + min
 			const end = slice * (index + 1) + min
@@ -104,16 +137,17 @@ const repeatLinear = (min, max) => {
 
 /**
  * repeat a scale across octaves in audio space
+ * @param {object} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
  * @return {number[]} multiple octave audio scale
  */
-const repeatExponential = (min, max) => {
+const repeatExponential = (s, min, max) => {
 	if (max % min !== 0) {
 		console.error('endpoints supplied for exponential scale repetition are not octaves')
 	}
 
-	return Array.from({ length: octaves })
+	return Array.from({ length: octaves(s) })
 		.map((_, index) => {
 			const steps = minorExponential(min * 2 ** index)
 
@@ -130,17 +164,17 @@ const repeatExponential = (min, max) => {
  */
 const notes = (values, dispatcher, s) => {
 	const [min, max] = d3.extent(values, d => d.value)
-	const domain = repeatLinear(feature(s).isBar() ? 0 : min, max)
-	const range = repeatExponential(root, root * 2 ** octaves)
+	const domain = repeatLinear(s, feature(s).isBar() ? 0 : min, max)
+	const range = repeatExponential(s, root(s), root(s) * 2 ** octaves(s))
 	const scale = d3.scaleThreshold().domain(domain).range(range)
 
 	const pitches = values.map(({ value }) => scale(value))
 
 	pitches.forEach((pitch, index) => {
-		note(pitch, index * duration)
+		note(s, pitch, index * duration(s))
 		setTimeout(() => {
 			dispatcher.call('focus', null, index, s)
-		}, (index + 1) * duration * 1000)
+		}, (index + 1) * duration(s) * 1000)
 	})
 }
 
