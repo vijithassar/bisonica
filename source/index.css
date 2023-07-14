@@ -177,7 +177,7 @@ path.mark {
   text-anchor: end;
 }
 
-.axis.quantitative .tick line {
+.axis.continuous .tick line {
   stroke: var(--light-private);
 }
 
