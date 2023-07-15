@@ -39,6 +39,7 @@ const _feature = s => {
 		hasPointsFilled: s => (mark(s) !== 'point') && (s.mark?.filled !== false) && s.mark?.point !== 'transparent',
 		hasLayers: s => s.layer,
 		isCircular: s => mark(s) === 'arc',
+		hasDefs: s => !!s.mark?.color?.gradient,
 		isRule: s => mark(s) === 'rule',
 		isText: s => mark(s) === 'text',
 		isImage: s => mark(s) === 'image',

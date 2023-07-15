@@ -21,6 +21,7 @@ import { table, tableToggle } from './table.js'
 import { feature } from './feature.js'
 import { fetchAll } from './fetch.js'
 import { copyMethods } from './helpers.js'
+import { defs } from './defs.js'
 import { dimensions } from './dimensions.js'
 import { menu } from './menu.js'
 
@@ -66,6 +67,8 @@ const render = (s, _panelDimensions) => {
 			const imageHeight = panelDimensions.y - legendHeight
 
 			svg.attr('height', Math.max(imageHeight, 0))
+
+			svg.call(defs(s))
 
 			const { top, right, bottom, left } = margin(s, panelDimensions)
 

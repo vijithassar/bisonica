@@ -21,6 +21,7 @@ import { values } from './values.js'
 import { markDescription } from './descriptions.js'
 import { detach, datum, isDiscrete, kebabToCamel, key, mark, missingSeries } from './helpers.js'
 import { feature } from './feature.js'
+import { gradientKey } from './gradient.js'
 import { memoize } from './memoize.js'
 import { parseScales } from './scales.js'
 import { parseTime, timePeriod } from './time.js'
@@ -376,6 +377,8 @@ const areaMarks = (s, dimensions) => {
 
 		const layout = data(s)
 
+		const fill = (d, i) => s.mark.color?.gradient ? `url(#${gradientKey(s, i)})` : color
+
 		marks
 			.selectAll(markSelector(s))
 			.data(layout)
@@ -385,7 +388,7 @@ const areaMarks = (s, dimensions) => {
 			.attr('role', 'region')
 			.attr('aria-roledescription', 'data series')
 			.attr('tabindex', -1)
-			.attr('fill', color)
+			.attr('fill', fill)
 			.attr('class', 'area mark')
 			.attr('aria-label', d => d.key)
 	}
