@@ -377,7 +377,7 @@ const areaMarks = (s, dimensions) => {
 
 		const layout = data(s)
 
-		const fill = (d, i) => s.mark.color?.gradient ? `url(#${gradientKey(s, i)})` : color
+		const fill = (d, i) => s.mark.color?.gradient ? `url(#${gradientKey(s, i)})` : color(d)
 
 		marks
 			.selectAll(markSelector(s))
