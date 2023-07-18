@@ -1,3 +1,8 @@
+/**
+ * reusable nodes that are referenced but aren't directly rendered
+ * @module defs
+ */
+
 import { feature } from './feature.js'
 import { gradient } from './gradient.js'
 import { noop } from './helpers.js'
