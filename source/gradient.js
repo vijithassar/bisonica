@@ -1,3 +1,9 @@
+/**
+ * render gradients
+ * @module gradients
+ * @see {@link https://vega.github.io/vega-lite/docs/gradient.html|vega-lite:gradient}
+ */
+
 import { key, noop } from './helpers.js'
 
 /**
