@@ -1,8 +1,9 @@
 import { feature } from './feature.js'
 import { gradient } from './gradient.js'
 import { noop } from './helpers.js'
+import { memoize } from './memoize.js'
 
-const defs = s => {
+const _defs = s => {
 	if (!feature(s).hasDefs()) {
 		return noop
 	}
@@ -18,5 +19,6 @@ const defs = s => {
 	}
 	return renderer
 }
+const defs = memoize(_defs)
 
 export { defs }
