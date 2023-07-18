@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/vijithassar/bisonica/compare/v0.1.14...v0.1.15) (2023-07-18)
+
+
+### Features
+
+* **core:** call color scheme functions ([e0e98aa](https://github.com/vijithassar/bisonica/commit/e0e98aaf75170a50b1c514e1bc6b62d72cafe4c4))
+* **core:** center stack alignment ([ea04f6d](https://github.com/vijithassar/bisonica/commit/ea04f6d10aa907ce61ed9dc8b4114c8d725f3524))
+* **core:** custom configuration for audio sonification ([b96321d](https://github.com/vijithassar/bisonica/commit/b96321d30c620e1db8c26b4c266ba00018e2376c))
+* **core:** custom menu items ([8a4ca57](https://github.com/vijithassar/bisonica/commit/8a4ca576885a827bc7be0a5ed6a518fdd0b19ed5))
+* **core:** default dimensions ([b437046](https://github.com/vijithassar/bisonica/commit/b4370468d1b0dc7dfb19b6253947dd98807e356e))
+* **core:** encoding titles ([d7bcaca](https://github.com/vijithassar/bisonica/commit/d7bcacae6717f09ed9cc587bf6212188ba16536d))
+* **core:** gradients ([efeb172](https://github.com/vijithassar/bisonica/commit/efeb1728fa1fb3ec2bfc81ff32835135507432ec))
+* **core:** grid lines for quantitative x axis ([d6df6f3](https://github.com/vijithassar/bisonica/commit/d6df6f3d5f1e9f4436ed33a7655c975f41187d4c))
+* **core:** handle negative values for stack layouts ([31d030c](https://github.com/vijithassar/bisonica/commit/31d030c306b407a7e8634d98c857568a1df433b6))
+* **core:** handle negative values in x encoding ([ed045b9](https://github.com/vijithassar/bisonica/commit/ed045b93cedbd7b784fa2937969f75c6e2f81a52))
+* **core:** named color schemes ([40ae93e](https://github.com/vijithassar/bisonica/commit/40ae93eb6983da1b7003ba5501804ce705b12072))
+* **core:** reverse scale range ([586d2f5](https://github.com/vijithassar/bisonica/commit/586d2f50f8b4464b4fe79a9068ae016d100d0a90))
+* **core:** set dimensions with step intervals ([8ab4ba6](https://github.com/vijithassar/bisonica/commit/8ab4ba6c781450d903290127a0bca9955f625e5f))
+* **core:** toggle table ([20ade0c](https://github.com/vijithassar/bisonica/commit/20ade0c2b9d80b63ca157d578340f47849a85219))
+* **docs:** add external links ([006617b](https://github.com/vijithassar/bisonica/commit/006617b5c8766666d7d3d10a0d0e3c787028972e))
+* **docs:** add internal references with [@see](https://github.com/see) ([8bcd95a](https://github.com/vijithassar/bisonica/commit/8bcd95a9fbcf4fe0ae631cd12cfad960a6b8dbd6))
+* **docs:** build documentation ([9651e3a](https://github.com/vijithassar/bisonica/commit/9651e3a363cbc8b5021a3f88c5a2f1d70a7379e0))
+* **tooling:** check Markdown links ([cbfc807](https://github.com/vijithassar/bisonica/commit/cbfc8079d836d3dbe5840c5f8fe451d0a32d11b2))
+* **tooling:** lint JSDoc ([562caf7](https://github.com/vijithassar/bisonica/commit/562caf70b2fc58e8993b2a9654c3f6ef34171bc8))
+* **tooling:** lint Markdown files ([6425d69](https://github.com/vijithassar/bisonica/commit/6425d6973ecafba2d2c49efa43d391b73ab01427))
+
+
+### Bug Fixes
+
+* **core:** add href attributes to download links ([6aed19a](https://github.com/vijithassar/bisonica/commit/6aed19a1b4f9bdc484cce6f8f69c2d45ae76ddb3))
+* **core:** alternate range index for line marks ([a151cfa](https://github.com/vijithassar/bisonica/commit/a151cfae74aff2dbaa5f430b947de466888c0e5f))
+* **core:** apply grid lines to continuous x encodings ([527c2d5](https://github.com/vijithassar/bisonica/commit/527c2d56ee248e5b04bc02182a342a10b9fbe524))
+* **core:** apply grid lines to continuous y encodings ([9c11976](https://github.com/vijithassar/bisonica/commit/9c11976e10d1cf2d4dbd5dc6ea86dbed5cd551f7))
+* **core:** center y axis relative to data rectangle ([64bbe54](https://github.com/vijithassar/bisonica/commit/64bbe54de0c770cac7c9db8242bf7c38b95cfd12))
+* **core:** correct color scheme property nesting ([d23025e](https://github.com/vijithassar/bisonica/commit/d23025e0d686e705e542e5b2d2773067be7be820))
+* **core:** darker axis titles ([c2035df](https://github.com/vijithassar/bisonica/commit/c2035df337fc90b6f4553eaa55e4301a2c71604d))
+* **core:** disable y axis ticks for horizontal bar charts ([3a69481](https://github.com/vijithassar/bisonica/commit/3a694812839e3a0e9478ab2781f7ac0b85652606))
+* **core:** fix x axis title placement ([d3299f0](https://github.com/vijithassar/bisonica/commit/d3299f0ea95a0bb00c3b9c9ccbfd0aa4e21dfdec))
+* **core:** grid line helper ([fd7bbf6](https://github.com/vijithassar/bisonica/commit/fd7bbf6444bae937085af022718c4393451726f1))
+* **core:** grid lines for negative values ([dcada5e](https://github.com/vijithassar/bisonica/commit/dcada5e06df701bd32b62e552053404c71d2b4eb))
+* **core:** optimal streamgraph width ([a7bc8e8](https://github.com/vijithassar/bisonica/commit/a7bc8e83b2a6568c916cf156c69231d8bdf3d40f))
+* **core:** pass datum to color encoder ([b9ba917](https://github.com/vijithassar/bisonica/commit/b9ba91713a7cbc0a3941659ec4f26209d3f735da))
+* **core:** render buttons in menu ([8a253ce](https://github.com/vijithassar/bisonica/commit/8a253ce45c941c347b7767b25332e055474f74ea))
+* **core:** restore axis tick grid lines ([5df3c11](https://github.com/vijithassar/bisonica/commit/5df3c11a9f03a12edc4380e85515d55b772effbc))
+* **core:** restore stacking for area marks ([fa67ca1](https://github.com/vijithassar/bisonica/commit/fa67ca1139e965fe19a15cd8ed325c2c0b694f67))
+* **docs:** add JSDoc module tags ([13a468d](https://github.com/vijithassar/bisonica/commit/13a468d01af1c163aff1344002e81f277d5ebab3))
+* **docs:** add module descriptions ([0aeff3f](https://github.com/vijithassar/bisonica/commit/0aeff3ff2dbc0de5d4b7e660546e0c761635604a))
+* **docs:** fix Cartesian return type annotation text ([b44b289](https://github.com/vijithassar/bisonica/commit/b44b289e09e9f5b65c23b7f450025b086571f55e))
+* **docs:** remove invalid argument types ([699cbbb](https://github.com/vijithassar/bisonica/commit/699cbbb1df0631f57ed94c09a1290313b31729a1))
+
 ### [0.1.14](https://github.com/vijithassar/bisonica/compare/v0.1.13...v0.1.14) (2023-05-24)
 
 
