@@ -191,7 +191,7 @@ const encodingChannelCovariate = s => {
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
  * @param {object} s Vega Lite specification
- * @return {string} visual encoding chanel
+ * @return {string} visual encoding channel
  */
 const encodingChannelCovariateCartesian = s => {
 	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
