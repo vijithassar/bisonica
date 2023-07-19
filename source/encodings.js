@@ -204,6 +204,22 @@ const encodingChannelCovariateCartesian = s => {
 }
 
 /**
+ * determine which channel of a Cartesian specification object
+ * is the primary quantitative channel
+ * @param {object} s Vega Lite specification
+ * @return {string} visual encoding channel
+ */
+const encodingChannelQuantitativeCartesian = s => {
+	const channel = ['x', 'y'].find(channel => channel === encodingChannelQuantitative(s))
+	if (channel) {
+		return channel
+	} else {
+		const message = feature(s).isCartesian() ? 'could not determine Cartesian quantitative encoding' : 'specification is not Cartesian'
+		throw new Error(message)
+	}
+}
+
+/**
  * bundle together an accessor and an encoder function
  * into an encoder function
  * @param {object} s Vega Lite specification
@@ -280,6 +296,7 @@ export {
 	encodingValue,
 	encodingType,
 	encodingChannelQuantitative,
+	encodingChannelQuantitativeCartesian,
 	encodingChannelCovariate,
 	encodingChannelCovariateCartesian,
 	createEncoders,
