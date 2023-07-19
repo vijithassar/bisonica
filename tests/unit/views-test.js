@@ -163,11 +163,11 @@ module('unit > views', () => {
 								type: 'line'
 							},
 							encoding: {
-								theta: {
+								y: {
 									field: 'value',
 									type: 'quantitative'
 								},
-								color: {
+								x: {
 									field: 'date',
 									type: 'temporal'
 								}
