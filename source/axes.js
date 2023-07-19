@@ -55,7 +55,7 @@ const ticks = (s, channel) => {
 	const scales = parseScales(s)
 
 	if (isDiscrete(s, channel)) {
-		return scales[channel].range()
+		return scales[channel].range().length
 	}
 
 	const hasSingleValue = scales[channel].domain()[0] === scales[channel].domain()[1]
