@@ -12,7 +12,7 @@ import { createAccessors } from './accessors.js'
 import {
 	createEncoders,
 	encodingChannelCovariateCartesian,
-	encodingChannelQuantitative,
+	encodingChannelQuantitativeCartesian,
 	encodingType,
 	encodingValue
 } from './encodings.js'
@@ -338,11 +338,11 @@ const areaEncoders = (s, dimensions) => {
 		x0: x,
 		x1: d => x(d) + width(d)
 	}
-	if (encodingChannelQuantitative(s) === 'x') {
+	if (encodingChannelQuantitativeCartesian(s) === 'x') {
 		return {
 			...base
 		}
-	} else if (encodingChannelQuantitative(s) === 'y') {
+	} else if (encodingChannelQuantitativeCartesian(s) === 'y') {
 		return {
 			x0: x,
 			y0: y,

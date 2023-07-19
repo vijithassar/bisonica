@@ -11,6 +11,7 @@ import * as d3 from 'd3'
 
 import {
 	encodingChannelQuantitative,
+	encodingChannelQuantitativeCartesian,
 	encodingChannelCovariate,
 	encodingChannelCovariateCartesian,
 	encodingField,
@@ -232,7 +233,7 @@ const circularData = s => {
  * @return {object[]} summed values for line chart
  */
 const lineData = s => {
-	const quantitative = encodingField(s, encodingChannelQuantitative(s))
+	const quantitative = encodingField(s, encodingChannelQuantitativeCartesian(s))
 	const covariate = encodingField(s, encodingChannelCovariateCartesian(s)) || missingSeries()
 	const color = encodingField(s, 'color') || encodingField(s, 'detail')
 

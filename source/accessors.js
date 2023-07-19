@@ -6,7 +6,7 @@
  */
 
 import { layoutDirection } from './marks.js'
-import { encodingChannelCovariateCartesian, encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
+import { encodingChannelCovariateCartesian, encodingChannelQuantitativeCartesian, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
 import { mark } from './helpers.js'
 import { memoize } from './memoize.js'
@@ -85,7 +85,7 @@ const _createAccessors = (s, type = null) => {
 	}
 
 	if (key === 'line') {
-		const quantitative = encodingChannelQuantitative(s)
+		const quantitative = encodingChannelQuantitativeCartesian(s)
 		const covariate = encodingChannelCovariateCartesian(s)
 
 		accessors[quantitative] = d => d.value

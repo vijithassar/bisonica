@@ -12,7 +12,7 @@ import * as d3 from 'd3'
 import { data, stackOffset, sumByCovariates } from './data.js'
 import { values } from './values.js'
 import { colors } from './color.js'
-import { encodingChannelQuantitative, encodingType, encodingValue } from './encodings.js'
+import { encodingChannelQuantitativeCartesian, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
 import { identity, isContinuous, isDiscrete, isTextChannel } from './helpers.js'
 import { memoize } from './memoize.js'
@@ -481,7 +481,7 @@ const extendScales = (s, dimensions, scales) => {
 
 	if (extensions.includes('length')) {
 		extendedScales.length = d => {
-			const channel = encodingChannelQuantitative(s)
+			const channel = encodingChannelQuantitativeCartesian(s)
 			if (extendedScales[channel].domain().every(endpoint => endpoint === 0)) {
 				return 0
 			}
@@ -507,7 +507,7 @@ const extendScales = (s, dimensions, scales) => {
 
 	if (extensions.includes('start')) {
 		extendedScales.start = d => {
-			const channel = encodingChannelQuantitative(s)
+			const channel = encodingChannelQuantitativeCartesian(s)
 			if (feature(s).isStacked()) {
 				if (channel === 'y') {
 					return extendedScales[channel](d[0]) - extendedScales.length(d[1] - d[0])
