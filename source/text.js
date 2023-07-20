@@ -46,7 +46,7 @@ const measureText = memoize(_measureText)
 /**
  * extract font styles relevant to string width
  * from a DOM node
- * @param {object} node DOM node
+ * @param {SVGElement} node DOM node
  * @return {object} hashmap of styles
  */
 const fontStyles = node => {

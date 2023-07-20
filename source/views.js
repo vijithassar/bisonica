@@ -202,7 +202,7 @@ const layerPrimary = memoize(_layerPrimary)
  * find the DOM element corresponding to a layer
  * specification
  * @param {object} s Vega Lite layer specification
- * @param {object} wrapper chart wrapper node
+ * @param {HTMLElement} wrapper chart wrapper node
  * @return {object} DOM element
  */
 const layerNode = (s, wrapper) => {

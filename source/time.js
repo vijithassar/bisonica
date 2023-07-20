@@ -17,21 +17,21 @@ const TIME = 'time'
 /**
  * convert date string in YYYY-MM-DD format to date object
  * @param {string} dateString string in YYYY-MM-DD format
- * @return {object} date object
+ * @return {Date} date object
  */
 const timeParseYYYYMMDD = d3.utcParse('%Y-%m-%d')
 
 /**
  * convert date string in ISO8601 format to date object
  * @param {string} dateString string in ISO8601 format
- * @return {object} date object
+ * @return {Date} date object
  */
 const timeParseIso = d3.isoParse
 
 /**
  * convert date in milliseconds to date object
  * @param {number} date number of milliseconds
- * @return {object} date object
+ * @return {Date} date object
  */
 const timeParseMilliseconds = date => new Date(date)
 
@@ -138,7 +138,7 @@ const timePeriod = (s, channel) => {
  * for a temporal bar chart
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {object} chart dimensions with bar width offset
+ * @return {dimensions} chart dimensions with bar width offset
  */
 const temporalBarDimensions = (s, dimensions) => {
 	const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0

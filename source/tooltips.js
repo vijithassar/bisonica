@@ -63,7 +63,7 @@ const includedChannels = memoize(_includedChannels)
 /**
  * dispatch a CustomEvent with a data point
  * @param {object} s Vega Lite specification
- * @param {object} node mark DOM node
+ * @param {SVGElement} node mark DOM node
  * @param {object} interaction event
  */
 function tooltipEvent(s, node, interaction) {
