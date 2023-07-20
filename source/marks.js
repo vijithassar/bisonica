@@ -209,7 +209,7 @@ const stackEncoders = (s, dimensions) => {
 	const lane = encoders[encodingChannelCovariateCartesian(s)]
 	const start = encoders.start
 	const length = encoders.length
-	const width = () => step(s, dimensions)
+	const width = () => feature(s).isBar() ? barWidth(s, dimensions) : step(s, dimensions)
 
 	return {
 		x: vertical ? lane : start,
