@@ -23,3 +23,7 @@
 /**
  * @typedef {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} mark
  */
+
+/**
+ * @typedef {('audio'|'color'|'description'|'download'|'id'|'menu'|'table')} extension
+ */
