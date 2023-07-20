@@ -12,6 +12,7 @@ import { createAccessors } from './accessors.js'
 import {
 	createEncoders,
 	encodingChannelCovariateCartesian,
+	encodingChannelQuantitative,
 	encodingChannelQuantitativeCartesian,
 	encodingType,
 	encodingValue
@@ -114,7 +115,21 @@ const _step = (s, dimensions) => {
 	}
 }
 const step = memoize(_step)
-const barWidth = step
+
+/**
+ * compute bar width based on input data
+ * @param {object} s Vega Lite specification
+ * @param {dimensions} dimensions chart dimensions
+ * @return {number} bar width
+ */
+const barWidth = (s, dimensions) => {
+	if (feature(s).isCartesian()) {
+		return step(s, dimensions)
+	} else {
+		const key = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
+		return dimensions[key]
+	}
+}
 
 /**
  * retrieve the d3 curve factory function needed for the marks
