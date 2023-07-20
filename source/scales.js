@@ -262,7 +262,7 @@ const adjustDomain = (s, channel) => {
 /**
  * sort the domain
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  * @return {function(array)}
  */
 const domainSort = (s, channel) => {
@@ -276,7 +276,7 @@ const domainSort = (s, channel) => {
 /**
  * compute domain
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  */
 const domain = (s, channel) => {
 	return customDomain(s, channel) || domainSort(s, channel)(adjustDomain(s, channel)(domainBaseValues(s, channel)))

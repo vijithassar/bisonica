@@ -47,7 +47,7 @@ const emptyData = data => {
 /**
  * compute a unified set of scale values across all layers
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  * @param {'domain'|'range'} valueType value type
  * @return {array} unified set of scale values
  */
@@ -100,7 +100,7 @@ const unionScaleValues = (s, channel, valueType) => {
 /**
  * compute a unified data domain across all layers
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  * @return {array} unified domain
  */
 const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain')
@@ -108,7 +108,7 @@ const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain')
 /**
  * compute a unified data range across all layers
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  * @return {array} unified range
  */
 const unionRanges = (s, channel) => unionScaleValues(s, channel, 'range')

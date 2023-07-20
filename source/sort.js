@@ -199,7 +199,7 @@ const sortMarkData = memoize(_sortMarkData)
 /**
  * select sort comparator function
  * @param {object} s Vega Lite specification
- * @param {string} channel visual encoding
+ * @param {string} channel encoding channel
  * @return {string} sort comparator type
  */
 const selectSorter = (s, channel) => {
