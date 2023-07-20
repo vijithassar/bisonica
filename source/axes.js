@@ -122,7 +122,7 @@ const tickText = (s, channel) => {
  * y axis positions
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {object} y axis positions
+ * @return {{x: number, y: number}} y axis positions
  */
 const axisOffsetY = (s, dimensions) => {
 	const shift = feature(s).isBar() && encodingType(s, 'x') === 'temporal'
