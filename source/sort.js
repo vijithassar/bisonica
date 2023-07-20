@@ -88,7 +88,7 @@ const sortOrder = memoize(_sortOrder)
  * look up the channel used for sorting
  * @param {object} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {string} visual encoding channel used for sorting
+ * @return {string} encoding channel used for sorting
  */
 const _sortChannel = (s, channel) => {
 	return Object.entries(s.encoding).find(item => item[1].field === sortField(s, channel))[0]

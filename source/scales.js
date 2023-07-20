@@ -138,7 +138,7 @@ const categoryCount = (s, channel) => {
 /**
  * sanitize channel name
  * @param {string} channel encoding parameter
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const channelRoot = channel => {
 	return channel.endsWith('2') ? channel.slice(0, -1) : channel

@@ -62,7 +62,7 @@ const encodingValue = (s, channel) => {
 /**
  * determine which channel is used for quantitative encoding
  * @param {object} s Vega Lite specification
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const encodingChannelQuantitative = s => {
 	const test = channel => encodingType(s, channel) === 'quantitative'
@@ -133,7 +133,7 @@ const encodingTypeDefault = memoize(_encodingTypeDefault)
  * determine which channel matches a predicate function
  * @param {object} s Vega Lite specification
  * @param {function} test test
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const _encodingTest = (s, test) => {
 	const encodings = Object.entries(s.encoding).filter(([channel, definition]) => {
@@ -166,7 +166,7 @@ const encodingTest = memoize(_encodingTest)
 /**
  * determine which channel is used for the independent variable
  * @param {object} s Vega Lite specification
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const encodingChannelCovariate = s => {
 	if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
@@ -191,7 +191,7 @@ const encodingChannelCovariate = s => {
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
  * @param {object} s Vega Lite specification
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const encodingChannelCovariateCartesian = s => {
 	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
@@ -207,7 +207,7 @@ const encodingChannelCovariateCartesian = s => {
  * determine which channel of a Cartesian specification object
  * is the primary quantitative channel
  * @param {object} s Vega Lite specification
- * @return {string} visual encoding channel
+ * @return {string} encoding channel
  */
 const encodingChannelQuantitativeCartesian = s => {
 	const channel = ['x', 'y'].find(channel => channel === encodingChannelQuantitative(s))
