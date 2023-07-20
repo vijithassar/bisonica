@@ -138,7 +138,7 @@ const timePeriod = (s, channel) => {
  * for a temporal bar chart
  * @param {object} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {object} chart dimensions with bar width offset
+ * @return {dimensions} chart dimensions with bar width offset
  */
 const temporalBarDimensions = (s, dimensions) => {
 	const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0

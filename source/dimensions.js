@@ -8,6 +8,8 @@ import { feature } from './feature.js'
 import { isContinuous } from './helpers.js'
 import { markData } from './marks.js'
 
+import './types.d.js'
+
 const channels = {
 	x: 'width',
 	y: 'height'
@@ -18,7 +20,7 @@ const channels = {
  * @param {object} s Vega Lite specification
  * @param {HTMLElement} node DOM node
  * @param {object} [explicitDimensions] chart dimensions
- * @return {object} chart dimensions
+ * @return {dimensions} chart dimensions
  */
 const dimensions = (s, node, explicitDimensions) => {
 	let result = { x: null, y: null }
