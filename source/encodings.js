@@ -191,10 +191,11 @@ const encodingChannelCovariate = s => {
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
  * @param {object} s Vega Lite specification
- * @return {string} encoding channel
+ * @return {cartesian} encoding channel
  */
 const encodingChannelCovariateCartesian = s => {
-	const channel = ['x', 'y'].find(channel => channel !== encodingChannelQuantitative(s))
+	const test = channel => ['x', 'y'].includes(channel) && encodingType(s, channel) !== 'quantitative'
+	const channel = encodingTest(s, test)
 	if (channel) {
 		return channel
 	} else {
@@ -207,10 +208,11 @@ const encodingChannelCovariateCartesian = s => {
  * determine which channel of a Cartesian specification object
  * is the primary quantitative channel
  * @param {object} s Vega Lite specification
- * @return {string} encoding channel
+ * @return {cartesian} encoding channel
  */
 const encodingChannelQuantitativeCartesian = s => {
-	const channel = ['x', 'y'].find(channel => channel === encodingChannelQuantitative(s))
+	const test = channel => ['x', 'y'].includes(channel) && encodingType(s, channel) === 'quantitative'
+	const channel = encodingTest(s, test)
 	if (channel) {
 		return channel
 	} else {
