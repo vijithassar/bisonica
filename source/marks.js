@@ -221,7 +221,7 @@ const layoutDirection = s => {
 const stackEncoders = (s, dimensions) => {
 	const encoders = createEncoders(s, dimensions, createAccessors(s))
 	const vertical = layoutDirection(s) === 'vertical'
-	const lane = encoders[encodingChannelCovariateCartesian(s)]
+	const lane = feature(s).isCartesian() ? encoders[encodingChannelCovariateCartesian(s)] : null
 	const start = encoders.start
 	const length = encoders.length
 	const width = () => feature(s).isBar() ? barWidth(s, dimensions) : step(s, dimensions)

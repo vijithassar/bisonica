@@ -111,7 +111,7 @@ const stackKeys = data => {
  */
 const sumByCovariates = s => {
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
-	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
+	const covariate = feature(s).isCartesian() ? encodingField(s, encodingChannelCovariateCartesian(s)) : null
 	const group = encodingField(s, 'color') || encodingField(s, 'detail')
 
 	const summedByGroup = groupAndSumByProperties(values(s), covariate, group, quantitative)
@@ -157,7 +157,7 @@ const stackValue = (d, key) => d[key]?.value || 0
  * @return {object[]} stacked data series
  */
 const stackData = s => {
-	const covariate = encodingField(s, encodingChannelCovariateCartesian(s))
+	const covariate = feature(s).isCartesian() ? encodingField(s, encodingChannelCovariateCartesian(s)) : null
 	const quantitative = encodingField(s, encodingChannelQuantitative(s))
 	const group = encodingField(s, 'color') || encodingField(s, 'detail')
 
