@@ -109,7 +109,7 @@ const timeMethod = specifier => {
 /**
  * string key for controlling date functionality
  * @param {object} s Vega Lite specification
- * @param {string} channel temporal channel
+ * @param {string} channel temporal encoding channel
  */
 const timePeriod = (s, channel) => {
 	const unit = s.encoding[channel].timeUnit || 'utcday'

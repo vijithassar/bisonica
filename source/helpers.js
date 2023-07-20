@@ -195,7 +195,7 @@ const isDiscrete = (s, channel) => {
 
 /**
  * determine whether a given channel is text based
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {boolean} whether the field is text based
  */
 const isTextChannel = channel => {
