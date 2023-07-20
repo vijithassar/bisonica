@@ -4,10 +4,12 @@
  * @see {@link https://vega.github.io/vega-lite/docs/spec.html|vega-lite:spec}
  */
 
+import './types.d.js'
+
 /**
  * retrieve information from usermeta
  * @param {object} s Vega Lite specification
- * @param {string} key usermeta key
+ * @param {extension} key usermeta key
  */
 const extension = (s, key) => {
 	if (s.usermeta?.[key] !== undefined) {
