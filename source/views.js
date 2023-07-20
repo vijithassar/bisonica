@@ -20,7 +20,7 @@ import { values } from './values.js'
  * determine whether encoding types can be shared
  * across layers
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {string} encoding type
  */
 const unionEncodingTypes = (s, channel) => {

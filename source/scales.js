@@ -37,7 +37,7 @@ const syntheticScale = (scale, domain, range) => {
 /**
  * parse scale types which have been explicitly specified
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {string|null}
  */
 const explicitScale = (s, channel) => {
@@ -66,7 +66,7 @@ const scaleType = (s, channel) => {
  * determine the d3 method name of the scale function to
  * generate for a given dimension of visual encoding
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {string|null} d3 scale type
  */
 const scaleMethod = (s, channel) => {
@@ -103,7 +103,7 @@ const scaleMethod = (s, channel) => {
 /**
  * get the specified domain from a specification
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {array} domain
  */
 const customDomain = (s, channel) => {
@@ -121,7 +121,7 @@ const customDomain = (s, channel) => {
 /**
  * sanitize channel name
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {number} number of data categories
  */
 const categoryCount = (s, channel) => {
@@ -137,7 +137,7 @@ const categoryCount = (s, channel) => {
 
 /**
  * sanitize channel name
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {string} encoding channel
  */
 const channelRoot = channel => {
@@ -147,7 +147,7 @@ const channelRoot = channel => {
 /**
  * determine whether a scale starts at zero
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {boolean} whether to start the scale at zero
  */
 const zero = (s, channel) => {
@@ -173,7 +173,7 @@ const baseline = (s, channel) => {
 /**
  * compute raw values for scale domain
  * @param {object} s Vega Lite specification
- * @param {string} channel encoding parameter
+ * @param {string} channel encoding channel
  * @return {number[]|string[]} domain
  */
 const domainBaseValues = (s, channel) => {
