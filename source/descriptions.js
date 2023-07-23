@@ -207,11 +207,10 @@ const chartDescription = s => {
 	const type = chartType(s)
 	const description = s.description
 	const chart = type ? type[0].toUpperCase() + type.slice(1) + ' of ' + encodingDescription(s) : ''
-	const keys = instructions(s) || ''
 	return [
 		description,
 		chart,
-		keys
+		instructions(s)
 	]
 		.filter(Boolean)
 		.map(item => end.includes(item.slice(-1)) ? item : `${item}.`)
