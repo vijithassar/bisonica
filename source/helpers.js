@@ -24,6 +24,13 @@ const abbreviateNumbers = number => {
 }
 
 /**
+ * capitalize a string
+ * @param {string} string input string
+ * @return {string} capitalized string
+ */
+const capitalize = string => string[0].toUpperCase() + string.slice(1)
+
+/**
  * return the original data object if it has been nested
  * by a layout generator
  * @param {object} s Vega Lite specification
@@ -274,6 +281,7 @@ const kebabToCamel = kebab => {
 export {
 	abbreviateNumbers,
 	mark,
+	capitalize,
 	datum,
 	nested,
 	deduplicateByField,

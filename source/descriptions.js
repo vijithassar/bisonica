@@ -6,7 +6,7 @@
 import './types.d.js'
 
 import * as d3 from 'd3'
-import { datum, identity, isContinuous } from './helpers.js'
+import { capitalize, datum, identity, isContinuous } from './helpers.js'
 import {
 	encodingField,
 	encodingType,
@@ -206,7 +206,7 @@ const chartDescription = s => {
 	const segmentDelimiters = ['.', '!', '?']
 	const type = chartType(s)
 	const description = s.description
-	const chart = type ? type[0].toUpperCase() + type.slice(1) + ' of ' + encodingDescription(s) : ''
+	const chart = type ? capitalize(type) + ' of ' + encodingDescription(s) : ''
 	return [
 		description,
 		chart,
