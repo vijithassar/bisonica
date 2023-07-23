@@ -116,6 +116,9 @@ const extentDescription = memoize(_extentDescription)
  * @return {string} encoding description
  */
 const encodingDescription = s => {
+	if (!s.encoding) {
+		return ''
+	}
 	let segments = []
 	if (feature(s).isCircular()) {
 		segments.push(`${encodingField(s, 'theta')}`)
@@ -197,7 +200,7 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
-	return [s.description, chartType(s), s.encoding && encodingDescription(s), instructions(s)].filter(Boolean).join(' ')
+	return [s.description, chartType(s), encodingDescription(s), instructions(s)].filter(Boolean).join(' ')
 }
 
 /**
