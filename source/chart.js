@@ -51,6 +51,8 @@ const render = (s, _panelDimensions) => {
 
 			chartNode.call(audio(s))
 
+			chartNode.attr('aria-description', s.description || null)
+
 			initializeInteractions(chartNode.node(), s)
 
 			chartNode.call(menu(s))
