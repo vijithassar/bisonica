@@ -42,13 +42,13 @@ module('unit > description', () => {
 		test('generates chart description based on encodings', assert => {
 			const s = specification()
 			const description = chartDescription(s)
-			assert.equal(description, 'pie chart of size split by type')
+			assert.equal(description, 'pie chart of size split by type Use the arrow keys to navigate.')
 		})
 		test('prepends custom chart description', assert => {
 			const s = specification()
 			s.description = 'this is a chart with a custom description! it is also a'
 			const description = chartDescription(s)
-			assert.equal(description, 'this is a chart with a custom description! it is also a pie chart of size split by type')
+			assert.equal(description, 'this is a chart with a custom description! it is also a pie chart of size split by type Use the arrow keys to navigate.')
 		})
 	})
 })
