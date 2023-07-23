@@ -119,6 +119,9 @@ const encodingDescription = s => {
 	if (!s.encoding) {
 		return ''
 	}
+	if (extension(s, 'description')?.instructions === false) {
+		return ''
+	}
 	let segments = []
 	if (feature(s).isCircular()) {
 		segments.push(`${encodingField(s, 'theta')}`)
