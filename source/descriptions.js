@@ -206,7 +206,8 @@ const chartDescription = s => {
 	const segmentDelimiters = ['.', '!', '?']
 	const type = chartType(s)
 	const description = s.description
-	const chart = type ? capitalize(type) + ' of ' + encodingDescription(s) : ''
+	const encoding = encodingDescription(s)
+	const chart = type && encoding ? `${capitalize(type)} of ${encoding}` : type || encoding
 	return [
 		description,
 		chart,

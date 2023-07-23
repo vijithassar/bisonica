@@ -44,6 +44,13 @@ module('unit > description', () => {
 			const description = chartDescription(s)
 			assert.equal(description, 'Pie chart of size split by type. Use the arrow keys to navigate.')
 		})
+		test('describes how to open links with keyboard navigation', assert => {
+			const s = specification()
+			s.encoding.href = { field: 'url' }
+			const description = chartDescription(s)
+			assert.ok(description.includes('Enter key'))
+			assert.ok(description.includes('open links'))
+		})
 		test('prepends custom chart description', assert => {
 			const s = specification()
 			s.description = 'this is a chart with a custom description!'
