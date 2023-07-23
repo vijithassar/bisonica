@@ -100,8 +100,9 @@ const rows = s => {
 			.data(d => columnEntries(s)(d))
 			.enter()
 			.append('td')
-			.text(([_, value]) => value)
+		cell
 			.attr('class', ([_, value]) => typeof value === 'number' ? 'quantitative' : null)
+			.text(([_, value]) => value)
 		if (s.encoding.color?.field) {
 			cell.filter(([key]) => key === encodingField(s, 'color'))
 				.append('div')
