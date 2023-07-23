@@ -197,7 +197,7 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
-	return [chartType(s), s.encoding && encodingDescription(s)].filter(Boolean).join(' ')
+	return [s.description, chartType(s), s.encoding && encodingDescription(s)].filter(Boolean).join(' ')
 }
 
 /**
@@ -225,11 +225,7 @@ const chartLabel = s => {
 	if (!s.title.text) {
 		throw new Error('specification title is required')
 	}
-	if (s.description) {
-		return s.description
-	} else {
-		return `${[s.title.text, s.title.subtitle].filter(Boolean).join(' - ')}. ${instructions(s)}`
-	}
+	return `${[s.title.text, s.title.subtitle].filter(Boolean).join(' - ')}. ${instructions(s)}`
 }
 
 /**
