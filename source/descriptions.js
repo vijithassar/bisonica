@@ -200,15 +200,19 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
+	const end = ['.', '!', '?']
 	const type = chartType(s)
 	const description = s.description
 	const chart = type ? type[0].toUpperCase() + type.slice(1) + ' of ' + encodingDescription(s) : ''
 	const keys = instructions(s) || ''
 	return [
 		description,
-		chart ? `${chart}.` : '',
-		keys ? `${keys}.` : ''
-	].filter(Boolean).join(' ')
+		chart,
+		keys
+	]
+		.filter(Boolean)
+		.map(item => end.includes(item.slice(-1)) ? item : `${item}.`)
+		.join(' ')
 }
 
 /**
