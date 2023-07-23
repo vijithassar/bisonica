@@ -24,7 +24,7 @@ import { scaleType, parseScales } from './scales.js'
 import { formatAxis } from './format.js'
 import { list } from './text.js'
 
-const delimiter = '; '
+const fieldDelimiter = '; '
 
 const quantitativeChannels = s => {
 	const result = Object.keys(s.encoding)
@@ -102,7 +102,7 @@ const _extentDescription = s => {
 			return `${endpoint.type} value of ${s.encoding[channel].field} field`
 		}).filter(Boolean)
 		if (endpoints.length) {
-			return delimiter + endpoints.join(delimiter)
+			return fieldDelimiter + endpoints.join(fieldDelimiter)
 		} else {
 			return ''
 		}
@@ -203,7 +203,7 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
-	const end = ['.', '!', '?']
+	const segmentDelimiters = ['.', '!', '?']
 	const type = chartType(s)
 	const description = s.description
 	const chart = type ? type[0].toUpperCase() + type.slice(1) + ' of ' + encodingDescription(s) : ''
@@ -213,7 +213,7 @@ const chartDescription = s => {
 		instructions(s)
 	]
 		.filter(Boolean)
-		.map(item => end.includes(item.slice(-1)) ? item : `${item}.`)
+		.map(item => segmentDelimiters.includes(item.slice(-1)) ? item : `${item}.`)
 		.join(' ')
 }
 
