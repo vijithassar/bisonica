@@ -35,4 +35,17 @@ module('integration > table', function() {
 		toggle.dispatchEvent(event())
 		assert.notOk(table.querySelector('tr'), 'table view is inactive')
 	})
+	test('renders urls as links', assert => {
+		const s = specificationFixture('circular')
+		const count = s.data.values.length
+		s.data.values = s.data.values.map((item, index) => {
+			return { ...item, url: `https://example.com/${index}` }
+		})
+		s.encoding.href = { field: 'url' }
+		const element = render(s)
+		const toggle = element.querySelector(selector)
+		const table = element.querySelector('.table')
+		toggle.dispatchEvent(event())
+		assert.equal(table.querySelectorAll('td a').length, count, `${count} links in table`)
+	})
 })
