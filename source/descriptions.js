@@ -6,7 +6,7 @@
 import './types.d.js'
 
 import * as d3 from 'd3'
-import { datum, identity, isContinuous } from './helpers.js'
+import { capitalize, datum, identity, isContinuous } from './helpers.js'
 import {
 	encodingField,
 	encodingType,
@@ -24,7 +24,7 @@ import { scaleType, parseScales } from './scales.js'
 import { formatAxis } from './format.js'
 import { list } from './text.js'
 
-const delimiter = '; '
+const fieldDelimiter = '; '
 
 const quantitativeChannels = s => {
 	const result = Object.keys(s.encoding)
@@ -102,7 +102,7 @@ const _extentDescription = s => {
 			return `${endpoint.type} value of ${s.encoding[channel].field} field`
 		}).filter(Boolean)
 		if (endpoints.length) {
-			return delimiter + endpoints.join(delimiter)
+			return fieldDelimiter + endpoints.join(fieldDelimiter)
 		} else {
 			return ''
 		}
@@ -116,6 +116,12 @@ const extentDescription = memoize(_extentDescription)
  * @return {string} encoding description
  */
 const encodingDescription = s => {
+	if (!s.encoding) {
+		return ''
+	}
+	if (extension(s, 'description')?.instructions === false) {
+		return ''
+	}
 	let segments = []
 	if (feature(s).isCircular()) {
 		segments.push(`${encodingField(s, 'theta')}`)
@@ -139,7 +145,7 @@ const encodingDescription = s => {
 		segments.push(`split by ${encodingField(s, 'color')}`)
 	}
 	if (segments.length) {
-		return `of ${segments.join(' ')}`
+		return `${segments.join(' ')}`
 	}
 }
 
@@ -197,7 +203,19 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
-	return [chartType(s), s.encoding && encodingDescription(s)].filter(Boolean).join(' ')
+	const segmentDelimiters = ['.', '!', '?']
+	const type = chartType(s)
+	const description = s.description
+	const encoding = encodingDescription(s)
+	const chart = type && encoding ? `${capitalize(type)} of ${encoding}` : type || encoding
+	return [
+		description,
+		chart,
+		instructions(s)
+	]
+		.filter(Boolean)
+		.map(item => segmentDelimiters.includes(item.slice(-1)) ? item : `${item}.`)
+		.join(' ')
 }
 
 /**
@@ -211,8 +229,7 @@ const instructions = s => {
 	}
 	return [
 		'Use the arrow keys to navigate',
-		feature(s).hasLinks() ? ' and press the Enter key to open links' : '',
-		'.'
+		feature(s).hasLinks() ? ' and press the Enter key to open links' : ''
 	].join('')
 }
 
@@ -225,11 +242,7 @@ const chartLabel = s => {
 	if (!s.title.text) {
 		throw new Error('specification title is required')
 	}
-	if (s.description) {
-		return s.description
-	} else {
-		return `${[s.title.text, s.title.subtitle].filter(Boolean).join(' - ')}. ${instructions(s)}`
-	}
+	return `${[s.title.text, s.title.subtitle].filter(Boolean).join(' - ')}`
 }
 
 /**
