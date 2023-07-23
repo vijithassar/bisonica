@@ -12,6 +12,8 @@ import { parseScales } from './scales.js'
 import { values } from './values.js'
 import { feature } from './feature.js'
 
+import * as d3 from 'd3'
+
 const tableSelector = '.chart > .table'
 const legendSelector = '.chart .legend'
 const graphicSelector = '.chart .graphic'
@@ -100,8 +102,13 @@ const rows = s => {
 			.data(d => columnEntries(s)(d))
 			.enter()
 			.append('td')
-			.text(([_, value]) => value)
+		cell
 			.attr('class', ([_, value]) => typeof value === 'number' ? 'quantitative' : null)
+			.each(function([field, value]) {
+				const href = encodingField(s, 'href') === field
+				const target = href ? d3.select(this).append('a').attr('href', value) : d3.select(this)
+				target.text(([_, value]) => value)
+			})
 		if (s.encoding.color?.field) {
 			cell.filter(([key]) => key === encodingField(s, 'color'))
 				.append('div')
