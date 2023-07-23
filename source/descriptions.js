@@ -142,7 +142,7 @@ const encodingDescription = s => {
 		segments.push(`split by ${encodingField(s, 'color')}`)
 	}
 	if (segments.length) {
-		return `of ${segments.join(' ')}`
+		return `${segments.join(' ')}`
 	}
 }
 
@@ -200,7 +200,15 @@ const chartType = s => {
  * @return {string} chart description
  */
 const chartDescription = s => {
-	return [s.description, chartType(s), encodingDescription(s), instructions(s)].filter(Boolean).join(' ')
+	const type = chartType(s)
+	const description = s.description
+	const chart = type ? type[0].toUpperCase() + type.slice(1) + ' of ' + encodingDescription(s) : ''
+	const keys = instructions(s) || ''
+	return [
+		description,
+		chart ? `${chart}.` : '',
+		keys ? `${keys}.` : ''
+	].filter(Boolean).join(' ')
 }
 
 /**
@@ -214,8 +222,7 @@ const instructions = s => {
 	}
 	return [
 		'Use the arrow keys to navigate',
-		feature(s).hasLinks() ? ' and press the Enter key to open links' : '',
-		'.'
+		feature(s).hasLinks() ? ' and press the Enter key to open links' : ''
 	].join('')
 }
 
