@@ -425,6 +425,7 @@ const pointMarkCircle = (s, dimensions) => {
 			.attr('cx', encoders.x)
 			.attr('cy', encoders.y)
 			.attr('r', radius)
+			.attr('fill', encoders.color)
 	}
 	return renderer
 }
@@ -552,13 +553,13 @@ const pointMarks = (s, dimensions) => {
 				.style('stroke-width', 1)
 			points
 				.style('fill', feature(s).isMulticolor() ? encoders.color : color)
-				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : transparent)
+				.style('fill-opacity', feature(s).hasMarksFilled() ? 1 : transparent)
 		// style the series node when point marks are on top of line marks
 		} else {
 			marks
 				.style('stroke', encoders.color)
-				.style('fill', feature(s).hasPointsFilled() ? encoders.color : null)
-				.style('fill-opacity', feature(s).hasPointsFilled() ? 1 : transparent)
+				.style('fill', feature(s).hasMarksFilled() ? encoders.color : null)
+				.style('fill-opacity', feature(s).hasMarksFilled() ? 1 : transparent)
 			if (s.mark.point === 'transparent') {
 				marks
 					.selectAll(pointMarkSelector(s))

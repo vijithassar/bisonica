@@ -36,7 +36,15 @@ const _feature = s => {
 		isLine: s => mark(s) === 'line',
 		isArea: s => mark(s) === 'area',
 		hasPoints: s => ['point', 'circle', 'square'].includes(mark(s)) || s.mark?.point === true || s.mark?.point === 'transparent',
-		hasPointsFilled: s => (mark(s) !== 'point') && (s.mark?.filled !== false) && s.mark?.point !== 'transparent',
+		hasMarksFilled: s => {
+			if (mark(s) === 'point') {
+				return s.mark?.filled === true && s.mark?.point !== 'transparent'
+			} else if (['line', 'rule'].includes(mark(s))) {
+				return false
+			} else {
+				return s.mark?.filled !== false
+			}
+		},
 		hasLayers: s => s.layer,
 		isCircular: s => mark(s) === 'arc',
 		hasDefs: s => !!s.mark?.color?.gradient,
