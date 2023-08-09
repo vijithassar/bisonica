@@ -21,7 +21,7 @@
  */
 
 /**
- * @typedef {('rect'|'path'|'circle'|'rect'|'line'|'image'|'text')} mark
+ * @typedef {('path'|'circle'|'rect'|'line'|'image'|'text')} mark
  */
 
 /**
