@@ -1,6 +1,6 @@
 # Overview
 
-bisonica is a minimalist and accessibility-first alternative renderer for the open source [Vega Lite](https://vega.github.io/vega-lite/) standard for data visualization, a replacement for the [original `vega-lite.js` library](https://github.com/vega/vega-lite) which reads in the same JSON configuration objects and outputs charts.
+bisonica is a minimalist and accessibility-first alternative renderer for the open source [Vega Lite](https://vega.github.io/vega-lite/) standard for data visualization, a replacement for the [original `vega-lite.js` library](https://github.com/vega/vega-lite) which reads in the same [JSON configuration objects](https://vega.github.io/vega-lite/docs/) and outputs charts.
 
 # Install
 
