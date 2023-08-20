@@ -75,7 +75,7 @@ On the other hand, the standard `vega-lite.js` renderer is definitely still the 
 
 ## Omissions
 
-bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`source/marks.js`](./source/marks.js).
+bisonica is still a work in progress and as such supports only a subset of Vega Lite functionality. The supported chart forms are listed in [`marks.js`](./source/marks.js).
 
 Data loading will not [parse inline strings](https://vega.github.io/vega-lite/docs/data.html#inline).
 
