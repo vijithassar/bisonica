@@ -23,6 +23,7 @@ import { missingSeries, nested } from './helpers.js'
 import { memoize } from './memoize.js'
 import { parseTime } from './time.js'
 import { values } from './values.js'
+import { layerPrimary } from './views.js'
 
 /**
  * stack offset configuration
@@ -293,10 +294,11 @@ const chartData = s => {
 
 /**
  * wrapper function around data preprocessing functionality
- * @param {object} s Vega Lite specification
+ * @param {object} _s Vega Lite specification
  * @return {object[]} sorted and aggregated data
  */
-const _data = s => {
+const _data = _s => {
+	const s = layerPrimary(_s)
 	return metadata(s, chartData(s))
 }
 const data = memoize(_data)

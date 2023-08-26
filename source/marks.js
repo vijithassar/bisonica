@@ -29,15 +29,17 @@ import { parseTime, timePeriod } from './time.js'
 import { sortMarkData } from './sort.js'
 import { tooltips } from './tooltips.js'
 import { ticks } from './axes.js'
+import { layerPrimary } from './views.js'
 
 const transparent = 0.001
 
 /**
  * aggregate and sort mark data
- * @param {object} s Vega Lite specification
+ * @param {object} _s Vega Lite specification
  * @return {object[]} aggregated and sorted data for data join
  */
-const markData = s => {
+const markData = _s => {
+	const s = layerPrimary(_s)
 	const series = Array.isArray(data(s)) && data(s).every(Array.isArray)
 
 	if (series) {
