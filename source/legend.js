@@ -119,12 +119,10 @@ const swatches = s => {
 
 /**
  * discrete swatch legend
- * @param {object} _s Vega Lite specification
+ * @param {object} s Vega Lite specification
  * @return {function(object)} renderer
  */
-const swatch = _s => {
-	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
-
+const swatch = s => {
 	const renderer = selection => {
 		try {
 			const dispatcher = dispatchers.get(selection.node())
@@ -140,10 +138,6 @@ const swatch = _s => {
 			}
 
 			selection.call(legendStyle(s))
-
-			if (feature(s).hasLegendTitle()) {
-				selection.append('h3').text(legendTitle(s))
-			}
 
 			const main = selection.append('div').classed('items-main', true).append('ul')
 			const more = d3.create('ul').classed('items-more', true)
@@ -208,11 +202,15 @@ const swatch = _s => {
 
 /**
  * render chart legend
- * @param {object} s Vega Lite specification
+ * @param {object} _s Vega Lite specification
  * @return {function(object)} renderer
  */
-const legend = s => {
+const legend = _s => {
+	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
 	return selection => {
+		if (feature(s).hasLegendTitle()) {
+			selection.append('h3').text(legendTitle(s))
+		}
 		if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
 			selection.call(swatch(s))
 		}
