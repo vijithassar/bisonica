@@ -25,6 +25,7 @@ const selectors = [
 	'.point title',
 	'.tick',
 	'.legend',
+	'.legend .title',
 	'.legend .pair',
 	'.legend .items-main',
 	'.legend .items-more',

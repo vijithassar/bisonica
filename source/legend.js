@@ -12,6 +12,7 @@ import { encodingField } from './encodings.js'
 import { feature } from './feature.js'
 import { key, mark } from './helpers.js'
 import { layerPrimary } from './views.js'
+import { extension } from './extensions.js'
 import { parseScales } from './scales.js'
 import { renderStyles } from './styles.js'
 import { list } from './text.js'
@@ -46,6 +47,19 @@ function createLegendItem(config) {
  */
 const legendTitle = s => {
 	return s.encoding.color.legend?.title || s.encoding.color.title || encodingField(s, 'color')
+}
+
+/**
+ * a string for identifiying the legend in the DOM
+ * @param {object} s specification
+ * @return {string|null} legend title identifier string
+ */
+const legendIdentifier = s => {
+	if (extension(s, 'id')) {
+		return `legend-title-${extension(s, 'id')}`
+	} else {
+		return null
+	}
 }
 
 /**
@@ -124,6 +138,7 @@ const swatches = s => {
  */
 const swatch = s => {
 	const renderer = selection => {
+		const titleIdentifier = feature(s).hasLegendTitle() ? selection.select('h3').attr('id') : null
 		try {
 			const dispatcher = dispatchers.get(selection.node())
 
@@ -142,6 +157,8 @@ const swatch = s => {
 			const main = selection.append('div').classed('items-main', true).append('ul')
 			const more = d3.create('ul').classed('items-more', true)
 			const moreHeader = more.append('h3')
+
+			main.attr('aria-labelledby', titleIdentifier)
 
 			let target = main
 
@@ -207,12 +224,16 @@ const swatch = s => {
  */
 const legend = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
+	const id = legendIdentifier(_s)
 	return selection => {
 		if (feature(s).hasLegendTitle()) {
-			selection
+			const title = selection
 				.append('h3')
 				.classed('title', true)
 				.text(legendTitle(s))
+			if (id) {
+				title.attr('id', id)
+			}
 		}
 		if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
 			selection.call(swatch(s))
