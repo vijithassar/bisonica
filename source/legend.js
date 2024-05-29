@@ -209,7 +209,9 @@ const legend = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s
 	return selection => {
 		if (feature(s).hasLegendTitle()) {
-			selection.append('h3').text(legendTitle(s))
+			selection
+				.append('h3')
+				.text(legendTitle(s))
 		}
 		if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
 			selection.call(swatch(s))
