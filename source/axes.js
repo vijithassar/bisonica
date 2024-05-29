@@ -16,7 +16,7 @@ import { feature } from './feature.js'
 import { layerMatch } from './views.js'
 import { parseScales } from './scales.js'
 import { renderStyles } from './styles.js'
-import { margin, tickMargin } from './position.js'
+import { tickMargin } from './position.js'
 import { timeMethod, timePeriod } from './time.js'
 import { axisDescription } from './descriptions.js'
 
@@ -248,11 +248,9 @@ const axisTitleX = (s, dimensions) => {
 	}
 	return selection => {
 		const xTitle = selection.append('text').attr('class', 'title')
-		const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
-
 		xTitle
 			.attr('x', () => {
-				return (dimensions.x - margin(s, dimensions).left + bar) * 0.5
+				return dimensions.x * 0.5
 			})
 			.attr('y', () => {
 				const axisHeight = selection.node().getBBox().height * 2
