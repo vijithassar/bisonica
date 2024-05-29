@@ -211,6 +211,7 @@ const legend = _s => {
 		if (feature(s).hasLegendTitle()) {
 			selection
 				.append('h3')
+				.classed('title', true)
 				.text(legendTitle(s))
 		}
 		if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
