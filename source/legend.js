@@ -10,7 +10,7 @@ import * as d3 from 'd3'
 import { dispatchers } from './interactions.js'
 import { encodingField } from './encodings.js'
 import { feature } from './feature.js'
-import { key, mark, noop } from './helpers.js'
+import { key, mark } from './helpers.js'
 import { layerPrimary } from './views.js'
 import { parseScales } from './scales.js'
 import { renderStyles } from './styles.js'
@@ -212,10 +212,10 @@ const swatch = _s => {
  * @return {function(object)} renderer
  */
 const legend = s => {
-	if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
-		return swatch(s)
-	} else {
-		return noop
+	return selection => {
+		if (feature(s).hasLegend() && (feature(s).isMulticolor() || feature(s).isCircular())) {
+			selection.call(swatch(s))
+		}
 	}
 }
 
