@@ -243,26 +243,27 @@ const createY = (s, dimensions) => {
  * @return {function(object)} x axis title renderer
  */
 const axisTitleX = (s, dimensions) => {
+	if (!feature(s).hasEncodingX() || !feature(s).hasAxisTitleX()) {
+		return noop
+	}
 	return selection => {
-		if (feature(s).hasEncodingX() && feature(s).hasAxisTitleX()) {
-			const xTitle = selection.append('text').attr('class', 'title')
-			const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
+		const xTitle = selection.append('text').attr('class', 'title')
+		const bar = feature(s).isBar() ? barWidth(s, dimensions) : 0
 
-			xTitle
-				.attr('x', () => {
-					return (dimensions.x - margin(s, dimensions).left + bar) * 0.5
-				})
-				.attr('y', () => {
-					const axisHeight = selection.node().getBBox().height * 2
-					const tickHeight = tickMargin(s).bottom
-					const yPosition = axisHeight + tickHeight
+		xTitle
+			.attr('x', () => {
+				return (dimensions.x - margin(s, dimensions).left + bar) * 0.5
+			})
+			.attr('y', () => {
+				const axisHeight = selection.node().getBBox().height * 2
+				const tickHeight = tickMargin(s).bottom
+				const yPosition = axisHeight + tickHeight
 
-					return yPosition
-				})
-				.attr('transform', `translate(0,${axisOffset(s, dimensions)('y').y})`)
-				.text(titleText(s, 'x'))
-				.call(axisTitleStyles(s, 'x'))
-		}
+				return yPosition
+			})
+			.attr('transform', `translate(0,${axisOffset(s, dimensions)('y').y})`)
+			.text(titleText(s, 'x'))
+			.call(axisTitleStyles(s, 'x'))
 	}
 }
 
