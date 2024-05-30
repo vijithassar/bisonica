@@ -9,10 +9,6 @@ import { mark } from './helpers.js'
 import { memoize } from './memoize.js'
 import { values } from './values.js'
 
-// this is a mistake
-// import { isPresent } from '@ember/utils';
-const isPresent = x => x !== null
-
 const _feature = s => {
 	const multicolorTest = s => {
 		const colorValues = [
@@ -55,7 +51,7 @@ const _feature = s => {
 		hasLinks: s => s.encoding?.href || s.mark?.href,
 		hasData: s => s.data?.values?.length || s.data?.url,
 		hasLegend: s => s.encoding?.color && s.encoding?.color?.legend !== null,
-		hasLegendTitle: s => isPresent(s.encoding?.color?.legend?.title),
+		hasLegendTitle: s => s.encoding?.color?.legend?.title !== null,
 		hasTooltip: s => s.mark?.tooltip || s.encoding?.tooltip,
 		hasTransforms: s => Array.isArray(s.transform),
 		hasAxisX: s => s.encoding?.x && s.encoding?.x.axis !== null,
