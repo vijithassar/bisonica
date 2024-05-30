@@ -59,4 +59,16 @@ module('integration > legend', function() {
 
 		assert.notOk(element.querySelector(testSelector('legend-items-more')))
 	})
+
+	test('uses aria-labelledby to associate legend title and content', assert => {
+		const spec = specificationFixture('circular')
+		spec.usermeta = { id: 'abdefg' }
+		const element = render(spec)
+		const legend = element.querySelector(testSelector('legend'))
+		const title = legend.querySelector(testSelector('legend-title'))
+		const id = title.getAttribute('id')
+		const content = legend.querySelector('ul')
+		const aria = content.getAttribute('aria-labelledby')
+		assert.equal(id, aria)
+	})
 })
