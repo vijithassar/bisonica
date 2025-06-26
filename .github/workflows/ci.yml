@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn check && yarn check --integrity && yarn check --verify-tree
+      - run: npm install && npm check && npm check --integrity && npm check --verify-tree
   check-build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run build
+      - run: npm install && npm run build
   lint-js:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run lint-js
+      - run: npm install && npm run lint-js
   lint-styles:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run lint-styles
+      - run: npm install && npm run lint-styles
   lint-markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run lint-markdown
+      - run: npm install && npm run lint-markdown
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run test
+      - run: npm install && npm run test
   lint-git:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run lint-git
+      - run: npm install && npm run lint-git
   types:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -74,7 +74,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run types
+      - run: npm install && npm run types
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -83,4 +83,4 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: yarn && yarn run build
+      - run: npm install && npm run build
