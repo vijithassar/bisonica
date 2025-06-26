@@ -108,6 +108,8 @@ The [calculate transform](https://vega.github.io/vega-lite/docs/calculate.html) 
 
 Escaping special characters in field names is not supported. Instead, you should mutate your data before rendering to clean up the affected field names.
 
+[Geographic maps](https://vega.github.io/vega-lite/examples/#maps-geographic-displays) are not implemented.
+
 Advanced Vega Lite features like [`facet`](https://vega.github.io/vega-lite/docs/composition.html#faceting) and [`parameters`](https://vega.github.io/vega-lite/docs/parameter.html) are not yet available.
 
 Rendering to alternative output formats such as `<canvas>` instead of `<svg>` will most likely never be supported.
