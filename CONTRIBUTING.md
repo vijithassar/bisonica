@@ -4,7 +4,7 @@ bisonica follows the API for [Vega Lite](https://vega.github.io/vega-lite/). Not
 
 # Documentation
 
-Internals are thoroughly documented with [JSDoc](https://jsdoc.app/). To build the documentation locally, run `yarn run documentation` and then view the generated HTML files in your web browser.
+Internals are thoroughly documented with [JSDoc](https://jsdoc.app/). To build the documentation locally, run `npm run documentation` and then view the generated HTML files in your web browser.
 
 # Architecture
 
