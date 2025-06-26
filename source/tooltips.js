@@ -6,6 +6,7 @@
  */
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
 
 import { category } from './marks.js'
 import { createAccessors } from './accessors.js'
@@ -87,8 +88,7 @@ function tooltipEvent(s, node, interaction) {
 
 		node.dispatchEvent(customEvent)
 	} catch (error) {
-		error.message = `could not emit tooltip event - ${error.message}`
-		throw error
+		extendError(error, 'could not emit tooltip event')
 	}
 }
 

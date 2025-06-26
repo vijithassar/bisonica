@@ -1,4 +1,5 @@
 import { chart } from '../../source/chart.js'
+import { extendError } from '../../source/error.js'
 import * as d3 from 'd3'
 import qunit from 'qunit'
 
@@ -24,6 +25,14 @@ module('unit > error handling', () => {
 		const renderer = chart(specification, dimensions).error(handler)
 		d3.create('div').call(renderer)
 		assert.ok(x instanceof Error)
+	})
+	test('extends errors', assert => {
+		const error = new Error('a')
+		try {
+			extendError(error, 'b')
+		} catch (error) {
+			assert.equal(error.message, 'b - a')
+		}
 	})
 	test('disables error handling', assert => {
 		const renderer = chart(specification).error(null)

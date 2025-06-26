@@ -5,6 +5,8 @@
  * @see {@link https://vega.github.io/vega-lite/docs/predicate.html|vega-lite:predicate}
  */
 
+import { extendError } from './error.js'
+
 import { identity } from './helpers.js'
 import { memoize } from './memoize.js'
 import { expressionStringParse } from './expression.js'
@@ -124,8 +126,7 @@ const _predicate = config => {
 			return single(config)
 		}
 	} catch (error) {
-		error.message = `could not create predicate function - ${error.message}`
-		throw error
+		extendError(error, 'could not create predicate function')
 	}
 }
 const predicate = memoize(_predicate)

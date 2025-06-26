@@ -9,6 +9,8 @@
 import './types.d.js'
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
+
 import { data, stackOffset, sumByCovariates } from './data.js'
 import { values } from './values.js'
 import { colors } from './color.js'
@@ -383,8 +385,7 @@ const range = (s, dimensions, _channel) => {
 
 		return range
 	} catch (error) {
-		error.message = `could not determine scale range for ${channel} channel - ${error.message}`
-		throw error
+		extendError(`could not determine scale range for ${channel} channel`)
 	}
 }
 
@@ -433,8 +434,7 @@ const coreScales = (s, dimensions) => {
 					scales[channel] = scale
 				}
 			} catch (error) {
-				error.message = `could not generate ${channel} scale - ${error.message}`
-				throw error
+				extendError(error, `could not generate ${channel} scale`)
 			}
 		})
 

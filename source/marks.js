@@ -7,6 +7,7 @@
 import './types.d.js'
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
 
 import { createAccessors } from './accessors.js'
 import {
@@ -890,8 +891,7 @@ const _marks = (s, dimensions) => {
 			throw new Error('could not determine mark rendering function')
 		}
 	} catch (error) {
-		error.message = `could not render marks - ${error.message}`
-		throw error
+		extendError(error, 'could not render marks')
 	}
 }
 const marks = (s, dimensions) => detach(_marks(s, dimensions))

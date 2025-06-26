@@ -7,8 +7,9 @@
 import './types.d.js'
 
 import * as d3 from 'd3'
-import { feature } from './feature.js'
+import { extendError } from './error.js'
 
+import { feature } from './feature.js'
 import { mark, noop } from './helpers.js'
 import { markSelector, marks } from './marks.js'
 import { memoize } from './memoize.js'
@@ -314,9 +315,7 @@ const layerMarks = (s, dimensions) => {
 					.call(marks(layer, changeDimensions ? temporalBarDimensions(barLayer, dimensions) : dimensions))
 			} catch (error) {
 				const markName = mark(layerSpecification(s, index))
-
-				error.message = `could not render ${markName} mark layer at index ${index} - ${error.message}`
-				throw error
+				extendError(error, `could not render ${markName} mark layer at index ${index}`)
 			}
 		})
 	}
@@ -349,8 +348,7 @@ const layerCall = (s, fn) => {
 			try {
 				selection.call(fn(layer))
 			} catch (error) {
-				error.message = `function ${fn.name} does not return a function for layer ${index} - ${error.message}`
-				throw error
+				extendError(error, `function ${fn.name} does not return a function for layer ${index}`)
 			}
 		})
 	}
