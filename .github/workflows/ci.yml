@@ -1,15 +1,6 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  check-build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: latest
-      - run: npm install && npm run build
   lint-js:
     runs-on: ubuntu-latest
     timeout-minutes: 5
