@@ -57,6 +57,23 @@ import "bisonica/styles.css";
 
 In the preceding code, the `specification` variable is a JSON object that describes the chart according to the [Vega Lite](https://vega.github.io/vega-lite/) open standard. Explaining the structure of that object is beyond the scope of the bisonica documentation and would be duplicative in any case. Instead, please refer to the excellent [examples](https://vega.github.io/vega-lite/examples/), [API documentation](https://vega.github.io/vega-lite/docs/), and [tutorials](https://vega.github.io/vega-lite/tutorials/getting_started.html) provided by the Vega Lite project.
 
+# Tooltips
+
+Vega Lite and bisonica both support attaching tooltips to chart content if specification requests it. Please see the [Vega Lite tooltip documentation](https://vega.github.io/vega-lite/docs/tooltip.html) for more details on the numerous useful ways this can be configured.
+
+By default, bisonica renders tooltip content [svg `<title>` nodes](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/title) within each piece of the chart, which browsers typically reveal on mouseover.
+
+You can also add your own custom tooltips by calling the `.tooltip()` method attached to a chart renderer and passing it an arbitrary function.
+
+```javascript
+const renderer = chart(specification, dimensions);
+renderer.tooltip(myCustomTooltipFunction);
+```
+
+When it is called, your tooltip function will be passed an object containing the data point, the SVG DOM node, the browser event, and key/value pairs of any data fields itemized in the specification object used to create the chart.
+
+Note that the tooltip API is only loosely defined in the Vega Lite standard and also has not yet stabilized in bisonica.
+
 # Why?
 
 ## Accessibility
