@@ -13,7 +13,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "esbuild --bundle --format=esm --external:d3 --outfile=build/bisonica.js source/chart.js",
-    "postbuild": "yarn run archive",
+    "postbuild": "npm run archive",
     "archive": "zip -jr build/bisonica-$(npm view bisonica version).zip build/bisonica.js source/index.css",
     "documentation": "jsdoc --recurse source --destination documentation --template node_modules/docdash",
     "lint-git": "commitlint --to=HEAD --from=11cd541",
@@ -26,9 +26,9 @@
     "test-ci": "testem --file ./tests/testem.cjs ci",
     "types": "tsc --noEmit --allowJs --checkJs --moduleResolution node --target ES2022 ./source/chart.js",
     "release": "npx standard-version",
-    "coverage": "c8 --all --src source --exclude fixtures --exclude tests yarn run test",
-    "audit": "yarn audit",
-    "prerelease": "yarn run audit",
+    "coverage": "c8 --all --src source --exclude fixtures --exclude tests npm run test",
+    "audit": "npm audit",
+    "prerelease": "npm run audit",
     "benchmark": "node --require jsdom-global/register --require ./tests/browser-shim.cjs benchmarks/benchmarks.js"
   },
   "devDependencies": {
