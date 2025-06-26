@@ -7,6 +7,8 @@
  */
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
+
 import { cached } from './fetch.js'
 import { identity, nested } from './helpers.js'
 import { transformValues } from './transform.js'
@@ -69,8 +71,7 @@ const wrap = arr => {
 				return { data: item }
 			})
 		} catch (error) {
-			error.message = `could not convert primitives to objects - ${error.message}`
-			throw error
+			extendError(error, 'could not convert primitives to objects')
 		}
 	}
 }

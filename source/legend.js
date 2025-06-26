@@ -6,6 +6,7 @@
  */
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
 
 import { dispatchers } from './interactions.js'
 import { encodingField } from './encodings.js'
@@ -209,8 +210,7 @@ const swatch = s => {
 				dispatcher.on('removeLegendHighlight', removeLegendHighlight)
 			}
 		} catch (error) {
-			error.message = `could not render legend - ${error.message}`
-			throw error
+			extendError(error, 'could not render legend')
 		}
 	}
 

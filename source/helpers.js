@@ -4,6 +4,7 @@
  */
 
 import * as d3 from 'd3'
+import { extendError } from './error.js'
 
 import { encodingField, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
@@ -241,8 +242,7 @@ const detach = (fn, ...rest) => {
 			selection.append(() => detached.node())
 		} catch (error) {
 			const identifier = fn.name ? `function ${fn.name}()` : 'function'
-			error.message = `could not run ${identifier} with detached <${tag}> node - ${error.message}`
-			throw error
+			extendError(error, `could not run ${identifier} with detached <${tag}> node`)
 		}
 	}
 }
