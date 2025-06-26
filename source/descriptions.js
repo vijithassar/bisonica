@@ -239,6 +239,9 @@ const instructions = s => {
  * @return {string} chart title
  */
 const chartLabel = s => {
+	if (typeof s.title === 'string') {
+		throw new Error('specification title must be an object with a text property, not a string')
+	}
 	if (!s.title.text) {
 		throw new Error('specification title is required')
 	}

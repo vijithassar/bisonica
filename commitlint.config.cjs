@@ -3,6 +3,7 @@ const config = {
     "rules": {
         'body-case': [0],
         'body-max-line-length': [0],
+        'body-leading-blank': [2, 'always'],
         'footer-empty': [0],
         'footer-max-line-length': [0],
         'references-empty': [0],

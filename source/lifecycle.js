@@ -46,6 +46,9 @@ const setupNode = (s, dimensions) => {
 		svg.attr('width', dimensions.x)
 		svg.attr('role', 'document')
 
+		if (typeof s.title === 'string') {
+			throw new Error('specification title must be an object with a text property, not a string')
+		}
 		if (!s.title?.text) {
 			throw new Error('specification title is required')
 		}
