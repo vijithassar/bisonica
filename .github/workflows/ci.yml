@@ -1,7 +1,6 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  # this job should be removed
   check-build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -10,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: latest
-      - run: exit 0 # placeholder to get ci to pass
+      - run: npm install && npm run build
   lint-js:
     runs-on: ubuntu-latest
     timeout-minutes: 5
