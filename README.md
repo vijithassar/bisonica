@@ -53,6 +53,10 @@ Or import with a packager or build tool:
 import "bisonica/styles.css";
 ```
 
+# Specifications
+
+In the preceding code, the `specification` variable is a JSON object that describes the chart according to the [Vega Lite](https://vega.github.io/vega-lite/) open standard. Explaining the structure of that object is beyond the scope of the bisonica documentation and would be duplicative in any case. Instead, please refer to the excellent [examples](https://vega.github.io/vega-lite/examples/), [API documentation](https://vega.github.io/vega-lite/docs/), and [tutorials](https://vega.github.io/vega-lite/tutorials/getting_started.html) provided by the Vega Lite project.
+
 # Why?
 
 ## Accessibility
