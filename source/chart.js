@@ -24,6 +24,7 @@ import { copyMethods } from './helpers.js'
 import { defs } from './defs.js'
 import { dimensions } from './dimensions.js'
 import { menu } from './menu.js'
+import { select } from 'd3'
 
 /**
  * generate chart rendering function based on
@@ -38,6 +39,8 @@ const render = (s, _panelDimensions) => {
 	let tableRenderer = table
 
 	const renderer = selection => {
+		selection = selection instanceof Element ? select(selection) : selection
+
 		try {
 			selection.html('')
 
