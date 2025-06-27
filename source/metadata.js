@@ -13,7 +13,7 @@ const metadataChannels = ['description', 'tooltip', 'href']
 
 /**
  * test whether a specification has metadata
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {boolean}
  */
 const hasMetadata = s => {
@@ -34,7 +34,7 @@ const matchingFields = (a, b, fields) => {
 /**
  * create a function for looking up core encoding channels
  * and returning them as a string key suitable for indexing
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} convert datum to string key
  */
 const createKeyBuilder = s => {
@@ -47,7 +47,7 @@ const createKeyBuilder = s => {
 
 /**
  * determine which fields contain metadata
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  */
 const metadataFields = s => {
 	return metadataChannels
@@ -74,7 +74,7 @@ const pick = (object, fields) => {
 /**
  * determine which core encoding channels are
  * represented in a Vega Lite specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} encoding channels
  */
 const coreEncodingChannels = s => {
@@ -91,7 +91,7 @@ const coreEncodingChannels = s => {
 /**
  * fields used to represent core
  * encoding channels
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} encoding fields
  */
 const coreEncodingFields = s => {
@@ -100,7 +100,7 @@ const coreEncodingFields = s => {
 
 /**
  * count the metadata fields in a data set and look for conflicts
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object[]} data data set to count fields in
  * @param {function} createKey function to create a unique key per datum
  * @return {object} metadata fields indexed by core field values
@@ -131,7 +131,7 @@ const countFields = (s, data, createKey) => {
  * restructure a data point from aggregate data
  * for a circular chart to make it easier to find
  * the data fields of interest for comparison
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} item datum
  * @return {object} object with lookup fields at the top level
  */
@@ -157,7 +157,7 @@ const lookupCircular = (s, item) => {
  * looked up once externally and then passed into
  * this restructuring function as arguments instead
  * of being kept entirely inside this scope
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} series series key
  * @param {string} covariate covariate
  * @param {object} item datum
@@ -183,7 +183,7 @@ const lookupStack = (s, series, covariate, item) => {
  * looked up once externally and then passed into
  * this restructuring function as arguments instead
  * of being kept entirely inside this scope
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} series series key
  * @param {string} covariate covariate
  * @param {object} item datum
@@ -202,7 +202,7 @@ const lookupLine = (s, series, covariate, item) => {
 /**
  * move properties from an array of source
  * values to an aggregate
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object[]} aggregated aggregated data points
  * @param {object[]} raw individual data points
  * @return {object[]} aggregated data points with transplanted field attached
@@ -243,7 +243,7 @@ const transplantFields = (s, aggregated, raw) => {
 
 /**
  * transfer metadata from raw data points to aggregated data
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object[]} data aggregated data for data join
  * @return {object[]} aggregated data with metadata
  */

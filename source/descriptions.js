@@ -35,7 +35,7 @@ const quantitativeChannels = s => {
 /**
  * calculate minimum and maximum value for
  * each quantitative channel
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object} extents
  */
 const calculateExtents = s => {
@@ -83,7 +83,7 @@ const empty = () => ''
 /**
  * render descriptive text highlighting the minimum
  * and maximum values in the data set
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} extent description
  */
 const _extentDescription = s => {
@@ -112,7 +112,7 @@ const extentDescription = memoize(_extentDescription)
 
 /**
  * written description of the encodings of a chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} encoding description
  */
 const encodingDescription = s => {
@@ -151,7 +151,7 @@ const encodingDescription = s => {
 
 /**
  * render a description into the DOM
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} mark description renderer
  */
 const _markDescription = s => {
@@ -170,7 +170,7 @@ const markDescription = memoize(_markDescription)
 
 /**
  * chart type
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string|null} chart type
  */
 const chartType = s => {
@@ -199,7 +199,7 @@ const chartType = s => {
 
 /**
  * chart description
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} chart description
  */
 const chartDescription = s => {
@@ -220,7 +220,7 @@ const chartDescription = s => {
 
 /**
  * generate a string describing the keyboard navigation
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} instructions
  */
 const instructions = s => {
@@ -235,7 +235,7 @@ const instructions = s => {
 
 /**
  * chart name which includes title and subtitle
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} chart title
  */
 const chartLabel = s => {
@@ -250,7 +250,7 @@ const chartLabel = s => {
 
 /**
  * text description of axis values
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {string} values description
  */
@@ -273,7 +273,7 @@ const scaleDescriptions = {
 
 /**
  * written description of a scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {string} scale description
  */
@@ -293,7 +293,7 @@ const scaleDescription = (s, channel) => {
 
 /**
  * written description of an axis
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {string} axis description
  */

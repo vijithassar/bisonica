@@ -12,7 +12,7 @@ import { download } from './download.js'
 
 /**
  * create a menu configuration object for a data download
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {'csv'|'json'} format data format
  * @return {object} menu item configuration object
  */
@@ -22,7 +22,7 @@ const item = (s, format) => {
 
 /**
  * determine menu content
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} menu item configuration objects
  */
 const items = s => {
@@ -37,7 +37,7 @@ const items = s => {
 
 /**
  * render menu
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} menu renderer
  */
 const menu = s => {

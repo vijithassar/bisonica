@@ -8,7 +8,7 @@ import './types.d.js'
 
 /**
  * retrieve information from usermeta
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {extension} key usermeta key
  */
 const extension = (s, key) => {
@@ -20,7 +20,7 @@ const extension = (s, key) => {
 /**
  * initialize usermeta object if it doesn't
  * already exist
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  */
 const usermeta = s => {
 	if (typeof s.usermeta !== 'object') {

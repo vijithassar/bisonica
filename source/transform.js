@@ -51,7 +51,7 @@ const composeCalculateTransforms = memoize(_composeCalculateTransforms)
 
 /**
  * create a function to run transforms on a single datum
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} transform function for a single datum
  */
 const transformDatum = s => {
@@ -74,7 +74,7 @@ const sample = n => {
 
 /**
  * run a filter transform
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} config transform configuration
  * @return {function(object[])} filter transform function
  */
@@ -127,7 +127,7 @@ const flatten = config => {
 
 /**
  * apply a single transform
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} config transform configuration
  * @param {object[]} data data set
  * @return {object[]} transformed data set
@@ -146,7 +146,7 @@ const applyTransform = (s, config, data) => {
 
 /**
  * create a function to run transforms on a data set
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object[])} transform function for a data set
  */
 const _transformValues = s => {

@@ -12,7 +12,7 @@ import { feature } from './feature.js'
 
 /**
  * render download links
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {'csv'|'json'} format data format
  * @return {string} download url
  */

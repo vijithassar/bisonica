@@ -21,7 +21,7 @@ const toggleSelector = '.menu [data-menu="table"] button'
 
 /**
  * create the outer DOM for the table
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} table setup function
  */
 const setup = s => {
@@ -35,14 +35,14 @@ const setup = s => {
 
 /**
  * column headers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} array of column names
  */
 const channels = s => deduplicateByField(s)(Object.keys(s.encoding))
 
 /**
  * column encoding fields
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} array of column encoding fields
  */
 const fields = s => {
@@ -54,7 +54,7 @@ const fields = s => {
 
 /**
  * create an ordered datum for data binding
- * @param {object} s datum
+ * @param {specification} s datum
  * @return {function(object)} function to convert a datum into key/value pairs
  */
 const columnEntries = s => {
@@ -64,7 +64,7 @@ const columnEntries = s => {
 
 /**
  * render table header
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} header renderer
  */
 const header = s => {
@@ -85,7 +85,7 @@ const header = s => {
 
 /**
  * render table rows
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} rows renderer
  */
 const rows = s => {
@@ -119,7 +119,7 @@ const rows = s => {
 
 /**
  * compile options to pass to an external table renderer
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object} options for table rendering
  */
 const tableOptions = s => {
@@ -147,7 +147,7 @@ const table = (_s, options) => { // eslint-disable-line no-unused-vars
 
 /**
  * toggle the content from a graphic to a table
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} renderer custom table rendering function
  * @return {function(object)} table toggle interaction function
  */

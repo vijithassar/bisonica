@@ -17,7 +17,7 @@ const channels = {
 
 /**
  * determine rendering size for chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {HTMLElement} node DOM node
  * @param {object} [explicitDimensions] chart dimensions
  * @return {dimensions} chart dimensions

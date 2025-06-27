@@ -26,7 +26,7 @@ const isInverted = sort => {
 
 /**
  * look up sorting field
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} encoding parameter
  */
@@ -57,7 +57,7 @@ const sortField = memoize(_sortField)
 
 /**
  * look up sorting direction
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string|null} sorting direction
  */
@@ -86,7 +86,7 @@ const sortOrder = memoize(_sortOrder)
 
 /**
  * look up the channel used for sorting
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} encoding channel used for sorting
  */
@@ -97,7 +97,7 @@ const sortChannel = memoize(_sortChannel)
 
 /**
  * determine whether sort is ascending
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean} sorting direction is ascending
  */
@@ -107,7 +107,7 @@ const isAscending = (s, channel) => {
 
 /**
  * determine whether sort is descending
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean} sorting direction is descending
  */
@@ -117,7 +117,7 @@ const isDescending = (s, channel) => {
 
 /**
  * extract the values to sort and resolve repeated values
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {object[]} array of data values to be sorted
  */
@@ -174,7 +174,7 @@ const valuesToSort = (s, channel) => {
 
 /**
  * sort aggregated data for mark rendering
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function} sort comparator function
  */
 const _sortMarkData = s => {
@@ -198,7 +198,7 @@ const sortMarkData = memoize(_sortMarkData)
 
 /**
  * select sort comparator function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} sort comparator type
  */
@@ -225,7 +225,7 @@ const selectSorter = (s, channel) => {
 /**
  * select a simple comparator function to as part
  * of more elaborate sort functions
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} sort comparator function
  */
@@ -241,7 +241,7 @@ const selectComparator = (s, channel) => {
 
 /**
  * wrapper for natural sort comparator
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} natural sort comparator function
  */
@@ -255,7 +255,7 @@ const sortNatural = (s, channel) => {
 
 /**
  * field sort comparator
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} field sort comparator function
  */
@@ -275,7 +275,7 @@ const sortByField = (s, channel) => {
 
 /**
  * encoding channel sort comparator
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} encoding channel sort comparator function
  */
@@ -305,7 +305,7 @@ const sortByChannel = (s, channel) => {
 
 /**
  * array sort comparator
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} array sort comparator function
  */
@@ -331,7 +331,7 @@ const sortNone = () => () => 0
 
 /**
  * create sort comparator function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function} sort comparator
  */

@@ -1,4 +1,19 @@
 /**
+ * Vega Lite specification
+ * @typedef specification
+ * @property {object} title title
+ * @property {object} [description] description
+ * @property {object} data data
+ * @property {object} [datasets] datasets
+ * @property {object} encoding encoding parameters for chart graphics
+ * @property {object|string} mark mark for rendering chart
+ * @property {object} [transform] transforms
+ * @property {object} [usermeta] arbitrary extensions
+ * @property {object} [layer] layers
+ * @property {object} [facet] facets
+ */
+
+/**
  * chart dimensions
  * @typedef dimensions
  * @property {number} x horizontal dimension

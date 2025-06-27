@@ -15,7 +15,7 @@ import { parseTime } from './time.js'
 /**
  * generate accessor methods which can look up
  * data points for a particular chart type
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {mark} [type] mark type
  * @return {object} accessor methods
  */

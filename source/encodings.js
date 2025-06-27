@@ -17,7 +17,7 @@ import { isTextChannel, nested } from './helpers.js'
 
 /**
  * look up the field used for a visual encoding
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} encoding field
  */
@@ -28,7 +28,7 @@ const encodingField = (s, channel) => {
 /**
  * look up the data type used for an encoding in the s
  * (these are types of data sets, not JavaScript primitive types)
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
  */
@@ -39,7 +39,7 @@ const encodingType = (s, channel) => {
 /**
  * create a function which looks up the data value used for
  * a visual encoding
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function(object)}
  */
@@ -61,7 +61,7 @@ const encodingValue = (s, channel) => {
 
 /**
  * determine which channel is used for quantitative encoding
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} encoding channel
  */
 const encodingChannelQuantitative = s => {
@@ -73,7 +73,7 @@ const encodingChannelQuantitative = s => {
 /**
  * create a function which looks up the data value used for
  * the quantitative visual encoding
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)}
  */
 const encodingValueQuantitative = s => {
@@ -82,7 +82,7 @@ const encodingValueQuantitative = s => {
 
 /**
  * default encoding types
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} default encoding type
  */
@@ -131,7 +131,7 @@ const encodingTypeDefault = memoize(_encodingTypeDefault)
 
 /**
  * determine which channel matches a predicate function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} test test
  * @return {string} encoding channel
  */
@@ -165,7 +165,7 @@ const encodingTest = memoize(_encodingTest)
 
 /**
  * determine which channel is used for the independent variable
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} encoding channel
  */
 const encodingChannelCovariate = s => {
@@ -190,7 +190,7 @@ const encodingChannelCovariate = s => {
 /**
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {cartesian} encoding channel
  */
 const encodingChannelCovariateCartesian = s => {
@@ -207,7 +207,7 @@ const encodingChannelCovariateCartesian = s => {
 /**
  * determine which channel of a Cartesian specification object
  * is the primary quantitative channel
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {cartesian} encoding channel
  */
 const encodingChannelQuantitativeCartesian = s => {
@@ -224,7 +224,7 @@ const encodingChannelQuantitativeCartesian = s => {
 /**
  * bundle together an accessor and an encoder function
  * into an encoder function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @param {function} accessor accessor function
  * @param {dimensions} dimensions chart dimensions
@@ -278,7 +278,7 @@ const encoder = memoize(_encoder)
 
 /**
  * generate a set of complex encoders
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @param {object} accessors hash of data accessor functions
  * @return {object} hash of encoder functions with complex data
