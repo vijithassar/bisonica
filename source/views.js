@@ -17,6 +17,8 @@ import { parseScales } from './scales.js'
 import { temporalBarDimensions } from './time.js'
 import { values } from './values.js'
 
+/* eslint-disable jsdoc/require-property */
+
 /**
  * a variant of a specification
  * which represents a single layer
@@ -26,6 +28,8 @@ import { values } from './values.js'
  * within views.js
  * @typedef {object} layerSpecification
  */
+
+/* eslint-enable jsdoc/require-property */
 
 /**
  * determine whether encoding types can be shared
