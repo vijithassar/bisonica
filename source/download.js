@@ -26,8 +26,10 @@ const _download = (s, format) => {
 	} else if (format === 'json') {
 		file = new Blob([JSON.stringify(s)], { type: 'text/json' })
 	}
-	const url = URL.createObjectURL(file)
-	return url
+	if (URL) {
+		const url = URL?.createObjectURL(file)
+		return url
+	}
 }
 const download = memoize(_download)
 
