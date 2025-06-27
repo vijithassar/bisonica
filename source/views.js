@@ -18,6 +18,16 @@ import { temporalBarDimensions } from './time.js'
 import { values } from './values.js'
 
 /**
+ * a variant of a specification
+ * which represents a single layer
+ * among many
+ *
+ * this is only for internal use
+ * within views.js
+ * @typedef {object} layerSpecification
+ */
+
+/**
  * determine whether encoding types can be shared
  * across layers
  * @param {specification} s Vega Lite specification
@@ -135,7 +145,7 @@ const layerTest = (s, test) => {
  * which matches a predicate function return it
  * @param {specification} s Vega Lite specification
  * @param {function} test predicate function
- * @return {object} Vega Lite specification for a single layer
+ * @return {layerSpecification} Vega Lite specification for a single layer
  */
 const layerMatch = (s, test) => {
 	if (!s.layer && test(s)) {
@@ -155,7 +165,7 @@ const layerMatch = (s, test) => {
  * for global functionality like axes and margins across the
  * entire chart
  * @param {object} s Vega Lite specification
- * @return {object} layer specification
+ * @return {layerSpecification} layer specification
  */
 const _layerPrimary = s => {
 	if (!s.layer) {
@@ -224,7 +234,7 @@ const layerNode = (s, wrapper) => {
  * single layer of a multilayer specification
  * @param {specification} s Vega Lite specification
  * @param {number} index index of the target layer
- * @return {object} Vega Lite specification for a single layer
+ * @return {layerSpecification} Vega Lite specification for a single layer
  */
 const layerSpecification = (s, index) => {
 	if (index === undefined) {
