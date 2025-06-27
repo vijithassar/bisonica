@@ -169,7 +169,7 @@ const layerMatch = (s, test) => {
  * for global functionality like axes and margins across the
  * entire chart
  * @param {object} s Vega Lite specification
- * @return {layerSpecification} layer specification
+ * @return {layerSpecification} Vega Lite specification for a single layer
  */
 const _layerPrimary = s => {
 	if (!s.layer) {
