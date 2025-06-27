@@ -108,7 +108,7 @@ const timeMethod = specifier => {
 
 /**
  * string key for controlling date functionality
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel temporal encoding channel
  */
 const timePeriod = (s, channel) => {
@@ -136,7 +136,7 @@ const timePeriod = (s, channel) => {
 /**
  * alter dimensions object to subtract the bar width
  * for a temporal bar chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @return {dimensions} chart dimensions with bar width offset
  */

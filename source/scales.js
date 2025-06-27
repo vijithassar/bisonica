@@ -38,7 +38,7 @@ const syntheticScale = (scale, domain, range) => {
 
 /**
  * parse scale types which have been explicitly specified
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string|null}
  */
@@ -56,7 +56,7 @@ const explicitScale = (s, channel) => {
 
 /**
  * scale type lookup
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} scale type
  */
@@ -67,7 +67,7 @@ const scaleType = (s, channel) => {
 /**
  * determine the d3 method name of the scale function to
  * generate for a given dimension of visual encoding
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string|null} d3 scale type
  */
@@ -104,7 +104,7 @@ const scaleMethod = (s, channel) => {
 
 /**
  * get the specified domain from a specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {array} domain
  */
@@ -122,7 +122,7 @@ const customDomain = (s, channel) => {
 
 /**
  * sanitize channel name
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {number} number of data categories
  */
@@ -148,7 +148,7 @@ const channelRoot = channel => {
 
 /**
  * determine whether a scale starts at zero
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean} whether to start the scale at zero
  */
@@ -164,7 +164,7 @@ const zero = (s, channel) => {
 
 /**
  * baseline for an axis
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel visual encoding
  * @return {number[]}
  */
@@ -174,7 +174,7 @@ const baseline = (s, channel) => {
 
 /**
  * compute raw values for scale domain
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {number[]|string[]} domain
  */
@@ -241,7 +241,7 @@ const domainBaseValues = (s, channel) => {
 /**
  * adjust a domain by substituting explicit values
  * if they are included in the specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function(array)} domain adjustment function
  */
@@ -263,7 +263,7 @@ const adjustDomain = (s, channel) => {
 
 /**
  * sort the domain
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {function(array)}
  */
@@ -277,7 +277,7 @@ const domainSort = (s, channel) => {
 
 /**
  * compute domain
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  */
 const domain = (s, channel) => {
@@ -286,7 +286,7 @@ const domain = (s, channel) => {
 
 /**
  * compute cartesian range
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {function(object)} function which computes Cartesian range
  */
@@ -317,7 +317,7 @@ const cartesianRange = (s, channel) => {
 
 /**
  * compute scale range
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {string} _channel visual encoding
  * @return {number[]} range
@@ -392,7 +392,7 @@ const range = (s, dimensions, _channel) => {
 /**
  * generate scale functions described by the
  * specification's encoding section
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @return {object} hash of d3 scale functions
  */
@@ -449,7 +449,7 @@ const coreScales = (s, dimensions) => {
  * determine whether a specification describes a chart that
  * will require scale functions beyond the ones listed directly
  * in the s's encoding section
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} additional scale functions required
  */
 const detectScaleExtensions = s => {
@@ -470,7 +470,7 @@ const detectScaleExtensions = s => {
 /**
  * generate additional necessary scale functions beyond those
  * described in the s's encoding section
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {object} scales a hash of the core scale functions
  * @return {object} hash of extended d3 scale functions
@@ -544,7 +544,7 @@ const _parseScales = (s, dimensions = defaultDimensions) => {
 
 /**
  * determine whether an encoding uses a time scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean}
  */
@@ -554,7 +554,7 @@ const isTemporalScale = (s, channel) => {
 
 /**
  * determine whether an encoding uses an ordinal scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean}
  */
@@ -564,7 +564,7 @@ const isOrdinalScale = (s, channel) => {
 
 /**
  * determine whether an encoding uses an ordinal scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean}
  */
@@ -574,7 +574,7 @@ const isQuantitativeScale = (s, channel) => {
 
 /**
  * generate all scale functions necessary to render a s
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} [dimensions] chart dimensions
  * @return {object} hash of all necessary d3 scale functions
  */

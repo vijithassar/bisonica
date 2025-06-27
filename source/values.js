@@ -16,21 +16,21 @@ import { memoize } from './memoize.js'
 
 /**
  * get values from values property
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]|object}
  */
 const valuesInline = s => s.data.values || s.data
 
 /**
  * get values from datasets property based on name
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]}
  */
 const valuesTopLevel = s => s.datasets[s.data.name]
 
 /**
  * generate a data set
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} data
  */
 const valuesSequence = s => {
@@ -44,7 +44,7 @@ const valuesSequence = s => {
 
 /**
  * look up data values attached to specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]|object}
  */
 const valuesStatic = s => {
@@ -79,7 +79,7 @@ const wrap = arr => {
 /**
  * look up data from a nested object based on
  * a string of properties
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)}
  */
 const lookup = s => {
@@ -93,7 +93,7 @@ const lookup = s => {
 
 /**
  * get remote data from the cache
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} data set
  */
 const valuesCached = s => cached(s.data)
@@ -107,7 +107,7 @@ const parsers = {
 
 /**
  * convert field types in an input datum object
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} datum field parsing function
  */
 const parseFields = s => {
@@ -127,7 +127,7 @@ const parseFields = s => {
 /**
  * run all data transformation and utility functions
  * on an input data set
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object[])} data processing function
  */
 const dataUtilities = s => {
@@ -138,7 +138,7 @@ const dataUtilities = s => {
 
 /**
  * look up data values
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} data set
  */
 const _values = s => {

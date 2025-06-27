@@ -26,7 +26,7 @@ import { values } from './values.js'
 
 /**
  * stack offset configuration
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} stack command
  */
 const stackOffset = s => s.encoding[encodingChannelQuantitative(s)].stack
@@ -106,7 +106,7 @@ const stackKeys = data => {
 
 /**
  * sum values across the time period specified on the x axis
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} values summed across time period
  */
 const sumByCovariates = s => {
@@ -153,7 +153,7 @@ const stackValue = (d, key) => d[key]?.value || 0
 /**
  * reorganize data from specification into array
  * of values used to render a stacked bar chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} stacked data series
  */
 const stackData = s => {
@@ -202,7 +202,7 @@ const stackData = s => {
 /**
  * reorganize data from specification into totals
  * used to render a circular chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} totals by group
  */
 const circularData = s => {
@@ -229,7 +229,7 @@ const circularData = s => {
 /**
  * reorganize data from a specification into
  * array of values used to render a line chart.
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} summed values for line chart
  */
 const lineData = s => {
@@ -262,21 +262,21 @@ const lineData = s => {
 
 /**
  * retrieve data points used for point marks
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} data points for point marks
  */
 const pointData = values
 
 /**
  * retrieve data points used for generic marks
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} data points for generic marks
  */
 const genericData = values
 
 /**
  * wrapper function around chart-specific data preprocessing functionality
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} sorted and aggregated data
  */
 const chartData = s => {
@@ -293,7 +293,7 @@ const chartData = s => {
 
 /**
  * wrapper function around data preprocessing functionality
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object[]} sorted and aggregated data
  */
 const _data = s => {

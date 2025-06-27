@@ -43,7 +43,7 @@ function createLegendItem(config) {
 
 /**
  * look up the title of the legend
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} legend title
  */
 const legendTitle = s => {
@@ -52,7 +52,7 @@ const legendTitle = s => {
 
 /**
  * a string for identifiying the legend in the DOM
- * @param {object} s specification
+ * @param {specification} s specification
  * @return {string|null} legend title identifier string
  */
 const legendIdentifier = s => {
@@ -65,7 +65,7 @@ const legendIdentifier = s => {
 
 /**
  * generate a written description for the legend
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} legend description
  */
 const legendDescription = s => {
@@ -98,14 +98,14 @@ const legendStyles = {
 
 /**
  * style the legend based on the specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} legend style renderer
  */
 const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
 /**
  * legend item configuration
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} index item in legend
  * @return {object} object describing the legend item
  */
@@ -122,7 +122,7 @@ const itemConfig = (s, index) => {
 
 /**
  * items to plot in swatch legend
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string[]} domain for legend
  */
 const swatches = s => {
@@ -134,7 +134,7 @@ const swatches = s => {
 
 /**
  * discrete swatch legend
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} renderer
  */
 const swatch = s => {

@@ -39,7 +39,7 @@ const fetch = data => {
 
 /**
  * fetch and cache all remote resources for a specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  */
 const fetchAll = s => {
 	const resources = [

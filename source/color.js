@@ -127,7 +127,7 @@ const scheme = (_count, config) => {
 
 /**
  * generate a categorical color scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} count number of colors
  */
 const colors = (s, count) => {

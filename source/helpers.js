@@ -34,7 +34,7 @@ const capitalize = string => string[0].toUpperCase() + string.slice(1)
 /**
  * return the original data object if it has been nested
  * by a layout generator
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
  * @return {object} datum
  */
@@ -78,7 +78,7 @@ const nested = function(d, key, newValue) {
 /**
  * create a function which ensures channels have
  * unique fields
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(array)} deduplication function
  */
 const deduplicateByField = s => {
@@ -110,7 +110,7 @@ const missingSeries = () => '_'
 
 /**
  * look up the URL attached to a datum
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
  * @return {string} url
  */
@@ -128,7 +128,7 @@ const getUrl = (s, d) => {
 /**
  * look up the mark name from either a simple string
  * or the type property of a mark specification object
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {string} mark name
  */
 const mark = s => {
@@ -183,7 +183,7 @@ const degrees = radians => (radians * 180) / Math.PI
 
 /**
  * test whether a channel is continuous
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean}
  */
@@ -193,7 +193,7 @@ const isContinuous = (s, channel) => {
 
 /**
  * test whether a channel is discrete
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {boolean}
  */

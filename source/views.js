@@ -20,7 +20,7 @@ import { values } from './values.js'
 /**
  * determine whether encoding types can be shared
  * across layers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {string} encoding type
  */
@@ -47,7 +47,7 @@ const emptyData = data => {
 
 /**
  * compute a unified set of scale values across all layers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @param {'domain'|'range'} valueType value type
  * @return {array} unified set of scale values
@@ -100,7 +100,7 @@ const unionScaleValues = (s, channel, valueType) => {
 
 /**
  * compute a unified data domain across all layers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {array} unified domain
  */
@@ -108,7 +108,7 @@ const unionDomains = (s, channel) => unionScaleValues(s, channel, 'domain')
 
 /**
  * compute a unified data range across all layers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {array} unified range
  */
@@ -116,7 +116,7 @@ const unionRanges = (s, channel) => unionScaleValues(s, channel, 'range')
 
 /**
  * test all layers with a predicate function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} test predicate function
  * @return {boolean} recursive test result
  */
@@ -133,7 +133,7 @@ const layerTest = (s, test) => {
 /**
  * find the first root level or layer level specification
  * which matches a predicate function return it
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} test predicate function
  * @return {object} Vega Lite specification for a single layer
  */
@@ -222,7 +222,7 @@ const layerNode = (s, wrapper) => {
 /**
  * construct a specification equivalent to a
  * single layer of a multilayer specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} index index of the target layer
  * @return {object} Vega Lite specification for a single layer
  */
@@ -294,7 +294,7 @@ const layerSpecification = (s, index) => {
 
 /**
  * render layers of a specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @return {function(object)} layer renderer
  */
@@ -324,7 +324,7 @@ const layerMarks = (s, dimensions) => {
 /**
  * recursively test a predicate function on root
  * level specification and any layers it contains
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} test predicate function
  * @return {boolean} recursive test result
  */
@@ -334,7 +334,7 @@ const layerTestRecursive = (s, test) => {
 
 /**
  * run a function with selection.call() across multiple layers
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {function} fn function
  * @return {function(object)}
  */

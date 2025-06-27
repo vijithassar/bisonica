@@ -75,7 +75,7 @@ const format = memoize(_format)
  *
  * this is only valid for text and tooltip channels; most of
  * the time the right choice is formatAxis
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {'text'|'tooltip'} channel encoding channel
  */
 const formatChannel = (s, channel) => {
@@ -88,7 +88,7 @@ const formatChannel = (s, channel) => {
  * this doesn't mean you're necessarily formatting axis ticks;
  * rather, it means the formatting instruction is taken from
  * the axis object, which is the most common scenario
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  */
 const formatAxis = (s, channel) => {

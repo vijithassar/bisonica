@@ -14,7 +14,7 @@ import { fetchAll } from './fetch.js'
 
 /**
  * prepare the DOM of a specified element for rendering a chart
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  */
 const setupNode = (s, dimensions) => {

@@ -29,7 +29,7 @@ import { select } from 'd3'
 /**
  * generate chart rendering function based on
  * a Vega Lite specification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} [_panelDimensions] chart dimensions
  * @return {function(object)} renderer
  */
@@ -135,7 +135,7 @@ const render = (s, _panelDimensions) => {
 /**
  * convert a synchronous rendering function
  * into an asynchronous rendering function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @return {function(object)} asynchronous rendering function
  */
@@ -154,7 +154,7 @@ const asyncRender = (s, dimensions) => {
 /**
  * optionally fetch remote data, then create and run
  * a chart rendering function
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} [dimensions] chart dimensions
  * @return {function(object)} renderer
  */

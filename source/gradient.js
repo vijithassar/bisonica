@@ -8,7 +8,7 @@ import { key, noop } from './helpers.js'
 
 /**
  * assemble a string key for a gradient
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} [index] gradient index
  * @return {string} gradient id
  */
@@ -19,7 +19,7 @@ const gradientKey = (s, index = 0) => {
 
 /**
  * create a gradient
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} gradient definition rendering function
  */
 const gradient = s => {

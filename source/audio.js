@@ -23,28 +23,28 @@ const defaults = {
 
 /**
  * root note for the musical scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {number} root frequency
  */
 const root = s => extension(s, 'audio')?.root || defaults.root
 
 /**
  * octaves spread which repeats the musical scale
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {number} number of octaves
  */
 const octaves = s => extension(s, 'audio')?.octaves || defaults.octaves
 
 /**
  * tempo
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {number} tempo in beats per minute
  */
 const tempo = s => extension(s, 'audio')?.tempo || defaults.tempo
 
 /**
  * note duration
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {number} note duration
  */
 const duration = s => 60 / tempo(s) / 2
@@ -89,7 +89,7 @@ const minorExponential = root => {
 
 /**
  * play a note
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} frequency audio frequency
  * @param {number} start start time
  */
@@ -115,7 +115,7 @@ const note = (s, frequency, start) => {
 
 /**
  * repeat a scale across octaves in linear data space
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
  * @return {number[]} multiple octave data scale
@@ -137,7 +137,7 @@ const repeatLinear = (s, min, max) => {
 
 /**
  * repeat a scale across octaves in audio space
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
  * @return {number[]} multiple octave audio scale
@@ -160,7 +160,7 @@ const repeatExponential = (s, min, max) => {
  * handle playback of musical notes
  * @param {object[]} values data values
  * @param {object} dispatcher interaction dispatcher
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  */
 const notes = (values, dispatcher, s) => {
 	const [min, max] = d3.extent(values, d => d.value)
@@ -180,7 +180,7 @@ const notes = (values, dispatcher, s) => {
 
 /**
  * audio sonification
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} audio sonification function
  */
 const audio = s => {

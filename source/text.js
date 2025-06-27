@@ -67,7 +67,7 @@ const fontStyles = node => {
 
 /**
  * abbreviate axis tick label text
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
  * @param {cartesian} channel encoding channel
  * @return {function(string)} abbreviation function
@@ -97,7 +97,7 @@ const abbreviate = memoize(_abbreviate)
 
 /**
  * format axis tick label text
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {function(string)} formatting function
  */
@@ -109,7 +109,7 @@ const format = (s, channel) => {
 
 /**
  * rotate axis tick label text
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {number} axis tick text rotation
  */
@@ -148,7 +148,7 @@ const truncate = memoize(_truncate)
 
 /**
  * process axis tick text content
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel axis dimension
  * @param {string} textContent text to process
  * @param {object} [styles] styles to incorporate when measuring text width
@@ -171,7 +171,7 @@ const axisTicksLabelTextContent = memoize(_axisTicksLabelTextContent)
 
 /**
  * compute margin values based on chart type
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {object} longest axis tick label text length in pixels
  */
 const _longestAxisTickLabelTextWidth = s => {
@@ -207,7 +207,7 @@ const longestAxisTickLabelTextWidth = memoize(_longestAxisTickLabelTextWidth)
 
 /**
  * render axis tick text
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
  * @return {function(object)} text processing function
  */

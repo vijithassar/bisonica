@@ -51,7 +51,7 @@ const x = {
 
 /**
  * generate a listener for an arrow key
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @param {('up'|'right'|'down'|'left')} direction arrow direction
  * @return {function(object)} key listener
  */

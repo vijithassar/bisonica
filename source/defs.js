@@ -10,7 +10,7 @@ import { memoize } from './memoize.js'
 
 /**
  * create a defs node
- * @param {object} s Vega Lite specification
+ * @param {specification} s Vega Lite specification
  * @return {function(object)} defs rendering function
  */
 const _defs = s => {
