@@ -62,7 +62,7 @@ const _feature = s => {
 		hasAxisTitleY: s => s.encoding?.y?.axis?.title !== null,
 		hasStaticText: s => s.mark?.text && !s.encoding?.text,
 		hasTable: s => s.usermeta?.table !== null,
-		hasDownload: s => s.usermeta?.download !== null,
+		hasDownload: s => s.usermeta?.download !== null && !!URL,
 		isCartesian: s => (s.encoding?.x && s.encoding?.y),
 		isLinear: s => (s.encoding?.x && !s.encoding?.y) || (s.encoding?.y && !s.encoding?.x),
 		isTemporal: () => isTemporal,
