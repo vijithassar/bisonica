@@ -1,6 +1,6 @@
 import bench from 'nanobench'
 import { render } from '../tests/test-helpers.js'
-import { charts } from '../tests/unit/support.js'
+import { charts, internals, dimensions } from '../tests/unit/support.js'
 
 const count = 100
 
@@ -21,3 +21,27 @@ Object.entries(charts).forEach(([name, s]) => {
 		b.end()
 	})
 })
+
+const pairs = Object.entries(charts).map(([chart]) => {
+	return Object.entries(internals).map(([internal]) => [chart, internal])
+})
+	.flat()
+	.filter(item => item[1] !== 'createEncoders')
+
+const timed = pairs.map(([chart, internal]) => {
+	const start = performance.now() // eslint-disable-line compat/compat
+	internals[internal](charts[chart], dimensions)
+	const end = performance.now() // eslint-disable-line compat/compat
+	const time = end - start
+	return { chart, internal, time }
+})
+
+const round = number => Math.round(number * 100) / 100
+
+const table = {}
+timed.forEach(({ chart, internal, time }) => {
+	table[chart] = table[chart] || {}
+	table[chart][internal] = round(time)
+})
+
+console.table(table) // eslint-disable-line no-console
