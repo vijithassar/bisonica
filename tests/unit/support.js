@@ -12,10 +12,10 @@ const datum = () => {
 	return { label: date, value: Math.random(), group: group() }
 }
 
-const data = () => {
+const generate_data = () => {
 	return Array.from({ length: 100 }).map(datum)
 }
 
 const dimensions = { x: 100, y: 100 }
 
-export { data, dimensions, groups }
+export { dimensions, groups, charts }

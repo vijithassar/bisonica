@@ -1,4 +1,4 @@
-import { dimensions } from './support.js'
+import { dimensions, charts } from './support.js'
 import qunit from 'qunit'
 import { createAccessors } from '../../source/accessors.js'
 import { parseScales } from '../../source/scales.js'
@@ -9,19 +9,6 @@ import { marks } from '../../source/marks.js'
 import { specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
-
-const charts = [
-	'categoricalBar',
-	'circular',
-	'dotPlot',
-	'line',
-	'multiline',
-	'rules',
-	'scatterPlot',
-	'singleBar',
-	'stackedArea',
-	'temporalBar'
-]
 
 module('unit > internals', () => {
 	test('feature()', assert => {
