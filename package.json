@@ -17,7 +17,7 @@
     "archive": "zip -jr build/bisonica-$(npm view bisonica version).zip build/bisonica.js source/index.css",
     "documentation": "jsdoc --recurse source --destination documentation --template node_modules/docdash",
     "lint-git": "commitlint --to=HEAD --from=11cd541",
-    "lint-js": "eslint source fixtures tests/**/*.js tests/*.js",
+    "lint-js": "eslint source fixtures benchmarks tests/**/*.js tests/*.js",
     "lint-styles": "stylelint source/index.css",
     "lint-markdown": "markdownlint ./**/*.md --ignore CHANGELOG.md --ignore LICENSE.md --ignore node_modules",
     "check-markdown-links": "markdown-link-check README.md CONTRIBUTING.md",
