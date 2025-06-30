@@ -1,5 +1,5 @@
 import bench from 'nanobench'
-import { specificationFixture, render } from '../tests/test-helpers.js'
+import { render } from '../tests/test-helpers.js'
 import { charts } from '../tests/unit/support.js'
 
 const count = 100
@@ -11,12 +11,11 @@ const bar = time => {
 	return bar
 }
 
-charts.forEach(chart => {
-	const specification = specificationFixture(chart)
-	bench(`${chart} × ${count}`, b => {
+Object.entries(charts).forEach(([name, s]) => {
+	bench(`${name} × ${count}`, b => {
 		b.start()
 		for (let i = 0; i < count; i++) {
-			render(specification)
+			render(s)
 		}
 		b.log(bar(b.elapsed()))
 		b.end()

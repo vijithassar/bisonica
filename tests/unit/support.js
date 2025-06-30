@@ -4,8 +4,9 @@ import { createEncoders } from '../../source/encodings.js'
 import { data } from '../../source/data.js'
 import { feature } from '../../source/feature.js'
 import { marks } from '../../source/marks.js'
+import { specificationFixture } from '../test-helpers.js'
 
-const charts = [
+const chartNames = [
 	'categoricalBar',
 	'circular',
 	'dotPlot',
@@ -17,6 +18,10 @@ const charts = [
 	'stackedArea',
 	'temporalBar'
 ]
+
+const fixtures = chartNames.map(name => [name, specificationFixture(name)])
+
+const charts = Object.fromEntries(fixtures)
 
 const internals = {
 	createAccessors,
