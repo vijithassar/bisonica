@@ -1,14 +1,10 @@
-import { dimensions, charts } from './support.js'
+import { dimensions, charts, internals } from './support.js'
 import qunit from 'qunit'
-import { createAccessors } from '../../source/accessors.js'
-import { parseScales } from '../../source/scales.js'
-import { createEncoders } from '../../source/encodings.js'
-import { data } from '../../source/data.js'
-import { feature } from '../../source/feature.js'
-import { marks } from '../../source/marks.js'
 import { specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
+
+const { feature, data, createAccessors, parseScales, createEncoders, marks } = internals
 
 module('unit > internals', () => {
 	test('feature()', assert => {

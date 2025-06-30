@@ -1,4 +1,31 @@
-// import { timeFormat } from '../source/time.js';
+import { createAccessors } from '../../source/accessors.js'
+import { parseScales } from '../../source/scales.js'
+import { createEncoders } from '../../source/encodings.js'
+import { data } from '../../source/data.js'
+import { feature } from '../../source/feature.js'
+import { marks } from '../../source/marks.js'
+
+const charts = [
+	'categoricalBar',
+	'circular',
+	'dotPlot',
+	'line',
+	'multiline',
+	'rules',
+	'scatterPlot',
+	'singleBar',
+	'stackedArea',
+	'temporalBar'
+]
+
+const internals = {
+	createAccessors,
+	parseScales,
+	createEncoders,
+	data,
+	feature,
+	marks
+}
 
 const timeFormat = () => null
 
@@ -12,10 +39,10 @@ const datum = () => {
 	return { label: date, value: Math.random(), group: group() }
 }
 
-const generate_data = () => {
+const generateData = () => {
 	return Array.from({ length: 100 }).map(datum)
 }
 
 const dimensions = { x: 100, y: 100 }
 
-export { dimensions, groups, charts }
+export { generateData as data, dimensions, groups, charts, internals }
