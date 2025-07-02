@@ -1,4 +1,3 @@
-import bench from 'nanobench'
 import { charts, internals, dimensions } from '../tests/unit/support.js'
 
 const time = fn => {
