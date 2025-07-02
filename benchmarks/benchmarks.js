@@ -4,6 +4,13 @@ import { charts, internals, dimensions } from '../tests/unit/support.js'
 
 const count = 100
 
+const time = fn => {
+	const start = performance.now() // eslint-disable-line compat/compat
+	fn()
+	const end = performance.now() // eslint-disable-line compat/compat
+	return end - start
+}
+
 const bar = time => {
 	const step = 50 // milliseconds per unit
 	const units = time / step
@@ -29,11 +36,7 @@ const pairs = Object.entries(charts).map(([chart]) => {
 	.filter(item => item[1] !== 'createEncoders')
 
 const timed = pairs.map(([chart, internal]) => {
-	const start = performance.now() // eslint-disable-line compat/compat
-	internals[internal](charts[chart], dimensions)
-	const end = performance.now() // eslint-disable-line compat/compat
-	const time = end - start
-	return { chart, internal, time }
+	return { chart, internal, time: time(() => internals[internal](charts[chart], dimensions)) }
 })
 
 const round = number => Math.round(number * 100) / 100
