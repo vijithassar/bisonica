@@ -408,7 +408,7 @@ const coreScales = (s, dimensions) => {
 			return
 		}
 
-		if (definition !== null && definition.value) {
+		if (definition !== null && typeof definition.value !== 'undefined') {
 			scales[channel] = () => definition.value
 		}
 
