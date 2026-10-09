@@ -17,13 +17,13 @@ const argumentKey = arg => {
 	} else {
 		const reference = references.map.get(arg)
 		if (reference) {
-			return `${type}:${reference}`
+			return `${type}:#${reference}`
 		} else {
 			const id = `${references.count++}`
 
 			references.map.set(arg, id)
 
-			return `${type}:${id}`
+			return `${type}:#${id}`
 		}
 	}
 }
