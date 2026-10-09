@@ -106,7 +106,7 @@ const note = (s, frequency, start) => {
 
 	oscillator.frequency.value = frequency
 
-	gainNode.gain.setValueAtTime(context.currentTime + start * 0.8, 1)
+	gainNode.gain.setValueAtTime(1, context.currentTime + start * 0.8)
 	gainNode.gain.linearRampToValueAtTime(0.001, end)
 
 	oscillator.start(context.currentTime + start)
