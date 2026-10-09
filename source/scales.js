@@ -379,7 +379,7 @@ const range = (s, dimensions, _channel) => {
 			}
 		}
 
-		if (s.encoding[channel].reverse) {
+		if (s.encoding[channel].scale?.reverse) {
 			range.reverse()
 		}
 
