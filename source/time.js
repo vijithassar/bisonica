@@ -10,6 +10,7 @@ import { encodingChannelCovariateCartesian, encodingValue } from './encodings.js
 import { memoize } from './memoize.js'
 import { feature } from './feature.js'
 import { barWidth } from './marks.js'
+import { values } from './values.js'
 
 const UTC = 'utc'
 const TIME = 'time'
@@ -122,7 +123,7 @@ const timePeriod = (s, channel) => {
 		period = unit
 	} else {
 		if (weekly) {
-			const firstDate = parseTime(d3.min(s.data.values, encodingValue(s, channel)))
+			const firstDate = parseTime(d3.min(values(s), encodingValue(s, channel)))
 
 			period = d3.utcFormat('%A')(firstDate)
 		} else {
