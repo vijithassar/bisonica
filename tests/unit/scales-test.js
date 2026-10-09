@@ -150,7 +150,7 @@ module('unit > scales', hooks => {
 		const forward = specificationFixture('circular')
 		const forwardRange = parseScales(forward).color.range()
 		const reverse = specificationFixture('circular')
-		reverse.encoding.color.reverse = true
+		reverse.encoding.color.scale = { reverse: true }
 		const reverseRange = parseScales(reverse).color.range()
 		assert.equal(forwardRange.join(' '), reverseRange.reverse().join(' '))
 	})
