@@ -11,7 +11,7 @@ import { markInteractionSelector } from './marks.js'
 import { missingSeries, noop } from './helpers.js'
 import { extension } from './extensions.js'
 
-const context = new window.AudioContext()
+const context = window.AudioContext ? new window.AudioContext() : null
 
 const tuning = 440
 
