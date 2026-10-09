@@ -13,7 +13,7 @@ const argumentKey = arg => {
 	const primitive = (type !== 'object' && type !== 'function') || arg === null || arg === undefined
 
 	if (primitive) {
-		return `${arg}`
+		return `${type}:${arg}`
 	} else {
 		const reference = references.map.get(arg)
 		if (reference) {

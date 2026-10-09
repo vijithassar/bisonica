@@ -15,6 +15,14 @@ module('unit > memoize', () => {
 		assert.equal(memoized(2), memoized(2))
 	})
 
+	test('memoizes arguments with types', assert => {
+		const fn = input => {
+			return `${input} is ${typeof input}`
+		}
+		const memoized = memoize(fn)
+		assert.notEqual(memoized(1), memoized('1'))
+	})
+
 	test('memoizes functions with multiple arguments', assert => {
 		const fn = (...inputs) => {
 			return inputs.reduce((accumulator, current) => {
