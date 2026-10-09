@@ -209,10 +209,10 @@ const createY = (s, dimensions) => {
 	}
 	const classes = [
 		'axis',
-		encodingType(s, 'x'),
-		isContinuous(s, 'x') ? 'continuous' : null,
-		isDiscrete(s, 'x') ? 'continuous' : null,
-		rotation(s, 'x') ? 'angled' : ''
+		encodingType(s, 'y'),
+		isContinuous(s, 'y') ? 'continuous' : null,
+		isDiscrete(s, 'y') ? 'continuous' : null,
+		rotation(s, 'y') ? 'angled' : ''
 	].filter(Boolean).join(' ')
 
 	return selection => {
