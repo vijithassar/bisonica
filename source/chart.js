@@ -27,6 +27,16 @@ import { menu } from './menu.js'
 import { select } from 'd3'
 
 /**
+ * resolve target input element to selection
+ * if necessary
+ * @param {HTMLElement|object} target HTML element or d3 selection
+ * @return {object} d3 selection
+ */
+const resolveTarget = target => {
+	return target instanceof Element ? select(target) : target
+}
+
+/**
  * generate chart rendering function based on
  * a Vega Lite specification
  * @param {specification} s Vega Lite specification
@@ -39,8 +49,7 @@ const render = (s, _panelDimensions) => {
 	let tableRenderer = table
 
 	const renderer = selection => {
-		selection = selection instanceof Element ? select(selection) : selection
-
+		selection = resolveTarget(selection)
 		try {
 			selection.html('')
 
@@ -142,6 +151,7 @@ const render = (s, _panelDimensions) => {
 const asyncRender = (s, dimensions) => {
 	const renderer = render(s, dimensions)
 	const fn = selection => {
+		selection = resolveTarget(selection)
 		fetchAll(s)
 			.then(() => {
 				selection.call(renderer)
