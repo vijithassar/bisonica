@@ -331,7 +331,7 @@ const range = (s, dimensions, _channel) => {
 		y: () => cartesianRange(s, 'y')(dimensions),
 		color: () => {
 			if (s.encoding.color?.scale?.range) {
-				return s.encoding.color.scale.range
+				return [...s.encoding.color.scale.range]
 			} else {
 				return colors(s, categoryCount(s, channel))
 			}
