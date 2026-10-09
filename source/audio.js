@@ -97,7 +97,7 @@ const note = (s, frequency, start) => {
 	const oscillator = context.createOscillator()
 	const gainNode = context.createGain()
 
-	gainNode.gain.setValueAtTime(1.0, context.currentTime + start)
+	gainNode.gain.setValueAtTime(1, context.currentTime + start)
 
 	const end = context.currentTime + start + duration(s)
 
