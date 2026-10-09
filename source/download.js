@@ -20,15 +20,16 @@ const _download = (s, format) => {
 	if (extension(s, 'download')?.[format] === false || !values(s) || !feature(s).hasDownload()) {
 		return
 	}
-	let file
+	let mime = `text/${format}`
+	let content
 	if (format === 'csv') {
-		file = new Blob([csvFormat(values(s))], { type: 'text/csv' })
+		content = csvFormat(values(s))
 	} else if (format === 'json') {
-		file = new Blob([JSON.stringify(s)], { type: 'text/json' })
+		content = JSON.stringify(s)
 	}
 	if (URL) {
-		const url = URL?.createObjectURL(file)
-		return url
+		const file = new Blob([content], { type: mime })
+		return URL?.createObjectURL(file)
 	}
 }
 const download = memoize(_download)
