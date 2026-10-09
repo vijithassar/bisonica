@@ -27,7 +27,7 @@ const _download = (s, format) => {
 	} else if (format === 'json') {
 		content = JSON.stringify(s)
 	}
-	if (URL) {
+	if (URL && Blob) {
 		const file = new Blob([content], { type: mime })
 		return URL?.createObjectURL(file)
 	}
