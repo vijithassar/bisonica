@@ -38,10 +38,12 @@ const matchingFields = (a, b, fields) => {
  * @return {function(object)} convert datum to string key
  */
 const createKeyBuilder = s => {
-	const delimiter = ' + '
+	const start = '['
+	const end = ']'
+	const separator = ']['
 	const fields = coreEncodingFields(s)
 	const getters = fields.map(field => item => item[field])
-	const getter = item => getters.map(getter => getter(item)).join(delimiter)
+	const getter = item => start + getters.map(getter => getter(item)).join(separator) + end
 	return getter
 }
 
