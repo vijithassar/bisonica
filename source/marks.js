@@ -140,7 +140,9 @@ const barWidth = (s, dimensions) => {
 const curve = s => {
 	const { interpolate } = s.mark
 	if (interpolate === 'monotone') {
-		return d3.curveMonotoneY
+		const direction = encodingChannelQuantitative(s)
+		const method = `curveMonotone${direction.toUpperCase()}`
+		return d3[method]
 	} else if (interpolate) {
 		return d3[kebabToCamel(`curve-${s.mark.interpolate}`)]
 	} else {
