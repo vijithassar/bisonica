@@ -121,7 +121,7 @@ const customDomain = (s, channel) => {
 }
 
 /**
- * sanitize channel name
+ * count data categories represented in an encoding channel
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  * @return {number} number of data categories
