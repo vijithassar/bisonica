@@ -74,10 +74,10 @@ const header = s => {
 			.append('thead')
 			.append('tr')
 		header
-			.selectAll('td')
+			.selectAll('th')
 			.data(fields(s))
 			.enter()
-			.append('td')
+			.append('th')
 			.attr('scope', 'col')
 			.text(d => d)
 	}
