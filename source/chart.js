@@ -105,7 +105,11 @@ const render = (s, _panelDimensions) => {
 				selection.call(testAttributes)
 			}
 		} catch (error) {
-			errorHandler(error)
+			if (typeof errorHandler === 'function') {
+				errorHandler(error)
+			} else if (errorHandler === null) {
+				throw error
+			}
 		}
 	}
 
