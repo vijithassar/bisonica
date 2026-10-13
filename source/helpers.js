@@ -10,21 +10,6 @@ import { encodingField, encodingType, encodingValue } from './encodings.js'
 import { feature } from './feature.js'
 
 /**
- * round number based on significant digits
- * @param {number} number number
- * @return {string} rounded number as string with SI suffix
- */
-const abbreviateNumbers = number => {
-	if (number < 10 && Number.isInteger(number)) {
-		return `${number}`
-	} else if (number < 10 && !Number.isInteger(number)) {
-		return d3.format('.1f')(number)
-	} else if (number > 10) {
-		return d3.format('.2s')(number)
-	}
-}
-
-/**
  * capitalize a string
  * @param {string} string input string
  * @return {string} capitalized string
@@ -279,7 +264,6 @@ const kebabToCamel = kebab => {
 }
 
 export {
-	abbreviateNumbers,
 	mark,
 	capitalize,
 	datum,
