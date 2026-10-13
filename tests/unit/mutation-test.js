@@ -27,6 +27,9 @@ const freeze = object => {
 module('unit > mutation', () => {
 	test('does not mutate specifications', assert => {
 		const s = freeze(JSON.parse(JSON.stringify(specificationFixture('line'))))
+
+		const pre = JSON.stringify(s)
+
 		const dimensions = { x: 500, y: 500 }
 
 		assert.equal(
@@ -43,6 +46,9 @@ module('unit > mutation', () => {
 
 		render()
 
+		const post = JSON.stringify(s)
+
 		assert.ok(true, 'chart function generated with a frozen specification does not throw error')
+		assert.equal(pre, post, 'rendering does not change serialized representation of specification')
 	})
 })
