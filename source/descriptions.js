@@ -191,7 +191,7 @@ const chartType = s => {
 		return 'line chart'
 	} else if (feature(s).isArea()) {
 		return 'area chart'
-	} else if (feature(s).hasPoints && !feature(s).isLine() && feature(s).hasEncodingX() && feature(s).hasEncodingY()) {
+	} else if (feature(s).hasPoints() && !feature(s).isLine() && feature(s).hasEncodingX() && feature(s).hasEncodingY()) {
 		return 'scatterplot'
 	}
 	return null
