@@ -251,10 +251,10 @@ const adjustDomain = (s, channel) => {
 		return identity
 	}
 	return domain => {
-		if (scale?.domainMin) {
+		if (typeof scale?.domainMin !== 'undefined') {
 			domain[0] = scale?.domainMin
 		}
-		if (scale?.domainMax) {
+		if (typeof scale?.domainMax !== 'undefined') {
 			domain[1] = scale?.domainMax
 		}
 		return domain
@@ -371,10 +371,10 @@ const range = (s, dimensions, _channel) => {
 		}
 
 		if (isContinuous(s, channel)) {
-			if (scale?.rangeMin) {
+			if (typeof scale?.rangeMin !== 'undefined') {
 				range[0] = scale?.rangeMin
 			}
-			if (scale?.rangeMax) {
+			if (typeof scale?.rangeMax !== 'undefined') {
 				range[1] = scale?.rangeMax
 			}
 		}
