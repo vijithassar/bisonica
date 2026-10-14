@@ -1,4 +1,6 @@
 import { chart } from '../../source/chart.js'
+import { values } from '../../source/values.js'
+import { data } from '../../source/data.js'
 import qunit from 'qunit'
 import { select } from 'd3'
 import { specificationFixture } from '../test-helpers.js'
@@ -50,5 +52,10 @@ module('unit > mutation', () => {
 
 		assert.ok(true, 'chart function generated with a frozen specification does not throw error')
 		assert.equal(pre, post, 'rendering does not change serialized representation of specification')
+	})
+	test('copies data values to new array', assert => {
+		const s = specificationFixture('line')
+		assert.notEqual(values(s), s.data.values, 'values() copies data from specification to new array')
+		assert.notEqual(data(s), s.data.values, 'data() copies data from specification to new array')
 	})
 })
