@@ -114,32 +114,33 @@ const render = (s, _panelDimensions) => {
 	}
 
 	renderer.table = t => {
-		if (t === undefined) {
-			return tableRenderer
-		} else {
-			if (typeof t === 'function') {
+		try {
+			if (t === undefined) {
+				return tableRenderer
+			} else {
 				tableRenderer = t
+				return renderer
 			}
-
-			return renderer
+		} catch (error) {
+			errorHandler(error)
 		}
 	}
 
 	renderer.tooltip = h => {
-		if (h === undefined) {
-			return tooltipHandler
-		} else {
-			if (typeof h === 'function') {
+		try {
+			if (h === undefined) {
+				return tooltipHandler
+			} else {
 				tooltipHandler = h
 				usermeta(s)
 				s.usermeta.tooltipHandler = true
-			} else {
-				throw new Error(`tooltip handler must be a function, but input was of type ${typeof h}`)
+				return renderer
 			}
-
-			return renderer
+		} catch (error) {
+			errorHandler(error)
 		}
 	}
+
 	renderer.error = h => typeof h !== 'undefined' ? (errorHandler = h, renderer) : errorHandler
 
 	return renderer

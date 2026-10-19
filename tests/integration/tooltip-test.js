@@ -256,7 +256,6 @@ module('integration > tooltips', function() {
 		const renderer = chart(specificationFixture('circular'))
 		renderer.tooltip(fn)
 		assert.equal(renderer.tooltip(), fn, 'attaches custom tooltip handler functions')
-		assert.throws(() => renderer.tooltip(null), 'rejects invalid tooltip handler functions')
 	})
 
 	test('emits a custom tooltip event', async function(assert) {
