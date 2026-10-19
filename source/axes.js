@@ -176,7 +176,7 @@ const createX = (s, dimensions) => {
 			'axis',
 			encodingType(s, 'x'),
 			isContinuous(s, 'x') ? 'continuous' : null,
-			isDiscrete(s, 'x') ? 'continuous' : null,
+			isDiscrete(s, 'x') ? 'discrete' : null,
 			rotation(s, 'x') ? 'angled' : ''
 		].filter(Boolean).join(' ')
 
@@ -211,7 +211,7 @@ const createY = (s, dimensions) => {
 		'axis',
 		encodingType(s, 'y'),
 		isContinuous(s, 'y') ? 'continuous' : null,
-		isDiscrete(s, 'y') ? 'continuous' : null,
+		isDiscrete(s, 'y') ? 'discrete' : null,
 		rotation(s, 'y') ? 'angled' : ''
 	].filter(Boolean).join(' ')
 
