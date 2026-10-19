@@ -52,7 +52,7 @@ const category = {
 	get(key) {
 		return this.datum.get(key) || this.datum.get(d3.select(key).datum()) || this.node.get(key)
 	},
-	datum: new Map(),
+	datum: new WeakMap(),
 	node: d3.local(),
 	set(key, category) {
 		const isNode = typeof key.querySelector === 'function'
