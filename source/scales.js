@@ -385,7 +385,7 @@ const range = (s, dimensions, _channel) => {
 
 		return range
 	} catch (error) {
-		extendError(`could not determine scale range for ${channel} channel`)
+		extendError(error, `could not determine scale range for ${channel} channel`)
 	}
 }
 
