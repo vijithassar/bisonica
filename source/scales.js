@@ -364,6 +364,10 @@ const range = (s, dimensions, _channel) => {
 	try {
 		let range
 
+		if (Array.isArray(scale?.range)) {
+			return [...scale.range]
+		}
+
 		if (scale?.range?.field) {
 			range = [...new Set(values(s).map(item => item[scale.range.field]))]
 		} else {
