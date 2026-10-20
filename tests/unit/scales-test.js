@@ -102,6 +102,17 @@ module('unit > scales', hooks => {
 		assert.equal(scales.y.domain()[1], max)
 	})
 
+	test('range minimum and maximum', assert => {
+		const s = specificationFixture('line')
+		const min = 3
+		const max = 9
+		s.encoding.y.scale = { rangeMin: min, rangeMax: max }
+		const dimensions = { x: 100, y: 100 }
+		const scales = parseScales(s, dimensions)
+		assert.equal(scales.y.range()[0], min)
+		assert.equal(scales.y.range()[1], max)
+	})
+
 	test('explicit color ranges', assert => {
 		const range = ['black', 'white']
 		const s = {
