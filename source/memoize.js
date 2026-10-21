@@ -29,7 +29,7 @@ const argumentKey = arg => {
 }
 
 const memoizeKey = args => {
-	return args.map(argumentKey).join(' ')
+	return '[' + args.map(argumentKey).join('][') + ']'
 }
 
 /**
