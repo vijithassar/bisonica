@@ -40,6 +40,12 @@ module('unit > data', () => {
 			assert.ok(data(s).every(item => typeof item._ === 'number'))
 		})
 	})
+	module('reference', () => {
+		test('copies data values to new array', assert => {
+			const s = specificationFixture('line')
+			assert.notEqual(data(s), s.data.values)
+		})
+	})
 	module('chart forms', () => {
 		test('compiles stacked bar data', assert => {
 			const stacked = data(specificationFixture('stackedBar'))

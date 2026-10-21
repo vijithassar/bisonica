@@ -1,5 +1,6 @@
 import { values } from '../../source/values.js'
 import qunit from 'qunit'
+import { specificationFixture } from '../test-helpers.js'
 
 const { module, test } = qunit
 
@@ -39,5 +40,9 @@ module('unit > values', () => {
 		assert.strictEqual(parsed.a, 0)
 		assert.strictEqual(parsed.b, false)
 		assert.equal(typeof parsed.c.getFullYear, 'function')
+	})
+	test('copies data values to new array', assert => {
+		const s = specificationFixture('line')
+		assert.notEqual(values(s), s.data.values)
 	})
 })
