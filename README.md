@@ -80,6 +80,8 @@ Note that the tooltip API is only loosely defined in the Vega Lite standard and 
 
 When faced with an accessibility concern, bisonica typically just defaults to the most accessible option, whereas `vega-lite.js` might require more elaborate JSON in the specification object in order to achieve the same result. Some accessibility features such as the keyboard navigation and audio sonification cannot be replicated with the standard `vega-lite.js` renderer at all.
 
+In pursuit of this goal, [`specification.title.text`](https://vega.github.io/vega-lite/docs/title.html) is required.
+
 ## Performance
 
 bisonica is often considerably faster than rendering the same chart using `vega-lite.js`. This will depend on the specific chart configuration and the input data, but as an example, pie charts have been clocked rendering in as little as 1.25 milliseconds.
