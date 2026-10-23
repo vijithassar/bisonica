@@ -128,7 +128,7 @@ To set a custom error handler, pass a function to the `.error()` method.
 
 ```javascript
 // create a chart renderer
-const renderer = chart(specification, dimensions)
+const renderer = chart(specification, dimensions);
 
 // error handling function
 const errorHandler = (error) => alert(error.message);
