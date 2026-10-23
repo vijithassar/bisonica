@@ -98,7 +98,7 @@ function tooltipEvent(s, node, interaction) {
  * @param {specification} s Vega Lite specification
  */
 const tooltip = (selection, s) => {
-	if (!s.mark.tooltip || s.encoding.tooltip === null) {
+	if (!feature(s).hasTooltip()) {
 		return noop
 	}
 
