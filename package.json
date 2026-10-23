@@ -38,7 +38,7 @@
     "c8": "^12.0.0",
     "d3": "^7.6.1",
     "docdash": "^2.0.1",
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.28.0",
     "eslint": "^8.17.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-compat": "^6.0.2",
