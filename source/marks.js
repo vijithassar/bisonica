@@ -428,7 +428,8 @@ const pointMarkCircle = (s, dimensions) => {
 			.attr('cx', encoders.x)
 			.attr('cy', encoders.y)
 			.attr('r', radius)
-			.attr('fill', feature(s).hasMarksFilled() ? encoders.color : transparent)
+			.style('fill', feature(s).hasMarksFilled() ? encoders.color : null)
+			.attr('fill-opacity', feature(s).hasMarksFilled() ? 1 : transparent)
 	}
 	return renderer
 }
@@ -450,7 +451,8 @@ const pointMarkSquare = (s, dimensions) => {
 			.attr('y', d => encoders.y(d) + offset(d))
 			.attr('height', side)
 			.attr('width', side)
-			.attr('fill', feature(s).hasMarksFilled() ? encoders.color : transparent)
+			.style('fill', feature(s).hasMarksFilled() ? encoders.color : null)
+			.attr('fill-opacity', feature(s).hasMarksFilled() ? 1 : transparent)
 	}
 	return renderer
 }
