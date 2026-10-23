@@ -49,6 +49,14 @@ const render = (s, _panelDimensions) => {
 	let errorHandler = console.error
 	let tableRenderer = table
 
+	const handleError = error => {
+		if (typeof errorHandler === 'function') {
+			errorHandler(error)
+		} else if (errorHandler === null) {
+			throw error
+		}
+	}
+
 	const renderer = selection => {
 		selection = resolveTarget(selection)
 		try {
@@ -106,11 +114,7 @@ const render = (s, _panelDimensions) => {
 				selection.call(testAttributes)
 			}
 		} catch (error) {
-			if (typeof errorHandler === 'function') {
-				errorHandler(error)
-			} else if (errorHandler === null) {
-				throw error
-			}
+			handleError(error)
 		}
 	}
 
@@ -123,9 +127,7 @@ const render = (s, _panelDimensions) => {
 				return renderer
 			}
 		} catch (error) {
-			if (typeof errorHandler === 'function') {
-				errorHandler(error)
-			}
+			handleError(error)
 		}
 	}
 
@@ -140,9 +142,7 @@ const render = (s, _panelDimensions) => {
 				return renderer
 			}
 		} catch (error) {
-			if (typeof errorHandler === 'function') {
-				errorHandler(error)
-			}
+			handleError(error)
 		}
 	}
 
