@@ -84,6 +84,10 @@ const scaleMethod = (s, channel) => {
 
 	let method
 
+	if (channel === 'size') {
+		method = 'scaleSqrt'
+	}
+
 	if (['x', 'y'].includes(channelRoot(channel)) && isDiscrete(s, channel)) {
 		if (feature(s).isBar()) {
 			method = 'scaleBand'
