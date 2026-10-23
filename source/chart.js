@@ -120,7 +120,7 @@ const render = (s, _panelDimensions) => {
 
 	renderer.table = t => {
 		try {
-			if (t === undefined) {
+			if (typeof t === 'undefined') {
 				return tableRenderer
 			} else {
 				tableRenderer = t
@@ -133,7 +133,7 @@ const render = (s, _panelDimensions) => {
 
 	renderer.tooltip = h => {
 		try {
-			if (h === undefined) {
+			if (typeof h === 'undefined') {
 				return tooltipHandler
 			} else {
 				tooltipHandler = h

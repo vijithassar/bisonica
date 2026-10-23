@@ -29,7 +29,7 @@ const testNavigation = (assert, s, steps) => {
 		if (current) {
 			current.dispatchEvent(arrows[key])
 		}
-		if (content !== undefined) {
+		if (typeof content !== 'undefined') {
 			if (content === null) {
 				assert.equal(current, null, `step ${index} does not highlight a mark`)
 			} else {

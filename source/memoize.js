@@ -10,7 +10,7 @@ const references = {
 
 const argumentKey = arg => {
 	const type = arg === null ? 'null' : typeof arg
-	const primitive = (type !== 'object' && type !== 'function') || arg === null || arg === undefined
+	const primitive = (type !== 'object' && type !== 'function') || arg === null || typeof arg === 'undefined'
 
 	if (primitive) {
 		return `${type}:${arg}`

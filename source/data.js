@@ -55,7 +55,7 @@ const sumByProperty = (datum, property, valueKey) => {
 	datum.values.forEach(item => {
 		const key = item[property]
 
-		if (result[key] === undefined) {
+		if (typeof result[key] === 'undefined') {
 			result[key] = { value: 0 }
 		}
 
