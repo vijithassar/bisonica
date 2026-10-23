@@ -64,11 +64,12 @@ const encodingValue = (s, channel) => {
  * @param {specification} s Vega Lite specification
  * @return {string} encoding channel
  */
-const encodingChannelQuantitative = s => {
+const _encodingChannelQuantitative = s => {
 	const test = channel => encodingType(s, channel) === 'quantitative'
 
 	return encodingTest(s, test)
 }
+const encodingChannelQuantitative = memoize(_encodingChannelQuantitative)
 
 /**
  * create a function which looks up the data value used for
