@@ -28,6 +28,7 @@
         "arrow-parens": ["error", "as-needed"],
         "no-return-assign": "off",
         "no-console": ["error", { "allow": ["warn", "error"] }],
+        "no-undefined": ["error"],
         "no-unused-vars": ["error", {"destructuredArrayIgnorePattern": "^_"}],
         "no-prototype-builtins": "off",
         "jsdoc/require-returns": "off",
