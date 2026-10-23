@@ -187,6 +187,15 @@ const isDiscrete = (s, channel) => {
 }
 
 /**
+ * determine whether a channel is an offset of another channel
+ * @param {string} channel encoding channel
+ * @return {boolean} whether the field is an offset
+ */
+const isOffset = channel => {
+	return ['xOffset', 'yOffset'].includes(channel)
+}
+
+/**
  * determine whether a given channel is text based
  * @param {string} channel encoding channel
  * @return {boolean} whether the field is text based
@@ -279,6 +288,7 @@ export {
 	degrees,
 	isContinuous,
 	isDiscrete,
+	isOffset,
 	isTextChannel,
 	polarToCartesian,
 	detach,
