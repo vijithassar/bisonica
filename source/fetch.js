@@ -26,14 +26,18 @@ const cached = data => {
  * @return {Promise<object[]>} data set
  */
 const fetch = data => {
-	const extensions = ['json', 'tsv', 'csv', 'dsv']
-	const extension = data?.format?.type ||
-		extensions.find(item => data.url.endsWith(`.${item}`)) ||
-		'json'
-	if (extension === 'dsv') {
-		return d3.dsv(data.format.delimiter, data.url)
-	} else {
-		return d3[extension](data.url)
+	try {
+		const extensions = ['json', 'tsv', 'csv', 'dsv']
+		const extension = data?.format?.type ||
+			extensions.find(item => data.url.endsWith(`.${item}`)) ||
+			'json'
+		if (extension === 'dsv') {
+			return d3.dsv(data.format.delimiter, data.url)
+		} else {
+			return d3[extension](data.url)
+		}
+	} catch (error) {
+		throw new Error(`could not fetch ${data.url}`)
 	}
 }
 

@@ -25,6 +25,7 @@ import { defs } from './defs.js'
 import { dimensions } from './dimensions.js'
 import { menu } from './menu.js'
 import { select } from 'd3'
+import { extendError } from './error.js'
 
 /**
  * resolve target input element to selection
@@ -164,6 +165,9 @@ const asyncRender = (s, dimensions) => {
 		fetchAll(s)
 			.then(() => {
 				selection.call(renderer)
+			})
+			.catch(error => {
+				extendError(error, 'could not render chart with remote data')
 			})
 	}
 	copyMethods(['error', 'tooltip', 'table'], renderer, fn)
