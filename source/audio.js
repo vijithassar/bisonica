@@ -11,7 +11,7 @@ import { markInteractionSelector } from './marks.js'
 import { missingSeries, noop } from './helpers.js'
 import { extension } from './extensions.js'
 
-const context = window.AudioContext ? new window.AudioContext() : null
+let context = null
 
 const tuning = 440
 
@@ -179,6 +179,15 @@ const notes = (values, dispatcher, s) => {
 }
 
 /**
+ * set up audio context
+ */
+const initialize = () => {
+	if (!context) {
+		context = window.AudioContext ? new window.AudioContext() : null
+	}
+}
+
+/**
  * audio sonification
  * @param {specification} s Vega Lite specification
  * @return {function(object)} audio sonification function
@@ -234,6 +243,7 @@ const audio = s => {
 		let playing = false
 
 		play.on('click', () => {
+			initialize()
 			if (!playing) {
 				dispatcher.call('play', null, values, s)
 				playing = true
