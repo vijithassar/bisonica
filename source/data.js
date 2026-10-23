@@ -84,9 +84,10 @@ const sumByProperty = (datum, property, valueKey) => {
  * @param {string} valueKey property to sum
  * @return {object[]} nested group sums
  */
-const groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
+const _groupAndSumByProperties = (values, groupBy, sumBy, valueKey) => {
 	return groupByProperty(values, groupBy).map(item => sumByProperty(item, sumBy, valueKey))
 }
+const groupAndSumByProperties = memoize(_groupAndSumByProperties)
 
 /**
  * string keys used to compute stack layout
