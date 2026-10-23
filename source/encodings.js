@@ -13,7 +13,7 @@ import { memoize } from './memoize.js'
 import { isTemporalScale, isOrdinalScale, isQuantitativeScale, parseScales } from './scales.js'
 import { parseTime } from './time.js'
 import { transformDatum } from './transform.js'
-import { isTextChannel, nested } from './helpers.js'
+import { isOffset, isTextChannel, nested } from './helpers.js'
 
 /**
  * look up the field used for a visual encoding
@@ -176,7 +176,8 @@ const encodingChannelCovariate = s => {
 		const filter = channel => {
 			return isTextChannel(channel) === false &&
 				channel !== 'color' &&
-				encodingType(s, channel) !== 'quantitative'
+				encodingType(s, channel) !== 'quantitative' &&
+				!isOffset(channel)
 		}
 		const covariate = Object.keys(s.encoding).filter(filter)
 
