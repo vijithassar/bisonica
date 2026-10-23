@@ -122,7 +122,9 @@ const render = (s, _panelDimensions) => {
 				return renderer
 			}
 		} catch (error) {
-			errorHandler(error)
+			if (typeof errorHandler === 'function') {
+				errorHandler(error)
+			}
 		}
 	}
 
@@ -137,7 +139,9 @@ const render = (s, _panelDimensions) => {
 				return renderer
 			}
 		} catch (error) {
-			errorHandler(error)
+			if (typeof errorHandler === 'function') {
+				errorHandler(error)
+			}
 		}
 	}
 
