@@ -57,6 +57,12 @@ import "bisonica/styles.css";
 
 In the preceding code, the `specification` variable is a JSON object that describes the chart according to the [Vega Lite](https://vega.github.io/vega-lite/) open standard. Explaining the structure of that object is beyond the scope of the bisonica documentation and would be duplicative in any case. Instead, please refer to the excellent [examples](https://vega.github.io/vega-lite/examples/), [API documentation](https://vega.github.io/vega-lite/docs/), and [tutorials](https://vega.github.io/vega-lite/tutorials/getting_started.html) provided by the Vega Lite project.
 
+Specification objects are assumed to be immutable and unique. Sharing a specification object between separate renders, mutating a specification, or reusing part of specification object (for example, `encoding` or `scale`) may result in unexpected behavior. Instead, consider cloning the specification, such as by serializing and then deserializing.
+
+```javascript
+const copy = JSON.parse(JSON.stringify(original));
+```
+
 # Tooltips
 
 Vega Lite and bisonica both support attaching tooltips to chart content if the specification requests it. Please see the [Vega Lite tooltip documentation](https://vega.github.io/vega-lite/docs/tooltip.html) for more details on the numerous useful ways this can be configured.
