@@ -481,9 +481,6 @@ const pointMark = (s, dimensions) => {
 			.classed('link', encodingValue(s, 'href'))
 			.call(pointMarkRenderer(s, dimensions))
 			.call(tooltips(s))
-		if (!feature(s).isLine()) {
-			point.attr('aria-label', markDescription(s))
-		}
 	}
 	return renderer
 }
