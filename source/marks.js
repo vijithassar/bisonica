@@ -140,7 +140,7 @@ const barWidth = (s, dimensions) => {
 const curve = s => {
 	const { interpolate } = s.mark
 	if (interpolate === 'monotone') {
-		const direction = encodingChannelQuantitative(s)
+		const direction = encodingChannelCovariateCartesian(s)
 		const method = `curveMonotone${direction.toUpperCase()}`
 		return d3[method]
 	} else if (interpolate) {
