@@ -340,8 +340,8 @@ const range = (s, dimensions, _channel) => {
 		detail: () => {
 			return s.encoding.detail?.scale?.range || Array.from({ length: categoryCount(s, channel) }).map(() => null)
 		},
-		yOffset: () => [step(s, dimensions).y, 0],
-		xOffset: () => [0, step(s, dimensions).x],
+		yOffset: () => [step(s, dimensions.y), 0],
+		xOffset: () => [0, step(s, dimensions.x)],
 		size: () => {
 			let min = 0
 			let max
