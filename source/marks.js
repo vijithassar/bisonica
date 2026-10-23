@@ -163,6 +163,8 @@ const pointMarkSelector = s => {
 		return 'rect'
 	} else if (mark(s) === 'circle') {
 		return 'circle'
+	} else {
+		throw new Error('could not determine selector for point marks')
 	}
 }
 
@@ -184,6 +186,8 @@ const markSelector = s => {
 		return 'text'
 	} else if (feature(s).isImage()) {
 		return 'image'
+	} else {
+		throw new Error('could not determine selector for marks')
 	}
 }
 
@@ -194,6 +198,10 @@ const markSelector = s => {
  */
 const markInteractionSelector = _s => {
 	const s = !feature(_s).hasLayers() ? _s : _s.layer.find(layer => !feature(layer).isRule())
+
+	if (!s) {
+		throw new Error('could not determine selector for interactions')
+	}
 
 	if (feature(s).isLine()) {
 		return `.marks ${pointMarkSelector(s)}.point.mark`
