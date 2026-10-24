@@ -62,9 +62,10 @@ module('unit > transform', () => {
 			assert.equal(typeof calculate(expressions.naive), 'function')
 		})
 		test('requires a string input', assert => {
+			let empty
 			assert.throws(() => calculate(0))
 			assert.throws(() => calculate(null))
-			assert.throws(() => calculate(undefined))
+			assert.throws(() => calculate(empty))
 			assert.throws(() => calculate([]))
 			assert.throws(() => calculate({}))
 		})

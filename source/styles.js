@@ -11,14 +11,14 @@ import { noop } from './helpers.js'
  * @param {object} source desired styles with JavaScript style keys
  */
 const renderStyles = (styles, source) => {
-	if (source === undefined || source === null) {
+	if (typeof source === 'undefined' || source === null) {
 		return noop
 	}
 	return selection => {
 		Object.entries(styles)
 			.forEach(([js, css]) => {
 				const value = source[js]
-				if (value !== undefined) {
+				if (typeof value !== 'undefined') {
 					selection.style(css, value)
 				}
 			})

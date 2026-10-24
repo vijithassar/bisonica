@@ -74,7 +74,7 @@ const key = (s, direction) => {
 			return false
 		}
 
-		if (state.index() === undefined) {
+		if (typeof state.index() === 'undefined') {
 			state.init()
 			dispatcher.call('addMarkHighlight', current())
 			dispatcher.call('addLegendHighlight', null, category.get(current()))
@@ -241,7 +241,7 @@ const keyboard = _s => {
 			// fire navigation initialization behaviors on first focus
 
 			mark.on('focus', function(event) {
-				if (state.index() === undefined) {
+				if (typeof state.index() === 'undefined') {
 					navigator[RIGHT](mark, state)
 				}
 

@@ -12,10 +12,11 @@ const datumPrefix = 'datum.'
  * @return {function} static function
  */
 const functionExpression = str => {
+	let unknown
 	const fns = {
 		random: () => Math.random(),
 		now: () => Date.now(),
-		windowSize: () => window ? [window.innerWidth, window.innerHeight] : [undefined, undefined],
+		windowSize: () => window ? [window.innerWidth, window.innerHeight] : [unknown, unknown],
 		screen: () => window ? window.screen : {}
 	}
 	return fns[str.slice(0, -2)]

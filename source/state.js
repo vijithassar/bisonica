@@ -13,12 +13,12 @@ const createState = () => {
 
 	return {
 		init() {
-			if (index === undefined) {
+			if (typeof index === 'undefined') {
 				index = 0
 			}
 		},
 		index(n) {
-			return n === undefined ? index : ((index = n), true)
+			return typeof n === 'undefined' ? index : ((index = n), true)
 		}
 	}
 }

@@ -12,7 +12,7 @@ import './types.d.js'
  * @param {extension} key usermeta key
  */
 const extension = (s, key) => {
-	if (s.usermeta?.[key] !== undefined) {
+	if (typeof s.usermeta?.[key] !== 'undefined') {
 		return s.usermeta[key]
 	}
 }

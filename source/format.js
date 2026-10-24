@@ -96,7 +96,7 @@ const formatAxis = (s, channel) => {
 	if (config === null) {
 		return noop
 	}
-	if (config === undefined) {
+	if (typeof config === 'undefined') {
 		return identity
 	}
 	// sidestep the format() wrapper function in cases where
