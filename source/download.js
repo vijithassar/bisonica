@@ -14,7 +14,7 @@ import { feature } from './feature.js'
  * render download links
  * @param {specification} s Vega Lite specification
  * @param {'csv'|'json'} format data format
- * @return {string} download url
+ * @returns {string} download url
  */
 const _download = (s, format) => {
 	if (extension(s, 'download')?.[format] === false || !values(s) || !feature(s).hasDownload()) {

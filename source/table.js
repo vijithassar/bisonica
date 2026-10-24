@@ -22,7 +22,7 @@ const toggleSelector = '.menu [data-menu="table"] button'
 /**
  * create the outer DOM for the table
  * @param {specification} s Vega Lite specification
- * @return {function(object)} table setup function
+ * @returns {function(object)} table setup function
  */
 const setup = s => {
 	return selection => {
@@ -36,14 +36,14 @@ const setup = s => {
 /**
  * column headers
  * @param {specification} s Vega Lite specification
- * @return {string[]} array of column names
+ * @returns {string[]} array of column names
  */
 const channels = s => deduplicateByField(s)(Object.keys(s.encoding))
 
 /**
  * column encoding fields
  * @param {specification} s Vega Lite specification
- * @return {string[]} array of column encoding fields
+ * @returns {string[]} array of column encoding fields
  */
 const fields = s => {
 	const encodings = channels(s).map(channel => encodingField(s, channel))
@@ -55,7 +55,7 @@ const fields = s => {
 /**
  * create an ordered datum for data binding
  * @param {specification} s datum
- * @return {function(object)} function to convert a datum into key/value pairs
+ * @returns {function(object)} function to convert a datum into key/value pairs
  */
 const columnEntries = s => {
 	return d => Object.entries(d)
@@ -65,7 +65,7 @@ const columnEntries = s => {
 /**
  * render table header
  * @param {specification} s Vega Lite specification
- * @return {function(object)} header renderer
+ * @returns {function(object)} header renderer
  */
 const header = s => {
 	return selection => {
@@ -86,7 +86,7 @@ const header = s => {
 /**
  * render table rows
  * @param {specification} s Vega Lite specification
- * @return {function(object)} rows renderer
+ * @returns {function(object)} rows renderer
  */
 const rows = s => {
 	return selection => {
@@ -120,7 +120,7 @@ const rows = s => {
 /**
  * compile options to pass to an external table renderer
  * @param {specification} s Vega Lite specification
- * @return {object} options for table rendering
+ * @returns {object} options for table rendering
  */
 const tableOptions = s => {
 	return { data: { marks: markData(layerPrimary(s)) } }
@@ -130,7 +130,7 @@ const tableOptions = s => {
  * render table
  * @param {object} _s Vega Lite specification
  * @param {object} options table options
- * @return {function(object)} table renderer
+ * @returns {function(object)} table renderer
  */
 const table = (_s, options) => { // eslint-disable-line no-unused-vars
 	const s = layerPrimary(_s)
@@ -149,7 +149,7 @@ const table = (_s, options) => { // eslint-disable-line no-unused-vars
  * toggle the content from a graphic to a table
  * @param {specification} s Vega Lite specification
  * @param {function} renderer custom table rendering function
- * @return {function(object)} table toggle interaction function
+ * @returns {function(object)} table toggle interaction function
  */
 const tableToggle = (s, renderer) => {
 	// input selection must be the outer chart wrapper

@@ -36,7 +36,7 @@ const quantitativeChannels = s => {
  * calculate minimum and maximum value for
  * each quantitative channel
  * @param {specification} s Vega Lite specification
- * @return {object} extents
+ * @returns {object} extents
  */
 const calculateExtents = s => {
 	const quantitative = quantitativeChannels(s)
@@ -76,7 +76,7 @@ const calculateExtents = s => {
 
 /**
  * return an empty string as a default value
- * @return {string} empty string
+ * @returns {string} empty string
  */
 const empty = () => ''
 
@@ -84,7 +84,7 @@ const empty = () => ''
  * render descriptive text highlighting the minimum
  * and maximum values in the data set
  * @param {specification} s Vega Lite specification
- * @return {function(object)} extent description
+ * @returns {function(object)} extent description
  */
 const _extentDescription = s => {
 	const disabled = extension(s, 'description')?.extent === false
@@ -113,7 +113,7 @@ const extentDescription = memoize(_extentDescription)
 /**
  * written description of the encodings of a chart
  * @param {specification} s Vega Lite specification
- * @return {string} encoding description
+ * @returns {string} encoding description
  */
 const encodingDescription = s => {
 	if (!s.encoding) {
@@ -152,7 +152,7 @@ const encodingDescription = s => {
 /**
  * render a description into the DOM
  * @param {specification} s Vega Lite specification
- * @return {function(object)} mark description renderer
+ * @returns {function(object)} mark description renderer
  */
 const _markDescription = s => {
 	return d => {
@@ -171,7 +171,7 @@ const markDescription = memoize(_markDescription)
 /**
  * chart type
  * @param {specification} s Vega Lite specification
- * @return {string|null} chart type
+ * @returns {string|null} chart type
  */
 const chartType = s => {
 	if (feature(s).hasLayers()) {
@@ -200,7 +200,7 @@ const chartType = s => {
 /**
  * chart description
  * @param {specification} s Vega Lite specification
- * @return {string} chart description
+ * @returns {string} chart description
  */
 const chartDescription = s => {
 	const segmentDelimiters = ['.', '!', '?']
@@ -221,7 +221,7 @@ const chartDescription = s => {
 /**
  * generate a string describing the keyboard navigation
  * @param {specification} s Vega Lite specification
- * @return {string} instructions
+ * @returns {string} instructions
  */
 const instructions = s => {
 	if (extension(s, 'description')?.instructions === false) {
@@ -236,7 +236,7 @@ const instructions = s => {
 /**
  * chart name which includes title and subtitle
  * @param {specification} s Vega Lite specification
- * @return {string} chart title
+ * @returns {string} chart title
  */
 const chartLabel = s => {
 	if (typeof s.title === 'string') {
@@ -252,7 +252,7 @@ const chartLabel = s => {
  * text description of axis values
  * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @return {string} values description
+ * @returns {string} values description
  */
 const axisValuesText = (s, channel) => {
 	const values = parseScales(s)[channel].domain()
@@ -275,7 +275,7 @@ const scaleDescriptions = {
  * written description of a scale
  * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @return {string} scale description
+ * @returns {string} scale description
  */
 const scaleDescription = (s, channel) => {
 	if (encodingType(s, channel) !== 'quantitative') {
@@ -295,7 +295,7 @@ const scaleDescription = (s, channel) => {
  * written description of an axis
  * @param {specification} s Vega Lite specification
  * @param {cartesian} channel encoding channel
- * @return {string} axis description
+ * @returns {string} axis description
  */
 const axisDescription = (s, channel) => {
 	if (s.encoding[channel].axis?.description) {

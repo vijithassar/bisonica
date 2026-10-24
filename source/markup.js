@@ -35,7 +35,7 @@ const selectors = [
 /**
  * remove dot
  * @param {string} selector DOM selector string
- * @return {string} sanitized
+ * @returns {string} sanitized
  */
 const stripDots = selector => {
 	const leading = selector.slice(0, 1) === '.'
@@ -49,7 +49,7 @@ const stripDots = selector => {
 /**
  * filter out unwanted segments from CSS selectors
  * @param {string} segment DOM selector string
- * @return {boolean} string match
+ * @returns {boolean} string match
  */
 const isAllowedSegment = segment => {
 	return segment !== '>'
@@ -58,7 +58,7 @@ const isAllowedSegment = segment => {
 /**
  * convert a selector string into a data attribute value
  * @param {string} selector DOM selector string
- * @return {string} attribute
+ * @returns {string} attribute
  */
 const convertToTestSelector = selector => {
 	return selector.split(' ').map(stripDots).filter(isAllowedSegment).join('-')
