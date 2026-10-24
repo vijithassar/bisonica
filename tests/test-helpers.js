@@ -43,7 +43,7 @@ const nodesHavePositiveHeights = nodes =>
  * Vega Lite specification to use
  * for tests
  * @param {string} type chart type
- * @return {object} Vega Lite specification
+ * @returns {object} Vega Lite specification
  */
 function specificationFixture(type) {
 	let spec

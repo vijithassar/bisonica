@@ -31,7 +31,7 @@ import { extendError } from './error.js'
  * resolve target input element to selection
  * if necessary
  * @param {HTMLElement|object} target HTML element or d3 selection
- * @return {object} d3 selection
+ * @returns {object} d3 selection
  */
 const resolveTarget = target => {
 	return target instanceof Element ? select(target) : target
@@ -42,7 +42,7 @@ const resolveTarget = target => {
  * a Vega Lite specification
  * @param {specification} s Vega Lite specification
  * @param {dimensions} [_panelDimensions] chart dimensions
- * @return {function(object)} renderer
+ * @returns {function(object)} renderer
  */
 const render = (s, _panelDimensions) => {
 	let tooltipHandler
@@ -156,7 +156,7 @@ const render = (s, _panelDimensions) => {
  * into an asynchronous rendering function
  * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {function(object)} asynchronous rendering function
+ * @returns {function(object)} asynchronous rendering function
  */
 const asyncRender = (s, dimensions) => {
 	const renderer = render(s, dimensions)
@@ -179,7 +179,7 @@ const asyncRender = (s, dimensions) => {
  * a chart rendering function
  * @param {specification} s Vega Lite specification
  * @param {dimensions} [dimensions] chart dimensions
- * @return {function(object)} renderer
+ * @returns {function(object)} renderer
  */
 const chart = (s, dimensions) => {
 	if (s.data?.url || s.layer?.find(layer => layer.data?.url)) {

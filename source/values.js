@@ -17,21 +17,21 @@ import { memoize } from './memoize.js'
 /**
  * get values from values property
  * @param {specification} s Vega Lite specification
- * @return {object[]|object}
+ * @returns {object[]|object}
  */
 const valuesInline = s => s.data.values || s.data
 
 /**
  * get values from datasets property based on name
  * @param {specification} s Vega Lite specification
- * @return {object[]}
+ * @returns {object[]}
  */
 const valuesTopLevel = s => s.datasets[s.data.name]
 
 /**
  * generate a data set
  * @param {specification} s Vega Lite specification
- * @return {object[]} data
+ * @returns {object[]} data
  */
 const valuesSequence = s => {
 	const { start, stop, step } = s.data.sequence
@@ -45,7 +45,7 @@ const valuesSequence = s => {
 /**
  * look up data values attached to specification
  * @param {specification} s Vega Lite specification
- * @return {object[]|object}
+ * @returns {object[]|object}
  */
 const valuesStatic = s => {
 	if (s.data?.name) {
@@ -60,7 +60,7 @@ const valuesStatic = s => {
 /**
  * convert numbers to objects
  * @param {number[]} arr array of primitives
- * @return {object[]} array of objects
+ * @returns {object[]} array of objects
  */
 const wrap = arr => {
 	if (!arr || typeof arr[0] === 'object') {
@@ -80,7 +80,7 @@ const wrap = arr => {
  * look up data from a nested object based on
  * a string of properties
  * @param {specification} s Vega Lite specification
- * @return {function(object)}
+ * @returns {function(object)}
  */
 const lookup = s => {
 	if (s.data.format?.type !== 'json' || !s.data.format?.property) {
@@ -94,7 +94,7 @@ const lookup = s => {
 /**
  * get remote data from the cache
  * @param {specification} s Vega Lite specification
- * @return {object[]} data set
+ * @returns {object[]} data set
  */
 const valuesCached = s => cached(s.data)
 
@@ -108,7 +108,7 @@ const parsers = {
 /**
  * convert field types in an input datum object
  * @param {specification} s Vega Lite specification
- * @return {function(object)} datum field parsing function
+ * @returns {function(object)} datum field parsing function
  */
 const parseFields = s => {
 	if (!s.data?.format?.parse) {
@@ -128,7 +128,7 @@ const parseFields = s => {
  * run all data transformation and utility functions
  * on an input data set
  * @param {specification} s Vega Lite specification
- * @return {function(object[])} data processing function
+ * @returns {function(object[])} data processing function
  */
 const dataUtilities = s => {
 	return data => {
@@ -139,7 +139,7 @@ const dataUtilities = s => {
 /**
  * look up data values
  * @param {specification} s Vega Lite specification
- * @return {object[]} data set
+ * @returns {object[]} data set
  */
 const _values = s => {
 	if (!s.data) {

@@ -6,7 +6,7 @@
 
 /**
  * store current keyboard navigation position in a closure
- * @return {object} methods for modifying keyboard position state
+ * @returns {object} methods for modifying keyboard position state
  */
 const createState = () => {
 	let index

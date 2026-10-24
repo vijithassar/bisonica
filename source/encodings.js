@@ -19,7 +19,7 @@ import { isOffset, isTextChannel, nested } from './helpers.js'
  * look up the field used for a visual encoding
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {string} encoding field
+ * @returns {string} encoding field
  */
 const encodingField = (s, channel) => {
 	return s.encoding?.[channel]?.field || s.facet?.[channel]?.field
@@ -30,7 +30,7 @@ const encodingField = (s, channel) => {
  * (these are types of data sets, not JavaScript primitive types)
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
+ * @returns {('nominal'|'ordinal'|'quantitative'|'temporal')} encoding type
  */
 const encodingType = (s, channel) => {
 	return s.encoding?.[channel]?.type || encodingTypeDefault(s, channel)
@@ -41,7 +41,7 @@ const encodingType = (s, channel) => {
  * a visual encoding
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {function(object)}
+ * @returns {function(object)}
  */
 const encodingValue = (s, channel) => {
 	const key = encodingField(s, channel)
@@ -62,7 +62,7 @@ const encodingValue = (s, channel) => {
 /**
  * determine which channel is used for quantitative encoding
  * @param {specification} s Vega Lite specification
- * @return {string} encoding channel
+ * @returns {string} encoding channel
  */
 const _encodingChannelQuantitative = s => {
 	const test = channel => encodingType(s, channel) === 'quantitative'
@@ -75,7 +75,7 @@ const encodingChannelQuantitative = memoize(_encodingChannelQuantitative)
  * create a function which looks up the data value used for
  * the quantitative visual encoding
  * @param {specification} s Vega Lite specification
- * @return {function(object)}
+ * @returns {function(object)}
  */
 const encodingValueQuantitative = s => {
 	return encodingValue(s, encodingChannelQuantitative(s))
@@ -85,7 +85,7 @@ const encodingValueQuantitative = s => {
  * default encoding types
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {string} default encoding type
+ * @returns {string} default encoding type
  */
 const _encodingTypeDefault = (s, channel) => {
 	const channelDefinition = s.encoding?.[channel]
@@ -134,7 +134,7 @@ const encodingTypeDefault = memoize(_encodingTypeDefault)
  * determine which channel matches a predicate function
  * @param {specification} s Vega Lite specification
  * @param {function} test test
- * @return {string} encoding channel
+ * @returns {string} encoding channel
  */
 const _encodingTest = (s, test) => {
 	const encodings = Object.entries(s.encoding).filter(([channel, definition]) => {
@@ -167,7 +167,7 @@ const encodingTest = memoize(_encodingTest)
 /**
  * determine which channel is used for the independent variable
  * @param {specification} s Vega Lite specification
- * @return {string} encoding channel
+ * @returns {string} encoding channel
  */
 const encodingChannelCovariate = s => {
 	if ((feature(s).isCircular() || feature(s).isLinear()) && feature(s).hasColor()) {
@@ -193,7 +193,7 @@ const encodingChannelCovariate = s => {
  * determine which channel of a Cartesian specification object
  * is secondary to the quantitative channel
  * @param {specification} s Vega Lite specification
- * @return {cartesian} encoding channel
+ * @returns {cartesian} encoding channel
  */
 const encodingChannelCovariateCartesian = s => {
 	const test = channel => ['x', 'y'].includes(channel) && encodingType(s, channel) !== 'quantitative'
@@ -210,7 +210,7 @@ const encodingChannelCovariateCartesian = s => {
  * determine which channel of a Cartesian specification object
  * is the primary quantitative channel
  * @param {specification} s Vega Lite specification
- * @return {cartesian} encoding channel
+ * @returns {cartesian} encoding channel
  */
 const encodingChannelQuantitativeCartesian = s => {
 	const test = channel => ['x', 'y'].includes(channel) && encodingType(s, channel) === 'quantitative'
@@ -230,7 +230,7 @@ const encodingChannelQuantitativeCartesian = s => {
  * @param {string} channel encoding channel
  * @param {function} accessor accessor function
  * @param {dimensions} dimensions chart dimensions
- * @return {function(object)} encoder function
+ * @returns {function(object)} encoder function
  */
 const _encoder = (s, channel, accessor, dimensions) => {
 	const scales = parseScales(s, dimensions)
@@ -283,7 +283,7 @@ const encoder = memoize(_encoder)
  * @param {specification} s Vega Lite specification
  * @param {object} dimensions chart dimensions
  * @param {object} accessors hash of data accessor functions
- * @return {object} hash of encoder functions with complex data
+ * @returns {object} hash of encoder functions with complex data
  * lookup suitable for use as d3 callbacks
  */
 const createEncoders = (s, dimensions, accessors) => {
