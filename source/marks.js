@@ -520,7 +520,7 @@ const imageMarks = (s, dimensions) => {
 				const y = encoders.y(d)
 				return `translate(${x + dx},${y + dy})`
 			})
-			.attr('preserveAspectRatio', s.mark.aspect === 'false' ? 'none' : null)
+			.attr('preserveAspectRatio', s.mark.aspect === false ? 'none' : null)
 			.attr('width', s.mark.width)
 			.attr('height', s.mark.height)
 	}
