@@ -37,10 +37,5 @@
         "jsdoc/check-types": "off",
         "jsdoc/valid-types": "off",
         "jsdoc/no-undefined-types": "off"
-    },
-    "settings": {
-        "jsdoc": {
-            "mode": "permissive"
-        }
     }
 }
