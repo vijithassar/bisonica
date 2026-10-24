@@ -10,7 +10,7 @@ import { key, noop } from './helpers.js'
  * assemble a string key for a gradient
  * @param {specification} s Vega Lite specification
  * @param {number} [index] gradient index
- * @return {string} gradient id
+ * @returns {string} gradient id
  */
 const gradientKey = (s, index = 0) => {
 	const n = index + 1
@@ -20,7 +20,7 @@ const gradientKey = (s, index = 0) => {
 /**
  * create a gradient
  * @param {specification} s Vega Lite specification
- * @return {function(object)} gradient definition rendering function
+ * @returns {function(object)} gradient definition rendering function
  */
 const gradient = s => {
 	if (!s.mark?.color?.gradient) {

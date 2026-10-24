@@ -21,7 +21,7 @@ import { list } from './text.js'
 /**
  * color scale legend item
  * @param {object} config name and color
- * @return {object} DOM node
+ * @returns {object} DOM node
  */
 function createLegendItem(config) {
 	const item = d3.create('li')
@@ -44,7 +44,7 @@ function createLegendItem(config) {
 /**
  * look up the title of the legend
  * @param {specification} s Vega Lite specification
- * @return {string} legend title
+ * @returns {string} legend title
  */
 const legendTitle = s => {
 	return s.encoding.color.legend?.title || s.encoding.color.title || encodingField(s, 'color')
@@ -53,7 +53,7 @@ const legendTitle = s => {
 /**
  * a string for identifiying the legend in the DOM
  * @param {specification} s specification
- * @return {string|null} legend title identifier string
+ * @returns {string|null} legend title identifier string
  */
 const legendIdentifier = s => {
 	if (extension(s, 'id')) {
@@ -66,7 +66,7 @@ const legendIdentifier = s => {
 /**
  * generate a written description for the legend
  * @param {specification} s Vega Lite specification
- * @return {string} legend description
+ * @returns {string} legend description
  */
 const legendDescription = s => {
 	const description = s.encoding.color.legend?.description
@@ -84,7 +84,7 @@ const legendDescription = s => {
  * @param {number} node.clientHeight client height
  * @param {number} node.scrollWidth scroll width
  * @param {number} node.scrollHeight scroll height
- * @return {boolean}
+ * @returns {boolean}
  */
 const isOverflown = ({ clientWidth, clientHeight, scrollWidth, scrollHeight }) => {
 	return scrollHeight > clientHeight || scrollWidth > clientWidth
@@ -99,7 +99,7 @@ const legendStyles = {
 /**
  * style the legend based on the specification
  * @param {specification} s Vega Lite specification
- * @return {function(object)} legend style renderer
+ * @returns {function(object)} legend style renderer
  */
 const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
 
@@ -107,7 +107,7 @@ const legendStyle = s => renderStyles(legendStyles, s.encoding?.color?.legend)
  * legend item configuration
  * @param {specification} s Vega Lite specification
  * @param {number} index item in legend
- * @return {object} object describing the legend item
+ * @returns {object} object describing the legend item
  */
 const itemConfig = (s, index) => {
 	const scales = parseScales(s)
@@ -123,7 +123,7 @@ const itemConfig = (s, index) => {
 /**
  * items to plot in swatch legend
  * @param {specification} s Vega Lite specification
- * @return {string[]} domain for legend
+ * @returns {string[]} domain for legend
  */
 const swatches = s => {
 	return parseScales(s).color.domain()
@@ -135,7 +135,7 @@ const swatches = s => {
 /**
  * discrete swatch legend
  * @param {specification} s Vega Lite specification
- * @return {function(object)} renderer
+ * @returns {function(object)} renderer
  */
 const swatch = s => {
 	const renderer = selection => {
@@ -220,7 +220,7 @@ const swatch = s => {
 /**
  * render chart legend
  * @param {object} _s Vega Lite specification
- * @return {function(object)} renderer
+ * @returns {function(object)} renderer
  */
 const legend = _s => {
 	let s = feature(_s).hasLayers() ? layerPrimary(_s) : _s

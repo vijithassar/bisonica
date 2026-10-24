@@ -18,21 +18,21 @@ const TIME = 'time'
 /**
  * convert date string in YYYY-MM-DD format to date object
  * @param {string} dateString string in YYYY-MM-DD format
- * @return {Date} date object
+ * @returns {Date} date object
  */
 const timeParseYYYYMMDD = d3.utcParse('%Y-%m-%d')
 
 /**
  * convert date string in ISO8601 format to date object
  * @param {string} dateString string in ISO8601 format
- * @return {Date} date object
+ * @returns {Date} date object
  */
 const timeParseIso = d3.isoParse
 
 /**
  * convert date in milliseconds to date object
  * @param {number} date number of milliseconds
- * @return {Date} date object
+ * @returns {Date} date object
  */
 const timeParseMilliseconds = date => new Date(date)
 
@@ -60,14 +60,14 @@ const _getTimeParser = date => {
 /**
  * select a function that can parse a date format
  * @param {(string|number)} date date representation
- * @return {function(Date)} date parsing function
+ * @returns {function(Date)} date parsing function
  */
 const getTimeParser = memoize(_getTimeParser)
 
 /**
  * select a function that can parse a date format
  * @param {(string|number)} date date representation
- * @return {Date} date object
+ * @returns {Date} date object
  */
 const _parseTime = date => {
 	const parser = getTimeParser(date)
@@ -82,7 +82,7 @@ const findTimePeriod = new RegExp(`(?:${TIME}|${UTC})(\\w+)`, 'gi')
 /**
  * capitalize the time period in a time specifier string
  * @param {string} timeSpecifier lowercase time specifier string
- * @return {string} camelcased time specifier string
+ * @returns {string} camelcased time specifier string
  */
 const camelCaseTimePeriod = timeSpecifier => {
 	let matches = [...timeSpecifier.matchAll(findTimePeriod)]
@@ -99,7 +99,7 @@ const camelCaseTimePeriod = timeSpecifier => {
 /**
  * convert time specifier into d3 method name
  * @param {string} specifier time specifier string
- * @return {string} d3 time interval method name
+ * @returns {string} d3 time interval method name
  */
 const timeMethod = specifier => {
 	const prefix = specifier.startsWith(UTC) ? '' : TIME
@@ -139,7 +139,7 @@ const timePeriod = (s, channel) => {
  * for a temporal bar chart
  * @param {specification} s Vega Lite specification
  * @param {dimensions} dimensions chart dimensions
- * @return {dimensions} chart dimensions with bar width offset
+ * @returns {dimensions} chart dimensions with bar width offset
  */
 const temporalBarDimensions = (s, dimensions) => {
 	const offset = feature(s).isTemporalBar() ? barWidth(s, dimensions) : 0

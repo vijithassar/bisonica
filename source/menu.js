@@ -14,7 +14,7 @@ import { download } from './download.js'
  * create a menu configuration object for a data download
  * @param {specification} s Vega Lite specification
  * @param {'csv'|'json'} format data format
- * @return {object} menu item configuration object
+ * @returns {object} menu item configuration object
  */
 const item = (s, format) => {
 	return { text: format, href: download(s, format) }
@@ -23,7 +23,7 @@ const item = (s, format) => {
 /**
  * determine menu content
  * @param {specification} s Vega Lite specification
- * @return {object[]} menu item configuration objects
+ * @returns {object[]} menu item configuration objects
  */
 const items = s => {
 	const download = feature(s).hasDownload() && extension(s, 'download')
@@ -38,7 +38,7 @@ const items = s => {
 /**
  * render menu
  * @param {specification} s Vega Lite specification
- * @return {function(object)} menu renderer
+ * @returns {function(object)} menu renderer
  */
 const menu = s => {
 	return selection => {

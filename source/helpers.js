@@ -12,7 +12,7 @@ import { feature } from './feature.js'
 /**
  * capitalize a string
  * @param {string} string input string
- * @return {string} capitalized string
+ * @returns {string} capitalized string
  */
 const capitalize = string => string[0].toUpperCase() + string.slice(1)
 
@@ -21,7 +21,7 @@ const capitalize = string => string[0].toUpperCase() + string.slice(1)
  * by a layout generator
  * @param {specification} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
- * @return {object} datum
+ * @returns {object} datum
  */
 const datum = (s, d) => {
 	if (feature(s).isCircular() && d.data) {
@@ -64,7 +64,7 @@ const nested = function(d, key, newValue) {
  * create a function which ensures channels have
  * unique fields
  * @param {specification} s Vega Lite specification
- * @return {function(array)} deduplication function
+ * @returns {function(array)} deduplication function
  */
 const deduplicateByField = s => {
 	const fields = Object.entries(s.encoding).map(([_, definition]) => definition?.field).filter(Boolean)
@@ -89,7 +89,7 @@ const deduplicateByField = s => {
 
 /**
  * get the string used when there's no appropriate name for a series
- * @return {string} series name
+ * @returns {string} series name
  */
 const missingSeries = () => '_'
 
@@ -97,7 +97,7 @@ const missingSeries = () => '_'
  * look up the URL attached to a datum
  * @param {specification} s Vega Lite specification
  * @param {object} d datum, which may or may not be nested
- * @return {string} url
+ * @returns {string} url
  */
 const getUrl = (s, d) => {
 	if (s.mark.href) {
@@ -114,7 +114,7 @@ const getUrl = (s, d) => {
  * look up the mark name from either a simple string
  * or the type property of a mark specification object
  * @param {specification} s Vega Lite specification
- * @return {string} mark name
+ * @returns {string} mark name
  */
 const mark = s => {
 	if (typeof s.mark === 'string') {
@@ -136,7 +136,7 @@ const noop = () => {
  * returns the input; occasionally useful for composition
  * @template T
  * @param {T} x input
- * @return {T} output
+ * @returns {T} output
  */
 const identity = x => x
 
@@ -155,14 +155,14 @@ const hide = selection => selection.style('display', 'none')
 /**
  * convert an identifier to machine-friendly key
  * @param {string|number} id identifier
- * @return {string} kebab case string
+ * @returns {string} kebab case string
  */
 const key = id => `${id}`.toLowerCase().replace(/ /g, '-')
 
 /**
  * convert radians to degrees
  * @param {number} radians angle in radians
- * @return {number} angle in degrees
+ * @returns {number} angle in degrees
  */
 const degrees = radians => (radians * 180) / Math.PI
 
@@ -170,7 +170,7 @@ const degrees = radians => (radians * 180) / Math.PI
  * test whether a channel is continuous
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {boolean}
+ * @returns {boolean}
  */
 const isContinuous = (s, channel) => {
 	return ['temporal', 'quantitative'].includes(encodingType(s, channel))
@@ -180,7 +180,7 @@ const isContinuous = (s, channel) => {
  * test whether a channel is discrete
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
- * @return {boolean}
+ * @returns {boolean}
  */
 const isDiscrete = (s, channel) => {
 	return ['nominal', 'ordinal'].includes(encodingType(s, channel))
@@ -189,7 +189,7 @@ const isDiscrete = (s, channel) => {
 /**
  * determine whether a channel is an offset of another channel
  * @param {string} channel encoding channel
- * @return {boolean} whether the field is an offset
+ * @returns {boolean} whether the field is an offset
  */
 const isOffset = channel => {
 	return ['xOffset', 'yOffset'].includes(channel)
@@ -198,7 +198,7 @@ const isOffset = channel => {
 /**
  * determine whether a given channel is text based
  * @param {string} channel encoding channel
- * @return {boolean} whether the field is text based
+ * @returns {boolean} whether the field is text based
  */
 const isTextChannel = channel => {
 	return ['href', 'text', 'tooltip', 'description', 'url'].includes(channel)
@@ -208,7 +208,7 @@ const isTextChannel = channel => {
  * convert polar coordinates to Cartesian
  * @param {number} radius radius
  * @param {number} angle angle in radians
- * @return {object} equivalent Cartesian coordinates
+ * @returns {object} equivalent Cartesian coordinates
  */
 const polarToCartesian = (radius, angle) => {
 	return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) }
@@ -224,7 +224,7 @@ const polarToCartesian = (radius, angle) => {
  * by using scrollTop or .getBoundingClientRect()
  * @param {function(object): void} fn rendering function
  * @param {array} [rest] additional arguments to rendering function
- * @return {function(object)} rendering function which uses detached node
+ * @returns {function(object)} rendering function which uses detached node
  */
 const detach = (fn, ...rest) => {
 	return selection => {
@@ -246,7 +246,7 @@ const detach = (fn, ...rest) => {
  * @param {string[]} methods list of method names
  * @param {object|function} source object or function providing methods to copy
  * @param {object|function} target object or function receiving copied methods
- * @return {object|function} object or function with copied methods
+ * @returns {object|function} object or function with copied methods
  */
 const copyMethods = (methods, source, target) => {
 	methods.forEach(method => {
@@ -257,7 +257,7 @@ const copyMethods = (methods, source, target) => {
 /**
  * convert kebab-case string to camelCase
  * @param {string} kebab kebab case string
- * @return {string} camelCase string
+ * @returns {string} camelCase string
  */
 const kebabToCamel = kebab => {
 	return kebab

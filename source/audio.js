@@ -24,28 +24,28 @@ const defaults = {
 /**
  * root note for the musical scale
  * @param {specification} s Vega Lite specification
- * @return {number} root frequency
+ * @returns {number} root frequency
  */
 const root = s => extension(s, 'audio')?.root || defaults.root
 
 /**
  * octaves spread which repeats the musical scale
  * @param {specification} s Vega Lite specification
- * @return {number} number of octaves
+ * @returns {number} number of octaves
  */
 const octaves = s => extension(s, 'audio')?.octaves || defaults.octaves
 
 /**
  * tempo
  * @param {specification} s Vega Lite specification
- * @return {number} tempo in beats per minute
+ * @returns {number} tempo in beats per minute
  */
 const tempo = s => extension(s, 'audio')?.tempo || defaults.tempo
 
 /**
  * note duration
  * @param {specification} s Vega Lite specification
- * @return {number} note duration
+ * @returns {number} note duration
  */
 const duration = s => 60 / tempo(s) / 2
 
@@ -54,7 +54,7 @@ const temperament = Math.pow(2, 1 / 12)
 /**
  * generate frequencies for a chromatic scale
  * @param {number} root root frequency
- * @return {number[]} chromatic audio scale
+ * @returns {number[]} chromatic audio scale
  */
 const chromatic = root => {
 	return Array.from({ length: 13 }).map((step, index) => root * Math.pow(temperament, index))
@@ -64,7 +64,7 @@ const chromatic = root => {
  * linear division of a data range into a minor scale
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @return {number[]} minor scale in linear data space
+ * @returns {number[]} minor scale in linear data space
  */
 const minorLinear = (min, max) => {
 	const h = (max - min) / 12
@@ -79,7 +79,7 @@ const minorLinear = (min, max) => {
 /**
  * minor scale
  * @param {number} root root frequency
- * @return {number[]} minor audio scale
+ * @returns {number[]} minor audio scale
  */
 const minorExponential = root => {
 	const semitones = [0, 2, 3, 5, 7, 8, 10, 12]
@@ -118,7 +118,7 @@ const note = (s, frequency, start) => {
  * @param {specification} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @return {number[]} multiple octave data scale
+ * @returns {number[]} multiple octave data scale
  */
 const repeatLinear = (s, min, max) => {
 	const spread = max - min
@@ -140,7 +140,7 @@ const repeatLinear = (s, min, max) => {
  * @param {specification} s Vega Lite specification
  * @param {number} min minimum value
  * @param {number} max maximum value
- * @return {number[]} multiple octave audio scale
+ * @returns {number[]} multiple octave audio scale
  */
 const repeatExponential = (s, min, max) => {
 	if (max % min !== 0) {
@@ -190,7 +190,7 @@ const initialize = () => {
 /**
  * audio sonification
  * @param {specification} s Vega Lite specification
- * @return {function(object)} audio sonification function
+ * @returns {function(object)} audio sonification function
  */
 const audio = s => {
 	if (s.layer) {

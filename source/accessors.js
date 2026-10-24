@@ -17,7 +17,7 @@ import { parseTime } from './time.js'
  * data points for a particular chart type
  * @param {specification} s Vega Lite specification
  * @param {mark} [type] mark type
- * @return {object} accessor methods
+ * @returns {object} accessor methods
  */
 const _createAccessors = (s, type = null) => {
 	const key = type || mark(s)

@@ -11,7 +11,7 @@ import { memoize } from './memoize.js'
 /**
  * create a defs node
  * @param {specification} s Vega Lite specification
- * @return {function(object)} defs rendering function
+ * @returns {function(object)} defs rendering function
  */
 const _defs = s => {
 	if (!feature(s).hasDefs()) {
