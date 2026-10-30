@@ -284,9 +284,10 @@ const domainSort = (s, channel) => {
  * @param {specification} s Vega Lite specification
  * @param {string} channel encoding channel
  */
-const domain = (s, channel) => {
+const _domain = (s, channel) => {
 	return customDomain(s, channel) || domainSort(s, channel)(adjustDomain(s, channel)(domainBaseValues(s, channel)))
 }
+const domain = memoize(_domain)
 
 /**
  * compute cartesian range
