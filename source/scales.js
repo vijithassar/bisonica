@@ -172,9 +172,10 @@ const zero = (s, channel) => {
  * @param {cartesian} channel visual encoding
  * @returns {number[]}
  */
-const baseline = (s, channel) => {
+const _baseline = (s, channel) => {
 	return d3.min([0, ...values(s).map(encodingValue(s, channel))])
 }
+const baseline = memoize(_baseline)
 
 /**
  * compute raw values for scale domain
